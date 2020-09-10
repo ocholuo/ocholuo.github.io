@@ -10,7 +10,7 @@
 
 title: Grace                          # the main title
 
-tagline: 9.10.1.IT  # it will display as the sub-title
+tagline: 9.10.2.IT  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   A webpages focus on the IT learning path.
@@ -52,7 +52,7 @@ baseurl: ''
 timezone: America/New_York
 
 google_analytics:
-  id: 'lgraceye@hotmail.com'          # Fill with your Google Analytics ID
+  id: ''          # Fill with your Google Analytics ID
   pv:
     # The Google Analytics pageviews switch.
     # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
