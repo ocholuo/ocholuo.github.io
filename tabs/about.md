@@ -42,10 +42,10 @@ I have documented a lot of exercises and learning outcomes throughout my journey
 # Blog Main PROJECTS
 
 I have worked on a number of projects during my studies, some of which include:
-- [Course - Learning Path](../_posts/0LearningPath/2020-09-14-CourseREADME.md)
-- [InfoSec - Note](../_posts/0LearningPath/2020-09-18-InfoSec.md)
-- [Programming - Code & Learning Path](../_posts/0LearningPath/2020-09-04-CodeREADME.md)
-- [Web - demo & Learning Path](../_posts/0LearningPath/2020-07-16-WebREADME.md)
+- [Course - Learning Path](https://ocholuo.github.io/posts/CourseREADME/)
+- [InfoSec - Note](https://ocholuo.github.io/posts/InfoSec/)
+- [Programming - Code & Learning Path](https://ocholuo.github.io/posts/CodeREADME/)
+- [Web - demo & Learning Path](https://ocholuo.github.io/posts/WebREADME/)
 
 <!-- To know more about the projects vist the Projects page using the button below. The page has "Learn More" links to navigate to their respective GitHub repository home pages. -->
 
@@ -63,19 +63,19 @@ Introduction to Netcat -->
 
 ## LAB EXERCISES
 Lab exercises designed by Syracuse university:
-- [XSS Attack Lab](../_posts/Lab/SEEDLab/2020-09-20-SEED-Labs–XSS-Attack-Lab.md) - Self Replicating Worm attack on vulnerable web app   ✔️
+- [XSS Attack Lab](https://ocholuo.github.io/posts/SEED-Labs–XSS-Attack-Lab) - Self Replicating Worm attack on vulnerable web app   ✔️
 <!-- Set UID Attack Lab - Exploiting setuid and LD_PRELOAD env variable. -->
 <!-- MD5 Attack Lab - Attack Merkle Damgard construction of MD5 using collisions. -->
 
 Lab exercises designed by netdevgroup:
-- [PAN8 Cybersecurity Essentials](../_posts/Lab/NDG/2020-07-16-PAN8-Cybersecurity-Essentials.md) ✔️
-- [PAN8 Cybersecurity Gateway](../_posts/Lab/NDG/2020-07-16-PAN8-Cybersecurity-Gateway.md) ✔️
+- [PAN8 Cybersecurity Essentials](https://ocholuo.github.io/posts/PAN8-Cybersecurity-Essentials/) ✔️
+- [PAN8 Cybersecurity Gateway](https://ocholuo.github.io//posts/PAN8-Cybersecurity-Gateway/) ✔️
 
 
 ## WARGAMES
 Wargames from OverTheWire.org
-- [Overthewire - bandit](../_posts/zWargame/2020-02-17-Overthewire-bandit.md) - Based on SSH  ✔️
-- [Overthewire - natas](../_posts/zWargame/2020-05-20-Overthewire-natas.md)  ✔️
+- [Overthewire - bandit](https://ocholuo.github.io/posts/Overthewire-bandit/Overthewire-bandit/) - Based on SSH  ✔️
+- [Overthewire - natas](https://ocholuo.github.io/posts/Overthewire-bandit/Overthewire-natas/)  ✔️
 
 <!-- Leviathan - Based on SetUID.
 Narnia - Based on binary exploitation.
