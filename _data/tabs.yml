@@ -4,7 +4,13 @@
 #  © 2020 Cotes Chung
 #  MIT Licensed
 
+# the front page
 
+-
+  name: "About"
+  icon: "fas fa-info"
+  path: tabs
+  url: about
 -
   name: Home
   icon: "fas fa-home"
@@ -23,8 +29,3 @@
   path: tabs
   url: archives
   icon: "fas fa-archive"
--
-  name: "About"
-  icon: "fas fa-info"
-  path: tabs
-  url: about
