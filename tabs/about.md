@@ -34,7 +34,7 @@ I worked at VUST from Febrary 2019 - May 2020, where my work was primarily focus
 
 
 ## WRITE-UPS
-I have been fortunate enough to meet great folks, come across ample valuable online resources, have the opportunity to learn my loved security field, and been able to have my step in this Cyber Security carear.
+I have been fortunate enough to meet great folks, come across ample valuable online resources, have the opportunity to learn my loved security field, and been able to have my step in Cyber Security.
 I have documented a lot of exercises and learning outcomes throughout my journey. Visit my Blog page and go through the note and OnePage i wirite, hope it can also be helpful for you in your study.
 
 ---
