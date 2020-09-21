@@ -74,8 +74,8 @@ Lab exercises designed by netdevgroup:
 
 ## WARGAMES
 Wargames from OverTheWire.org
-- [Overthewire - bandit](https://ocholuo.github.io/posts/Overthewire-bandit/Overthewire-bandit/) - Based on SSH  ✔️
-- [Overthewire - natas](https://ocholuo.github.io/posts/Overthewire-bandit/Overthewire-natas/)  ✔️
+- [Overthewire - bandit](https://ocholuo.github.io/posts/Overthewire-bandit/) - Based on SSH  ✔️
+- [Overthewire - natas](https://ocholuo.github.io/posts/Overthewire-natas/)  ✔️
 
 <!-- Leviathan - Based on SetUID.
 Narnia - Based on binary exploitation.
