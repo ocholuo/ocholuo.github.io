@@ -16,9 +16,9 @@ title: Grace L
 
 I am a bright, eager, passionate practician, and an enthusiast of Information Security with an MS (Hons.) in Cyber Security and Information Assurance. 
 
-I have a quick, imaginative, and strategic mind, I am a quick learner and i would like to take every chance I can to improve my knowledge. i am Highly curious, always passionate and curious about learning new technology and tools, and always up for a challenge and unforeseen possibilities
+> I have a quick, imaginative, and strategic mind, I am a quick learner and i would like to take every chance I can to improve my knowledge. i am Highly curious, always passionate and curious about learning new technology and tools, and always up for a challenge and unforeseen possibilities
 
-Such a background allows me to be a goal-oriented person and thinking outside the box. With a fortunate touch of mild laziness and witty impulsiveness, if tasks lead to something clear and relevant, I strive to accomplish those tasks. I have a unique perspective on tricky problems. Using these skills, I learn more about Cyber Security, about different cyber attacks, about identifying loopholes and thinking about how to protect and maintain a secure environment for the enterprise.
+> Such a background allows me to be a goal-oriented person and thinking outside the box. With a fortunate touch of mild laziness and witty impulsiveness, if tasks lead to something clear and relevant, I strive to accomplish those tasks. I have a unique perspective on tricky problems. Using these skills, I learn more about Cyber Security, about different cyber attacks, about identifying loopholes and thinking about how to protect and maintain a secure environment for the enterprise.
 
 Currently, I work as a Amazon Data Center Security Specialist and spend my days studying courses for my CISSP certification and other InforSecurity tech, being involved in projects for courses like Network Security, Secure Computer Systems and Software development. Playing the piano and dance are two constructive hobbies I pursue. 
 
@@ -34,8 +34,17 @@ I worked at VUST from Febrary 2019 - May 2020, where my work was primarily focus
 
 
 ## WRITE-UPS
+
 I have been fortunate enough to meet great folks, come across ample valuable online resources, have the opportunity to learn my loved security field, and been able to have my step in Cyber Security.
-I have documented a lot of exercises and learning outcomes throughout my journey. Visit my Blog page and go through the note and OnePage i wirite, hope it can also be helpful for you in your study.
+
+Also, I have documented a lot of exercises and learning outcomes throughout my journey. This blog is all about:
+- Real-world experience
+- Classroom learning
+- Online learning
+- Hands-on training(CTFs, labs, hackathons, etc)
+- Recognized certifications learning
+
+Visit my Blog page and go through the note I posted, hope it can also be helpful for you in your study path.
 
 ---
 
