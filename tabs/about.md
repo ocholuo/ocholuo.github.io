@@ -44,7 +44,7 @@ Also, I have documented a lot of exercises and learning outcomes throughout my j
 - Hands-on training(CTFs, labs, hackathons, etc)
 - Recognized certifications learning
 
-Visit my Blog page and go through the note I posted, hope it can also be helpful for you in your study path.
+I am trying to upload all my Learning note to here. Visit my Blog page and hope it can also be helpful for you in your study path.
 
 ---
 
@@ -72,7 +72,7 @@ Introduction to Netcat -->
 
 ## LAB EXERCISES
 Lab exercises designed by Syracuse university: 
-- [XSS Attack Lab](https://ocholuo.github.io/posts/SEED-Labs-XSS-Attack-Lab/) - Self Replicating Worm attack on vulnerable web app   ✔️
+- [XSS Attack Lab](https://ocholuo.github.io/posts/SEED-Labs-CrossSiteScripting-Attack-Lab/) - Self Replicating Worm attack on vulnerable web app   ✔️
 <!-- Set UID Attack Lab - Exploiting setuid and LD_PRELOAD env variable. -->
 <!-- MD5 Attack Lab - Attack Merkle Damgard construction of MD5 using collisions. -->
 
