@@ -71,8 +71,8 @@ Basics of Socket Programming in Java
 Introduction to Netcat -->
 
 ## LAB EXERCISES
-Lab exercises designed by Syracuse university:
-- [XSS Attack Lab](https://ocholuo.github.io/posts/SEED-Labs–XSS-Attack-Lab) - Self Replicating Worm attack on vulnerable web app   ✔️
+Lab exercises designed by Syracuse university: 
+- [XSS Attack Lab](https://ocholuo.github.io/posts/SEED-Labs-XSS-Attack-Lab/) - Self Replicating Worm attack on vulnerable web app   ✔️
 <!-- Set UID Attack Lab - Exploiting setuid and LD_PRELOAD env variable. -->
 <!-- MD5 Attack Lab - Attack Merkle Damgard construction of MD5 using collisions. -->
 
