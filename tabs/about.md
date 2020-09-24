@@ -52,7 +52,7 @@ Visit my Blog page and go through the note I posted, hope it can also be helpful
 
 I have worked on a number of projects during my studies, some of which include:
 - [Course - Learning Path](https://ocholuo.github.io/posts/CourseREADME/)
-- [InfoSec - Note](https://ocholuo.github.io/posts/InfoSec/)
+- [InfoSec - Note](https://ocholuo.github.io/posts/InfoSecREADME/)
 - [Programming - Code & Learning Path](https://ocholuo.github.io/posts/CodeREADME/)
 - [Web - demo & Learning Path](https://ocholuo.github.io/posts/WebREADME/)
 
