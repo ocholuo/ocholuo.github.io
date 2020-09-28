@@ -16,13 +16,11 @@ title: Grace L
 
 I am a bright, eager, passionate practician, and an enthusiast of Information Security with an MS (Hons.) in Cyber Security and Information Assurance. 
 
-> I have a quick, imaginative, and strategic mind, I am a quick learner and i would like to take every chance I can to improve my knowledge. i am Highly curious, always passionate and curious about learning new technology and tools, and always up for a challenge and unforeseen possibilities
+> quick, imaginative, and strategic mind, quick learner and like to take every chance to improve the knowledge and learn new technology. Highly curious, goal-oriented person, always passionate, always up for a challenge and unforeseen possibilities
 
-> Such a background allows me to be a goal-oriented person and thinking outside the box. With a fortunate touch of mild laziness and witty impulsiveness, if tasks lead to something clear and relevant, I strive to accomplish those tasks. I have a unique perspective on tricky problems. Using these skills, I learn more about Cyber Security, about different cyber attacks, about identifying loopholes and thinking about how to protect and maintain a secure environment for the enterprise.
+> like breaking into things; both physically and virtually.
 
-Currently, I work as a Amazon Data Center Security Specialist and spend my days studying courses for my CISSP certification and other InforSecurity tech, being involved in projects for courses like Network Security, Secure Computer Systems and Software development. Playing the piano and dance are two constructive hobbies I pursue. 
-
-I aim to be a successful Cyber Security Practician in the industry and make a positive contribution to the Cybersec community that has helped me get to where I am today.
+Currently, I work as a Cloud Security Analyst and spend my days studying courses for my CISSP& OSCP certification, being involved in projects for courses like Network Security, Secure Computer Systems and Software development. Playing the piano and dance are two constructive hobbies I pursue. 
 
 ---
 
@@ -30,8 +28,9 @@ I aim to be a successful Cyber Security Practician in the industry and make a po
 
 I interned at Amzon LLC from June 2020, accpected the return offer, and currently work as a Data Center Security Sepecialist. I was part of the IAD Data Center Security team and worked on the monitored and supported security operations and performing both internal and external security audits for the Data center. I primarily worked on improving the security patterns, solutions, and best practices for the data centers.
 
-I worked at VUST from Febrary 2019 - May 2020, where my work was primarily focused on monitoring and analyzing the network traffic and events, identifing the sources of abnormal or malicious activity. builded and maintained the secure cloud environment on AWS. I also tested the firewalls, conducted detailed risk reports that document the security breaches and the extent of the damage caused by the breaches. 
+I worked at VUST from Febrary 2019 - May 2020 as a Junior IT Enginner, where my work was primarily focused on monitoring and analyzing the network traffic and events, identifing the sources of abnormal or malicious activity. builded and maintained the secure cloud environment on AWS. I also tested the firewalls, conducted detailed risk reports that document the security breaches and the extent of the damage caused by the breaches. 
 
+---
 
 ## WRITE-UPS
 
@@ -61,8 +60,10 @@ I have worked on a number of projects during my studies, some of which include:
 
 ## GENERAL (CS AND INFOSEC)
 Write-Ups from various domains of computer science and info-sec that I documented while learning.
-- Python 3 Programming - UMich  ✔️
-- Java Programming and Software Engineering Fundamentals Specialization - DukeU  ✔️
+- Coding skill:
+  - Python 3 Programming - UMich  ✔️
+  - Java Programming and Software Engineering Fundamentals Specialization - DukeU  ✔️
+  - Linux & Bash Scripting ✔️
 - IBM Cybersecurity Analyst Professional Certificate - IBM ✏️
 <!-- Analysis of Marriott Data Breach - Diamond Model
 Introduction to Linux Device Drivers
@@ -80,8 +81,6 @@ Lab exercises designed by netdevgroup:
 - [PAN8 Cybersecurity Essentials](https://ocholuo.github.io/posts/PAN8-Cybersecurity-Essentials/) ✔️
 - [PAN8 Cybersecurity Gateway](https://ocholuo.github.io//posts/PAN8-Cybersecurity-Gateway/) ✔️
 
-
-## WARGAMES
 Wargames from OverTheWire.org
 - [Overthewire - bandit](https://ocholuo.github.io/posts/Overthewire-bandit/) - Based on SSH  ✔️
 - [Overthewire - natas](https://ocholuo.github.io/posts/Overthewire-natas/)  ✔️
