@@ -10,7 +10,7 @@
 
 title: Grace                          # the main title
 
-tagline: 9.22.1.IT  # only title + add + minus link + add
+tagline: 10.6.IT  # only title + add + minus link + add
 
 description: >-                        # used by seo meta and the atom feed
   A webpages focus on the IT learning path.
@@ -76,12 +76,12 @@ disqus:
 #
 #     dark   - Use the dark color scheme
 #
-theme_mode: dual
+theme_mode: dark
 
 # boolean type, global switch for ToC in posts.
 toc: true
 
-paginate: 10
+paginate: 15
 
 markdown: kramdown
 
