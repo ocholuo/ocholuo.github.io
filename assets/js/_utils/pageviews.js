@@ -187,7 +187,7 @@ function fetchPageviews(fetchOrigin = true, filterOrigin = false) {
         PvCache.saveOriginCache(JSON.stringify(data));
       })
       .then(() => fetchProxyPageviews());
-
+      
   } else {
     fetchProxyPageviews();
   }
