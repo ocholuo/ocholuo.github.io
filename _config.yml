@@ -52,14 +52,14 @@ baseurl: ''
 timezone: America/New_York
 
 google_analytics:
-  id: UA-179830187-1          # Fill with your Google Analytics ID
+  id: 'UA-179830187-1'          # Fill with your Google Analytics ID
   pv:
     # The Google Analytics pageviews switch.
     # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
     enabled: true
     # the next options only valid when `google_analytics.pv` is enabled.
-    proxy_url: '	https://myochosite-291718.appspot.com/query?id=ahNwfm15b2Nob3NpdGUtMjkxNzE4chULEghBcGlRdWVyeRiAgIDo14eBCgw'
-    proxy_endpoint: '	https://myochosite-291718.appspot.com/query?id=ahNwfm15b2Nob3NpdGUtMjkxNzE4chULEghBcGlRdWVyeRiAgIDo14eBCgw'
+    proxy_url: 'https://myochosite-291718.appspot.com'  # the URL of proxy_endpoint
+    proxy_endpoint: 'https://myochosite-291718.appspot.com/query?id=ahNwfm15b2Nob3NpdGUtMjkxNzE4chULEghBcGlRdWVyeRiAgIDo14eBCgw'
     cache: false  # pv data local cache, good for the users from GFW area.
 
 disqus:
