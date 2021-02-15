@@ -86,9 +86,7 @@ Virtual machines need <font color=red> block storage </font>
 - keep these as backups or use when need to migrate a VM to another region.
 
 
-
 <font color=red> grained control of costs </font>
-
 - <font color=blue> per second billing </font>
   - GCP enables fine grained control of costs of Compute Engine resources by providing per second billing.
   - helps reduce the costs when deploying compute resources for short periods of time
