@@ -1,4 +1,4 @@
-package labuladongjava.other; 
+package labuladongjava.dsjava.card; 
 
 // import java.lang.System;
 
