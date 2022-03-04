@@ -1,5 +1,4 @@
-package labuladongjava.cipher;
-// Java Program to Enode a Message Using Playfair Cipher
+
 
 import java.io.*;
 import java.util.*;
