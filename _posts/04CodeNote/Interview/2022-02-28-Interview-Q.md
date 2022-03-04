@@ -1,6 +1,6 @@
 ---
-title: Interview Quetsions
-date: 2021-02-28 11:11:11 -0400
+title: 遇到的 Interview Quetsions
+date: 2022-02-28 11:11:11 -0400
 categories: [04CodeNote]
 tags: [makefile]
 math: true
@@ -8,12 +8,14 @@ image:
 ---
 
 - [Question during interview](#question-during-interview)
+  - [2022-2](#2022-2)
 
 ---
 
 # Question during interview
 
 
+## 2022-2
 
 I will give you a tree. I'll give you an input 
 - For every input will be in lines every line has two numbers, a and b. 
