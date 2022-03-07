@@ -1,10 +1,10 @@
 ---
-title: DS - pythonds3 - 5. Recursion
+title: Data Structures - Basic 1 - Recursion
 # author: Grace JyL
 date: 2019-08-25 11:11:11 -0400
 description:
 excerpt_separator:
-categories: [04CodeNote, PythonNote]
+categories: [04CodeNote, DS]
 tags:
 math: true
 # pin: true
@@ -12,9 +12,12 @@ toc: true
 # image: /assets/img/sample/devices-mockup.png
 ---
 
-- [DS - pythonds3 - 5. Recursion](#ds---pythonds3---5-recursion)
+- [Data Structures - Basic 1 - Recursion](#data-structures---basic-1---recursion)
+  - [basic](#basic)
   - [The 3 Recursion Laws](#the-3-recursion-laws)
-  - [simple code](#simple-code)
+  - [examples of the use of recursion](#examples-of-the-use-of-recursion)
+    - [The Factorial Function](#the-factorial-function)
+    - [Drawing an English Ruler](#drawing-an-english-ruler)
     - [Calculating the Sum of a List of Numbers](#calculating-the-sum-of-a-list-of-numbers)
     - [returns reverse string](#returns-reverse-string)
     - [check palindrome string](#check-palindrome-string)
@@ -33,20 +36,30 @@ toc: true
       - [memoization/caching](#memoizationcaching)
       - [dynamic programming](#dynamic-programming-1)
 
-- ref
-  - [youtube - CS Dojo](https://www.youtube.com/watch?v=vYquumk4nWw)
-  -
 
 ---
 
+# Data Structures - Basic 1 - Recursion
 
-# DS - pythonds3 - 5. Recursion
+source:
+- DS - pythonds3 - 3. Analysis
+- Problem Solving with Algorithms and Data Structures using Python 3
+- Data Structures and Algorithms in Java, 6th Edition.pdf
+- [youtube - CS Dojo](https://www.youtube.com/watch?v=vYquumk4nWw)
 
-**A recursive function is a function that calls itself**.
 
-Recursion is a method of solving problems that involves breaking a problem down into smaller and smaller subproblems until you get to a small enough problem that it can be solved trivially.
-- Usually recursion involves a function calling itself.
-- While it may not seem like much on the surface, recursion allows us to write elegant solutions to problems that may otherwise be very difficult to program.
+---
+
+## basic
+
+**Recursion**
+
+- **A recursive function is a function that calls itself**.
+  - Usually recursion involves a function calling itself.
+
+- recursion provides an elegant and powerful alternative for performing repetitive tasks.
+  - method of solving problems that involves breaking a problem down into smaller and smaller subproblems until you get to a small enough problem that it can be solved trivially.
+  - While it may not seem like much on the surface, recursion allows us to write elegant solutions to problems that may otherwise be very difficult to program.
 
 > Each time we make a recursive call we are solving a smaller problem, until we reach the point where the problem cannot get any smaller.
 
@@ -54,7 +67,33 @@ Recursion is a method of solving problems that involves breaking a problem down 
 **A truly dynamic programming algorithm will take a more `systematic 系统的 approach` to the problem**.
 - build from the bottom to top
 
+find:
+- **recursive definition**
+- **base case**: refer to fixed values of the function.
+- **recursive case**: define the function in terms of itself.
+- **recursion trace**:
+  - illustrate the execution of a recursive method
+  - mirrors a programming language’s execution of the recursion.
+- **activation record/frame**
+  - In Java, each time a method (recursive or otherwise) is called, a structure known as an `activation record or activation frame is created to store information`
+    - about the progress of that invocation of the method.
+    - stores the parameters and local variables specific to a given call of the method,
+    - and information about which command in the body of the method is currently executing.
+  - When the execution of a method leads to a nested method call
+    - the execution of the former call is suspended
+    - its frame stores the place in the source code at which the flow of control should continue upon return of the nested call.
+    - A new frame is then created for the nested method call.
+    - This process is used both in the standard case of one method calling a different method, or in the recursive case where a method invokes itself.
+    - The key point is to **have a separate frame for each active call**.
+
+
+
+
+
+
+
 ---
+
 
 ## The 3 Recursion Laws
 
@@ -83,7 +122,74 @@ A recursive algorithm **must `call itself, recursively`**.
 
 ---
 
-## simple code
+## examples of the use of recursion
+
+---
+
+### The Factorial Function
+
+- 5! = 5 · 4 · 3 · 2 · 1 = 120.
+- The factorial function is important because it is known to equal the `number of ways in which n distinct items can be arranged` into a sequence
+- the number of permutations of n items.
+
+```java
+// 5! = 5 · 4 · 3 · 2 · 1
+// 2! = 2 · 1
+// 1! = 1
+public static int factorial(int n) throws IllegalArgumentException {
+    if(n<0) throw new IllegalArgumentException();
+    else if(n==0) return 1;
+    else return factorial(n-1) * n;
+}
+```
+
+---
+
+
+### Drawing an English Ruler
+
+- For each inch, we place a tick with a numeric label.
+- We denote the length of the tick designating a whole inch as the major tick length.
+- Between the marks for whole inches, the ruler contains a series of minor ticks, placed at intervals of 1/2 inch, 1/4 inch, and so on.
+- As the size of the interval decreases by half, the tick length decreases by one.  
+
+
+- The English ruler pattern is a simple example of a fractal, that is, a shape that has a self-recursive structure at various levels of magnification.
+
+![Screen Shot 2022-03-05 at 14.39.50](https://i.imgur.com/ztQl7AA.png)
+
+
+```java
+---- 0
+-
+--
+-
+---
+-
+--
+-
+---- 1
+-
+--
+-
+----
+-
+--
+-
+--- 2   
+
+
+
+
+```
+
+
+
+
+
+
+
+
 
 ---
 
