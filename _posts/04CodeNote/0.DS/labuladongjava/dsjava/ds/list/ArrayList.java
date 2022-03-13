@@ -1,4 +1,4 @@
-package array;
+package list;
 
 
 public class ArrayList<E> implements List<E> { // instance variables {
@@ -6,39 +6,32 @@ public class ArrayList<E> implements List<E> { // instance variables {
     // default array capacity
     public static final int CAPACITY=16; 
     // generic array used for storage
-    private E[ ] data;
-    // current number of elements
+    private E[ ] data; 
     private int size = 0;
 
-    // constructors
-    // constructs list with default capacity
-    public ArrayList() { 
-        this(CAPACITY); 
-    } 
+    // constructors 
+    public ArrayList() { this(CAPACITY); } 
     
     // constructs list with given capacity
-    public ArrayList(int capacity) {
-        // safe cast; compiler may give warning
+    public ArrayList(int capacity) { 
         data = (E[]) new Object[capacity]; 
     }
-    // // public methods
-    // /∗∗ Returns the number of elements in the array list. ∗/ 
-    public int size() { return size; }
-
-    // /∗∗ Returns whether the array list is empty. ∗/
+    
+    // public methods 
+    public int size() { return size; } 
     public boolean isEmpty() { return size == 0; }
 
-    // // utility method
+    // utility method
     // /∗∗ Checks whether the given index is in the range [0, n-1]. ∗/
     protected void checkIndex(int i, int n) throws IndexOutOfBoundsException {
         if (i < 0 || i >= n) throw new IndexOutOfBoundsException("Illegal index: " + i);
     }
-
-    // /∗∗ Returns (but does not remove) the element at index i. ∗/ 
+    
     public E get(int i) throws IndexOutOfBoundsException {
         checkIndex(i, size);
         return data[i]; 
     }
+    
     // /∗∗ Replaces the element at index i with e, and returns the replaced element. ∗/ 
     public E set(int i, E e) throws IndexOutOfBoundsException {
         checkIndex(i, size); 

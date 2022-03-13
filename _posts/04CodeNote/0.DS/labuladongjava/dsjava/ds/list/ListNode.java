@@ -1,4 +1,4 @@
-package array;
+package list;
 
 
 // 单链表节点的结构
