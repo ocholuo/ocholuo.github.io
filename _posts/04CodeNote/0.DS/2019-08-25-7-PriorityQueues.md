@@ -1,10 +1,10 @@
 ---
-title: DS - pythonds3 - 7. Priority Queues
+title: Data Structures - Basic 1 - Priority Queues
 # author: Grace JyL
 date: 2019-08-25 11:11:11 -0400
 description:
 excerpt_separator:
-categories: [04CodeNote, PythonNote]
+categories: [04CodeNote, DS]
 tags:
 math: true
 # pin: true
@@ -13,14 +13,19 @@ toc: true
 ---
 
 
-- [DS - pythonds3 - 7. Binary Heap](#ds---pythonds3---7-binary-heap)
-  - [Priority Queues with Binary Heap 堆](#priority-queues-with-binary-heap-堆)
-  - [ADT: PriorityQueue in java](#adt-priorityqueue-in-java)
-    - [AbstractPriorityQueue: The AbstractPriorityQueue Base Class](#abstractpriorityqueue-the-abstractpriorityqueue-base-class)
+- [Data Structures - Basic 1 - Priority Queues](#data-structures---basic-1---priority-queues)
+  - [Priority Queues](#priority-queues)
+  - [ADT: Priority Queue in java](#adt-priority-queue-in-java)
+  - [Implementing a Priority Queue](#implementing-a-priority-queue)
+    - [Entry **Interface**](#entry-interface)
+    - [PriorityQueue **Interface**](#priorityqueue-interface)
+    - [Comparable **Interface**](#comparable-interface)
+    - [AbstractPriorityQueue **BaseClass**](#abstractpriorityqueue-baseclass)
     - [UnsortedPriorityQueue: Implementing a Priority Queue with an Unsorted List](#unsortedpriorityqueue-implementing-a-priority-queue-with-an-unsorted-list)
     - [Implementing a Priority Queue with a Sorted List](#implementing-a-priority-queue-with-a-sorted-list)
     - [import java.util.PriorityQueue](#import-javautilpriorityqueue)
-  - [heap implementation](#heap-implementation)
+  - [Binary Heap 堆](#binary-heap-堆)
+    - [heap implementation](#heap-implementation)
     - [max heap in java](#max-heap-in-java)
     - [min heap in python](#min-heap-in-python)
     - [heap in python](#heap-in-python)
@@ -29,28 +34,52 @@ toc: true
       - [analyze the binary heap](#analyze-the-binary-heap)
 
 
+- ref
+  - DS - pythonds3 - 7. Binary Heap
+  - Data Structures and Algorithms in Java, 6th Edition.pdf
+
+
 ---
 
-# DS - pythonds3 - 7. Binary Heap
+# Data Structures - Basic 1 - Priority Queues
 
+---
 
-
-
-## Priority Queues with Binary Heap 堆  
+## Priority Queues
 
 
 **queue**
 - first-in first-out data structure
 
+
+In practice, there are many applications in which a `queue-like structure` is used to manage objects that must be processed in some way, but `the first-in, first-out policy does not suffice`.
+- It is unlikely that the landing decisions are based purely on a FIFO policy.
+- “first come, first serve” policy might seem reasonable, yet for which other priorities come into play.
+
+
+
 **priority queue**
-- a collection of prioritized elements that allows `arbitrary element insertion`, and allows the removal of the element that has first priority.
 
 - One important variation of Queue
+
+- a collection of `prioritized elements` that
+  - allows `arbitrary element insertion`,
+  - and allows `the removal of the element that has first priority`.
 
 - A priority queue acts like a queue that dequeue an item by removing it from the front.
   - However, in a priority queue the `logical order of items` inside a queue is determined by their `priority`.
   - The highest priority items are at the front of the queue and the lowest priority items are at the back.
   - Thus when you enqueue an item on a priority queue, the new item may move all the way to the front.
+
+
+When an element is added to a priority queue
+- the user designates its priority by providing an associated **key**.
+- `The element with the minimal key will be the next to be removed` from the queue
+  - an element with key 1 will be given priority over an element with key 2
+- Although it is quite common for priorities to be expressed numerically, any Java object may be used as a key, as long as there exists means to compare any two instances a and b, in a way that defines a natural order of the keys.
+- With such generality, applications may develop their own notion of priority for each element.
+  - For example
+  - different financial analysts may assign different ratings (i.e., priorities) to a particular asset, such as a share of stock.
 
 
 Implement a priority queue using `sorting` functions and `lists`.
@@ -60,18 +89,11 @@ Implement a priority queue using `sorting` functions and `lists`.
   - A binary heap will allow us both enqueue and dequeue items in `𝑂(log𝑛)`.
 
 
-**Heap**
-- looks a lot like a tree,
-- but we implement it only need a single list as an internal representation.
-
-- The binary heap has two common variations:  
-  - min heap, the <font color=red> smallest key is always at the front </font>,
-  - max heap, the <font color=red> largest key value is always at the front </font>.
 
 
 ---
 
-## ADT: PriorityQueue in java
+## ADT: Priority Queue in java
 
 - When an element is added to a priority queue, the user designates its priority by providing an associated key.
 - The element with the minimal key will be the next to be removed from the queue (thus, an element with key 1 will be given priority over an element with key 2).
@@ -81,17 +103,22 @@ Implement a priority queue using `sorting` functions and `lists`.
   - different financial analysts may assign different ratings (i.e., priorities) to a particular asset,
   - such as a share of stock.
 
-insert(k, v):
+
+`insert(k, v)`:
 - Creates an entry with key k and value v in the priority queue.
-min():
+
+`min()`:
 - Returns (but does not remove) a priority queue entry (k,v) having minimal key;
 - returns null if the priority queue is empty.
-removeMin():
+
+`removeMin()`:
 - Removes and returns an entry (k,v) having minimal key fromm the priority queue;
 - returns null if the priority queue is empty.
-size():
+
+`size()`:
 - Returns the number of entries in the priority queue.
-isEmpty():
+
+`isEmpty()`:
 - Returns a boolean indicating whether the priority queue is empty.
 
 
@@ -109,25 +136,165 @@ isEmpty | O(1) | O(1)
 insert | O(1) | O(n)
 min | O(n) | O(1)
 removeMin | O(n) | O(1)
+space requirement | O(n) |
+
+---
 
 
 
-### AbstractPriorityQueue: The AbstractPriorityQueue Base Class
+
+## Implementing a Priority Queue
+
+
+
+---
+
+
+
+### Entry **Interface**
+
+
+
+
+implementing a priority queue
+- we must keep track of both `an element and its key`
+  - even as entries are relocated within a data structure.
+- This is reminiscent of maintain a list of elements with access frequencies.
+  - use **Design Pattern: Composite**
+  - defining an Item class that paired each element with its associated count in our primary data structure.
+
+  - For priority queues
+    - we use composition to `pair a key k and a value v as a single object`.
+    - To formalize this, we define the public interface, `Entry`
+
+
+```java
+// ∗ Interface for a key-value pair. ∗/
+public interface Entry<K, V> {
+    K getKey();
+    V getV();
+}
+```
+
+
+---
+
+### PriorityQueue **Interface**
+
+use the Entry interface for the priority queue
+- This allows us to `return both a key and value as a single object` from methods such as min and removeMin.
+
+define the insert method to return an entry;
+- in a more **advanced adaptable priority queue**, that entry can be subsequently updated or removed.
+
+```java
+// ∗∗ Interface for the priority queue ADT. ∗/
+public interface PriorityQueue<K, V> {
+    int size();
+    boolean isEmpty();
+    Entry<K,V> insert(K key, V value) throws IllegalArgumentException;
+    Entry<K,V> mim();
+    Entry<K,V> removeMim();
+}
+```
+
+
+---
+
+### Comparable **Interface**
+
+
+**Comparing Keys with Total Orders**
+- we can allow any type of object to serve as a key
+  - but we must be able to compare keys to each other in a meaningful way.
+  - More so, the results of the comparisons must not be contradictory.
+
+- For a comparison rule, which we denote by ≤, to be self-consistent, it must define a total order relation, which is to say that it satisfies the following properties for any keys k1, k2, and k3:
+
+  - **Comparability property**: k1 ≤ k2 or k2 ≤ k1.
+    - The comparability property states that comparison rule is defined for every pair of keys.
+    - Note that this property implies the following one:
+      - **Reflexive property**: k ≤ k.
+
+  - **Antisymmetric property**: if k1 ≤ k2 and k2 ≤ k1, then k1 = k2.
+  - **Transitive property**: if k1 ≤ k2 and k2 ≤ k3, then k1 ≤ k3.
+
+
+- A comparison rule, ≤, that defines a total order relation will never lead to a contradiction.
+- Such a rule defines a linear ordering among a set of keys;
+  - hence, if a (finite) set of elements has a total order defined for it, then the notion of a minimal key, kmin, is well defined, as a key in which kmin ≤ k, for any other key k in our set.
+
+
+
+**The Comparable Interface**
+- Java provides two means for defining comparisons between object types.
+
+  1. a class may define what is known as the natural ordering of its instances by formally implementing the `java.lang.Comparable` interface -> method, `compareTo`.
+     - The syntax `a.compareTo(b)` must return an integer i with the following meaning:
+
+       - i<0 designates that a<b.
+
+       - i=0 designates that a=b.
+
+- i>0designatesthata>b.
+For example, the compareTo method of the String class defines the natural
+ordering of strings to be lexicographic, which is a case-sensitive extension of the alphabetic ordering to Unicode.
+The Comparator Interface
+In some applications, we may want to compare objects according to some notion other than their natural ordering. For example, we might be interested in which of two strings is the shortest, or in defining our own complex rules for judging which of two stocks is more promising. To support generality, Java defines the java.util.Comparator interface. A comparator is an object that is external to the class of the keys it compares. It provides a method with the signature compare(a, b) that returns an integer with similar meaning to the compareTo method described above.
+www.it-ebooks.info
+364
+Chapter 9. Priority Queues
+1
+2
+3
+4
+5
+6 7} 8
+1
+2
+3 4}
+As a concrete example, Code Fragment 9.3 defines a comparator that evaluates strings based on their length (rather than their natural lexicographic order).
+public class StringLengthComparator implements Comparator<String> { /∗∗ Compares two strings according to their lengths. ∗/
+public int compare(String a, String b) {
+if (a.length() < b.length()) return −1;
+else if (a.length() == b.length()) return 0; else return 1;
+} Code Fragment 9.3: A comparator that evaluates strings based on their lengths. Comparators and the Priority Queue ADT
+For a general and reusable form of a priority queue, we allow a user to choose any key type and to send an appropriate comparator instance as a parameter to the priority queue constructor. The priority queue will use that comparator anytime it needs to compare two keys to each other.
+For convenience, we also allow a default priority queue to instead rely on the natural ordering for the given keys (assuming those keys come from a comparable class). In that case, we build our own instance of a DefaultComparator class, shown in Code Fragment 9.4.
+public class DefaultComparator<E> implements Comparator<E> { public int compare(E a, E b) throws ClassCastException {
+return ((Comparable<E>) a).compareTo(b);
+5 }Code Fragment 9.4: A DefaultComparator class that implements a comparator
+based upon the natural ordering of its element type.
+
+
+
+
+---
+
+
+
+### AbstractPriorityQueue **BaseClass**
+
+
+
+---
+
 
 
 ### UnsortedPriorityQueue: Implementing a Priority Queue with an Unsorted List
 
-running time:
-- size: `O(1)`
-- isEmpty: `O(1)`
-- insert: `O(1)`
-- min: `O(n)`
-- removeMin: `O(n)`
 
-The space requirement is O(n).
+
+---
+
 
 
 ### Implementing a Priority Queue with a Sorted List
+
+
+
+---
+
 
 
 
@@ -139,7 +306,38 @@ https://docs.oracle.com/javase/7/docs/api/java/util/PriorityQueue.html#add(E)
 ---
 
 
-## heap implementation
+
+
+
+
+
+
+
+
+
+
+
+---
+
+
+## Binary Heap 堆  
+
+
+**Heap**
+- looks a lot like a tree,
+- but we implement it only need a single list as an internal representation.
+
+- The binary heap has two common variations:  
+  - min heap, the <font color=red> smallest key is always at the front </font>,
+  - max heap, the <font color=red> largest key value is always at the front </font>.
+
+
+---
+
+
+
+
+### heap implementation
 
 using an `unsorted` list to store entries
 - `insertions` in O(1) time,

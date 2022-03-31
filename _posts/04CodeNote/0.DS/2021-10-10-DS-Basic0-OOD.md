@@ -1,5 +1,5 @@
 ---
-title: Data Structures - Basic 1 - Object Oriented Programming
+title: Data Structures - Basic 0 - Object Oriented Programming
 # author: Grace JyL
 date: 2021-10-10 11:11:11 -0400
 description:
@@ -24,7 +24,6 @@ toc: true
     - [Abstraction](#abstraction)
     - [Encapsulation 封装](#encapsulation-封装)
     - [Modularity 参数化/模版类类型](#modularity-参数化模版类类型)
-  - [Design Patterns](#design-patterns)
   - [继承/组合/参数化 类型 (复用技术)](#继承组合参数化-类型-复用技术)
     - [派生关系](#派生关系)
     - [组合](#组合)
@@ -56,10 +55,11 @@ toc: true
     - [Exception Hierarchy](#exception-hierarchy)
   - [Casting and Generics](#casting-and-generics)
     - [Casting](#casting)
-    - [Generics](#generics)
+    - [Generics **Framework**](#generics-framework)
       - [classic style](#classic-style)
-      - [Generics Framework](#generics-framework)
-  - [object-oriented design pattern 设计模式](#object-oriented-design-pattern-设计模式)
+      - [Generics Framework](#generics-framework-1)
+  - [Design Patterns](#design-patterns)
+    - [软件设计七大原则](#软件设计七大原则)
     - [创建型](#创建型)
       - [单例模式 Singleton Pattern](#单例模式-singleton-pattern)
       - [工厂模式 Factory Pattern](#工厂模式-factory-pattern)
@@ -74,11 +74,12 @@ toc: true
     - [结构型](#结构型)
       - [Adapter 适配器](#adapter-适配器)
       - [Bridge](#bridge)
-      - [Composite](#composite)
+      - [Composite 组合模式](#composite-组合模式)
       - [Decorator](#decorator)
       - [Façade](#façade)
       - [Proxy](#proxy)
     - [others](#others)
+    - [J2EE 模式](#j2ee-模式)
 - [2.2. Inheritance](#22-inheritance)
   - [Inheriting Variables and Methods](#inheriting-variables-and-methods)
     - [Mechanics of Defining a Subclass](#mechanics-of-defining-a-subclass)
@@ -90,14 +91,20 @@ toc: true
   - [22.4. Invoke 调用 the Parent Class’s Method](#224-invoke-调用-the-parent-classs-method)
   - [Considerations](#considerations)
 
+
+- source:
+  - Problem Solving with Algorithms and Data Structures using Python 3
+  - Data Structures and Algorithms in Java, 6th Edition.pdf
+  - https://www.runoob.com/design-pattern/design-pattern-intro.html
+  - http://c.biancheng.net/view/1373.html
+
+
+
+
 ---
 
 # Object-oriented programming 面向对象编程
 
-
-source:
-- Problem Solving with Algorithms and Data Structures using Python 3
-- Data Structures and Algorithms in Java, 6th Edition.pdf
 
 
 ---
@@ -280,6 +287,8 @@ Ask
 
 # Basic
 
+
+
 ---
 
 ## OOD Goals `robustness, adaptability, and reusability`
@@ -401,52 +410,13 @@ Encapsulation
 
 - 参数化类型/模版类 也是一种有效的代码复用技术。
   - 在C++的标准模版库中大量应用了这种方式。
-  - 例如，在定义一个List的变量时，List被另一个类型String所参数化。
+  - 例如，在定义一个List的变量时，List被另一个`类型S`tring所参数化。
 
 * 参数化类型方式是基于接口的编程，在一定程度上消除了类型给程序设计语言带来的限制。
 * 相对于组合方式来说，缺少的是动态修改能力。
 * 因为参数化类型本身就不是面向对象语言的一个特征，所以在面向对象的设计模式里面，没有一种模式是于参数化类型相关的。
 * 实践上我们方面是可以使用参数化类型来编写某种模式的。
 
-
----
-
-
-## Design Patterns
-
-**design pattern**
-- describes a solution to a “typical” software design problem.
-
-- A pattern provides a general template for a solution that can be applied in many different situations.
-
-- It describes the main elements of a solution in an abstract way that can be specialized for a specific problem at hand.
-
-- It consists of
-  - a name, which identifies the pattern;
-  - a context, which describes the scenarios for which this pattern can be applied;
-  - a template, which describes how the pattern is applied;
-  - and a result, which describes and analyzes what the pattern produces.
-
-
-Some algorithm design patterns
-- Recursion
-- Amortization
-- Divide-and-conquer
-- Prune-and-search, also known as decrease-and-conquer
-- Brute force
-- The greedy method
-- Dynamic programming
-
-
-some software engineering design patterns
-- Template method
-- Composition
-- Adapter
-- Position
-- Iterator
-- Factory Method
-- Comparator
-- Locator
 
 
 
@@ -1813,6 +1783,67 @@ public class ShoppingCart<T extends Sellable> {
 
 
 
+---
+
+
+## Design Patterns
+
+
+
+- 所谓的设计模式是指人们在开发软件的过程中，对于一些普适需求而总结的设计模版。
+  - 在软件设计中，被反复使用的一种`代码设计经验`。
+  - 使用设计模式的目的是为了可重用代码，提高代码的可扩展性和可维护性。
+
+- 根本原因还是软件开发要实现`可维护、可扩展`，就必须尽量`复用代码`，并且`降低代码的耦合度`。
+
+- describes a solution to a **“typical” software design problem**
+
+- A pattern **provides a general template for a solution** that can be applied in many different situations.
+
+- It describes the main elements of a solution in an abstract way that can be specialized for a specific problem at hand.
+
+- It consists of
+  - a name, which identifies the pattern;
+  - a context, which describes the scenarios for which this pattern can be applied;
+  - a template, which describes how the pattern is applied;
+  - and a result, which describes and analyzes what the pattern produces.
+
+
+
+根据模式目的可以分为三类：
+* 创建型(Creational).创建型模式 与 `对象的创建`相关。
+* 结构型(Structural).结构型模式 处理 `类或者是对象的组合`。
+* 行为型(Behavioral).行为型模式 对 `类或者是对象怎样交互和怎样分配职责进行描述`。
+
+
+
+
+Some algorithm design patterns
+- Recursion
+- Amortization
+- Divide-and-conquer
+- Prune-and-search, also known as decrease-and-conquer
+- Brute force
+- The greedy method
+- Dynamic programming
+
+
+some software engineering design patterns
+- Template method
+- Composition
+- Adapter
+- Position
+- Iterator
+- Factory Method
+- Comparator
+- Locator
+
+
+设计模式之间的关系：
+
+![the-relationship-between-design-patterns](https://i.imgur.com/VVIZXjx.jpg)
+
+
 
 
 
@@ -1820,24 +1851,98 @@ public class ShoppingCart<T extends Sellable> {
 ---
 
 
-## object-oriented design pattern 设计模式
-
-所谓的设计模式是指人们在开发软件的过程中，对于一些普适需求而总结的设计模版。根据模式目的可以分为三类：
-
-* 创建型(Creational).创建型模式 与 `对象的创建`相关。
-* 结构型(Structural).结构型模式 处理 `类或者是对象的组合`。
-* 行为型(Behavioral).行为型模式 对 `类或者是对象怎样交互和怎样分配职责进行描述`。
-
-下面我们对每种类型进行介绍。
-- 不可盲目相信设计模式。
-- 设计模式更多地只是提供一些思路，能够直接套用设计模式的情况并不多，更多的时候是对现成设计模式的改进和组合。
-- 所以对于设计模式的学习更多应该着眼于模式的意图，而不是模式的具体实现方法
+### 软件设计七大原则
 
 
+设计模式主要是基于OOP编程提炼的，它基于以下几个原则：
+
+- Open Closed Principle 开闭原则
+  - 软件应该对扩展开放，而对修改关闭。
+  - 这里的意思是在增加新功能的时候，能不改代码就尽量不要改，如果只增加代码就完成了新功能，那是最好的。
+  - （1）开放，对功能或需求的扩展开放，当有新需求或变化时，可依据现有的程序代码进行扩展，以便适应新要求；
+  - （2）封闭，意味着一旦设计完成，便可以独立工作，不能对其进行任何的修改。
+
+-  单一职责原则
+   -  一个类只负责一项职责。
+   -  针对一个类，其承担的职责越多，被复用的可能性就越小。
+   -  如果类承担的职责很多，就意味着这些职责耦合在了一起，若其中一项职责发生变化，就可能会影响其他职责的处理。
+
+
+
+- Liskov Substitution Principle 里氏替换原则
+  - 一种面向对象的设计原则，即如果我们调用一个父类的方法可以成功，那么替换成子类调用也应该完全可以运行。
+  - 其严格的表述为：如果对每一个`类型S`的对象o1，都有`类型T`的对象o2，使得以T定义的所有程序P在所有的对象o1代换o2时，程序P的行为没有变化，那么`类型S`是`类型T`的子类型。
+  - 所有基类出现的地方，都可以使用子类进行替换，子类可以扩展父类的功能，但不能改变父类原有的功能。
+  - 也就是说基类对象出现的地方，子类对象一定可以出现，但反过来则不行。
+  - 比如我喜欢车子，那么意味着我喜欢自行车，但反过来就不一定，因为我喜欢自行车并不代表就喜欢所有的车子。
+
+
+- Interface Segregation Principle 接口隔离原则
+  - （1）客户需要什么样的接口，就提供什么样的接口，不需要的就删除掉；
+  - （2）类之间的依赖关系应建立在最小的接口上。也就是说，接口中的方法要尽量的少，接口功能要尽量的细分。
+
+
+
+- Dependence Inversion Principle 依赖倒置原则
+  - 依赖于抽象，不要依赖于实现。
+  - 高层模块不依赖于底层模块，二者都依赖其抽象；
+  - 抽象不依赖于细节，细节应该依赖抽象。
+  - Abstractions should not depend upon details. Details should depend uponabstractions.
+  - 要针对接口编程，不要针对实现编程。（Program to an interface, not an implementation.）
+    - 应当**使用接口和抽象类**进行变量的`类型声明、参数类型声明、方法返还类型说明，以及数据类型的转换`等。
+    - 而**不要用具体类**进行变量的`类型声明、参数类型声明、方法返还类型说明，以及数据类型的转换`等。
+    - 要保证做到这一点，一个具体类应当只实现接口和抽象类中声明过的方法，而不要给出多余的方法。
+  - 传统的过程性系统的设计办法倾向于使高层次的模块依赖于低层次的模块，抽象层次依赖于具体层次。倒转原则就是把这个错误的依赖关系倒转过来。
+    - 面向对象设计的重要原则是创建抽象化，并且从抽象化导出具体化，具体化给出不同的实现。
+    - 继承关系就是一种从抽象化到具体化的导出。
+    - 抽象层包含的应该是应用系统的商务逻辑和宏观的、对整个系统来说重要的战略性决定，是必然性的体现。
+    - 具体层次含有的是一些次要的与实现有关的算法和逻辑，以及战术性的决定，带有相当大的偶然性选择。
+    - 具体层次的代码是经常变动的，不能避免出现错误。
+  - 从复用的角度来说，高层次的模块是应当复用的，而且是复用的重点，因为它含有一个应用系统最重要的宏观商务逻辑，是较为稳定的。而在传统的过程性设计中，复用则侧重于具体层次模块的复用。
+  - 依赖倒转原则则是对传统的过程性设计方法的“倒转”，是高层次模块复用及其可维护性的有效规范。
+  - 特例：对象的创建过程是违背“开—闭”原则以及依赖倒转原则的，但通过工厂模式，能很好地解决对象创建过程中的依赖倒转问题。
+
+
+- Demeter Principle 迪米特法则 最少知识原则
+  - 一个类对自己所依赖的类知道的越少越好，对于被依赖的类，不论其实现逻辑如何，都将这些逻辑封装在自己的范围内，对外通过public(protected可以通过子类访问)方法进行提供服务，否则不对外泄露任何信息，这也体现了数据保密性。
+
+
+- Composite Reuse Principle 组合/聚合复用原则
+  - 尽量使用对象的组合/聚合，而不是继承来达到复用的目的。
+  - 组合和聚合都是对象建模中关联关系的一种。
+    - **聚合**表示整体与部分的关系，表示“含有”，
+      - **整体由部分组合而成**，
+      - 部分可以脱离整体作为一个独立的个体存在。
+    - **组合**则是一种更强的聚合
+      - 部分组成整体，而且不可分割，
+      - 部分不能脱离整体而单独存在。
+    - 在合成关系中，部分和整体的生命周期一样，组合的新的对象完全支配其组成部分，包括他们的创建和销毁。
+    - 一个合成关系中成分对象是不能与另外一个合成关系共享。
+    - 组合/聚合和继承是实现代码复用的两种基本途径，在设计过程中`尽量使用组合/聚合，而不是继承`。
+    - 因为继承使得基类与子类有较强的耦合性，通常情况下基类的内部细节对子类来说是可见的，这样基类的实现细节会暴露给子类，破坏了系统的封装性。
+
+
+Overall
+- **开闭原则**是所有面向对象原则的核心；
+- **里式替换原则**是实现开闭原则的重要方式之一；
+- **依赖倒置原则**是系统抽象化的具体实现，其是面向对象设计的主要实现机制之一；
+- **接口隔离原则**要求接口的方法尽量少，接口尽量细化；
+- **迪米特法则**降低系统的耦合度，其使得一个模块的修改尽量少的影响其他模块，扩展会相对容易；
+- **组合/聚合复用原则** 在软件设计中，尽量使用组合/聚合而不是继承达到代码复用的目的。
+
+
+
+
+
+---
 
 ### 创建型
 
-一个类的创建型模式 使用继承 改变被实例化的类，而一个对象的创建型模式将实例化委托给另外一个对象。
+- 这些设计模式提供了一种在创建对象的同时`隐藏创建逻辑`的方式，而不是使用 new 运算符直接实例化对象。
+- 这使得程序在判断针对某个给定实例需要创建哪些对象时更加灵活。
+
+一个类的创建型模式 使用继承 改变被实例化的类
+一个对象的创建型模式将实例化委托给另外一个对象。
 
 在这些模式中有两种不断出现的主旋律：
 * 将该系统使用哪些具体的类封装起来
@@ -1846,6 +1951,14 @@ public class ShoppingCart<T extends Sellable> {
 总而言之，效果就是用户创建对象的结果是得到一个`基类指针`，
 - 用户通过基类指针调用继承类的方法。
 - 用户不需要知道在使用哪些继承类。
+
+
+includ:
+- 工厂模式（Factory Pattern）
+- 抽象工厂模式（Abstract Factory Pattern）
+- 单例模式（Singleton Pattern）
+- 建造者模式（Builder Pattern）
+- 原型模式（Prototype Pattern）
 
 
 ---
@@ -2007,6 +2120,28 @@ class ImageReaderFactory {
 - 行为模式不仅描述对象或者类的功能行为，还描述它们之间的通信模式。
 - 这些模式刻画了在运行时难以追踪的控制流，它们将你的注意从控制流转移到对象之间的联系上来。
 
+这些设计模式特别关注对象之间的通信。
+
+
+include:
+- 责任链模式（Chain of Responsibility Pattern）
+- 命令模式（Command Pattern）
+- 解释器模式（Interpreter Pattern）
+- 迭代器模式（Iterator Pattern）
+- 中介者模式（Mediator Pattern）
+- 备忘录模式（Memento Pattern）
+- 观察者模式（Observer Pattern）
+- 状态模式（State Pattern）
+- 空对象模式（Null Object Pattern）
+- 策略模式（Strategy Pattern）
+- 模板模式（Template Pattern）
+- 访问者模式（Visitor Pattern）
+
+
+
+---
+
+
 #### 观察者模式 observer
 
 意图：观察者模式(observer)定义对象之间的依赖关系，当一个对象“状态发生改变的话，所有依赖这个对象的对象都会被通知并且进行更新。
@@ -2086,7 +2221,28 @@ class ImageReaderFactory {
 - 但是B希望A同样实现一个Bar()接口，事实上Foo()基本实现了Bar()接口功能。
 - Adapter模式就是设计一个新类C，C提供Bar()接口，但实现的方式是内部调用 A的Foo()。
 
-在实现层面上可以通过继承和组合两种方式达到目的：C可以继承A，或者C把A作为自己的成员变量。两者孰优孰劣需要视情况而定。
+在实现层面上可以通过继承和组合两种方式达到目的：
+- C可以继承A，
+- 或者C把A作为自己的成员变量。
+- 两者孰优孰劣需要视情况而定
+
+
+这些设计模式关注**类和对象的组合**
+- 继承的概念被用来组合接口和定义组合对象获得新功能的方式。
+
+
+included:
+- 适配器模式（Adapter Pattern）
+- 桥接模式（Bridge Pattern）
+- 过滤器模式（Filter、Criteria Pattern）
+- 组合模式（Composite Pattern）
+- 装饰器模式（Decorator Pattern）
+- 外观模式（Facade Pattern）
+- 享元模式（Flyweight Pattern）
+- 代理模式（Proxy Pattern）
+
+
+
 
 
 ---
@@ -2113,9 +2269,11 @@ class ImageReaderFactory {
 
 ---
 
-#### Composite
+#### Composite 组合模式
 
 define a `single object` that is composed of `two or more other objects`.
+
+defining an Item class that paired each element with its associated count in our primary data structure.
 
 
 意图：将对象组合成为树形以表示层级结构，对于叶子和非叶子节点对象使用需要有一致性。
@@ -2125,6 +2283,90 @@ Composite模式强调在这种层级结构下，
 - 然后对于叶子节点操作没有特殊之处，
 - 而对于非叶子节点操作不仅仅需要操作自身，还要操作所管理的子节点。
 - 至于遍历子节点和处理顺序是由应用决定的，在Composite模式里面并不做具体规定。
+
+
+当你发现需求中是体现部分与整体层次的结构时，以及你希望用户可以忽略组合对象与单个对象的不同，统一地使用组合结构中的所有对象时，就应该考虑使用组合模式了。
+
+
+
+
+实现:
+
+![Screen Shot 2022-03-31 at 09.54.11](https://i.imgur.com/AzreHni.png)
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Employee {
+   private String name;
+   private String dept;
+   private int salary;
+   private List<Employee> subordinates;
+
+   //构造函数
+   public Employee(String name,String dept, int sal) {
+      this.name = name;
+      this.dept = dept;
+      this.salary = sal;
+      subordinates = new ArrayList<Employee>();
+   }
+
+   public void add(Employee e) {subordinates.add(e);}
+
+   public void remove(Employee e) {subordinates.remove(e);}
+
+   public List<Employee> getSubordinates(){return subordinates;}
+
+   public String toString(){
+      return ("Employee:[Name : "+ name +", dept : "+ dept + ", salary :" + salary+" ]");
+   }   
+}
+
+public class CompositePatternDemo {
+   public static void main(String[] args) {
+      Employee CEO = new Employee("John","CEO", 30000);
+      Employee headSales = new Employee("Robert","Head Sales", 20000);
+      Employee headMarketing = new Employee("Michel","Head Marketing", 20000);
+      Employee clerk1 = new Employee("Laura","Marketing", 10000);
+      Employee clerk2 = new Employee("Bob","Marketing", 10000);
+      Employee salesExecutive1 = new Employee("Richard","Sales", 10000);
+      Employee salesExecutive2 = new Employee("Rob","Sales", 10000);
+
+      CEO.add(headSales);
+      CEO.add(headMarketing);
+
+      headSales.add(salesExecutive1);
+      headSales.add(salesExecutive2);
+
+      headMarketing.add(clerk1);
+      headMarketing.add(clerk2);
+
+      //打印该组织的所有员工
+      System.out.println(CEO);
+      for (Employee headEmployee : CEO.getSubordinates()) {
+         System.out.println(headEmployee);
+         for (Employee employee : headEmployee.getSubordinates()) {
+            System.out.println(employee);
+         }
+      }        
+   }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ---
 
@@ -2171,6 +2413,26 @@ Adapter,Decorator以及Proxy之间比较相近，虽然说意图上差别很大�
 - Position
 - Comparator
 - Locator
+
+
+---
+
+
+### J2EE 模式
+
+这些设计模式特别关注表示层。这些模式是由 Sun Java Center 鉴定的。
+
+
+
+include:
+- MVC 模式（MVC Pattern）
+- 业务代表模式（Business Delegate Pattern）
+- 组合实体模式（Composite Entity Pattern）
+- 数据访问对象模式（Data Access Object Pattern）
+- 前端控制器模式（Front Controller Pattern）
+- 拦截过滤器模式（Intercepting Filter Pattern）
+- 服务定位器模式（Service Locator Pattern）
+- 传输对象模式（Transfer Object Pattern）
 
 
 ---
