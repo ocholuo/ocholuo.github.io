@@ -1,4 +1,4 @@
-package labuladongjava.PriorityQueue;
+package pq;
 
 public interface Position<E> {
     // Returns the element stored at this position

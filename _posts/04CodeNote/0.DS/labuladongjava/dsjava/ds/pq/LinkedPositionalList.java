@@ -1,4 +1,4 @@
-package labuladongjava.PriorityQueue;
+package pq;
 
 public class LinkedPositionalList<E> implements PositionalList<E> {
     

@@ -1,4 +1,4 @@
-package labuladongjava.PriorityQueue;
+package pg;
 
 public interface PositionalList<E> { 
     // /∗∗ Returns the number of elements in the list. ∗/ 
