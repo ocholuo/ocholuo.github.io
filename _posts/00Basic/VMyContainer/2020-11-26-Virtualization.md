@@ -1,13 +1,32 @@
 ---
 title: Virtualization
 date: 2020-11-26 11:11:11 -0400
-categories: [19VMs, VMs]
+categories: [00Basic, VMyContainer, VMs]
 tags: [Linux, VMs]
 math: true
 image:
 ---
 
-[toc]
+- [Virtualization](#virtualization)
+  - [traditional way](#traditional-way)
+  - [Virtualization](#virtualization-1)
+  - [Virtualization component](#virtualization-component)
+  - [Comparing Hypervisors](#comparing-hypervisors)
+  - [Type of Virtualization](#type-of-virtualization)
+    - [full virtualization scenario](#full-virtualization-scenario)
+    - [paravirtualization.](#paravirtualization)
+  - [QEMU](#qemu)
+  - [KVM `Kernel-based Virtual Machine`](#kvm-kernel-based-virtual-machine)
+  - [QEMU and KVM](#qemu-and-kvm)
+  - [QEMU example](#qemu-example)
+  - [Libvirt example](#libvirt-example)
+  - [virsh example](#virsh-example)
+  - [virsh example](#virsh-example-1)
+  - [change vm configure](#change-vm-configure)
+  - [snapshot and clone](#snapshot-and-clone)
+  - [autostart](#autostart)
+  - [vm migration](#vm-migration)
+  - [container](#container)
 
 ---
 

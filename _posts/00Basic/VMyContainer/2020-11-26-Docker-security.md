@@ -1,7 +1,7 @@
 ---
 title: Virtulization - Docker security
 date: 2020-11-26 11:11:11 -0400
-categories: [19VMs, Containers]
+categories: [00Basic, VMyContainer, Containers]
 tags: [Linux, VMs, Docker]
 math: true
 image:

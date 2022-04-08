@@ -1,13 +1,16 @@
 ---
 title: containers vs virtual machines (VM’s)
 date: 2020-11-26 11:11:11 -0400
-categories: [19VMs]
+categories: [VMyContainer]
 tags: [Linux, VMs]
 math: true
 image:
 ---
 
-[toc]
+- [containers vs virtual machines (VM’s)](#containers-vs-virtual-machines-vms)
+  - [Application Cell / Container Virtualization](#application-cell--container-virtualization)
+  - [containers vs virtual machines (VM’s)](#containers-vs-virtual-machines-vms-1)
+  - [Containers 101](#containers-101)
 
 ---
 

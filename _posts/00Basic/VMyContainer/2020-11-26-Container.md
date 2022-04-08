@@ -1,13 +1,27 @@
 ---
 title: Virtualization - Container
 date: 2020-11-26 11:11:11 -0400
-categories: [19VMs, Containers]
+categories: [00Basic, VMyContainer, Containers]
 tags: [Linux, VMs]
 math: true
 image:
 ---
 
-[toc]
+- [Virtualization - Container](#virtualization---container)
+  - [basic](#basic)
+  - [traditional](#traditional)
+  - [virtualization](#virtualization)
+  - [containers](#containers)
+    - [virtualmachine (VM)-based vs container-based deployment.](#virtualmachine-vm-based-vs-container-based-deployment)
+  - [Container](#container)
+    - [build and run containers](#build-and-run-containers)
+  - [containers component](#containers-component)
+  - [container image](#container-image)
+  - [Docker file](#docker-file)
+  - [Container Registry](#container-registry)
+  - [software for container](#software-for-container)
+  - [Best Practices for Securing AWS ECS](#best-practices-for-securing-aws-ecs)
+  - [Incident Readiness for Containers](#incident-readiness-for-containers)
 
 ---
 
@@ -345,10 +359,70 @@ software to build Container images and to run them.
      - roll out new versions of them, and even roll back to the old version if things go wrong.
 
 
+---
 
 
 
+## Best Practices for Securing AWS ECS
 
+1. Understand the AWS Shared Responsibility Model
+2. Enforce a Zero-Trust Identity and Access Management (IAM) Policy
+3. Ensure End-to-End Encryption for Secure Network Channels
+4. Inject Secrets into Containers in Runtime
+   1. Follow a zero-trust security policy in managing the Secrets definition parameters for AWS containers. 
+   2. Secrets include login credentials, certificates and API keys used by applications and services to access other system components. 
+   3. For example, use AWS Secrets manager for secure storage of Secrets credentials instead of baking them into the container.
+5. Regulatory Compliance as the Bare Minimum not target Security
+   1. Follow the guidelines of the applicable security regulations in your country and industry, but treat them as a bare minimum and not an end-goal of your ECS security plan. 
+   2. AWS helps deploy compliance-focused baseline environments especially focused on the following guidelines across most of the popular regulations such as HIPAA, PCI-DSS and GDPR, among others (some already mentioned) including understanding the shared responsibility model, enforcing strong IAM policy controls, leveraging the built-in tools / visibility provided by the cloud service provider and having the processes and technology in place to investigate and respond to incidents that may impact your ECS workloads.
+6. Gather the Right Data
+   1. Configure your container environments to communicate relevant security data and log data to the built-in AWS monitoring tools such as CloudWatch and CloudTrail. 
+   2. These tools can be used to collect data insights at the hardware, service, and cluster level.  
+
+7. Best Practices for AWS Fargate:
+   1. a serverless service that provides the option of fully managed and abstracted infrastructure for containerized applications managed using AWS ECS. The AWS Fargate service performs tasks such as provisioning, management, and security of the underlying container infrastructure while users simply specify the resource requirements for their containers.
+   2. The fully managed nature of Fargate is fantastic to reduce time and money spent worrying about failing drives or configuring operating systems, but this lack of infrastructure management comes with an equal lack of access. And this lack of access can add frustrations when it comes to security. Since AWS Fargate is a managed service, it offers no visibility and control into the underlying infrastructure. Due to this, it’s important that you leverage a third-party solution to allow for data collection from running containers should you need to investigate one.
+
+
+8. Construct Secure Container Images
+   1. Container images consist of multiple layers, each defining the configurations, dependencies and libraries required to run a containerized application. 
+   2. Security of container images should be seen as your first line of defense against cyberattacks or infringements facing your containerized applications. Constructing secure container images is critical to enforce container bounds and prevent adversaries from accessing the Host OS and Kernel. 
+   3. A few ECS container image security best practices that should be considered include 
+      1. using minimal or distroless images, 
+      2. image scanning for vulnerabilities, 
+      3. and avoiding running containers as privileged.
+
+
+## Incident Readiness for Containers
+- When investigating an environment which utilizes containers, data collection needs to happen quickly before automatic cluster scaling destroys valuable evidence.
+- Additionally, you may have thousands of containers so the collection, processing, and enrichment of container data needs to be automated. Some of the key things to consider are:
+
+
+1. Automated Data Collection
+   1. Cloud scaling allows you to scale your investigation resources too, not just your applications. Collect and process container data in parallel triggered by an analyst or other detection or orchestration tool (e.g., SOAR) to get valuable information to analysts more quickly and reduce your time to incident containment and resolution. 
+   
+2. Level of Visibility
+   1. While the visibility provided by built-in CSP tools (e.g. AWS CloudWatch and CloudTrail) is important, these data sources alone are not sufficient to perform an in-depth investigation. 
+   2. Leveraging third-party incident and threat intelligence capabilities prove vital to gain a deeper level of visibility across container assets. 
+   3. In this context, the useful data to include as part of your investigation are 
+      1. the system logs and files from within the container, 
+      2. the containers running processes and active network connections, 
+      3. the container host system and container runtime logs (if accessible), 
+      4. the container host memory (if accessible) and the AWS VPC flow logs for the VPC the container is attached to. 
+   4. If data collection wasn't baked into the container declaration before the need to investigate arose, you need to rely on data you can actively interrogate out of the container. Or if you’re using ECS on Fargate, taking an image of the running container or the container host isn’t an option as the underlying AWS infrastructure is shared with no access to the end customers. 
+   5. In this case, the /proc directory gives us a snapshot of the volatile state of the container, much like a memory dump. Using this ‘snapshot’ we can build a basic picture of what is going on in the container at that time, such as running processes, active network connections, open files etc. This data provides a foundation of what you need to correlate with other data sources such as firewall logs, network subnet flows etc during an investigation to understand the actions carried out by an attacker. 
+
+
+3. Container Asset Discovery
+   1. Since containers operate as virtualized environments within a shared host kernel OS, it’s often challenging to keep track of `asset workloads` running across all containerized machines in a scaled environment. 
+   2. An agentless discovery process that can efficiently discover and track container assets can be used to enforce appropriate security protocols across all container apps.
+
+
+4. Dedicated Investigation Tools and Environment
+   1. Have a dedicated toolset or environment which automates as much of the investigative process as possible in place ahead of time so that you are ready to respond at a moment's notice.
+
+5. Ability to Quickly Isolate
+   1. In the event a container is compromised, it’s critical that you have the ability to quickly isolate it in order to stop the active attack and prevent further spread and damage. In some cases, isolation can be a good first step to take following initial detection. This will allow you to perform a more thorough investigation in the background and ensure proper remediation and containment steps are taken after you have a better understanding of the true scope and impact of the incident.
 
 
 
