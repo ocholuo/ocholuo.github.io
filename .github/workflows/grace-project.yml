@@ -1,0 +1,41 @@
+name: 'Grace project'
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - .gitignore
+      - README.md
+      - LICENSE
+  schedule:
+    - cron: '0 21 * * *'
+
+jobs:
+
+  run_project_1:
+    name: project webscrap_apt
+    # runs-on: macOS-latest
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print a greeting
+        env:
+          MY_VAR: Hi there! My name is
+          PROJECT_NAME: webscrap_apt
+        run: |
+          echo $MY_VAR $PROJECT_NAME.
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # for posts's lastmod
+
+      # - name: Setup Ruby
+      #   uses: ruby/setup-ruby@v1
+      #   with:
+      #     ruby-version: 2.7
+      #     bundler-cache: true
+
+      - name: run apt project
+        # run: bash ./wh.sh \
+        run: python ./_posts/00CodeNote/project/webscrap_apt/play.py -t all

@@ -23,6 +23,8 @@ APT_DIC = {
     "talisman": "https://www.livetalisman.com/redmond/talisman/conventional/",
 }
 
+OUTPUTDIR = "./_posts/00CodeNote/project/webscrap_apt/apt_output"
+
 
 class _DeHTMLParser(HTMLParser):
     def __init__(self):
@@ -275,7 +277,7 @@ def create_csv(dic_list):
         "Limited_Time_Offer",
         "Available",
     ]
-    with open(f"./apt_output/{file_name}", "w") as f:
+    with open(f"{OUTPUTDIR}/{file_name}", "w") as f:
         LOGGER.info("======= created file %s =======" % file_name)
         # create the csv writer
         writer = csv.writer(f)
