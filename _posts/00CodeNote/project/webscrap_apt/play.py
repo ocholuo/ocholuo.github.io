@@ -19,14 +19,8 @@ LOGGER = logging.getLogger(__name__)
 # Retrieve log level from Lambda Environment Variables
 LOGGER.setLevel(level=os.environ.get("LOG_LEVEL", "INFO").upper())
 
-APT_DIC = {
-    "talisman": "https://www.livetalisman.com/redmond/talisman/conventional/",
-}
-
-OUTPUTDIR = "./_posts/00CodeNote/project/webscrap_apt/apt_output"
-
-
-class _DeHTMLParser(HTMLParser):
+# APT Object
+class _DeHTMLParser_General(HTMLParser):
     def __init__(self):
         HTMLParser.__init__(self)
         self.__text = []
@@ -49,33 +43,15 @@ class _DeHTMLParser(HTMLParser):
             "small-abbr",
         ]
 
-        target_attrs = [
+        target_attrs_div = [
             "fp-col-title",  # for Beds / Baths
             "fp-col-text",  # for Beds / Baths info
+        ]
+        target_attrs_a = [
             # "small-text",
             "primary-action",
             "secondary-action",
         ]
-
-        # target_attrs = [
-        #     "fp-col bed-bath",  # for Beds / Baths
-        #     "fp-col rent",
-        #     "fp-col deposit",
-        #     "fp-col sq-feet",
-        #     "fp-col special",
-        #     "fp-col action",
-        #     "fp-col-title",  # for Beds / Baths
-        #     "fp-col-text",   # for Beds / Baths info
-        # ]
-
-        # if tag == "meta":
-        #     for attrs_name, attrs_value in attrs:
-        #         if attrs_name == "content":
-        #             info = attrs_value
-        #         if attrs_name == "numberOfBedrooms":
-        #             self.__text.append(info)
-        #         if attrs_name == "numberOfBathroomsTotal":
-        #             self.__text.append(":").append(info).append(";")
 
         if tag == "h3":
             for attrs_name, attrs_value in attrs:
@@ -98,7 +74,7 @@ class _DeHTMLParser(HTMLParser):
 
         if tag == "span":
             for attrs_name, attrs_value in attrs:
-                if attrs_name == "class" and attrs_value in target_attrs:
+                if attrs_name == "class" and attrs_value in target_attrs_div:
                     # and attrs_value not in avoid_attrs:
                     # for Beds / Baths
                     # for Beds / Baths info
@@ -106,7 +82,14 @@ class _DeHTMLParser(HTMLParser):
 
         if tag == "div":
             for attrs_name, attrs_value in attrs:
-                if attrs_name == "class" and attrs_value in target_attrs:
+                if attrs_name == "class" and attrs_value in target_attrs_div:
+                    self.__text.append(";")
+                if attrs_name == "class" and attrs_value == "page-description":
+                    self.__text.append("\n")
+
+        if tag == "a":
+            for attrs_name, attrs_value in attrs:
+                if attrs_name == "class" and attrs_value in target_attrs_a:
                     self.__text.append(";")
 
         if tag == "p":
@@ -127,51 +110,19 @@ class _DeHTMLParser(HTMLParser):
             text = sub("[ \t\r\n]+", " ", text)
             self.__text.append(text + " ")
 
-    # #重写handle_data方法
-    # def handle_data(self, data):
 
-    #     text = data.strip()
-    #     if len(text) > 0:
-    #         text = sub('/[ \t\r\n]+', ' ', text)
-    #         # text = sub('^[^b\r\n]*b.*[\r\n]*', ' ', text)
-    #         self.__text.append(text + ' ')
-    #         # print(self.__text)
+OUTPUTDIR = "./_posts/00CodeNote/project/webscrap_apt/apt_output"
 
-    #     data = data.strip()
-    #     # if len(data) > 0:
-    #     # data = sub('/[ \t\r\n]+', ' ', data)
-    #         # text = sub('^[^b\r\n]*b.*[\r\n]*', ' ', text)
-    #         # self.__text.append(text + ' ')
-    #         # print(self.__text)
-    #     if len(data) > 0:
+URL_DIC = {
+    "talisman": "https://www.livetalisman.com/redmond/talisman/conventional/",
+    "modera": "https://www.moderaredmond.com/redmond/modera-redmond/conventional/",
+}
+CLASS_DIC = {
+    "talisman": _DeHTMLParser_General(),
+    "modera": _DeHTMLParser_General(),
+}
 
-    #         # if data != '':
-    #         #     print("Data     :" + data)
-    #         # if data.__contains__("/month"):
-    #         #     print("Data     :" + data)
-    #         # # if self.lasttag == 'span' and data.__contains__("/month"):
-    #         #     print("Data     :" + data)
-    #         # if self.lasttag == 'span' and data not in self.em_line:
-    #         if self.lasttag == 'span':
-    #            print("Data     :" + data)
-    #            # print(len(data))
-    #         # elif self.lasttag == 'h4' and data != "":
-    #         #     print("Data     :" + data)
-    #         #     # print data
-
-
-def dehtml_talisman(text):
-    try:
-        parser = _DeHTMLParser()
-        parser.feed(text)
-        parser.close()
-        # parser.print_reslut()
-        return parser.text()
-    except:
-        print_exc(file=stderr)
-        return text
-
-
+# Method_div
 def get_html(url):
     text = r"""
         <html>
@@ -194,12 +145,24 @@ def get_html(url):
     )
     code = r.status_code
     if code == 200:
-        LOGGER.info("======= get info from %s =======" % url)
+        LOGGER.info("======= Load info from %s =======" % url)
         html_text = r.text
     else:
         LOGGER.info("======= Error: can not get info from %s =======" % url)
         # os.Exit(1)
     return html_text
+
+
+def dehtml(target_apt, text):
+    try:
+        parser = CLASS_DIC[target_apt]
+        parser.feed(text)
+        parser.close()
+        # parser.print_reslut()
+        return parser.text()
+    except:
+        print_exc(file=stderr)
+        return text
 
 
 def output(text):
@@ -209,27 +172,23 @@ def output(text):
     for line in lines:
         # print(line)
         if "🟢:" in line:
+            line = (
+                line.replace(" ;", ";")
+                .replace(". ", ".")
+                .replace(" / ", "/")
+                .replace(" +", "+")
+            )
             # print(line)
             LOGGER.info(line)
             output.append(line)
     return output
 
 
-def create_dic(apt, text):
+def create_dic(apt, text, output_list):
     lines = text.split("\n")
-    output = []
+    # output = []
     for line in lines:
         if "🟢:" in line:
-            info = line
-            info = info.replace("🟢:", "")
-            info = info.replace(" ;Beds / Baths ;", ";")
-            info = info.replace(" ;Rent ;", ";")
-            info = info.replace(" ;Deposit ;", ";")
-            info = info.replace(" ;Sq. Ft ;", ";")
-            info = info.replace(" ;Limited Time Offer: Valid Through : ", ";")
-            info = info.replace("! ", ";")
-            # LOGGER.info(info)
-            info = info.split(";")
             # LOGGER.info(info)
             # [
             #     '🟢:Urban with Kitchen Bar',
@@ -240,22 +199,42 @@ def create_dic(apt, text):
             #     'Oct 27, 2022 - Jan 31, 2023 8 Weeks Free on Select Homes and Move-In Dates',
             #     '4 Available Details '
             # ]
+            info = (
+                line.replace(" ;", ";")
+                .replace(". ", ".")
+                .replace(" / ", "/")
+                .replace(" +", "+")
+            )
+            LOGGER.info(info)
+
+            info = info.replace("🟢:", "")
+            info_list = info.split(";")
+
             dic = {}
             dic["Apt"] = apt
-            dic["Floor_plan"] = info[0]
-            dic["Beds_Baths"] = info[1]
-            dic["Rent"] = info[2]
-            dic["Deposit"] = info[3]
-            dic["Sq_Ft"] = info[4]
-            dic["Limited_Time_Offer"] = info[5]
-            dic["Available"] = info[6]
-            output.append(dic)
-    # for i in output:
+            dic["Floor_plan"] = info_list[0]
+            if "Beds/Baths" in info:
+                dic["Beds/Baths"] = info_list[2]
+            if "Rent" in info:
+                dic["Rent"] = info_list[4]
+            if "Deposit" in info:
+                dic["Deposit"] = info_list[6]
+            if "Sq.Ft" in info:
+                dic["Sq.Ft"] = info_list[8]
+
+            if "Limited Time Offer" in info:
+                dic["Limited_Time_Offer"] = info_list[9]
+                dic["Available"] = info_list[10]
+            else:
+                dic["Limited_Time_Offer"] = "/"
+                dic["Available"] = info_list[9]
+            output_list.append(dic)
+    # for i in output_list:
     #     print(i)
-    return output
+    return output_list
 
 
-def create_csv(dic_list):
+def create_csv(all_dic_list):
     """
     Create the csv snapshot from APTSCRAPPER
     :param dic: info from the date
@@ -265,26 +244,26 @@ def create_csv(dic_list):
     target_date = date.today().strftime("%Y/%m/%d")  # "2022/06/01"
     filedate = target_date.replace("/", "")
     file_name = f"apt_{filedate}.csv"
-    LOGGER.info("======= creating file %s =======" % file_name)
+    LOGGER.info("\n======= creating file: %s =======" % file_name)
 
     header = [
         "Apt",
         "Floor_plan",
-        "Beds_Baths",
+        "Beds/Baths",
         "Rent",
         "Deposit",
-        "Sq_Ft",
+        "Sq.Ft",
         "Limited_Time_Offer",
         "Available",
     ]
     with open(f"{OUTPUTDIR}/{file_name}", "w") as f:
-        LOGGER.info("======= created file %s =======" % file_name)
+        LOGGER.info("======= filing file: %s =======" % file_name)
         # create the csv writer
         writer = csv.writer(f)
         # write a header to the csv file
         writer.writerow(header)
         # write a row to the csv file
-        for input_dic in dic_list:
+        for input_dic in all_dic_list:
             LOGGER.info(input_dic)
             # print(type(input_dic))
             # for info in input_dic.values():
@@ -292,26 +271,28 @@ def create_csv(dic_list):
     LOGGER.info("======= info loaded in the file %s =======\n" % file_name)
 
 
-def run(target_apt):
-
-    target_url = APT_DIC[target_apt]
-
-    if target_apt == "talisman":
-        html_text = get_html(target_url)
-        text = dehtml_talisman(html_text)
-        output(text)
-        dic_list = create_dic(target_apt, text)
-        print(type(dic_list))
-        create_csv(dic_list)
-
+def run(apt, all_dic_list):
+    if apt in URL_DIC.keys():
+        html_text = get_html(URL_DIC[apt])
+        # print(html_text)
+        text = dehtml(apt, html_text)
+        # output(text)
+        all_dic_list = create_dic(apt, text, all_dic_list)
+        # print(type(all_dic_list))
+        LOGGER.info("======= Got info for Apartment: %s =======\n", apt)
+        return all_dic_list
     else:
-        LOGGER.info("======= Error: invalid target: %s =======", target_apt)
+        LOGGER.info("======= Error: invalid target: %s =======", apt)
+        return []
 
 
-def main(target_Apts):
-    for apt in target_Apts.keys():
+def main(apt):
+    all_dic_list = []
+    for apt in URL_DIC.keys():
         LOGGER.info("======= Target Apartment: %s =======", apt)
-        run(apt)
+        all_dic_list = run(apt, all_dic_list)
+    # print(type(all_dic_list))
+    create_csv(all_dic_list)
 
 
 if __name__ == "__main__":
@@ -334,7 +315,7 @@ if __name__ == "__main__":
     LOGGER.info("======= Apt_scrapper loaded at %s" % timestamp)
 
     if target == "all":
-        target_Apts = APT_DIC
+        target_Apts = URL_DIC
         LOGGER.info(
             "============ Apt_scrapper run for url: %s ============\n" % target_Apts
         )

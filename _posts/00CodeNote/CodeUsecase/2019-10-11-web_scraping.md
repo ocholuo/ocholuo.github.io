@@ -1,13 +1,13 @@
 ---
-title: Python web scraping
+title: Web scraping
 date: 2019-10-11 11:11:11 -0400
 description:
-categories: [00CodeNote, project]
+categories: [00CodeNote, CodeUsecase]
 img: /assets/img/sample/rabbit.png
 tags: [Python, webscrap]
 ---
 
-- [Python web scraping](#python-web-scraping)
+- [Web scraping](#web-scraping)
   - [Code](#code)
   - [test](#test)
     - [HTMLParser 解析 html](#htmlparser-解析-html)
@@ -16,7 +16,7 @@ tags: [Python, webscrap]
 ---
 
 
-# Python web scraping
+# Web scraping
 
 ---
 

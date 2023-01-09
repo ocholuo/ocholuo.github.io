@@ -1,12 +1,12 @@
 name: 'Grace project'
 on:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - .gitignore
-      - README.md
-      - LICENSE
+  # push:
+  #   branches:
+  #     - master
+  #   paths-ignore:
+  #     - .gitignore
+  #     - README.md
+  #     - LICENSE
   schedule:
     - cron: '0 21 * * *'
 
