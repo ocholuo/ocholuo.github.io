@@ -9,6 +9,9 @@ toc: true
 
 - [Course - Learning Path](#course---learning-path)
   - [Cloud](#cloud)
+    - [GCP](#gcp)
+    - [AWS](#aws)
+    - [ALI](#ali)
   - [Security Project/LAB](#security-projectlab)
   - [Security](#security)
   - [Programmnig and Computer Science](#programmnig-and-computer-science)
@@ -51,7 +54,7 @@ sleepy....
 
 ## Cloud
 
-
+### GCP
 
 | GCP Certificate                                                                                                                                                                            | Mark |
 | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--- |
@@ -94,7 +97,7 @@ sleepy....
 | Optimize Costs for Google Kubernetes Engine                                                   | _None_                                                                                      |
 
 
-
+### AWS
 
 | **AWS Certificate**                                                                                                                                                                                        | Mark   |
 | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----- |
@@ -121,6 +124,7 @@ sleepy....
 | [AWSacademy-ExamReadiness:AWS Certified Alexa Skill Builder-Specialty](https://kiku.aws.training/Details/eLearning?id=34489)                                                                               | ✏️      |
 
 
+### ALI
 
 | **ALI Certificate**                                                                                                                 | Mark |
 | :---------------------------------------------------------------------------------------------------------------------------------- | :--- |
