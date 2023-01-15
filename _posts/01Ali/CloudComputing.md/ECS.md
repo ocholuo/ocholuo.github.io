@@ -9,6 +9,7 @@ image:
 
 - [ECS - Elastic Compute Service](#ecs---elastic-compute-service)
   - [overall](#overall)
+    - [Billing](#billing)
     - [Architecture](#architecture)
     - [responsibilities](#responsibilities)
     - [The advantage](#the-advantage)
@@ -17,13 +18,14 @@ image:
     - [Regions](#regions)
     - [Zones (datacenters)](#zones-datacenters)
     - [connectivity](#connectivity)
+    - [Instance Failover](#instance-failover)
   - [ECS Instance](#ecs-instance)
     - [ECS Instance Types](#ecs-instance-types)
     - [ECS Images](#ecs-images)
     - [ECS Storage](#ecs-storage)
     - [ECS Snapshots](#ecs-snapshots)
   - [Security Groups](#security-groups)
-  - [ECS Networking.](#ecs-networking)
+  - [ECS Networking](#ecs-networking)
     - [IP address](#ip-address)
 
 ---
@@ -40,7 +42,21 @@ image:
 - used to deploy virtual servers known as Instances.
 - essentially a Virtual Machine that lives on Alibaba's public cloud.
 
+---
 
+### Billing
+- PAYG: pay-as-you-go basis,
+- or upfront subscription
+- Pre-emptible Instance: PAYG instance, with PAYG lower price (Bid-based)
+
+use cause:
+- log
+- no worries of interrept
+
+![Screenshot 2023-01-15 at 12.29.50](https://i.imgur.com/JJqQlna.png)
+
+
+---
 ### Architecture
 
 ECS comprises the following major components:
@@ -231,9 +247,9 @@ connectivity between regions and zones.
 
 ---
 
+### Instance Failover
 
-
-## ECS Instance
+![Screenshot 2023-01-15 at 12.27.32](https://i.imgur.com/6MN1rbc.png)
 
 - SLA:
   - 99.975 percent for a single Virtual Machine
@@ -247,11 +263,12 @@ connectivity between regions and zones.
 
 - These Virtual Machines run as though they were the very own physical machine.
 
-- Billing
-  - pay-as-you-go basis, paying per hthe, or upfront subscription
-
 - ECS instance is a virtual machine that contains basic computing components such as the CPU, memory, operating system, network bandwidth, and disks.
 - Once created, you can customize and modify the configuration of an ECS instance. For example: Add or remove additional Cloud Disks.
+
+---
+
+## ECS Instance
 
 ---
 
@@ -541,7 +558,7 @@ Default Security Group:
 ---
 
 
-## ECS Networking.
+## ECS Networking
 
 Virtual Private Cloud (VPC)
 - a logically isolated Virtual Network. It provides VLAN-level isolation and blocks outer network communications, it is a requirement when provisioning an ECS Instance.
