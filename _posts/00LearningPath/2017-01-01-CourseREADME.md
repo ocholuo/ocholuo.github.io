@@ -122,6 +122,16 @@ sleepy....
 
 
 
+| **ALI Certificate**                                                                                                                 | Mark |
+| :---------------------------------------------------------------------------------------------------------------------------------- | :--- |
+| Certification: `ACP - Alibaba Cloud Professional`                                                                                   | 🐰    |
+| `coursera`                                                                                                                          | ---  |
+| **Alibaba Cloud Computing Specialization**                                                                                          | ✏️    |
+| [Cloud Computing Fundamentals on Alibaba Cloud](https://www.coursera.org/learn/alibaba-cloud-computing?specialization=alibabacloud) | ✏️    |
+| Big Data Analytical Platform on Alibaba Cloud                                                                                       | ✏️    |
+| Protecting Cloud Architecture with Alibaba Cloud                                                                                    | ✏️    |
+
+
 ---
 
 ## Security Project/LAB
