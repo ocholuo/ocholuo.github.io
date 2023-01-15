@@ -21,12 +21,20 @@ image:
     - [Instance Failover](#instance-failover)
   - [ECS Instance](#ecs-instance)
     - [ECS Instance Types](#ecs-instance-types)
-    - [ECS Images](#ecs-images)
     - [ECS Storage](#ecs-storage)
+      - [Block Storage](#block-storage)
+      - [Cloud Disks](#cloud-disks)
     - [ECS Snapshots](#ecs-snapshots)
-  - [Security Groups](#security-groups)
+    - [ECS Image](#ecs-image)
   - [ECS Networking](#ecs-networking)
+    - [VPC](#vpc)
+    - [ECS communication](#ecs-communication)
+    - [Security Groups](#security-groups)
     - [IP address](#ip-address)
+    - [ENI](#eni)
+  - [ECS Setting](#ecs-setting)
+    - [Instance Metadata](#instance-metadata)
+    - [User data](#user-data)
 
 ---
 
@@ -45,9 +53,11 @@ image:
 ---
 
 ### Billing
-- PAYG: pay-as-you-go basis,
-- or upfront subscription
-- Pre-emptible Instance: PAYG instance, with PAYG lower price (Bid-based)
+
+- **PAYG**: pay-as-you-go basis,
+- **subscription**: upfront subscription
+- **Pre-emptible Instance**: PAYG instance, with PAYG lower price (Bid-based)
+- **RI**: Reserved Instance
 
 use cause:
 - log
@@ -55,6 +65,7 @@ use cause:
 
 ![Screenshot 2023-01-15 at 12.29.50](https://i.imgur.com/JJqQlna.png)
 
+![Screenshot 2023-01-15 at 12.31.45](https://i.imgur.com/9Qs95yS.png)
 
 ---
 ### Architecture
@@ -401,12 +412,127 @@ The instance types follow a naming convention which depicts the instance family,
 
 ---
 
+### ECS Storage
 
-### ECS Images
+---
+#### Block Storage
+- a high-performance, low latency block storage service.
+- supports random or sequential read and write operations.
+- Block Storage is similar to a physical disk, you can format a Block Storage device and create a file system on it to meet the data storage needs of the business.
+
+
+---
+
+#### Cloud Disks
+
+- based on the `Apsara` distributed file system called `“Pangu”`.
+- <font color=red> 3 redundant copies </font> are stored on different physical servers under different switches in the datacentre.
+- This provides high data reliability in the case of a failure.
+
+
+![Screenshot 2023-01-15 at 12.33.17](https://i.imgur.com/LpxBzmr.png)
+
+
+**Cloud Disk Type**
+- 3 types of Cloud Disk
+- `Ultra Disk`:
+  - Cloud disks with high cost-effectiveness, medium random IOPS performance, and high data reliability.
+- `Standard SSD`:
+  - High-performance disks that feature consistent and high random IOPS performance and high data reliability.
+- `Enhanced SSD`:
+  - ultra-high performance disks based on the next-generation distributed block storage architecture.
+  - Each ESSD can deliver up to 1 million of random IOPS and has low latency.
+
+
+
+**Cloud Disks Target**
+
+- Cloud Disks can be mounted to any instance in the same zone,
+  - <font color=red> but cannot be mounted to instances across zones </font>.
+
+- ECS Storage provides architecture-based Cloud disks for the operating system disks and data disks.
+
+- <font color=blue> System disk </font>
+  - by default has the same life cycle as the ECS instance to which it is mounted, and is released along with the ECS instance. (This auto release function can be changed.)
+  - <font color=red> Shared access to system disks is not allowed </font>.
+  - System disk sizes can be 20GB and 500GB.
+    - dependent on the operating system being provisioned.
+      - Linux and FreeBSD systems default to 20GB.
+      - CoreOS systems default to 30GB.
+      - Windows systems default to 40GB.
+
+
+- <font color=blue> Data disks </font>
+  - have the same life cycle as the corresponding instance, and are released along with the instance by default. (auto-release function can be changed.)
+  - can be created separately or at the same time as an ECS instance.
+    - created separately can be released separately or at the same time as the corresponding ECS instance.
+  - s<font color=red> hared access to a data disk is not allowed </font>.
+  - sizes can be between 20GB and 32TB
+  - up to `16` Data Disks can be attached to a single ECS Instance.
+
+![Screenshot 2023-01-15 at 12.41.46](https://i.imgur.com/CdPfjYx.png)
+
+PL1: system
+PL3: database
+
+
+---
+
+### ECS Snapshots
+
+- Snapshots are complete, read-only copies of disk data at certain points in time.
+
+
+
+**Usecase**
+
+- **Disaster recovery and backup**:
+  - create a snapshot for a disk, use it to create another disk to implement zone- or geo-disaster recovery.
+
+- **Environment clone**:
+  - use a system disk snapshot to create a custom `image`,
+  - and then use the custom image to create an ECS instance to clone the environment.
+
+- **Data development**:
+  - Snapshots can provide near-real-time production data for applications
+  - such as data mining, report queries, and development and tests.
+
+- **Enhanced fault tolerance**:
+  - roll a disk back to a previous point in time by using a snapshot to reduce the risk of data loss caused by an unexpected occurrence.
+  - create snapshots on a regular basis to prevent losses caused by unexpected occurrences.
+  - These unexpected occurrences can include, for example,
+    - writing incorrect data to disks,
+    - accidentally deleting data from a disk,
+    - accidentally releasing ECS instances,
+    - data errors caused by application errors,
+    - and data loss due to hacking attempts.
+
+- **before high-risk operations**:
+  - such as changing operating systems, upgrading applications, and migrating business data.
+
+
+**snapshot policy**
+- Snapshots can be created `manually` or `automatically` by creating a **snapshot policy**.
+- When the maximum number of snapshots has been reached, the oldest snapshot is deleted as a new one is created.
+- Snapshots are charged based on the storage space used and the amount of time they are kept.
+
+![Screenshot 2023-01-15 at 13.01.19](https://i.imgur.com/vPKpye2.png)
+
+
+**incremental copy**
+- Up to 64 snapshots can be created per disk
+- and each snapshot is an **incremental copy** of the previous snapshot.
+
+![Screenshot 2023-01-15 at 13.02.55](https://i.imgur.com/KvcpQQt.png)
+
+---
+
+
+### ECS Image
 
 Images are a template of a runtime environment for an ECS Instance.
 
-There are 4 main types.
+4 main types.
 
 - `Public System Images`:
   - Public images licensed by Alibaba Cloud are highly secure and stable. These public images include most Windows Server and mainstream Linux systems.
@@ -430,115 +556,88 @@ There are 4 main types.
   - Alibaba Cloud cannot guarantee the security and integrity of the images shared with you. You use them at the own risk and discretion.
 
 
----
+![Screenshot 2023-01-15 at 13.03.43](https://i.imgur.com/s8mQa47.png)
 
+![Screenshot 2023-01-15 at 13.05.29](https://i.imgur.com/fxk6iKC.png)
 
-### ECS Storage
-
-Block Storage
-- a high-performance, low latency block storage service. It supports random or sequential read and write operations. Block Storage is similar to a physical disk, you can format a Block Storage device and create a file system on it to meet the data storage needs of the business.
-
-ECS Storage provides architecture-based Cloud disks for the operating system disks and data disks.
-
-Cloud Disks are based on the `Apsara` distributed file system called `“Pangu”`.
-- Three redundant copies are stored on different physical servers under different switches in the datacentre.
-- This provides high data reliability in the case of a failure.
-
-
-
-3 types of Cloud Disk:
-
-- `Ultra Disk`:
-  - Cloud disks with high cost-effectiveness, medium random IOPS performance, and high data reliability.
-- `Standard SSD`:
-  - High-performance disks that feature consistent and high random IOPS performance and high data reliability.
-- `Enhanced SSD`:
-  - ultra-high performance disks based on the next-generation distributed block storage architecture.
-  - Each ESSD can deliver up to 1 million of random IOPS and has low latency.
-
-
-The 2 functions of Cloud Disks are as follows:
-
-System disk
-- As a System disk, by default the system disk has the same life cycle as the ECS instance to which it is mounted, and is released along with the ECS instance. (This auto release function can be changed.)
-- Shared access to system disks is not allowed.
-- System disk sizes can be 20GB and 500GB.
-  - dependent on the operating system being provisioned.
-    - Linux and FreeBSD systems default to 20GB.
-    - CoreOS systems default to 30GB.
-    - Windows systems default to 40GB.
-
-
-Data disks:
-- Data Disks can be created separately or at the same time as an ECS instance.
-- Data disks created at the same time as an ECS instances have the same life cycle as the corresponding instance, and are released along with the instance by default.
-- And again, this auto-release function can be changed.
-- Data disks created separately can be released separately or at the same time as the corresponding ECS instance.
-- And like the System disk shared access to a data disk is not allowed.
-- sizes can be between 20GB and 32TB
-- up to 16 Data Disks can be attached to a single ECS Instance.
-
-
-Cloud Disks can be mounted to any instance in the same zone, but cannot be mounted to instances across zones.
-
-
-
-
-### ECS Snapshots
-
-- Snapshots are complete, read-only copies of disk data at certain points in time.
-
-
-You can use snapshots for the following scenarios:
-
-- Disaster recovery and backup: You can create a snapshot for a disk, and then use the snapshot to create another disk to implement zone- or geo-disaster recovery.
-
-- Environment clone: You can use a system disk snapshot to create a custom image, and then use the custom image to create an ECS instance to clone the environment.
-
-- Data development:
-  - Snapshots can provide near-real-time production data for applications
-  - such as data mining, report queries, and development and tests.
-
-- Enhanced fault tolerance:
-  - roll a disk back to a previous point in time by using a snapshot to reduce the risk of data loss caused by an unexpected occurrence.
-  - create snapshots on a regular basis to prevent losses caused by unexpected occurrences.
-  - These unexpected occurrences can include, for example,
-    - writing incorrect data to disks,
-    - accidentally deleting data from a disk,
-    - accidentally releasing ECS instances,
-    - data errors caused by application errors,
-    - and data loss due to hacking attempts.
-
-- before you perform high-risk operations:
-  - such as changing operating systems, upgrading applications, and migrating business data.
-
-
-Snapshots can be created manually or automatically by creating a snapshot policy.
-- Up to 64 snapshots can be created per disk and each snapshot is an **incremental copy** of the previous snapshot.
-- When the maximum number of snapshots has been reached, the oldest snapshot is deleted as a new one is created.
-- Snapshots are charged based on the storage space used and the amount of time they are kept.
 
 ---
 
+## ECS Networking
 
-## Security Groups
+---
+
+### VPC
+
+![Screenshot 2023-01-15 at 13.07.10](https://i.imgur.com/vepWzzD.png)
+
+**Virtual Private Cloud (VPC)**
+- a logically isolated Virtual Network.
+- provides VLAN-level isolation and blocks outer network communications
+- it is a requirement when provisioning an ECS Instance.
+
+- VPC offers two major features,
+  - customize their own network topology,
+  - Assign Private IP address ranges, allocate network segments,
+  - and Configure VSwitches.
+
+- Customers can Integrate existing Datacentres through a `dedicated line (Express Connect)` or a `VPN Gateway` to form a hybrid cloud.
 
 
-Security groups
+
+A VPC is made up of two main components:
+- `A Virtual Router (VRouter)`
+- and `one or more Virtual Switches (VSwitch)`
+
+
+**VSwitch**
+- a basic network device of a VPC network and is used to connect different ECS instances together in a subnet.
+- A VPC can have a maximum of 24 VSwitches.
+
+
+**VRouter**
+- a hub that connects all of the VSwitches in the VPC and serves as a gateway device that can connect to other networks.
+
+---
+
+### ECS communication
+
+![Screenshot 2023-01-15 at 13.14.34](https://i.imgur.com/ZHAU5BX.png)
+
+![Screen Shot 2021-09-17 at 4.09.04 PM](https://i.imgur.com/dEsfWmP.png)
+
+- VM1, VM2, and VM 3 can all communicate with each other, irrespective of the fact that they’re in different zones; they are in the same virtual private cloud network.
+
+
+---
+
+### Security Groups
+
 - act as virtual firewalls that provide **Stateful Packet Inspection** and **packet filtering** of `network protocol, port and sthece IP traffic` to allow or deny access.
-- You can configure security group rules to control the inbound and outbound traffic of ECS instances in the group.
+
+- configure security group rules to control the inbound and outbound traffic of ECS instances in the group.
+
+![Screenshot 2023-01-15 at 13.09.54](https://i.imgur.com/QPMirQ5.png)
 
 There are 2 classifications of security groups:
-- Basic and Advanced.
+- `Basic` and `Advanced`.
 
 
-Basic security groups support up to 2000 private IP Addresses, inbound and outbound rules can be configured to allow or deny ECS instances in basic security groups access to the Internet or intranet.
+**Basic security groups**
+- support up to 2000 private IP Addresses,
+- inbound and outbound rules can be configured to allow or deny ECS instances in basic security groups access to the Internet or intranet.
 
-Advanced security groups
+**Advanced security groups**
 - new type of security group.
 - an advanced security group can contain an unlimited number of private IP addresses.
 - can only configure allow rules for inbound and outbound traffic,
 - all non-allowed traffic is denied by default.
+
+
+**Default Security Group**:
+- When you create an ECS instance in a region through the ECS console, a default security group is created if no other security group has been created under the current account in this region.
+- The default security group is a basic security group and has the same network type as the ECS instance.
+
 
 Security groups have the following characteristics:
 - must specify a security group when you create an ECS instance.
@@ -548,43 +647,11 @@ Security groups have the following characteristics:
 - ECS instances in different security groups are isolated from each other.
 - You can add security group rules to authorize mutual access between two security groups.
 - You can configure security group rules only for basic security groups, to authorize mutual access between two security groups.
+- regional concept, can managed ECS in different zones.
 
-
-Default Security Group:
-- When you create an ECS instance in a region through the ECS console, a default security group is created if no other security group has been created under the current account in this region.
-- The default security group is a basic security group and has the same network type as the ECS instance.
-
+![Screenshot 2023-01-15 at 13.11.28](https://i.imgur.com/rhgUBua.png)
 
 ---
-
-
-## ECS Networking
-
-Virtual Private Cloud (VPC)
-- a logically isolated Virtual Network. It provides VLAN-level isolation and blocks outer network communications, it is a requirement when provisioning an ECS Instance.
-
-VPC offers two major features,
-- customize their own network topology, Assign Private IP address ranges, allocate network segments, and Configure VSwitches.
-
-Customers can Integrate existing Datacentres through a `dedicated line (Express Connect)` or a `VPN Gateway` to form a hybrid cloud.
-
-A Virtual Private Network is made up of two main components:
-- A Virtual Router (VRouter)
-- and one or more Virtual Switches (VSwitch).
-
-A VSwitch
-- a basic network device of a VPC network and is used to connect different ECS instances together in a subnet.
-- A VPC can have a maximum of 24 VSwitches.
-
-A VRouter
-- a hub that connects all of the VSwitches in the VPC and serves as a gateway device that can connect to other networks.
-
-
-![Screen Shot 2021-09-17 at 4.09.04 PM](https://i.imgur.com/dEsfWmP.png)
-
-- VM1, VM2, and VM 3 can all communicate with each other, irrespective of the fact that they’re in different zones; they are in the same virtual private cloud network.
-
-
 
 ### IP address
 
@@ -609,3 +676,35 @@ public IP address
 Their use cases are:
 - do not want to retain the public IP address when the instance is released, use a NatPublicIP address
 - want to keep a public IP address and associate it to any of the VPC-Connected ECS instances in the same region, use the EIP address
+
+![Screenshot 2023-01-15 at 13.15.51](https://i.imgur.com/WcvpSiY.png)
+
+
+![Screenshot 2023-01-15 at 13.16.18](https://i.imgur.com/V4CM8J4.png)
+
+
+---
+
+### ENI
+
+![Screenshot 2023-01-15 at 13.16.55](https://i.imgur.com/D9jsODv.png)
+
+
+---
+
+## ECS Setting
+
+
+### Instance Metadata
+
+
+![Screenshot 2023-01-15 at 13.18.24](https://i.imgur.com/DK96fvG.png)
+
+
+### User data
+
+![Screenshot 2023-01-15 at 13.19.11](https://i.imgur.com/C0YH664.png)
+
+
+
+.
