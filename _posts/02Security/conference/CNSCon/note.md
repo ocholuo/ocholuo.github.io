@@ -4,6 +4,7 @@
     - [status](#status)
       - [use](#use)
       - [community](#community)
+  - [SLSA](#slsa)
 
 ---
 
@@ -54,6 +55,30 @@ use case:
 Https://securityscorecards.dev/
 
 community meetings
+
+
+---
+
+
+## SLSA
+
+https://github.com/slsa-framework/slsa-verifier
+
+
+GUAC
+
+For artifacts relationship
+
+
+
+
+
+
+
+
+
+
+
 
 
 
