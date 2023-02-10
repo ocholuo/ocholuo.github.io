@@ -7,7 +7,9 @@ toc: true
 image:
 ---
 
-[toc]
+- [Modern Cryptography](#modern-cryptography)
+  - [Key Requirements](#key-requirements)
+
 
 ---
 
@@ -45,7 +47,6 @@ asymmetric:
 - communication among n users, n distinct private/public key pairs are needed.
 
 ![Pasted Graphic 3](https://i.imgur.com/6ptBLji.png)
-
 
 
 

@@ -7,7 +7,7 @@ toc: true
 image:
 ---
 
-- [Asymmetric Encryption](#asymmetric-encryption)
+- [Cryptography - Asymmetric Encryption](#cryptography---asymmetric-encryption)
   - [major advantage](#major-advantage)
   - [disadvantage:](#disadvantage)
 - [Algorithms:](#algorithms)
@@ -22,7 +22,7 @@ image:
 
 ---
 
-# Asymmetric Encryption
+# Cryptography - Asymmetric Encryption
 
 - also called
   - **Public-Key Encryption**

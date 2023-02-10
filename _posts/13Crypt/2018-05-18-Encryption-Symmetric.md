@@ -7,7 +7,7 @@ toc: true
 image:
 ---
 
-- [Symmetric Encryption](#symmetric-encryption)
+- [Cryptography - Symmetric Encryption](#cryptography---symmetric-encryption)
   - [strength](#strength)
   - [weaknesses](#weaknesses)
 - [Symmetric Block Cipher / stream cipher](#symmetric-block-cipher--stream-cipher)
@@ -29,7 +29,7 @@ image:
 ---
 
 
-# Symmetric Encryption
+# Cryptography - Symmetric Encryption
 
 > shared-key, secret key, session-key cryptography.
 
