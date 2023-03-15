@@ -45,3 +45,12 @@ wont
 fromi
 toi
 pricei
+
+
+statment
+rouge
+placehoder
+suround
+overrided
+archvies
+pannel
