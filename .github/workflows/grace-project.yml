@@ -60,6 +60,14 @@ jobs:
         run: |
           git config --global user.name "grace"
           git config --global user.email "lgraceye@hotmail.com"
-          git add -A
-          git commit -m "Auto updating csv to "
+          git add .
+          git commit -m "Auto updating csv to repo"
           git push
+
+      - name: Commit and push changes2
+        run: |
+          git init
+          git remote add origin https://github.com/ocholuo/ocholuo.github.io.git
+          git add .
+          git commit -m "Auto updating csv to repo"
+          git push origin master
