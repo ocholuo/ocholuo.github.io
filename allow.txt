@@ -51,14 +51,17 @@ alle
 archiv
 archvies
 autor
+categorie
 copie
 hightlight
 overrided
 placehoder
 pannel
+possibile
 rouge
 ressource
 statment
 suround
 unter
 versio
+varius
