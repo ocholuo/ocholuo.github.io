@@ -16,6 +16,7 @@ jobs:
     name: project webscrap_apt
     # runs-on: macOS-latest
     runs-on: ubuntu-latest
+
     steps:
 
       - name: Print a greeting
@@ -30,12 +31,35 @@ jobs:
         with:
           fetch-depth: 0  # for posts's lastmod
 
-      # - name: Setup Ruby
-      #   uses: ruby/setup-ruby@v1
-      #   with:
-      #     ruby-version: 2.7
-      #     bundler-cache: true
-
-      - name: run apt project
+      - name: run apt project script
         # run: bash ./wh.sh \
         run: python ./_posts/00CodeNote/project/webscrap_apt/play.py -t all
+
+      # - name: Run a one-line script
+      #   run: python ./.github/workflows/todo_List.py
+
+      # - name: switching from HTTPS to SSH
+      #   run: git remote set-url origin ${{ secrets.ssh }}
+
+      # - name: check for changes
+      #   run: git status
+
+      # - name: stage changed files
+      #   run: git add .
+
+      # - name: commit changed files
+      #   run: git commit -m "Auto updating csv to "
+
+      # - name: fetch from master
+      #   run: git fetch origin master
+
+      # - name: push code to master
+      #   run: git push origin HEAD:master
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "grace"
+          git config --global user.email "lgraceye@hotmail.com"
+          git add -A
+          git commit -m "Auto updating csv to "
+          git push
