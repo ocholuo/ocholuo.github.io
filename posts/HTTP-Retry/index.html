@@ -1,0 +1,745 @@
+<!DOCTYPE html><html lang="en" mode="dark" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="day-prompt" content="days ago"><meta name="hour-prompt" content="hours ago"><meta name="minute-prompt" content="minutes ago"><meta name="justnow-prompt" content="just now"><meta name="pv-proxy-endpoint" content="https://myochosite-291718.appspot.com/query?id=ahNwfm15b2Nob3NpdGUtMjkxNzE4chULEghBcGlRdWVyeRiAgIDo14eBCgw"><meta name="generator" content="Jekyll v4.3.2" /><meta property="og:title" content="HTTP - Retry" /><meta property="og:locale" content="en" /><meta name="description" content="HTTP - Retry 什么情况下要 retry Retry处理步骤 简单的立即retry 有延迟的retry 固定间隔的 delay 随机 delay 的方式： Circuit Breaker(断路器) Retry 设计模式在客户端的应用与实现 监控：更好地在运行时了解你的系统 Example go-resty 重试机制的实现 Backoff函数 Demo 一些其他重试机制的实现" /><meta property="og:description" content="HTTP - Retry 什么情况下要 retry Retry处理步骤 简单的立即retry 有延迟的retry 固定间隔的 delay 随机 delay 的方式： Circuit Breaker(断路器) Retry 设计模式在客户端的应用与实现 监控：更好地在运行时了解你的系统 Example go-resty 重试机制的实现 Backoff函数 Demo 一些其他重试机制的实现" /><link rel="canonical" href="https://ocholuo.github.io//posts/HTTP-Retry/" /><meta property="og:url" content="https://ocholuo.github.io//posts/HTTP-Retry/" /><meta property="og:site_name" content="Grace" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2021-04-25T11:11:11-04:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="HTTP - Retry" /><meta name="twitter:site" content="@twitter_username" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-10-30T21:02:21-04:00","datePublished":"2021-04-25T11:11:11-04:00","description":"HTTP - Retry 什么情况下要 retry Retry处理步骤 简单的立即retry 有延迟的retry 固定间隔的 delay 随机 delay 的方式： Circuit Breaker(断路器) Retry 设计模式在客户端的应用与实现 监控：更好地在运行时了解你的系统 Example go-resty 重试机制的实现 Backoff函数 Demo 一些其他重试机制的实现","headline":"HTTP - Retry","mainEntityOfPage":{"@type":"WebPage","@id":"https://ocholuo.github.io//posts/HTTP-Retry/"},"url":"https://ocholuo.github.io//posts/HTTP-Retry/"}</script><title>HTTP - Retry | Grace</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Grace"><meta name="application-name" content="Grace"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://myochosite-291718.appspot.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://myochosite-291718.appspot.com"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1.1.0/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end" lang="en"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/huoye.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Grace</a></div><div class="site-subtitle font-italic">2023 Mar 14 updated</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/ocholuo" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/twitter_username" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['',''].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>HTTP - Retry</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>HTTP - Retry</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="semi-bold"> Grace JyL </span> on <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Sun, Apr 25, 2021, 11:11 AM -0400" >Apr 25, 2021<i class="unloaded">2021-04-25T11:11:11-04:00</i> </span></div><div> <span> Updated <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Sun, Oct 30, 2022, 6:02 PM -0700" >Oct 30, 2022<i class="unloaded">2022-10-30T21:02:21-04:00</i> </span> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="4779 words">26 min read</span> <span id="pv" class="pageviews"> <i class="fas fa-spinner fa-spin fa-fw"></i> </span> views</div></div><div class="post-content"><ul><li><a href="#http---retry">HTTP - Retry</a><ul><li><a href="#什么情况下要-retry">什么情况下要 retry</a><li><a href="#retry处理步骤">Retry处理步骤</a><ul><li><a href="#简单的立即retry"><strong>简单的立即retry</strong></a><li><a href="#有延迟的retry"><strong>有延迟的retry</strong></a><ul><li><a href="#固定间隔的-delay">固定间隔的 delay</a><li><a href="#随机-delay-的方式">随机 delay 的方式：</a></ul><li><a href="#circuit-breaker断路器"><strong>Circuit Breaker(断路器)</strong></a></ul><li><a href="#retry-设计模式在客户端的应用与实现">Retry 设计模式在客户端的应用与实现</a><li><a href="#监控更好地在运行时了解你的系统">监控：更好地在运行时了解你的系统</a><li><a href="#example">Example</a><ul><li><a href="#go-resty-重试机制的实现">go-resty 重试机制的实现</a><li><a href="#backoff函数">Backoff函数</a><li><a href="#demo">Demo</a><li><a href="#一些其他重试机制的实现">一些其他重试机制的实现</a></ul></ul><li>ref<ul><li><a href="https://segmentfault.com/a/1190000022418493">浅谈Retry设计模式及在前端的应用与实现</a><li><a href="https://segmentfault.com/a/1190000025181043">重试机制的实现</a><li><a href="https://www.infoq.cn/article/7z0wpahuh9euxqiq5xzx">如何正确地实现重试 (Retry)</a></ul></ul><hr /><h1 id="http---retry">HTTP - Retry</h1><hr /><h2 id="什么情况下要-retry">什么情况下要 retry</h2><p>认识 Transient fault（短暂故障）</p><ul><li>短暂存在，并且在一段时间后会被修复的故障。<li>这个时间可以短到几毫秒也可以长达几小时。<li>如果的请求是因为一个这样的故障而失败的，那在适当的时候重试就可以了。</ul><blockquote><p>在前端应用中，短暂故障往往发生在你向服务端请求资源时。比如你向一个API发送一个AJAX请求，对面返回一个 “5XX” 的响应。</p></blockquote><p>鉴别 Transient fault（短暂故障）</p><ul><li>造成请求失败的原因有很多。<ul><li>因为服务端内部逻辑的错误，<li>客户端发送了一个糟糕的请求，<li>由Infrastructure造成的一些短暂故障（比如暂时负载量过大，某个服务器的宕机，或网络问题等）。</ul><li>而只有在短暂故障的情况下进行retry才有意义。<li>鉴别短暂故障<ul><li>最简单的方法是运用 HTTP 请求的响应码。根据规范，<li>400-499 之间是客户端造成的问题，没有必要重试了<li>500-599 之间是服务端的故障<ul><li>如何在5xx 的故障中鉴别出短暂故障。<li>如果服务端对错误响应码有标准的定义，就可以通过不同的号码得知错误的原因，从而决定是进行retry还是做别的处理。<li>服务端开发中标准并清晰的定义错误码和给与错误信息的重要性。</ul></ul></ul><hr /><h2 id="retry处理步骤">Retry处理步骤</h2><p>当请求失败时可以有一个基本的处理步骤：</p><ul><li>鉴别是不是 transient fault<li>如果是，启动retry机制，进行一定次数的retry<li>当retry达到最大次数还没有成功，报错并说明原因：服务端暂时无法响应。</ul><p>基本的retry设计模式。</p><h3 id="简单的立即retry"><strong>简单的立即retry</strong></h3><ul><li>当请求失败，立即retry，<li>用于一些不常见的失败原因，因为原因罕见，立刻retry也许就修复了。<li>但当碰到一些常见的失败原因如服务端负载过高，不断的立即retry只会让服务端更加不堪重负。<li>试想如果有多个客户端instance在同时发送请求，那越是retry情况就越糟糕。<li><strong>不带 backoff 的重试，对于下游来说会在失败发生时进一步遇到更多的请求压力，进一步恶化</strong>。</ul><div class="language-java highlighter-rouge"><div class="code-header" text-data="java"><button data-original-title="Copied!"><i class="far fa-clone"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="no">T</span> <span class="nf">retryNoDelay</span><span class="o">(</span><span class="kd">final</span> <span class="n">callable</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">callable</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">maxAttempts</span><span class="o">){</span>
+  <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">maxAttempts</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="kd">final</span> <span class="no">T</span> <span class="n">t</span> <span class="o">=</span> <span class="n">callable</span><span class="o">.</span><span class="na">call</span><span class="o">();</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">isExpected</span><span class="o">(</span><span class="n">t</span><span class="o">)){</span> <span class="k">return</span> <span class="n">t</span><span class="o">};</span>
+    <span class="o">}</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="n">insertMessageInboxResult</span> <span class="o">=</span> <span class="n">messageInboxManager</span><span class="o">.</span><span class="na">insertMessage</span><span class="o">(</span><span class="n">messageInbox</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">insertMessageInboxResult</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">break</span><span class="o">;</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span>
+        <span class="s">"insertMessageInbox exception retry {}, messageInbox={}"</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">messageInbox</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="c1">// return default t or error</span>
+  <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><hr /><h3 id="有延迟的retry"><strong>有延迟的retry</strong></h3><ul><li>与其立即retry, 倒不如等待一会，也许那时服务端的负载就降下来了。<li>这个 delay（延迟）的时间可以是一个常量，也可以是根据一定数学公式变化的变量。<ul><li>逐次增加delay算法。<li>Exponential Backoff (指数后退算法): 以指数的方式来增加delay。<ul><li>such as 第一次失败等待1秒，第二次再失败等待2秒，接下去4秒，8秒…。</ul></ul></ul><blockquote><p>根据自己系统的特性和业务的需求，设计更适合更优化的算法。</p></blockquote><h4 id="固定间隔的-delay">固定间隔的 delay</h4><ul><li><p>delay 的方式按照是方法本身是异步还是同步的，可以通过定时器或则简单的 <code class="language-plaintext highlighter-rouge">Thread.sleep</code> 实现</p><li>虽然这次带了固定间隔的 backoff，但是<strong>每次重试的间隔固定</strong><li>此时对于下游资源的冲击将会变成间歇性的脉冲；<li>特别是当集群都遇到类似的问题时，步调一致的脉冲，将会最终对资源造成很大的冲击，并陷入失败的循环中。</ul><div class="language-java highlighter-rouge"><div class="code-header" text-data="java"><button data-original-title="Copied!"><i class="far fa-clone"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="no">T</span> <span class="nf">retry</span><span class="o">(</span>
+  <span class="kd">final</span> <span class="nc">Callable</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">callable</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">maxAttempts</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">fixedBackOff</span><span class="o">){</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">maxAttempts</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="k">try</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="no">T</span> <span class="n">t</span> <span class="o">=</span> <span class="n">callable</span><span class="o">.</span><span class="na">call</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">isExpected</span><span class="o">(</span><span class="n">t</span><span class="o">)){</span> <span class="k">return</span> <span class="n">t</span><span class="o">};</span>
+      <span class="o">}</span>
+      <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"error"</span><span class="o">)</span>
+        <span class="k">try</span> <span class="o">{</span>
+          <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">fixedBackOff</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ee</span><span class="o">)</span> <span class="o">{}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">// return default t or error</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="o">}</span>
+</pre></table></code></div></div><div class="language-java highlighter-rouge"><div class="code-header" text-data="java"><button data-original-title="Copied!"><i class="far fa-clone"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre><span class="kd">private</span> <span class="no">T</span> <span class="nf">retry</span><span class="o">(</span><span class="nc">Supplier</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">function</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">RuntimeException</span> <span class="o">{</span>
+    <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"1st command failed, will be retired "</span> <span class="o">+</span> <span class="n">maxRetires</span> <span class="o">+</span> <span class="s">"times."</span><span class="o">);</span>
+    <span class="n">invokeCnt</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="nc">Exception</span> <span class="n">exception</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="k">while</span> <span class="o">(</span> <span class="n">invokeCnt</span> <span class="o">&lt;</span> <span class="n">maxRetires</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">try</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">sleepTime</span> <span class="o">&gt;</span> <span class="no">MIN_SLEEP_TIME</span> <span class="o">&amp;&amp;</span> <span class="n">sleepTime</span> <span class="o">&lt;=</span> <span class="no">MAX_SLEEP_TIME</span><span class="o">)</span> <span class="o">{</span>
+          <span class="nc">Thread</span><span class="o">,</span><span class="n">sleep</span><span class="o">(</span><span class="n">sleepTime</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">function</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+      <span class="o">}</span>
+      <span class="k">catch</span> <span class="o">(</span><span class="nc">InterrunptedException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{...}</span>
+      <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">exception</span> <span class="o">=</span> <span class="n">ex</span><span class="o">;</span>
+        <span class="n">invokeCnt</span><span class="o">++;</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">invokeCnt</span> <span class="o">+</span> <span class="s">" times retur failed of "</span> <span class="o">+</span> <span class="n">maxRetires</span> <span class="o">+</span> <span class="s">" error: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span> <span class="n">invokeCnt</span> <span class="o">&gt;</span> <span class="n">maxRetires</span><span class="o">)</span> <span class="o">{...}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="n">maxRetires</span> <span class="o">+</span> <span class="s">" retires all failes"</span><span class="o">,</span> <span class="n">exception</span><span class="o">);</span>
+  <span class="o">}</span>
+</pre></table></code></div></div><h4 id="随机-delay-的方式">随机 delay 的方式：</h4><ul><li>采用随机 backoff 的方式，即具体的 delay 时间在一个最小值和最大值之间浮动<li>虽然解决了 backoff 的时间集中的问题，对时间进行了随机打散，但是依然存在下面的问题：<li>如果依赖的底层服务持续地失败，改方法依然会进行固定次数的尝试，并不能起到很好的保护作用<li>对结果是否符合预期，是否需要进行重试依赖于异常<li>无法针对异常进行精细化的控制，如只针部分异常进行重试。</ul><div class="language-java highlighter-rouge"><div class="code-header" text-data="java"><button data-original-title="Copied!"><i class="far fa-clone"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre><td class="rouge-code"><pre>
+<span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="no">T</span> <span class="nf">retryWithRandomDelay</span><span class="o">(</span>
+  <span class="kd">final</span> <span class="nc">Callable</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">callable</span><span class="o">,</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">maxAttempts</span><span class="o">,</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">minBackOff</span><span class="o">,</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">maxBackOff</span><span class="o">,</span>
+  <span class="c1">// randomFactor, 0.0 - 1.0</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">randomFactor</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">maxAttempts</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="k">try</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="no">T</span> <span class="n">t</span> <span class="o">=</span> <span class="n">callable</span><span class="o">.</span><span class="na">call</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">isExpected</span><span class="o">(</span><span class="n">t</span><span class="o">))</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="n">t</span>
+        <span class="o">};</span>
+      <span class="o">}</span>
+      <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"error"</span><span class="o">)</span>
+        <span class="k">try</span> <span class="o">{</span>
+          <span class="kd">final</span> <span class="kt">double</span> <span class="n">rnd</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="nc">ThreadLocalRandom</span><span class="o">.</span><span class="na">current</span><span class="o">().</span><span class="na">nextDouble</span><span class="o">()</span> <span class="o">*</span> <span class="n">randomFactor</span><span class="o">;</span>
+          <span class="kt">long</span> <span class="n">backOffTime</span><span class="o">;</span>
+          <span class="k">try</span> <span class="o">{</span>
+            <span class="n">backOffTime</span> <span class="o">=</span> <span class="o">(</span><span class="kt">long</span><span class="o">)(</span><span class="nc">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">maxBackoff</span><span class="o">,</span> <span class="n">minBackoff</span> <span class="o">*</span> <span class="nc">Math</span><span class="o">.</span><span class="na">pow</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">i</span><span class="o">))</span> <span class="o">*</span> <span class="n">rnd</span><span class="o">);</span>
+          <span class="o">}</span>
+          <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ee</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">backOffTime</span> <span class="o">=</span> <span class="n">maxBackoff</span><span class="o">;</span>
+          <span class="o">}</span>
+          <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">backOffTime</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ee</span><span class="o">)</span> <span class="o">{}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">// return default t or error</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="o">}</span>
+</pre></table></code></div></div><div class="language-java highlighter-rouge"><div class="code-header" text-data="java"><button data-original-title="Copied!"><i class="far fa-clone"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">V</span><span class="o">&gt;</span> <span class="no">V</span> <span class="nf">retryWithRandomDelay</span><span class="o">(</span>
+  <span class="kd">final</span> <span class="nc">Callable</span><span class="o">&lt;</span><span class="no">V</span><span class="o">&gt;</span> <span class="n">callable</span><span class="o">,</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">maxRetryTime</span><span class="o">,</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">sleepInMills</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">maxRetryTime</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{...}</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">sleepInMills</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{...}</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">callable</span><span class="o">.</span><span class="na">call</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">catch</span> <span class="o">(</span><span class="nc">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">maxRetryTime</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{...}</span>
+      <span class="k">else</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+          <span class="no">LOGGGER</span><span class="o">.</span><span class="na">error</span><span class="o">(</span>
+            <span class="s">"retry with maxRetryTime:{}, sleepInMills:{}, error:{}"</span><span class="o">,</span>
+            <span class="n">maxRetryTime</span><span class="o">,</span><span class="n">sleepInMills</span><span class="o">,</span><span class="n">e</span>
+          <span class="o">)</span>
+          <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">sleepInMills</span><span class="o">);</span>
+          <span class="k">return</span> <span class="nf">retryWithBackoff</span><span class="o">(</span>
+            <span class="n">callable</span><span class="o">,</span>
+            <span class="nl">maxRetryTime:</span> <span class="n">maxRetryTime</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span>
+            <span class="nl">sleepInMills:</span> <span class="n">sleepInMills</span> <span class="o">*</span> <span class="nc">ThreadLocalRandom</span><span class="o">.</span><span class="na">current</span><span class="o">().</span><span class="na">nextDouble</span><span class="o">(</span><span class="nl">origin:</span><span class="mi">1</span><span class="o">,</span> <span class="nl">bound:</span> <span class="mi">3</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="k">catch</span> <span class="o">(</span><span class="nc">InterrunptedException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+          <span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">interrupt</span><span class="o">();</span>
+          <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+</pre></table></code></div></div><hr /><h3 id="circuit-breaker断路器"><strong>Circuit Breaker(断路器)</strong></h3><ul><li>如果 Transient fault 修复的时间特别长, 比如长时间的网络问题，那就算有再好的retry机制，也免不了是徒劳。只会一次又一次地retry, 失败，再retry, 直到达到上限。<ul><li>一来浪费资源，二来或许又会干扰服务端的自我修复。<li>断路器模式 一般用在当下游资源失败后，但是失败恢复的时间不固定时，自动地进行探索式地恢复尝试，并且在遇到较多失败时，能够快速自动地断开，从而避免失败蔓延的一种模式。<li>当断路器处于开断状态时，所有的请求都会直接失败，不再会对下游资源造成冲击，并能够在一段时间后，进行探索式的尝试，如果没有达到条件，可以自动地恢复到之前的闭合状态。</ul><li>Circuit Breaker (断路器)的设计模式: 原意其实就是电路中的开关<ul><li>在电路里一旦开关断开，电流就别想通过了。<li>一旦开关断开，就不会再发送任何请求了。</ul><li>Circuit Breaker在retry机制中的应用是一个状态机<ul><li>有三种状态：OPEN,HALF-OPEN, CLOSE。<li>设定一个 <code class="language-plaintext highlighter-rouge">threshold(阈值)</code> 和一个 <code class="language-plaintext highlighter-rouge">timeout</code>，<li>当retry的次数超过 <code class="language-plaintext highlighter-rouge">threshold</code> 时，认为服务端进入一个较长的Trasient fault。<li>那么就开关断开，进入 <strong>OPEN</strong> 状态。这时将不再向服务端发送任何请求，就像开关断开了，电流（请求）怎么也不会从客户端流向服务端。<li>当过了一段时间到了 <code class="language-plaintext highlighter-rouge">timeout</code>，就将状态设为 <strong>HALF-OPEN</strong>，这时会尝试把客户端的请求发往服务端去试探它是否已经恢复。<li>如果是就进入 <strong>CLOSE</strong> 状态，回到正常的机制中<li>如果不是，就再次进入 <strong>OPEN</strong> 状态。</ul></ul><blockquote><p>既节约了资源，防止了无休止的无用的尝试， 又保证了在修复后，客户端能知晓，并恢复的正常的运行。</p></blockquote><p><img data-proofer-ignore data-src="https://i.imgur.com/I2d9u6d.png" alt="Screen Shot 2021-09-02 at 01.37.21" /></p><p>在应用断路器时，需要对下游资源的每次调用都通过断路器，对代码具备一定的结构侵入性。常见的有 Hystrix 或 resilience4j.</p><div class="language-java highlighter-rouge"><div class="code-header" text-data="java"><button data-original-title="Copied!"><i class="far fa-clone"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="c1">// Given</span>
+<span class="nc">CircuitBreaker</span> <span class="n">circuitBreaker</span> <span class="o">=</span> <span class="nc">CircuitBreaker</span><span class="o">.</span><span class="na">ofDefaults</span><span class="o">(</span><span class="s">"testName"</span><span class="o">);</span>
+
+<span class="c1">// When I decorate my function</span>
+<span class="nc">CheckedFunction0</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">decoratedSupplier</span> <span class="o">=</span> <span class="nc">CircuitBreaker</span>
+        <span class="o">.</span><span class="na">decorateCheckedSupplier</span><span class="o">(</span><span class="n">circuitBreaker</span><span class="o">,</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="s">"This can be any method which returns: 'Hello"</span><span class="o">);</span>
+
+<span class="c1">// 又或者</span>
+<span class="n">def</span> <span class="n">callWithCircuitBreakerCS</span><span class="o">[](</span><span class="nl">body:</span> <span class="nc">Callable</span><span class="o">[</span><span class="nc">CompletionStage</span><span class="o">[</span><span class="no">T</span><span class="o">]]):</span> <span class="nc">CompletionStage</span><span class="o">[</span><span class="no">T</span><span class="o">]</span>
+
+</pre></table></code></div></div><hr /><h2 id="retry-设计模式在客户端的应用与实现">Retry 设计模式在客户端的应用与实现</h2><ul><li><p>在服务端，Retry 的机制被大量运用，尤其是在云端微服务的架构上。很多云平台本身就提供了主体（比如服务，节点等）之间的retry机制从而提高整个系统的稳定性。</p><li><p>而客户端，作为一个独立于服务端系统之外，运行在用户手机或电脑上的一个App, 并没有办法享受到平台的这个功能。</p><ul><li>这时，就需要为App加入retry机制, 从而使整个产品更加强壮。</ul></ul><p>npm 有一个 retry 的包可以帮助我们快速加入retry机制: https://www.npmjs.com/package</p><p>retry的实现并不复杂</p><ul><li>完全可以自己写一个这样的工具供一个或多个产品使用。<li>更容易更改其中的算法来适应产品的需求。</ul><p>下面是我写的一个简单的retry小工具，由于我们向服务端做请求的函数常常是返回promise的，比如 fetch 函数 。这个工具可以为任何一个返回promise的函数注入retry机制。</p><div class="language-java highlighter-rouge"><div class="code-header" text-data="java"><button data-original-title="Copied!"><i class="far fa-clone"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre><td class="rouge-code"><pre><span class="c1">// 这个函数会为你的 promiseFunction (一个返回promise的函数) 注入retry的机制。</span>
+<span class="c1">// 比如 retryPromiseFunctionGenerator(myPromiseFunction, 4, 1000, true, 4000)</span>
+<span class="c1">// 会返回一个函数，它的用法和功能与 myPromiseFunction 一样。但如果 Promise reject 了，</span>
+<span class="c1">// 它就会进行retry, 最多retry 4 次</span>
+<span class="c1">// 每次时间间隔指数增加，最初是1秒，随后2秒，4秒，</span>
+<span class="c1">// 由于设定最大delay是4秒，那么之后就会持续delay4秒，直到达到最大retry次数 4 次。</span>
+<span class="c1">// 如果 enableExponentialBackoff 设为 false, delay就会是一个常量1秒。</span>
+<span class="kd">const</span> <span class="n">retryPromiseFunctionGenerator</span> <span class="o">=</span> <span class="o">(</span>
+  <span class="n">promiseFunction</span><span class="o">,</span> <span class="c1">// 需要被retry的function</span>
+  <span class="n">numRetries</span> <span class="o">=</span> <span class="n">defaultNumRetries</span><span class="o">,</span> <span class="c1">// 最多retry几次</span>
+  <span class="n">retryDelayMs</span> <span class="o">=</span> <span class="n">defaultRetryDelayMs</span><span class="o">,</span> <span class="c1">// 两次retry间的delay</span>
+  <span class="n">enableExponentialBackoff</span> <span class="o">=</span> <span class="kc">false</span><span class="o">,</span> <span class="c1">// 是否启动指数增加delay</span>
+  <span class="n">maxRetryDelayMs</span> <span class="c1">// 最大delay时间</span>
+<span class="o">)</span> <span class="o">=&gt;</span> <span class="n">async</span> <span class="o">(...</span><span class="na">args</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="o">{</span>
+  <span class="k">for</span> <span class="o">(</span>
+    <span class="n">let</span> <span class="n">numRetriesLeft</span> <span class="o">=</span> <span class="n">numRetries</span><span class="o">;</span>
+    <span class="n">numRetriesLeft</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">numRetriesLeft</span> <span class="o">-=</span> <span class="mi">1</span>
+  <span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">await</span> <span class="nf">promiseFunction</span><span class="o">(...</span><span class="na">args</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">error</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">numRetriesLeft</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">||</span> <span class="o">!</span><span class="n">isTransientFault</span><span class="o">(</span><span class="n">error</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="n">error</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="kd">const</span> <span class="n">delay</span> <span class="o">=</span> <span class="n">enableExponentialBackoff</span>
+        <span class="o">?</span> <span class="nc">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span>
+            <span class="n">retryDelayMs</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">**</span> <span class="o">(</span><span class="n">numRetries</span> <span class="o">-</span> <span class="n">numRetriesLeft</span><span class="o">),</span>
+            <span class="n">maxRetryDelayMs</span> <span class="o">||</span> <span class="nc">Number</span><span class="o">.</span><span class="na">MAX_SAFE_INTEGER</span>
+          <span class="o">)</span>
+        <span class="o">:</span> <span class="n">retryDelayMs</span><span class="o">;</span>
+
+      <span class="n">await</span> <span class="k">new</span> <span class="nf">Promise</span><span class="o">((</span><span class="n">resolve</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">setTimeout</span><span class="o">(</span><span class="n">resolve</span><span class="o">,</span> <span class="n">delay</span><span class="o">));</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">};</span>
+</pre></table></code></div></div><hr /><h2 id="监控更好地在运行时了解你的系统">监控：更好地在运行时了解你的系统</h2><p>App拥有了retry机制，在客户端运行时，它变得更强壮了，一些失败的服务端请求并不能打到它。</p><p>但想知道它在用户手上retry了几次，什么时候retry的，最终失败了没有。</p><ul><li>这些信息不仅让我更好的了解用户的实际体验，它们也可以作为服务端性能的指标之一。<li>实时对这些信息进行监控可以<strong>尽早的发现服务端的故障</strong> 以减少损失</ul><p>客户端的监控是一个很大的话题，Retry信息的收集只是其中一个应用场景。</p><ul><li>实现呢很简单。<li>在每一次执行retry时发送一条log(日志)其中包含你想了解的信息。然后运用第三方或公司内部的日志浏览工具去分析这些日志，从而获得许多有意思的指标。<li>例子，我们可以简单地监控retry log 的数量，如果突然激增，那就说明服务端也许出现了一些故障，这时候开发团队可以在第一时间做出反应修复故障，以免对大面积的客户造成影响。<li>当然这不仅仅可以通过监控retry实现，我们也可以监控服务端的http请求失败的数量，</ul><hr /><h2 id="example">Example</h2><ul><li>服务在请求资源，如果遇到网络异常等情况，导致请求失败，这时需要有个重试机制来继续请求。<li>常见的做法是重试3次，并随机 sleep 几秒。<li>业务开发的脚手架，HTTP Client 基本会封装好 retry 方法，请求失败时根据配置自动重试。<li>下面以一个常见的 HTTP Client 为例， 看下它是如何实现请求重试。<li>最后整理其他一些重试机制的实现。</ul><h3 id="go-resty-重试机制的实现">go-resty 重试机制的实现</h3><p>先看下 go-resty 在发送 HTTP 请求时， 请求重试的实现：</p><div class="language-go highlighter-rouge"><div class="code-header" text-data="go"><button data-original-title="Copied!"><i class="far fa-clone"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+</pre><td class="rouge-code"><pre><span class="c">// Execute method performs the HTTP request with given HTTP method and URL</span>
+
+<span class="c">// for current `Request`.</span>
+<span class="c">//   resp, err := client.R().Execute(resty.GET, "http://httpbin.org/get")</span>
+<span class="k">func</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span><span class="n">Request</span><span class="p">)</span> <span class="n">Execute</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="n">Response</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="n">addrs</span> <span class="p">[]</span><span class="o">*</span><span class="n">net</span><span class="o">.</span><span class="n">SRV</span>
+    <span class="k">var</span> <span class="n">resp</span> <span class="o">*</span><span class="n">Response</span>
+    <span class="k">var</span> <span class="n">err</span> <span class="kt">error</span>
+
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">isMultiPart</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">(</span><span class="n">method</span> <span class="o">==</span> <span class="n">MethodPost</span> <span class="o">||</span> <span class="n">method</span> <span class="o">==</span> <span class="n">MethodPut</span> <span class="o">||</span> <span class="n">method</span> <span class="o">==</span> <span class="n">MethodPatch</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="no">nil</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"multipart content is not allowed in HTTP verb [%v]"</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">SRV</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">addrs</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">LookupSRV</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">SRV</span><span class="o">.</span><span class="n">Service</span><span class="p">,</span> <span class="s">"tcp"</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">SRV</span><span class="o">.</span><span class="n">Domain</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="no">nil</span><span class="p">,</span> <span class="n">err</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">r</span><span class="o">.</span><span class="n">Method</span> <span class="o">=</span> <span class="n">method</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">URL</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">selectAddr</span><span class="p">(</span><span class="n">addrs</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">RetryCount</span> <span class="o">==</span> <span class="m">0</span> <span class="p">{</span>
+        <span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">resp</span><span class="p">,</span> <span class="n">unwrapNoRetryErr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c">// 如果 r.client.RetryCount 不等于0 ，执行 Backoff() 函数</span>
+
+    <span class="c">// Backoff() 方法接收一个处理函数参数</span>
+    <span class="c">// 根据重试策略，进行 attempt 次网络请求，同时接收 Retries()、WaitTime()等函数参数</span>
+    <span class="n">attempt</span> <span class="o">:=</span> <span class="m">0</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">Backoff</span><span class="p">(</span>
+        <span class="k">func</span><span class="p">()</span> <span class="p">(</span><span class="o">*</span><span class="n">Response</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">attempt</span><span class="o">++</span>
+
+            <span class="n">r</span><span class="o">.</span><span class="n">URL</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">selectAddr</span><span class="p">(</span><span class="n">addrs</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">attempt</span><span class="p">)</span>
+
+            <span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="c">// 如果没有设置重试次数，执行 r.client.execute(r) ：</span>
+            <span class="c">// 直接请求 Request ， 返回 Response 和 error。</span>
+
+            <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+                <span class="n">r</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"%v, Attempt %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">attempt</span><span class="p">)</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">resp</span><span class="p">,</span> <span class="n">err</span>
+        <span class="p">},</span>
+        <span class="n">Retries</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">RetryCount</span><span class="p">),</span>
+        <span class="n">WaitTime</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">RetryWaitTime</span><span class="p">),</span>
+        <span class="n">MaxWaitTime</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">RetryMaxWaitTime</span><span class="p">),</span>
+        <span class="n">RetryConditions</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">RetryConditions</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">resp</span><span class="p">,</span> <span class="n">unwrapNoRetryErr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h3 id="backoff函数">Backoff函数</h3><div class="language-go highlighter-rouge"><div class="code-header" text-data="go"><button data-original-title="Copied!"><i class="far fa-clone"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+</pre><td class="rouge-code"><pre><span class="c">// Backoff retries with increasing timeout duration up until X amount of retries</span>
+<span class="c">// (Default is 3 attempts, Override with option Retries(n))</span>
+<span class="k">func</span> <span class="n">Backoff</span><span class="p">(</span><span class="n">operation</span> <span class="k">func</span><span class="p">()</span> <span class="p">(</span><span class="o">*</span><span class="n">Response</span><span class="p">,</span> <span class="kt">error</span><span class="p">),</span> <span class="n">options</span> <span class="o">...</span><span class="n">Option</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="c">// Defaults</span>
+    <span class="n">opts</span> <span class="o">:=</span> <span class="n">Options</span><span class="p">{</span>
+        <span class="n">maxRetries</span><span class="o">:</span>      <span class="n">defaultMaxRetries</span><span class="p">,</span>
+        <span class="n">waitTime</span><span class="o">:</span>        <span class="n">defaultWaitTime</span><span class="p">,</span>
+        <span class="n">maxWaitTime</span><span class="o">:</span>     <span class="n">defaultMaxWaitTime</span><span class="p">,</span>
+        <span class="n">retryConditions</span><span class="o">:</span> <span class="p">[]</span><span class="n">RetryConditionFunc</span><span class="p">{},</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">o</span> <span class="o">:=</span> <span class="k">range</span> <span class="n">options</span> <span class="p">{</span>
+        <span class="n">o</span><span class="p">(</span><span class="o">&amp;</span><span class="n">opts</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">var</span> <span class="p">(</span>
+        <span class="n">resp</span> <span class="o">*</span><span class="n">Response</span>
+        <span class="n">err</span>  <span class="kt">error</span>
+    <span class="p">)</span>
+
+    <span class="c">// 开始进行 opts.maxRetries 次 HTTP 请求</span>
+    <span class="k">for</span> <span class="n">attempt</span> <span class="o">:=</span> <span class="m">0</span><span class="p">;</span> <span class="n">attempt</span> <span class="o">&lt;=</span> <span class="n">opts</span><span class="o">.</span><span class="n">maxRetries</span><span class="p">;</span> <span class="n">attempt</span><span class="o">++</span> <span class="p">{</span>
+        <span class="c">// 执行处理函数 (发起 HTTP 请求)</span>
+        <span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">operation</span><span class="p">()</span>
+        <span class="n">ctx</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">()</span>
+
+        <span class="c">// 如果返回结果不为空并且 context 不为空，</span>
+        <span class="c">// 保持 repsonse 的请求上下文。</span>
+        <span class="k">if</span> <span class="n">resp</span> <span class="o">!=</span> <span class="no">nil</span> <span class="o">&amp;&amp;</span> <span class="n">resp</span><span class="o">.</span><span class="n">Request</span><span class="o">.</span><span class="n">ctx</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+            <span class="n">ctx</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">Request</span><span class="o">.</span><span class="n">ctx</span>
+        <span class="p">}</span>
+        <span class="c">// 如果上下文出错， 退出 Backoff() 流程</span>
+        <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">Err</span><span class="p">()</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">err</span>
+        <span class="p">}</span>
+
+        <span class="n">err1</span> <span class="o">:=</span> <span class="n">unwrapNoRetryErr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="c">// raw error, it used for return users callback.</span>
+
+        <span class="n">needsRetry</span> <span class="o">:=</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="o">&amp;&amp;</span> <span class="n">err</span> <span class="o">==</span> <span class="n">err1</span>
+        <span class="c">// retry on a few operation errors by default</span>
+
+        <span class="c">// 执行 retryConditions(), 设置检查重试的条件。</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">condition</span> <span class="o">:=</span> <span class="k">range</span> <span class="n">opts</span><span class="o">.</span><span class="n">retryConditions</span> <span class="p">{</span>
+            <span class="n">needsRetry</span> <span class="o">=</span> <span class="n">condition</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">err1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">needsRetry</span> <span class="p">{</span>
+                <span class="k">break</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="o">!</span><span class="n">needsRetry</span> <span class="p">{</span> <span class="c">//根据 needsRetry 判断是否退出流程</span>
+            <span class="k">return</span> <span class="n">err</span>
+        <span class="p">}</span>
+
+        <span class="c">// 通过 sleepDuration()计算 Duration</span>
+        <span class="c">// （根据此次请求resp, 等待时间配置，最大超时时间和重试次数算出 sleepDuration。</span>
+        <span class="c">// 时间算法相对复杂， 具体参考： Exponential Backoff And Jitter）</span>
+        <span class="n">waitTime</span><span class="p">,</span> <span class="n">err2</span> <span class="o">:=</span> <span class="n">sleepDuration</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">opts</span><span class="o">.</span><span class="n">waitTime</span><span class="p">,</span> <span class="n">opts</span><span class="o">.</span><span class="n">maxWaitTime</span><span class="p">,</span> <span class="n">attempt</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">err2</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">err</span> <span class="o">==</span> <span class="no">nil</span> <span class="p">{</span>
+                <span class="n">err</span> <span class="o">=</span> <span class="n">err2</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">err</span>
+        <span class="p">}</span>
+
+        <span class="c">// 等待 waitTime 进行下个重试。 如果请求完成退出流程</span>
+        <span class="k">select</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="o">&lt;-</span><span class="n">time</span><span class="o">.</span><span class="n">After</span><span class="p">(</span><span class="n">waitTime</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">case</span> <span class="o">&lt;-</span><span class="n">ctx</span><span class="o">.</span><span class="n">Done</span><span class="p">()</span><span class="o">:</span>
+            <span class="k">return</span> <span class="n">ctx</span><span class="o">.</span><span class="n">Err</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">err</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h3 id="demo">Demo</h3><p>看具体 HTTP Client （有做过简单封装）的请求:</p><div class="language-go highlighter-rouge"><div class="code-header" text-data="go"><button data-original-title="Copied!"><i class="far fa-clone"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre><td class="rouge-code"><pre><span class="k">func</span> <span class="n">getInfo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">request</span> <span class="o">:=</span> <span class="n">client</span><span class="o">.</span><span class="n">DefaultClient</span><span class="p">()</span><span class="o">.</span><span class="n">NewRestyRequest</span><span class="p">(</span>
+    <span class="n">ctx</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="n">client</span><span class="o">.</span><span class="n">RequestOptions</span><span class="p">{</span>
+      <span class="n">MaxTries</span><span class="o">:</span>      <span class="m">3</span><span class="p">,</span>
+      <span class="n">RetryWaitTime</span><span class="o">:</span> <span class="m">500</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">,</span>
+      <span class="n">RetryConditionFunc</span><span class="o">:</span> <span class="k">func</span><span class="p">(</span><span class="n">response</span> <span class="o">*</span><span class="n">resty</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="p">(</span><span class="n">b</span> <span class="kt">bool</span><span class="p">,</span> <span class="n">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="o">!</span><span class="n">response</span><span class="o">.</span><span class="n">IsSuccess</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="no">true</span><span class="p">,</span> <span class="no">nil</span> <span class="p">}</span>
+        <span class="k">return</span>
+      <span class="p">},</span>
+    <span class="p">})</span><span class="o">.</span><span class="n">SetAuthToken</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">Token</span><span class="p">)</span>
+
+    <span class="c">// 然后 request.Get(url) 进入到 Backoff() 流程，</span>
+    <span class="c">// 此时重试的边界条件是： !response.IsSuccess(), 直到请求成功。</span>
+    <span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">request</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="n">body</span> <span class="o">:=</span> <span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">StatusCode</span><span class="p">()</span> <span class="o">!=</span> <span class="m">200</span> <span class="p">{</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span>
+      <span class="n">ctx</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"Request keycloak access token failed, messages:%s, body:%s"</span><span class="p">,</span><span class="s">"message"</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">Status</span><span class="p">(),</span><span class="kt">string</span><span class="p">(</span><span class="n">body</span><span class="p">))),</span>
+        <span class="p">)</span>
+    <span class="k">return</span>
+    <span class="p">}</span>
+  <span class="o">...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><hr /><h3 id="一些其他重试机制的实现">一些其他重试机制的实现</h3><p>可以看出其实 go-resty 的 重试策略不是很简单， 这是一个完善，可定制化， 充分考虑 HTTP 请求场景下的一个机制， 它的业务属性相对比较重。</p><p>实现一</p><p>每次重试等待随机延长的时间， 直到 f() 执行完成 或不再重试。</p><div class="language-go highlighter-rouge"><div class="code-header" text-data="go"><button data-original-title="Copied!"><i class="far fa-clone"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre><td class="rouge-code"><pre><span class="c">// retry retries ephemeral errors from f up to an arbitrary timeout</span>
+<span class="k">func</span> <span class="n">retry</span><span class="p">(</span><span class="n">f</span> <span class="k">func</span><span class="p">()</span> <span class="p">(</span><span class="n">err</span> <span class="kt">error</span><span class="p">,</span> <span class="n">mayRetry</span> <span class="kt">bool</span><span class="p">))</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="p">(</span>
+        <span class="n">bestErr</span>     <span class="kt">error</span>
+        <span class="n">lowestErrno</span> <span class="n">syscall</span><span class="o">.</span><span class="n">Errno</span>
+        <span class="n">start</span>       <span class="n">time</span><span class="o">.</span><span class="n">Time</span>
+        <span class="n">nextSleep</span>   <span class="n">time</span><span class="o">.</span><span class="n">Duration</span> <span class="o">=</span> <span class="m">1</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="n">err</span><span class="p">,</span> <span class="n">mayRetry</span> <span class="o">:=</span> <span class="n">f</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">err</span> <span class="o">==</span> <span class="no">nil</span> <span class="o">||</span> <span class="o">!</span><span class="n">mayRetry</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">err</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">errno</span><span class="p">,</span> <span class="n">ok</span> <span class="o">:=</span> <span class="n">err</span><span class="o">.</span><span class="p">(</span><span class="n">syscall</span><span class="o">.</span><span class="n">Errno</span><span class="p">);</span> <span class="n">ok</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">lowestErrno</span> <span class="o">==</span> <span class="m">0</span> <span class="o">||</span> <span class="n">errno</span> <span class="o">&lt;</span> <span class="n">lowestErrno</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">bestErr</span> <span class="o">=</span> <span class="n">err</span>
+            <span class="n">lowestErrno</span> <span class="o">=</span> <span class="n">errno</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">bestErr</span> <span class="o">==</span> <span class="no">nil</span> <span class="p">{</span>
+            <span class="n">bestErr</span> <span class="o">=</span> <span class="n">err</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">start</span><span class="o">.</span><span class="n">IsZero</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">d</span> <span class="o">:=</span> <span class="n">time</span><span class="o">.</span><span class="n">Since</span><span class="p">(</span><span class="n">start</span><span class="p">)</span> <span class="o">+</span> <span class="n">nextSleep</span><span class="p">;</span> <span class="n">d</span> <span class="o">&gt;=</span> <span class="n">arbitraryTimeout</span> <span class="p">{</span>
+            <span class="k">break</span>
+        <span class="p">}</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">nextSleep</span><span class="p">)</span>
+        <span class="n">nextSleep</span> <span class="o">+=</span> <span class="n">time</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">rand</span><span class="o">.</span><span class="n">Int63n</span><span class="p">(</span><span class="kt">int64</span><span class="p">(</span><span class="n">nextSleep</span><span class="p">)))</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">bestErr</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>实现二</p><p>对函数重试 attempts 次，每次等待 sleep 时间， 直到 f() 执行完成。</p><pre><code class="language-`go">func Retry(attempts int, sleep time.Duration, f func() error) (err error) {
+    for i := 0; ; i++ {
+        err = f()
+        if err == nil {
+            return
+        }
+
+        if i &gt;= (attempts - 1) {
+            break
+        }
+
+        time.Sleep(sleep)
+
+    }
+    return fmt.Errorf("after %d attempts, last error: %v", attempts, err)
+}
+</code></pre><p>.</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/web/'>Web</a>, <a href='/categories/http/'>HTTP</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/web/" class="post-tag no-text-decoration" >Web</a> <a href="/tags/http/" class="post-tag no-text-decoration" >HTTP</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=HTTP - Retry - Grace&url=https://ocholuo.github.io//posts/HTTP-Retry/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=HTTP - Retry - Grace&u=https://ocholuo.github.io//posts/HTTP-Retry/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=HTTP - Retry - Grace&url=https://ocholuo.github.io//posts/HTTP-Retry/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/Amazon-CloudFront/">AWS Lab - AWS CloudFront</a><li><a href="/posts/Alexa-1stSkill/">AWS Alex First Skill - RedVelvet Time</a><li><a href="/posts/NetworkProtocol-SSL-TLS-Handshake/">NetworkProtocol SSL/TLS Handshake</a><li><a href="/posts/pythonCrash/">Python Crash</a><li><a href="/posts/%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%A7%A3%E9%87%8AAWS/">AWS - 一句话解释AWS</a><li><a href="/posts/GKE/">GCP - Google Cloud Computing - Kubernetes and Kubernetes Engine</a><li><a href="/posts/Go-Note/">Go Note</a><li><a href="/posts/SCPs/">AWS - IdenAccessManage - SCPs (Service Control Policies)</a><li><a href="/posts/CompanyBenefit/">Company Benefit</a><li><a href="/posts/Encryption-SSL&TLS/">Cryptography - SSL/TLS Encryption</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/aws/">AWS</a> <a class="post-tag" href="/tags/linux/">Linux</a> <a class="post-tag" href="/tags/cyberattack/">CyberAttack</a> <a class="post-tag" href="/tags/lab/">Lab</a> <a class="post-tag" href="/tags/cyberattacktools/">CyberAttackTools</a> <a class="post-tag" href="/tags/gcp/">GCP</a> <a class="post-tag" href="/tags/sysadmin/">Sysadmin</a> <a class="post-tag" href="/tags/java/">Java</a> <a class="post-tag" href="/tags/network/">Network</a> <a class="post-tag" href="/tags/soc/">SOC</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/HTTP-Header/"><div class="card-body"> <span class="timeago small" >Apr 25, 2020<i class="unloaded">2020-04-25T11:11:11-04:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>HTTP Header</h3><div class="text-muted small"><p> HTTP Header Pragma WWW-Authenticate response header HTTP Header Pragma The Pragma HTTP/1.0 general header is an implementation-specific header that may have vari...</p></div></div></a></div><div class="card"> <a href="/posts/HTTP-Referrer/"><div class="card-body"> <span class="timeago small" >Apr 25, 2020<i class="unloaded">2020-04-25T11:11:11-04:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>HTTP Referer</h3><div class="text-muted small"><p> HTTP Referer Referer 的含义 Referer 的发生场景 Referer 的作用 rel属性 Referrer Policy 的值 Referrer Policy 的用法 退出页面重定向 ref http://www.ruanyif...</p></div></div></a></div><div class="card"> <a href="/posts/HTTP-Status-Code/"><div class="card-body"> <span class="timeago small" >Apr 25, 2020<i class="unloaded">2020-04-25T11:11:11-04:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>HTTP status code</h3><div class="text-muted small"><p> HTTP Status Code 1xx: Information 2xx: Successful 3xx: Redirection 4xx: Client Error 5xx: Server Error HTTP Status Code 1xx: Information ...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/panda/" class="btn btn-outline-primary" prompt="Older"><p>Python - Panda Library</p></a> <a href="/posts/ml-1/" class="btn btn-outline-primary" prompt="Newer"><p>ML - 1st - Intro to Machine Learning</p></a></div></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2023 <a href="https://github.com/ocholuo">Grace JyL</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/aws/">AWS</a> <a class="post-tag" href="/tags/linux/">Linux</a> <a class="post-tag" href="/tags/cyberattack/">CyberAttack</a> <a class="post-tag" href="/tags/lab/">Lab</a> <a class="post-tag" href="/tags/cyberattacktools/">CyberAttackTools</a> <a class="post-tag" href="/tags/gcp/">GCP</a> <a class="post-tag" href="/tags/sysadmin/">Sysadmin</a> <a class="post-tag" href="/tags/java/">Java</a> <a class="post-tag" href="/tags/network/">Network</a> <a class="post-tag" href="/tags/soc/">SOC</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://ocholuo.github.io/{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script async src="https://cdn.jsdelivr.net/npm/countup.js@1.9.3/dist/countUp.min.js"></script> <script defer src="/assets/js/dist/pvreport.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/lozad/dist/lozad.min.js,npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script> /* see: <https://docs.mathjax.org/en/latest/options/input/tex.html#tex-options> */ MathJax = { tex: { inlineMath: [ /* start/end delimiter pairs for in-line math */ ['$','$'], ['\\(','\\)'] ], displayMath: [ /* start/end delimiter pairs for display math */ ['$$', '$$'], ['\\[', '\\]'] ] } }; </script> <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"> </script> <script src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.16.1,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-179830187-1"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-179830187-1'); }); </script>
