@@ -109,7 +109,7 @@ There are a few things to get ready for.
 
 Next, configure the _Pages_ service.
 
-1. Browse to your repository on GitHub. Select the tab _Settings_, then click _Pages_ in the left navigation bar. Then, in the **Source** section (under _Build and deployment_), select [**GitHub Actions**][pages-workflow-src] from the dropdown menu.  
+1. Browse to your repository on GitHub. Select the tab _Settings_, then click _Pages_ in the left navigation bar. Then, in the **Source** section (under _Build and deployment_), select [**GitHub Actions**][pages-workflow-src] from the dropdown menu.
 ![Build source](pages-source-light.png){: .light .border .normal w='375' h='140' }
 ![Build source](pages-source-dark.png){: .dark .normal w='375' h='140' }
 
