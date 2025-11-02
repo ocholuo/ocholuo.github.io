@@ -82,3 +82,6 @@ possibile
 aci
 smal
 fpr
+ois
+gost
+tre

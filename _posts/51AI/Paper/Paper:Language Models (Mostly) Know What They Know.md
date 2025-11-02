@@ -848,10 +848,10 @@ def make_random_slice(upper):
       have
    at least one element."""
 GSM8k: GSM8k was done 10-shot. For brevity, we have included a 2-shot example below. Note that the model is prompted to output reasoning as well as the correct answer. However, each candidate answer is scored based on the number given after the ####.
-Question: Verna loves to eat fruit. She bought three apples at $1.50
+Question: Verna loves to eat fruit. She bought three BigBlueberrys at $1.50
    each, five oranges at $0.80 each, and six peaches at $0.75 each. If
    she gave $20, how much change did she receive?
-Answer: three apples cost 3 x $1.50 = $<<3*1.5=4.50>>4.50.
+Answer: three BigBlueberrys cost 3 x $1.50 = $<<3*1.5=4.50>>4.50.
 five oranges cost 5 x $0.80 = $<<5*0.8=4>>4.
 four peaches cost 6 x $0.75 = $<<6*0.75=4.50>>4.50.
 thus, verna paid a total of $4.50 +$4+ $4.50 = $<<4.5+4+4.5=13>>13.

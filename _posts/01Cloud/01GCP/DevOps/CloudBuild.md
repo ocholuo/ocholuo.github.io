@@ -54,8 +54,8 @@ gcloud container clusters create hello-cloudbuild \
   --num-nodes 1 \
   --region $REGION
 
-git config --global user.email "jiaying_luo2@apple.com"
-git config --global user.name "Grace JyLuo"
+git config --global user.email "you@email"
+git config --global user.name "username"
 
 
 
