@@ -1,16 +1,18 @@
+# Home Loan
 
-- [loan](#loan)
-- [public info](#public-info)
-- [DADU](#dadu)
-- [sewer](#sewer)
-- [rate](#rate)
-- [cash](#cash)
-- [remodel](#remodel)
-  - [designer](#designer)
-- [inspection](#inspection)
-- [Questions](#questions)
+- [Home Loan](#home-loan)
+  - [loan](#loan)
+  - [public info](#public-info)
+  - [DADU](#dadu)
+  - [sewer](#sewer)
+  - [rate](#rate)
+  - [cash](#cash)
+  - [remodel](#remodel)
+    - [designer](#designer)
+  - [inspection](#inspection)
+  - [Questions](#questions)
 
-
+---
 
 ## loan
 
@@ -20,7 +22,7 @@
 
 - Zillow. You can get quotes from various places through them: https://www.zillow.com/mortgages/
 
-
+---
 
 ## public info
 
@@ -28,6 +30,7 @@
 
 - Seattle also has the [microfilm library](https://www.seattle.gov/sdci/about-us/who-we-are/public-resource-center) that might have more information; however that takes time to get but I did get my home's blueprints.   There is a ton of data there so making meaning out of it can be non trivial and overwhelming.
 
+---
 
 ## DADU
 
@@ -41,48 +44,35 @@
 
 - There’s a Seattle website out there that will tell you what’s feasible based on the parcel id: https://aduniverse-seattlecitygis.hub.arcgis.com/pages/feasibility
 
-
 ## sewer
 
 - use the county [website](https://gisrevprxy.seattle.gov/wab_ext/DSOResearch_Ext/) to find the sewer lines and look for disproportionately thriving greenery around the sewer line
 
-
-
 ## rate
-
 
 Shop around for rates, I found the best rates: https://www.sammamishmortgage.com/
 
-
 for neighborhoods you're interested in, find a few realtors who specialize in those areas and have a phone call or coffee with them to see if you click.
-'
-
 
 - Don’t let anyone pressure you into buying a property you don’t like
 
 - go to open houses as much as possible.
 
-
 - Homes can end up going for above (or quite possibly below) the list price.
-
 
 - You might have more leverage to negotiate as a buyer if a home lingered on the market for some time (e.g. over 30 days).
 
-
 - if at all feasible, see what kind of loan you can qualify for on just one of your incomes; do whatever you can to avoid getting saddled with a loan at the limits of what you can qualify for when you are both working 100% of the jobs you currently have
 
+---
 
 ## cash
 
 - need to have some cash available for whatever that first year in the house turns up, stuff will definitely turn up, maybe 10-20k of buffer on hand.
 
-
 - consider how long you plan to stay in the home. It’s much easier to accept compromises if your plan is to only stay for say 5 years vs. 30
 
-
-
-
-
+---
 
 ## remodel
 
@@ -90,44 +80,35 @@ for neighborhoods you're interested in, find a few realtors who specialize in th
 
 - I Love love love old homes and they are beautiful but... updating them or opening up walls can really be $$$$$
 
-
 - If you have to choose between sqft vs how good the interiors look, go with larger sqft and you can always update interiors.
-
 
 - Plumbing related work is expensive. A remodel involving bathroom/kitchen are expensive
 
-
 - Old homes are a mixed bag like the quality of some parts of the home your just not gonna get now. Like beautiful hardwood floors and just the details and character. New homes are often crappier materials but easier to fix when they break
-
 
 - The most beginner-friendly homes are apartments (not houses) that are already renovated. They come with the least hassle and costs.
 
-
 - Updating floor materials, wall colors, removing walls and removing storage is cheap and quick. Renovating kitchens and bathrooms is not. Windows are expensive and extensions are the hardest to pull off.
 
+---
 
 ### designer
 
 - If you'll undertake a major renovation, start finding an architect or interior designer and researching materials and providers (with delivery timelines) before you buy. This process often takes 2-3 months in which your new house would be sitting idle.
 - I have seen many friends get into 2-year-long money pits for just hiring a "good builder" and launching into major renovations without an architect or any plans. And often the result is just what they ended up accepting because they couldn't cope with it dragging on any longer. Hire a professional who will protect you from common pitfalls from builders.
 
-
 ## inspection
 
 - get it checked out before you buy, its worth the cost. I once had a plumbing issue cost over 13k for a 100 year old homes. I don't know the water situation in seattle but septic and well can end up costing a lot to maintain and depending on how hard the water it can destroy hot water heaters and appliances with out proper filtration.  If the choice is between a house on city services / well / septic, i would take city every day.
 
-
 ---
 
-
 ## Questions
-
 
 for one person
 - annual income: 210,000
 - unmarried
 - other tax deduction: 8,000/year
-
 
 House purchase
 - Purchase Price: `$940,000`
@@ -138,20 +119,16 @@ House purchase
 - closing fee: `$10,000 `
 - lender fee: `$5,000`
 
-
 Q:
 - how many tax benefits can he get from below home purchase
 - how much total interest will he pay?
 - what's the monthly payment?
-
-
 
 Expense Example Assumption:
 - Let's assume an annual property insurance cost of `$1,500` and an annual maintenance cost of `$3,000.`
 - Total Annual Expenses = Property Tax + Property Insurance + Maintenance
 - = `$11,280 + $1,500 + $3,000`
 - = `$15,780`
-
 
 Tax Benefits:
 - The primary tax benefits in this case would come from the `mortgage interest deduction` and `property tax deduction`.
@@ -167,7 +144,6 @@ Tax Benefits:
 - The total tax benefits from the home purchase:
   - the sum of the mortgage interest deduction and property tax deduction
   - `$49,840 + $11,280` = `$61,120`.
-
 
 Remaining Tax:
 - Annual income: `$210,000`
@@ -200,11 +176,10 @@ Total Monthly Payment = Principal Payment + Interest Payment
                      ≈ $4,811.00
 ```
 
-
 ```bash
 # mortgage payments for the first 30 months of the loan:
 | Month | Starting Balance | Monthly Payment | Interest Payment | Principal Payment | Additional Payment | Ending Balance |
-| ----- | ---------------- | --------------- | ---------------- | ----------------- | ------------------ | -------------- |
+|-------|------------------|-----------------|------------------|-------------------|--------------------|----------------|
 | 1     | $744,000.00      | $4,825.57       | $4,185.00        | $640.57           | $0.00              | $743,359.43    |
 | 2     | $743,359.43      | $4,825.57       | $4,181.40        | $644.17           | $0.00              | $742,715.26    |
 | 3     | $742,715.26      | $4,825.57       | $4,177.77        | $647.80           | $0.00              | $742,067.46    |
@@ -248,7 +223,6 @@ Total Monthly Payment = Principal Payment + Interest Payment
 | 359   | $9,570.13        | $4,825.57       | $53.83           | $4,771.74         | $0.00              | $4,798.39      |
 | 360   | $4,798.39        | $4,825.57       | $26.99           | $4,798.58         | $0.00              | $-0.19         |
 
-
 1-12 yearly_interest_payment: --> $45,833.44
 2-24 yearly_interest_payment: --> $49,473.02
 3-36 yearly_interest_payment: --> $48,885.79
@@ -284,10 +258,10 @@ total_interest_payment: $993,205.01
 # Around the 252nd month, the Interest Payment becomes very close to the Principal Payment, but they are not exactly equal. This is because the principal payment continues to reduce the loan balance, and as the loan balance becomes smaller, the interest payment also decreases.
 ```
 
-
 If the individual pays off a lump sum of `$350,000` towards the loan at the end of the 2nd year, it will significantly impact the remaining balance and the subsequent monthly payments.
 
 Original loan details:
+
 - Loan amount: $752,000
 - Interest rate: 6.625%
 - Loan term: 30 years (360 months)
@@ -311,11 +285,8 @@ To calculate the total interest paid, we can sum up the interest payments over t
 Total interest = Interest payment (Month 1) + Interest payment (Month 2) + ... + Interest payment (Month 24)
 ≈ $4,940.42 + $4,938.15 + ... + $2,649.31
 
-
-
 ```java
 // Here's the new table for the first few months after the lump sum payment:
-
 
 // when rate is 6.75%
 
@@ -336,7 +307,6 @@ yearly_additional_payment = 2288
 // 1-12 yearly_interest_payment: --> 45,714.97, current_balance: --> 733650.8254058858
 // total_interest_payment: $978,572.29
 
-
 yearly_additional_payment = 30000
 years_for_additional_payment = [2]
 // 1-12 yearly_interest_payment: --> 44,280.07, current_balance: --> 704339.9705584085
@@ -347,7 +317,6 @@ years_for_additional_payment = [2]
 // 25-300 yearly_interest_payment: --> 7,912.65, current_balance: --> 85545.73896623445
 // 26-312 yearly_interest_payment: --> 4,431.66, current_balance: --> 31769.7599182405
 // total_interest_payment: $824,044.45
-
 
 yearly_additional_payment = 30000
 years_for_additional_payment = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 268, 180, 192, 204, 216]
@@ -366,7 +335,6 @@ years_for_additional_payment = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 1
 // 13-156 yearly_interest_payment: --> 7,386.57, current_balance: --> 44826.308899335054
 // total_interest_payment: $414,961.52
 
-
 yearly_additional_payment = 60000
 years_for_additional_payment = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 268, 180, 192, 204, 216]
 // 1-12 yearly_interest_payment: --> 45,833.44, current_balance: --> 676070.8324747018
@@ -380,7 +348,6 @@ years_for_additional_payment = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 1
 // 9-108 yearly_interest_payment: --> 8,388.70, current_balance: --> 27715.268953851268
 // total_interest_payment: $285,415.25
 
-
 yearly_additional_payment = 90000
 years_for_additional_payment = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 268, 180, 192, 204, 216]
 // 1-12 yearly_interest_payment: --> 45,833.44, current_balance: --> 646070.8324747018
@@ -391,8 +358,6 @@ years_for_additional_payment = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 1
 // 6-72 yearly_interest_payment: --> 19,187.54, current_balance: --> 161948.4140063157
 // 7-84 yearly_interest_payment: --> 10,225.08, current_balance: --> 23492.195569928983
 // total_interest_payment: $225,235.30
-
-
 
 
 // when rate is 4%
@@ -428,7 +393,6 @@ years_for_additional_payment = [2]
 // 17-204 yearly_interest_payment: --> 1,483.08, current_balance: --> 1523.2201208691176
 // total_interest_payment: $271,944.58
 
-
 yearly_additional_payment = 30000
 years_for_additional_payment = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 268, 180, 192, 204, 216]
 // 1-12 yearly_interest_payment: --> 26,845.65, current_balance: --> 685331.3577520887
@@ -443,7 +407,6 @@ years_for_additional_payment = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 1
 // 10-120 yearly_interest_payment: --> 5,755.95, current_balance: --> 78482.90662394666
 // 11-132 yearly_interest_payment: --> 2,409.00, current_balance: --> -7299.928847598752
 // total_interest_payment: $185,675.31
-
 
 yearly_additional_payment = 60000
 years_for_additional_payment = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 268, 180, 192, 204, 216]
