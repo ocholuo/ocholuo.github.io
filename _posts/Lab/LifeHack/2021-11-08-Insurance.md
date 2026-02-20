@@ -35,7 +35,7 @@ ref:
 - Dependent Day Care FSA: 5000
 
 | Account Type       | Annual Limit + Carryover | Eligible Expenses       | Tax Advantage                                      |
-| ------------------ | ------------------------ | ----------------------- | -------------------------------------------------- |
+|--------------------|--------------------------|-------------------------|----------------------------------------------------|
 | HSA                | ✅ Unlimited rollover     | Medical, dental, vision | Triple tax-free (contribution, growth, withdrawal) |
 | FSA                | ✅ max carryover          | Medical, dental, vision | Tax-free contribution                              |
 | LPFSA              | ✅ max carryover          | Vision, dental only     | Tax-free contribution                              |
@@ -46,7 +46,7 @@ Note:
 - 可以同时有 hsa 和 lpfsa，后者报销 vision 和 dental
 
 | Account Type       | 2026                       | 2025                       |
-| ------------------ | -------------------------- | -------------------------- |
+|--------------------|----------------------------|----------------------------|
 | HSA                | `$4400` (`$750`)           | `$4300`(`$750`)            |
 | FSA                | `$3400` (`$680` carryover) | `$3300` (`$660` carryover) |
 | LPFSA              | `$3400` (`$680` carryover) | `$3300` (`$660` carryover) |
@@ -79,7 +79,7 @@ LPFSA
   - `$11`/paycheck x 26 (`~$286`/year)
 
 
-![](../../../assets/img/2021-11-08-Insurance-20251028143454.png)
+![](/assets/img/2021-11-08-Insurance-20251028143454.png)
 
 ### 💰 HSA
 

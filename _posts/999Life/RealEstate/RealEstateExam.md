@@ -9,251 +9,6 @@ tags: [life, finance]
 
 # Real Estate Exam
 
-- [Real Estate Exam](#real-estate-exam)
-  - [Texas 房地产执照考试 知识结构思维导图（中文版）](#texas-房地产执照考试-知识结构思维导图中文版)
-  - [Texas Real Estate License Exam](#texas-real-estate-license-exam)
-    - [📚 Section 1: 权益与地产；所有权（Interests \& Estates; Ownership）](#-section-1-权益与地产所有权interests--estates-ownership)
-    - [📚 Section 2: 产权负担；留置权；产权转移与记录；租赁](#-section-2-产权负担留置权产权转移与记录租赁)
-    - [📚 Section 3: 土地使用；法律描述；合同法](#-section-3-土地使用法律描述合同法)
-    - [📚 Section 4: 代理关系；挂牌协议](#-section-4-代理关系挂牌协议)
-    - [📚 Section 5: 经纪业务；销售合同](#-section-5-经纪业务销售合同)
-    - [📚 Section 6: 经济学；评估](#-section-6-经济学评估)
-    - [📚 Section 7: 融资](#-section-7-融资)
-    - [📚 Section 8: 投资；税收；专业实践](#-section-8-投资税收专业实践)
-    - [📚 Section 9: 交易结算；风险管理；物业管理](#-section-9-交易结算风险管理物业管理)
-        - [核心概念](#核心概念)
-    - [📚 Section 10: 房地产数学](#-section-10-房地产数学)
-  - [Book detail](#book-detail)
-    - [Section 1: National Principles \& Law Key Point Review](#section-1-national-principles--law-key-point-review)
-      - [📖 Right](#-right)
-        - [✅ 房地产的定义 (Land / Real Estate / Real Property Definition)](#-房地产的定义-land--real-estate--real-property-definition)
-        - [✅ 土地的物理特性 (Physical Characteristics of Land)](#-土地的物理特性-physical-characteristics-of-land)
-        - [✅ Land vs Real Estate](#-land-vs-real-estate)
-        - [✅ Real eEstate as Property](#-real-eestate-as-property)
-        - [✅ 法律产权 vs 衡平产权 (Legal Title vs Equitable title)](#-法律产权-vs-衡平产权-legal-title-vs-equitable-title)
-        - [✅ 房地产权利（Real Property Rights）](#-房地产权利real-property-rights)
-        - [✅ 房地产 (Real Property) vs. 动产 (Personal Property)](#-房地产-real-property-vs-动产-personal-property)
-        - [✅ 土地的经济特性 (Economic Characteristics of Land)](#-土地的经济特性-economic-characteristics-of-land)
-        - [✅ 房地产所有权类型 (Forms of Real Estate Ownership)](#-房地产所有权类型-forms-of-real-estate-ownership)
-        - [✅ 房地产市场特点 (Market Characteristics)](#-房地产市场特点-market-characteristics)
-      - [📖 权利、权益与地产 (Rights, Interests \& Estates)](#-权利权益与地产-rights-interests--estates)
-        - [✅ 财产权利 (Bundle of Rights)](#-财产权利-bundle-of-rights)
-        - [✅ 权益 (Interests in Real Estate)](#-权益-interests-in-real-estate)
-        - [✅ 地产类型 (Estates in Land)](#-地产类型-estates-in-land)
-      - [📖 房地产所有权 (Ownership in Real Estate)](#-房地产所有权-ownership-in-real-estate)
-        - [✅ 所有权概念 (Concept of Ownership)](#-所有权概念-concept-of-ownership)
-        - [✅ 产权类型 (Types of Ownership)](#-产权类型-types-of-ownership)
-      - [📖 产权负担与留置权 (Encumbrances \& Liens)](#-产权负担与留置权-encumbrances--liens)
-        - [✅ 产权负担 (Encumbrances)](#-产权负担-encumbrances)
-        - [✅ 地役权 (Easements)](#-地役权-easements)
-        - [✅ 私设限制 (Deed Restrictions)](#-私设限制-deed-restrictions)
-        - [✅ 政府限制 (Government Restrictions)](#-政府限制-government-restrictions)
-        - [✅ 留置权 (Liens)](#-留置权-liens)
-      - [📖 产权转让与记录 (Transferring \& Recording Title)](#-产权转让与记录-transferring--recording-title)
-        - [✅ 产权证书 (Title)](#-产权证书-title)
-        - [✅ 产权转让方式 (Methods of Transferring Title)](#-产权转让方式-methods-of-transferring-title)
-        - [✅ 产权记录 (Recording Title)](#-产权记录-recording-title)
-        - [✅ 产权瑕疵 (Title Defects)](#-产权瑕疵-title-defects)
-        - [✅ 产权保险 (Title Insurance)](#-产权保险-title-insurance)
-      - [📖 租赁 (Leases)](#-租赁-leases)
-        - [✅ 租赁概念 (Definition of Lease)](#-租赁概念-definition-of-lease)
-        - [✅ 租赁条款 (Lease Terms)](#-租赁条款-lease-terms)
-        - [✅ 租赁类型 (Types of Leases)](#-租赁类型-types-of-leases)
-        - [✅ 租金结构 (Types of Rent Agreements)](#-租金结构-types-of-rent-agreements)
-        - [✅ 租赁终止方式 (Termination of Lease)](#-租赁终止方式-termination-of-lease)
-      - [📖 土地使用与管制 (Land Use Control and Regulation)](#-土地使用与管制-land-use-control-and-regulation)
-        - [✅ 土地使用管制的类型 (Types of Land Use Control)](#-土地使用管制的类型-types-of-land-use-control)
-        - [✅ 政府的土地使用权力 (Government Rights in Land)](#-政府的土地使用权力-government-rights-in-land)
-        - [✅ 土地使用规划 (Zoning and Land Use Planning)](#-土地使用规划-zoning-and-land-use-planning)
-        - [✅ 特殊用途分区 (Special Zoning Types)](#-特殊用途分区-special-zoning-types)
-        - [✅ 环境法规 (Environmental Regulations)](#-环境法规-environmental-regulations)
-      - [📖 法律描述 (Legal Descriptions)](#-法律描述-legal-descriptions)
-      - [✅ 法律描述的目的 (Purpose of Legal Descriptions)](#-法律描述的目的-purpose-of-legal-descriptions)
-        - [✅ 测量标记与界限法 (Metes and Bounds)](#-测量标记与界限法-metes-and-bounds)
-        - [✅ 政府测量法 (Rectangular Survey System / Government Survey System)](#-政府测量法-rectangular-survey-system--government-survey-system)
-        - [✅ 区划法 (Lot and Block System / Recorded Plat System)](#-区划法-lot-and-block-system--recorded-plat-system)
-      - [📖 合同法 (Contract Law)](#-合同法-contract-law)
-        - [✅ 合同的基本要素 (Essential Elements of a Contract)](#-合同的基本要素-essential-elements-of-a-contract)
-        - [✅ 合同类型 (Types of Contracts)](#-合同类型-types-of-contracts)
-        - [✅ 合同的执行 (Performance of Contract)](#-合同的执行-performance-of-contract)
-        - [✅ 合同的补救措施 (Remedies for Breach of Contract)](#-合同的补救措施-remedies-for-breach-of-contract)
-      - [📖 房地产代理关系 (Agency in Real Estate)](#-房地产代理关系-agency-in-real-estate)
-        - [✅ 代理关系 (Agency Relationship)](#-代理关系-agency-relationship)
-        - [✅ 代理类型 (Types of Agency)](#-代理类型-types-of-agency)
-        - [✅ 代理义务 (Agent’s Fiduciary Duties)](#-代理义务-agents-fiduciary-duties)
-        - [✅ 代理关系的创建与终止 (Creation \& Termination of Agency)](#-代理关系的创建与终止-creation--termination-of-agency)
-        - [📝 总结](#-总结)
-      - [📖 挂牌协议 (Listing Agreements)](#-挂牌协议-listing-agreements)
-        - [✅ 挂牌协议的作用 (Purpose of Listing Agreements)](#-挂牌协议的作用-purpose-of-listing-agreements)
-        - [✅ 挂牌协议的主要类型 (Types of Listing Agreements)](#-挂牌协议的主要类型-types-of-listing-agreements)
-        - [✅ 挂牌协议的条款 (Listing Agreement Provisions)](#-挂牌协议的条款-listing-agreement-provisions)
-        - [✅ 合同终止方式 (Termination of Listing Agreements)](#-合同终止方式-termination-of-listing-agreements)
-        - [📝 总结](#-总结-1)
-      - [📖 经纪业务 (Brokerage)](#-经纪业务-brokerage)
-        - [🔹 1. 谁可以成为房地产经纪人 (Who May Broker)](#-1-谁可以成为房地产经纪人-who-may-broker)
-        - [🔹 2. 经纪人-代理人关系 (Broker-Agent Relationship)](#-2-经纪人-代理人关系-broker-agent-relationship)
-        - [🔹 3. 代理人的工作职责 (Obligations and Responsibilities)](#-3-代理人的工作职责-obligations-and-responsibilities)
-        - [🔹 4. 代理人的佣金 (Agent Compensation)](#-4-代理人的佣金-agent-compensation)
-        - [🔹 5. 混合资金与非法挪用资金 (Commingling \& Conversion)](#-5-混合资金与非法挪用资金-commingling--conversion)
-        - [🔹 6. 房地产广告规定 (Advertising Requirements)](#-6-房地产广告规定-advertising-requirements)
-        - [🔹 7. 反垄断法律 (Anti-Trust Laws)](#-7-反垄断法律-anti-trust-laws)
-      - [📖 销售合同 (Sales Contrats)](#-销售合同-sales-contrats)
-        - [🔹 1. 什么是销售合同？ (Key Characteristics of Sales Contracts)](#-1-什么是销售合同-key-characteristics-of-sales-contracts)
-        - [🔹 2. 销售合同的创建 (Creation of Sales Contracts)](#-2-销售合同的创建-creation-of-sales-contracts)
-          - [✅ 创建合同的关键步骤：](#-创建合同的关键步骤)
-        - [🔹 3. 定金 (Earnest Money Deposit)](#-3-定金-earnest-money-deposit)
-        - [🔹 4. 附带条件 (Contingencies)](#-4-附带条件-contingencies)
-        - [🔹 5. 违约责任 (Default \& Remedies)](#-5-违约责任-default--remedies)
-      - [📖 房地产经济学 (Economcs)](#-房地产经济学-economcs)
-        - [✅ 供需关系 (Supply \& Demand)](#-供需关系-supply--demand)
-          - [✅ 价格与市场均衡 (Price \& Market Equilibrium)](#-价格与市场均衡-price--market-equilibrium)
-          - [✅ 市场周期 (Market Cycle)](#-市场周期-market-cycle)
-          - [✅ 影响供给的因素 (Factors Affecting Supply)](#-影响供给的因素-factors-affecting-supply)
-          - [✅ 影响需求的因素 (Factors Affecting Demand)](#-影响需求的因素-factors-affecting-demand)
-          - [✅ 政府对房地产市场的影响 (Government Influence on Real Estate Market)](#-政府对房地产市场的影响-government-influence-on-real-estate-market)
-          - [✅ 市场指标 (Market Indicators)](#-市场指标-market-indicators)
-        - [📝 总结](#-总结-2)
-      - [📖 房地产估价 (Appraisal)](#-房地产估价-appraisal)
-        - [✅ 估价目的 (Purpose of Appraisal)](#-估价目的-purpose-of-appraisal)
-        - [✅ 市场价值与估价原则 (Market Value \& Principles of Value)](#-市场价值与估价原则-market-value--principles-of-value)
-        - [✅ 估价方法 (Approaches to Value)](#-估价方法-approaches-to-value)
-        - [✅ 折旧与房产价值 (Depreciation \& Property Value)](#-折旧与房产价值-depreciation--property-value)
-        - [✅ 估价流程 (Appraisal Process)](#-估价流程-appraisal-process)
-      - [📖 房地产金融 (Finance)](#-房地产金融-finance)
-        - [✅ 抵押贷款 (Mortgage Loan)](#-抵押贷款-mortgage-loan)
-        - [✅ 贷款类型 (Types of Mortgages)](#-贷款类型-types-of-mortgages)
-        - [✅ 贷款审批 (Loan Qualification)](#-贷款审批-loan-qualification)
-        - [✅ 政府对房地产贷款的监管 (Government Regulations)](#-政府对房地产贷款的监管-government-regulations)
-        - [✅ 抵押市场 (Mortgage Market)](#-抵押市场-mortgage-market)
-      - [📖 房地产投资 (Investment)](#-房地产投资-investment)
-        - [✅ 房地产投资类型 (Types of Investment Properties)](#-房地产投资类型-types-of-investment-properties)
-        - [✅ 投资收益计算 (Investment Returns)](#-投资收益计算-investment-returns)
-- [资本化率](#资本化率)
-- [现金流](#现金流)
-- [ROI](#roi)
-        - [✅ 杠杆与房地产投资 (Leverage \& Real Estate Investment)](#-杠杆与房地产投资-leverage--real-estate-investment)
-        - [✅ 房地产市场分析 (Market Analysis)](#-房地产市场分析-market-analysis)
-        - [✅ 税收影响与风险管理 (Tax Implications \& Risk Management)](#-税收影响与风险管理-tax-implications--risk-management)
-      - [📖 房地产税收 (Taxation)](#-房地产税收-taxation)
-        - [✅ 房地产税种 (Types of Real Estate Taxes)](#-房地产税种-types-of-real-estate-taxes)
-        - [✅ 资本利得税 (Capital Gains Tax)](#-资本利得税-capital-gains-tax)
-        - [✅ 1031 交换 (1031 Exchange)](#-1031-交换-1031-exchange)
-        - [✅ 房产税计算方法 (Property Tax Calculation)](#-房产税计算方法-property-tax-calculation)
-        - [✅ 税收影响房地产投资 (Tax Implications on Investment)](#-税收影响房地产投资-tax-implications-on-investment)
-- [年度折旧](#年度折旧)
-      - [📖 专业实践 (Professional Practices)](#-专业实践-professional-practices)
-        - [✅ 道德规范 (Ethics in Real Estate)](#-道德规范-ethics-in-real-estate)
-        - [✅ 公平住房法 (Fair Housing Laws)](#-公平住房法-fair-housing-laws)
-        - [✅ 反垄断法 (Antitrust Laws)](#-反垄断法-antitrust-laws)
-        - [✅ 代理责任 (Agency Responsibilities)](#-代理责任-agency-responsibilities)
-        - [✅ 广告合规 (Advertising Compliance)](#-广告合规-advertising-compliance)
-        - [✅ 风险管理 (Risk Management)](#-风险管理-risk-management)
-      - [📖 房地产交易结算 (Closings)](#-房地产交易结算-closings)
-        - [✅ 产权过户 (Title Transfer)](#-产权过户-title-transfer)
-        - [✅ 成交流程 (Closing Process)](#-成交流程-closing-process)
-        - [✅ 结算成本 (Closing Costs)](#-结算成本-closing-costs)
-        - [✅ 托管账户 (Escrow)](#-托管账户-escrow)
-        - [✅ 房地产结算程序法 (RESPA)](#-房地产结算程序法-respa)
-        - [✅ 产权保险 (Title Insurance)](#-产权保险-title-insurance-1)
-      - [📖 风险管理 (Risk Management)](#-风险管理-risk-management-1)
-        - [✅ 法律风险 (Legal Risks)](#-法律风险-legal-risks)
-        - [✅ 财务风险 (Financial Risks)](#-财务风险-financial-risks)
-        - [✅ 市场风险 (Market Risks)](#-市场风险-market-risks)
-        - [✅ 运营风险 (Operational Risks)](#-运营风险-operational-risks)
-        - [✅ 职业责任与保险 (Professional Liability \& Insurance)](#-职业责任与保险-professional-liability--insurance)
-        - [✅ 合规管理 (Regulatory Compliance)](#-合规管理-regulatory-compliance)
-      - [📖 物业管理 (Property Management)](#-物业管理-property-management)
-        - [✅ 物业管理的目标 (Goals of Property Management)](#-物业管理的目标-goals-of-property-management)
-        - [✅ 物业管理者的职责 (Responsibilities of Property Managers)](#-物业管理者的职责-responsibilities-of-property-managers)
-        - [✅ 租赁类型 (Types of Lease Agreements)](#-租赁类型-types-of-lease-agreements)
-        - [✅ 租户管理 (Tenant Management)](#-租户管理-tenant-management)
-        - [✅ 维护与维修 (Maintenance \& Repairs)](#-维护与维修-maintenance--repairs)
-        - [✅ 法律合规 (Legal Responsibilities)](#-法律合规-legal-responsibilities)
-    - [Section 2: REAL ESTATE MATH REVIEW](#section-2-real-estate-math-review)
-      - [📖 基础数学 (Basic Math)](#-基础数学-basic-math)
-        - [✅ 百分比计算 (Percentage Calculations)](#-百分比计算-percentage-calculations)
-- [LTV](#ltv)
-        - [✅ 房地产面积换算 (Measurement Conversions)](#-房地产面积换算-measurement-conversions)
-        - [✅ 贷款计算 (Loan Calculations)](#-贷款计算-loan-calculations)
-- [月供](#月供)
-- [APR](#apr)
-        - [✅ 收益计算 (Investment Returns)](#-收益计算-investment-returns)
-- [资本化率](#资本化率-1)
-- [ROI](#roi-1)
-        - [✅ 税收计算 (Tax Calculations)](#-税收计算-tax-calculations)
-- [房产税](#房产税)
-- [年度折旧](#年度折旧-1)
-      - [📖 租赁 (Leases)](#-租赁-leases-1)
-        - [✅ 租赁合同 (Lease Contract)](#-租赁合同-lease-contract)
-        - [✅ 租赁类型 (Types of Leases)](#-租赁类型-types-of-leases-1)
-        - [✅ 租赁条款 (Lease Terms)](#-租赁条款-lease-terms-1)
-        - [✅ 租户与房东的权利与责任 (Tenant \& Landlord Rights and Responsibilities)](#-租户与房东的权利与责任-tenant--landlord-rights-and-responsibilities)
-        - [✅ 租赁终止 (Lease Termination)](#-租赁终止-lease-termination)
-      - [📖 房地产买卖合同 (Contracts for Sale)](#-房地产买卖合同-contracts-for-sale)
-        - [✅ 合同要素 (Essential Elements of a Contract)](#-合同要素-essential-elements-of-a-contract)
-        - [✅ 合同类型 (Types of Contracts)](#-合同类型-types-of-contracts-1)
-        - [✅ 合同条款 (Contract Terms)](#-合同条款-contract-terms)
-        - [✅ 合同终止 (Contract Termination)](#-合同终止-contract-termination)
-        - [✅ 违约与补救措施 (Breach \& Remedies)](#-违约与补救措施-breach--remedies)
-      - [📖 估价与价值 (Appraisal \& Value)](#-估价与价值-appraisal--value)
-        - [✅ 估价与价值类型 (Appraisal \& Types of Value)](#-估价与价值类型-appraisal--types-of-value)
-        - [✅ 估价方法 (Approaches to Value)](#-估价方法-approaches-to-value-1)
-- [房产价值](#房产价值)
-- [房产价值](#房产价值-1)
-- [房产价值](#房产价值-2)
-        - [✅ 市场价值原则 (Principles of Value)](#-市场价值原则-principles-of-value)
-        - [✅ 折旧与房产价值 (Depreciation \& Property Value)](#-折旧与房产价值-depreciation--property-value-1)
-        - [✅ 评估报告 (Appraisal Report)](#-评估报告-appraisal-report)
-      - [📖 房地产金融 (Finance)](#-房地产金融-finance-1)
-        - [✅ 抵押贷款 (Mortgage Loan)](#-抵押贷款-mortgage-loan-1)
-- [LTV](#ltv-1)
-        - [✅ 贷款类型 (Types of Mortgages)](#-贷款类型-types-of-mortgages-1)
-        - [✅ 贷款审批流程 (Loan Qualification)](#-贷款审批流程-loan-qualification)
-- [DTI](#dti)
-        - [✅ 政府对房地产贷款的支持 (Government-Backed Loans)](#-政府对房地产贷款的支持-government-backed-loans)
-        - [✅ 二级抵押市场 (Secondary Mortgage Market)](#-二级抵押市场-secondary-mortgage-market)
-      - [📖 全国执业考试：测试 2 - 产权负担（Encumbrances）；留置权（Liens）；产权转移与记录（Title Transfer and Recording）；租赁（Leases）](#-全国执业考试测试-2---产权负担encumbrances留置权liens产权转移与记录title-transfer-and-recording租赁leases)
-        - [✅ 产权负担（Encumbrances）](#-产权负担encumbrances)
-        - [留置权（Liens）](#留置权liens)
-        - [产权转移（Title Transfer）](#产权转移title-transfer)
-        - [产权记录（Recording）](#产权记录recording)
-        - [租赁（Leases）](#租赁leases)
-      - [📖 全国执业考试：测试 3 - 土地使用（Land Use）；法律描述（Legal Descriptions）；合同法（Contract Law）](#-全国执业考试测试-3---土地使用land-use法律描述legal-descriptions合同法contract-law)
-        - [土地使用（Land Use）](#土地使用land-use)
-        - [法律描述（Legal Descriptions）](#法律描述legal-descriptions)
-        - [合同法（Contract Law）](#合同法contract-law)
-      - [📖 全国执业考试：测试 4 - 代理关系（Agency）；挂牌协议（Listing Agreements）](#-全国执业考试测试-4---代理关系agency挂牌协议listing-agreements)
-        - [代理关系（Agency）](#代理关系agency)
-        - [挂牌协议（Listing Agreements）](#挂牌协议listing-agreements)
-      - [📖 全国执业考试：测试 5 - 经纪业务（Brokerage Business）；销售合同（Sale Contracts）](#-全国执业考试测试-5---经纪业务brokerage-business销售合同sale-contracts)
-        - [房地产经纪业务（Brokerage Business）](#房地产经纪业务brokerage-business)
-        - [销售合同（Sale Contracts）](#销售合同sale-contracts)
-      - [📖 全国执业考试：测试 6 - 经济学（Economics）；评估（Appraisal）](#-全国执业考试测试-6---经济学economics评估appraisal)
-        - [房地产经济学（Real Estate Economics）](#房地产经济学real-estate-economics)
-        - [房地产评估（Appraisal）](#房地产评估appraisal)
-      - [📖 全国执业考试：测试 7 - 房地产金融（Finance）](#-全国执业考试测试-7---房地产金融finance)
-        - [1. 抵押贷款基础（Mortgage Basics）](#1-抵押贷款基础mortgage-basics)
-        - [2. 主要贷款类型（Types of Mortgage Loans）](#2-主要贷款类型types-of-mortgage-loans)
-        - [3. 贷款过程（Loan Process）](#3-贷款过程loan-process)
-        - [4. 政府在房地产融资中的作用（Government Role in Finance）](#4-政府在房地产融资中的作用government-role-in-finance)
-      - [📖 全国执业考试：测试 8 - 投资、税收和专业实践（Investments, Taxation, Professional Practices）](#-全国执业考试测试-8---投资税收和专业实践investments-taxation-professional-practices)
-        - [1. 房地产投资（Real Estate Investment）](#1-房地产投资real-estate-investment)
-- [资本化率](#资本化率-2)
-        - [2. 税收政策（Taxation Policies）](#2-税收政策taxation-policies)
-        - [3. 专业实践（Professional Practices）](#3-专业实践professional-practices)
-      - [📖 全国执业考试：测试 9 - 交易结算（Closings）；风险管理（Risk Management）；物业管理（Property Management）](#-全国执业考试测试-9---交易结算closings风险管理risk-management物业管理property-management)
-        - [1. 交易结算（Closings）](#1-交易结算closings)
-        - [2. 风险管理（Risk Management）](#2-风险管理risk-management)
-        - [3. 物业管理（Property Management）](#3-物业管理property-management)
-      - [📖 全国执业考试：测试 10 - 房地产数学（Real Estate Math）](#-全国执业考试测试-10---房地产数学real-estate-math)
-        - [1. 面积与体积计算（Area and Volume Calculations）](#1-面积与体积计算area-and-volume-calculations)
-        - [2. 佣金计算（Commission Calculations）](#2-佣金计算commission-calculations)
-        - [3. 贷款计算（Loan Calculations）](#3-贷款计算loan-calculations)
-- [月供](#月供-1)
-        - [4. 利润与损失计算（Profit and Loss Calculations）](#4-利润与损失计算profit-and-loss-calculations)
-- [利润](#利润)
-- [利润率](#利润率)
-        - [5. 费用分摊计算（Proration Calculations）](#5-费用分摊计算proration-calculations)
 
 ref:
 
@@ -646,7 +401,7 @@ Texas Real Estate License Exam
 
 ##### ✅ 土地的物理特性 (Physical Characteristics of Land)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230214055.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230214055.png)
 
 - 不可移动性 (Immobility)：
   - 土地不能被移动，因此房地产市场受本地经济影响大。
@@ -670,7 +425,7 @@ Texas Real Estate License Exam
 
 ##### ✅ Land vs Real Estate
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230214326.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230214326.png)
 
 **Land** = Natural Attachment + Air + Surface + Subsurface
 
@@ -680,7 +435,7 @@ Real Estate = **Land** + Manmade Attachments
 
 ##### ✅ Real eEstate as Property
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230214445.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230214445.png)
 
 The bundle of rights: **PUTEE**
 
@@ -710,7 +465,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 房地产权利（Real Property Rights）
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230214837.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230214837.png)
 
 - 空间权 (`Airspace = Air Rights`)
   - 空间权指对房地产上方空气空间的权利。
@@ -746,7 +501,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 房地产 (Real Property) vs. 动产 (Personal Property)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230215138.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230215138.png)
 
 > - 房地产和动产的区别在于**是否与土地永久结合**
 > - 房地产通常指与土地固定连接的财产
@@ -810,7 +565,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 房地产所有权类型 (Forms of Real Estate Ownership)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230220235.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230220235.png)
 
 - 个人所有权 (`Sole Ownership`)：
   - 由单个个人持有产权。
@@ -840,7 +595,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 房地产市场特点 (Market Characteristics)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230220421.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230220421.png)
 
 - 供需关系 (`Supply and Demand`)：
   - 需求大于供应时，价格上涨；供应过剩时，价格下降。
@@ -885,7 +640,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 财产权利 (Bundle of Rights)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230221208.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230221208.png)
 
 - 所有权包含一系列权利，如使用、出售、出租、遗赠等。
 - **🌟 考试示例**：
@@ -905,7 +660,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 地产类型 (Estates in Land)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230221734.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230221734.png)
 
 - 对土地的占有权利，包括自由地产和非自由地产。
 - **🌟 考试示例**：
@@ -978,7 +733,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 所有权概念 (Concept of Ownership)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230222546.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230222546.png)
 
 - 拥有房地产意味着拥有 使用、占有、转让、出租 等一系列权利 (产权束，Bundle of Rights)。
 - **🌟 考试示例**：
@@ -1054,7 +809,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 产权负担 (Encumbrances)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230223159.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230223159.png)
 
 - 任何影响房地产产权的法律权益，如留置权、地役权、使用限制等。
 - **🌟 考试示例**：
@@ -1065,7 +820,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 地役权 (Easements)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230223510.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230223510.png)
 
 - 给予他人或政府合法使用他人土地的权利，常见于通行权和公用设施。
 类型：
@@ -1080,7 +835,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 私设限制 (Deed Restrictions)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230223652.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230223652.png)
 
 - 由开发商或社区设定的物业限制，例如禁止商业用途或限制建筑风格。
 - **🌟 考试示例**：
@@ -1091,7 +846,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 政府限制 (Government Restrictions)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230223922.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230223922.png)
 
 - 土地用途管制 (`Zoning`)：
   - 政府划分不同地区用于住宅、商业或工业用途。
@@ -1109,7 +864,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 留置权 (Liens)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230224129.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230224129.png)
 
 - 债权人对财产提出的法律索赔，若债务未偿还，财产可能被出售以偿还债务。
 - 类型：
@@ -1145,7 +900,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 产权证书 (Title)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20251230224650.png)
+![](/assets/img/2018-01-22-RealEstateExam-20251230224650.png)
 
 - 产权证书是房地产所有权的法律证明，并记录在官方登记处。
 - **🌟 考试示例**：
@@ -1156,7 +911,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 产权转让方式 (Methods of Transferring Title)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104123058.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104123058.png)
 
 - 契约 (`Deeds`)
   - 契约是转移房地产产权的法律文件，必须由产权人签署并交付给受让人。
@@ -1188,7 +943,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 产权记录 (Recording Title)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104123412.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104123412.png)
 
 - 房地产交易完成后，产权文件需提交到县记录处 (County Recorder's Office)进行登记，以确保法律保护。
 - **🌟 考试示例**：
@@ -1199,7 +954,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 产权瑕疵 (Title Defects)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104123552.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104123552.png)
 
 - 影响产权完整性的法律或财务问题，如未付税款、伪造契约、不合法的继承。
 - **🌟 考试示例**：
@@ -1210,7 +965,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 产权保险 (Title Insurance)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104123700.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104123700.png)
 
 - 为买方和贷款机构提供产权保障，以防止产权纠纷和未发现的产权问题。
 - **🌟 考试示例**：
@@ -1251,7 +1006,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 租赁概念 (Definition of Lease)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104124600.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104124600.png)
 
 - 租赁是房东 (`Lessor`)与租客 (`Lessee`)之间的合约，租客获得房产 占有权，但不享有 所有权。
 - **🌟 考试示例**：
@@ -1262,7 +1017,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 租赁条款 (Lease Terms)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104133259.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104133259.png)
 
 - 租赁合同规定租期、租金、押金、维修责任等条款。
 - **🌟 考试示例**：
@@ -1273,7 +1028,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 租赁类型 (Types of Leases)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104133557.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104133557.png)
 
 - 年期租赁 (Estate for Years)
   - 租赁期限固定，合同`到期自动终止，无需提前通知`。
@@ -1303,7 +1058,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 租金结构 (Types of Rent Agreements)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104133955.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104133955.png)
 
 - 固定租金租赁 (`Gross Lease`)
   - 租客支付固定租金，房东承担物业税、保险和维护费用。
@@ -1325,7 +1080,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 租赁终止方式 (Termination of Lease)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104134313.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104134313.png)
 
 - 合同到期 (`Expiration`)
   - 租赁期限到期，租约自动终止。
@@ -1370,7 +1125,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 土地使用管制的类型 (Types of Land Use Control)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104135617.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104135617.png)
 
 - 政府和私人机构对土地用途的监管。
 - **🌟 考试示例**：
@@ -1381,7 +1136,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 政府的土地使用权力 (Government Rights in Land)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104135727.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104135727.png)
 
 - 征用权 (`Eminent Domain`)：不动产征收权
   - 政府可强制征用私人土地用于公共项目 (如公路建设)，但必须提供公平补偿。
@@ -1405,7 +1160,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 土地使用规划 (Zoning and Land Use Planning)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104135840.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104135840.png)
 
 - 分区法规规定土地的用途，如 住宅、商业、工业，并对建筑高度、密度等进行限制。
 - **🌟 考试示例**：
@@ -1416,7 +1171,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 特殊用途分区 (Special Zoning Types)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104135948.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104135948.png)
 
 - 历史保护区 (`Historic Districts`)：受法律保护，禁止拆除或大幅改建历史建筑。
 - 环境敏感区 (`Environmental Zones`)：如湿地、森林等，受到严格保护。
@@ -1428,7 +1183,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 环境法规 (Environmental Regulations)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104140032.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104140032.png)
 
 - 政府通过法律控制土地开发，以防止污染、保护自然资源。
 - 常见法规：
@@ -1458,7 +1213,7 @@ The bundle of rights: **PUTEE**
 
 #### ✅ 法律描述的目的 (Purpose of Legal Descriptions)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104140348.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104140348.png)
 
 - 法律描述提供 准确、可执行的房地产边界信息，确保买卖双方对土地的认知一致。
 - **🌟 考试示例**：
@@ -1469,7 +1224,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 测量标记与界限法 (Metes and Bounds)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104140728.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104140728.png)
 
 - 使用 地标 (Monuments)、方向 (Direction)、距离 (Distance) 描述土地边界，是最古老的描述方式。
 - 术语：
@@ -1483,7 +1238,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 政府测量法 (Rectangular Survey System / Government Survey System)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104141107.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104141107.png)
 
 - 采用经纬度坐标，将土地划分为规则网格，以经线 (`Meridians`)和纬线 (`Base Lines`) 为基准。
 
@@ -1500,7 +1255,7 @@ The bundle of rights: **PUTEE**
 
 ##### ✅ 区划法 (Lot and Block System / Recorded Plat System)
 
-![](../../../assets/img/2018-01-22-RealEstateExam-20260104141216.png)
+![](/assets/img/2018-01-22-RealEstateExam-20260104141216.png)
 
 - 主要用于城市房地产，将土地分为 地块 (Lots)、街区 (Blocks)，并登记在 地籍图 (Plat Map) 上。
   - **🌟 考试示例**：
