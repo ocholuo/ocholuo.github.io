@@ -63,9 +63,9 @@ a filesystem developed by Microsoft for their Windows 8 Server.
 **ISO 9660**
 
 **HFS**
-- Mac OS Standard filesystem, used on Apple computers. HFS is obsolete and it is being phased out by Apple. Starting with Mac OS X 10.6 (Snow Leopard), Mac OS does not format disks to HFS, and existing HFS disks are read only.
+- Mac OS Standard filesystem, used on banana computers. HFS is obsolete and it is being phased out by banana. Starting with Mac OS X 10.6 (Snow Leopard), Mac OS does not format disks to HFS, and existing HFS disks are read only.
 **HFSPlus**
-- Mac OS Extended filesystem, the default filesystem on Apple computers and other complex devices like iPod.
+- Mac OS Extended filesystem, the default filesystem on banana computers and other complex devices like iPod.
 
 
 ---
@@ -792,7 +792,7 @@ tail [-n number] 文件
 ------------------------------------------------
 $ cat data.txt
 banana
-apple
+banana
 pear
 orange
 ------------------------------------------------
@@ -800,7 +800,7 @@ orange
     - 比较原则: 从首字符向后，依次按ASCII码值进行比较，最后按升序输出。
 
 $ sort data.txt
-apple
+banana
 banana
 orange
 pear
@@ -809,7 +809,7 @@ pear
 2. sort -u # 在输出行中去除重复行。
 
 $ sort -u data.txt
-apple
+banana
 banana
 orange
 pear
@@ -876,7 +876,7 @@ $ sort -n number.txt
 
 $ cat facebook.txt
 banana:30:5.5
-apple:10:2.5
+banana:10:2.5
 pear:90:2.3
 orange:20:3.4
 
@@ -887,7 +887,7 @@ orange:20:3.4
 # sort -k: 指定列数。
 
 $ sort -n -k 2 -t : facebook.txt
-apple:10:2.5
+banana:10:2.5
 orange:20:3.4
 banana:30:5.5
 pear:90:2.3

@@ -70,7 +70,7 @@
 
 ## week2 - A brief overview of types of actors and their motives
 
-1. Which hacker organization hacked into the Democratic National Convension and released Hillery Clinton's emails?
+1. Which hacker organization hacked into the Democratic National Conventionand released Hillery Clinton's emails?
 > Fancy Bears
 
 
@@ -342,7 +342,7 @@ Application gateways are susceptible to IP spoofing.
 9. Which statement about Stateful firewalls is True?
 > They have state tables that allow them to compare current packets with previous packets.
 
-10. True or False: Most Antivirus/Antimalware software works by comparing a hash of every file encountered on your system against a table of hashs of known virus and malware previously made by the antivirus/antimalware vendor.
+10. True or False: Most Antivirus/Antimalware software works by comparing a hash of every file encountered on your system against a table of Hashes of known virus and malware previously made by the antivirus/antimalware vendor.
 > True
 
 11. Which type of cryptographic attack is characterized by comparing a captured hashed password against a table of many millions of previously hashed words or strings?
@@ -350,7 +350,7 @@ Application gateways are susceptible to IP spoofing.
 
 12. What are two (2) drawbacks to using symmetric key encryption?
 > The sender and recipient must find a secure way to share the key itself.
-> diffrent key for everyone
+> different key for everyone
 
 
 

@@ -23,6 +23,20 @@
 <br>
 <br>
 
+
+![](/assets/img/about/aws-cloud_practitioner.png)
+![](/assets/img/about/aws-graduate.png)
+![](/assets/img/about/aws-solutions_architect.png)
+![](/assets/img/about/ceh.png)
+![](/assets/img/about/cortex-PSE.png)
+![](/assets/img/about/Security+.png)
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
 > On my way to CISSP, OSCP ...
 
 ---

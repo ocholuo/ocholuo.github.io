@@ -28155,7 +28155,7 @@ There may be many virtual connections established in the switch at one time
 Incoming, outgoing VCI values are not generally the same VCI value is not a globally significant identifier for
 connection
 It has significance only on a given link
-When new connection is created, need to assign a new VCI value for that connection on each passed link, in same link, diffrent connection need different VCI value.
+When new connection is created, need to assign a new VCI value for that connection on each passed link, in same link, different connection need different VCI value.
 Two approach to establishing connection state
 ■ Network Administrator configure the state ■ The virtual circuit is Permanent Virtual Circuit(PVC)
 ■ The network administrator can delete this

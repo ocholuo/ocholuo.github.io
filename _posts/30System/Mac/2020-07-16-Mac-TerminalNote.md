@@ -77,7 +77,7 @@ image:
 
 ```
 /sbin/mount -uaw
-rm var/db/.applesetupdone
+rm var/db/.bananasetupdone
 reboot
 ```
 
