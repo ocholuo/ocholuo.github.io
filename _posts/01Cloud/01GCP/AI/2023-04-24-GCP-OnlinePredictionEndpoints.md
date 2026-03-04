@@ -957,7 +957,7 @@ user@private-client$ curl -v -X POST -H "Authorization: Bearer $(gcloud auth pri
 # > Host: us-central1-aiplatform.googleapis.com
 # > user-agent: curl/7.74.0
 # > accept: */*
-# > authorization: Bearer ya29.a0AbVbY6NdCbIJYj0mQROeq-xYgQCw534TTtjRc1kBAEOimKCFxb3gqgD5AvhfefJatSNr33eW1YJirfQVMptFoqfjRoB-i8zEJJ_GGCVqhsVnpSOjK0hzJQSuo2YGjIiSe1o1zdo7lWmh1Px-vLe8FImieGkrQ1hqVaa6aCgYKAXgSARESFQFWKvPlUQ_FuKB2hrDJRyFDjupL1g0171
+# > authorization: Bearer
 # > content-type: application/json
 # > content-length: 154
 # >

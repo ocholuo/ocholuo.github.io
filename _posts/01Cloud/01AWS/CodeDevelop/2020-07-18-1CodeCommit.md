@@ -136,7 +136,6 @@ With CodeCommit, you can:
          - Username: `cloud_user-at-183169071737`
          - credentials: `cloud_user_codecommit_credentials.csv`
 
-
 ```bash
 aws configure
 # AWS Access Key ID [None]: abcd
