@@ -78,7 +78,6 @@ LPFSA
   - `$24`/paycheck x 26 (`~$624`/year)
   - `$11`/paycheck x 26 (`~$286`/year)
 
-
 ![](/assets/img/2021-11-08-Insurance-20251028143454.png)
 
 ### 💰 HSA
