@@ -57,7 +57,7 @@ def infixToPostfix(infixexpr):
                 postfixList.append(opStack.pop())
                 print("postfixList.append:", token, postfixList)
             opStack.push(token)
-            print("opStack.push for caculator:", token)
+            print("opStack.push for calculator:", token)
     # When the input expression has been completely processed, check the opStack. Any operators still on the stack can be removed and appended to the end of the output list.
     while not opStack.isEmpty():
         out = opStack.pop()

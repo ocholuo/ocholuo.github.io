@@ -105,7 +105,7 @@
 // var input = document.querySelector('input');
 // input.value = 'Hello World'
 
-// // sepecify which one
+// // specify which one
 // var submit = document.querySelector('input[type="submit"]');
 // submit.value="SEND"
 
@@ -159,14 +159,14 @@
 // console.log(itemList.childNodes); // all
 
 // // children
-// console.log(itemList.children);   // item.recommand
+// console.log(itemList.children);   // item.recommend
 // console.log(itemList.children[1]);
 // itemList.children[1].style.backgroundColor = 'yellow';
 
 // // FirstChild
 // console.log(itemList.firstChild);        // all
 // // firstElementChild
-// console.log(itemList.firstElementChild); // item.recommand
+// console.log(itemList.firstElementChild); // item.recommend
 // itemList.firstElementChild.textContent = 'Hello 1';
 
 // // lastChild

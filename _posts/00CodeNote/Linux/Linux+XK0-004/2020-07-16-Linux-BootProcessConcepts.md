@@ -98,7 +98,7 @@ grub > setup (hd0)
 
 ESC : quiet
 
-Arrow : highlight the option in the GRUB meny
+Arrow : highlight the option in the GRUB menu
 
 
 grub2:

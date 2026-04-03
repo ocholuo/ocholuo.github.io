@@ -58,7 +58,7 @@ Path: `https://github.com/ocholuo/language/tree/master/0.project/webdemo/`
 
 
 
-[Traversy Media](https://www.youtube.com/watch?v=iYM2zFP3Zn0&list=PLillGF-RfqbYeckUaD1z6nviTp31GLTH8&index=16) recommand!!!!!
+[Traversy Media](https://www.youtube.com/watch?v=iYM2zFP3Zn0&list=PLillGF-RfqbYeckUaD1z6nviTp31GLTH8&index=16) recommend!!!!!
 
 [Web technology for developers](https://developer.mozilla.org/en-US/docs/Web)
 - Web technologies

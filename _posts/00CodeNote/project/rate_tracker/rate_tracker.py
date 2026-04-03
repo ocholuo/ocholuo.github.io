@@ -9,12 +9,13 @@ so the chart is always generated immediately.
 """
 
 import csv
-import json
 import datetime
+import json
 import platform
 import subprocess
 import sys
 from pathlib import Path
+
 
 # ── Dependencies (auto-install if missing) ──────────────────────────────────
 def ensure(pkg, import_as=None):
@@ -30,12 +31,13 @@ ensure("requests")
 ensure("matplotlib")
 ensure("numpy")
 
-import requests
 import matplotlib
 import matplotlib.ticker as ticker
+import requests
+
 matplotlib.use("Agg")          # headless – saves to file, no GUI window
-import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
 import numpy as np
 
 # ── Config ──────────────────────────────────────────────────────────────────

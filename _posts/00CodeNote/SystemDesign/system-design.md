@@ -91,7 +91,7 @@ key component
     - HTTP POST
       - xyz.com/books/
       - json:
-      - {id:x, auther:x, price:x}
+      - {id:x, author:x, price:x}
 - database
   - identify key component
     - customer (name, id, address)

@@ -136,11 +136,11 @@ sleepy....
 | `qwiklabs`                                                                                                                                                                                                 | ---     |
 | [all](https://run.qwiklabs.com/catalog?keywords=alexa&locale=&cloud%5B%5D=any&format%5B%5D=any&level%5B%5D=any&duration%5B%5D=any&modality%5B%5D=any&language%5B%5D=any)                                   | ✏️      |
 | [linuxacademy](https://app.linuxacademy.com/search?query=alexa)                                                                                                                                            | ✏️      |
-| `AWS internal`                                                                                                                                                                                             | ---     |
-| [knet--Alexa OE101](https://knet.csod.com/LMS/LoDetails/DetailsLo.aspx?loid=fc4f2400-66f4-4132-9183-439204619c1b&query=%3Fs%3D1%26q%3Dalexa&back_key=1&isCompletionRedirect=true&loStatus=16&regnum=1#t=1) | ✔️      |
-| [kiku-AWS internal](https://kiku.aws.training/Details/Curriculum?id=25534)                                                                                                                                 | ✏️      |
-| [kiku-AWS internal](https://kiku.aws.training/Details/eLearning?id=34489)                                                                                                                                  | ✏️      |
-| [AWSacademy-ExamReadiness:AWS Certified Alexa Skill Builder-Specialty](https://kiku.aws.training/Details/eLearning?id=34489)                                                                               | ✏️      |
+| `AWS internal` _(links below no longer active — internal employee resources, kept for reference)_                                                                                                          | ---     |
+| [knet--Alexa OE101](https://knet.csod.com/LMS/LoDetails/DetailsLo.aspx?loid=fc4f2400-66f4-4132-9183-439204619c1b&query=%3Fs%3D1%26q%3Dalexa&back_key=1&isCompletionRedirect=true&loStatus=16&regnum=1#t=1) _(expired)_ | ✔️      |
+| [kiku-AWS internal](https://kiku.aws.training/Details/Curriculum?id=25534) _(expired)_                                                                                                                    | ✏️      |
+| [kiku-AWS internal](https://kiku.aws.training/Details/eLearning?id=34489) _(expired)_                                                                                                                     | ✏️      |
+| [AWSacademy-ExamReadiness:AWS Certified Alexa Skill Builder-Specialty](https://kiku.aws.training/Details/eLearning?id=34489) _(expired)_                                                                   | ✏️      |
 
 ---
 

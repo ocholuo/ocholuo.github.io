@@ -20,8 +20,8 @@ image:
 ### IP Spoofing
 
 Each IP packet includes a place to specify the destination and source IP addresses.
-- The validity of the source addres
-s is never checked, however, and it is trivial for anyone to specify a source address that is different from their actual IP address.
+- The validity of the source address
+is never checked, however, and it is trivial for anyone to specify a source address that is different from their actual IP address.
 
 In fact, nearly every operating system provides an interface by which it can make network connections with arbitrary IP header information
 - so spoofing an IP address is specifying the desired IP in the source field of an IP packet data structure before transmitting that data to the network.

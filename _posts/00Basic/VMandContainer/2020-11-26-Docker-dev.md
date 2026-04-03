@@ -453,7 +453,7 @@ $ docker run -p 80:80/tcp -p 80:80/udp
 ENV PG_MAJOR=9.3
 ENV PG_VERSION=9.3.4
 
-RUN curl -SL https://example.com/postgres-$PG_VERSION.tar.xz | tar -xJC /usr/src/postgress && …
+RUN curl -SL https://example.com/postgres-$PG_VERSION.tar.xz | tar -xJC /usr/src/postgresql && …
 ENV PATH=/usr/local/postgres-$PG_MAJOR/bin:$PATH
 ```
 

@@ -125,7 +125,7 @@ crontab -e
 Add this line (runs at 9 AM every weekday):
 
 ```bash
-0 9 * * 1-5 /usr/bin/python3 /Users/graceluo/Documents/github-geren/ocholuo.github.io/_posts/00CodeNote/project/rate_tracker/rate_tracker.py >> /tmp/ratetracker.log 2>&1
+0 9 * * 1-5 /usr/bin/python3 /Users/my_path/ocholuo.github.io/_posts/00CodeNote/project/rate_tracker/rate_tracker.py >> /tmp/ratetracker.log 2>&1
 ```
 
 ---

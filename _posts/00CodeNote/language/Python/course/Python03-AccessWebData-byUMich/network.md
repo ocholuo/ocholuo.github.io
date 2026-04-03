@@ -56,7 +56,7 @@ J:~ luo$
 
 2. in python
 
-send request to the server and retrive a document
+send request to the server and retrieve a document
 
 ```py
 py.file
@@ -68,7 +68,7 @@ cmd = 'GET https://data.pr4e.org/romeo.txt HTTP/1.0\n\n'.encode() # makeup reque
 mysock.send(cmd) # send to the server
 
 while True:
-    data = mysock.recv(512)   # recieve up to 512 character
+    data = mysock.recv(512)   # receive up to 512 character
     if (len(data) < 1):       # if no data receive
         break
     print(data.decode())  # from byte to UTF-8 data
@@ -191,7 +191,7 @@ https://amzn.to/1K5Q81K
     - /a/c Y
 
 XML Validation
-- XML documnet
+- XML document
 - XML schema contract
 
 XML file:
@@ -199,7 +199,7 @@ XML file:
 ```xml
 <people>                     // complex element
     <person>                 // complex element
-        <name>Chuch</name>   // simple element
+        <name>Church</name>   // simple element
         <phone>1122</phone>
     </person>
     <person>

@@ -61,7 +61,7 @@ Directives | Note
 ---|---
 `<type>` | Authentication type. A common type is "Basic". IANA maintains a list of Authentication schemes.
 `realm=<realm>` | A description of the protected area. <br> If no realm is specified, clients often display a formatted hostname instead.
-`charset=<charset>` | Tells the client the server's prefered encoding scheme when submitting a username and password. The only allowed value is the case insensitive string "UTF-8". This does not relate to the encoding of the realm string.
+`charset=<charset>` | Tells the client the server's preferred encoding scheme when submitting a username and password. The only allowed value is the case insensitive string "UTF-8". This does not relate to the encoding of the realm string.
 
 **Examples**
 - server response contains a WWW-Authenticate header

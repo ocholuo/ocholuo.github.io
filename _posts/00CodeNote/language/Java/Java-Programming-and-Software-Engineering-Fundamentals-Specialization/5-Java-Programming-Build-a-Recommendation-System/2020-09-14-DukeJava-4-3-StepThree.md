@@ -11,7 +11,7 @@ toc: true
 
 ---
 
-# DukeJava 4-3 Step Three Interfaces, Filters, Database - Filtering Recomendations
+# DukeJava 4-3 Step Three Interfaces, Filters, Database - Filtering Recommendations
 
 Java-Programming-and-Software-Engineering-Fundamentals-Specialization
 - 5.Java-Programming-Build-a-Recommendation-System

@@ -13,7 +13,7 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH=$PATH:/usr/local/mysql/bin
 
 ##
-# Your previous /Users/luo/.bash_profile file was backed up as /Users/luo/.bash_profile.macports-saved_2019-10-04_at_18:50:17
+# Your previous /Users/my_path/.bash_profile file was backed up as /Users/my_path/.bash_profile.macports-saved_2019-10-04_at_18:50:17
 ##
 
 # MacPorts Installer addition on 2019-10-04_at_18:50:17: adding an appropriate PATH variable for use with MacPorts.
@@ -47,23 +47,23 @@ alias firesox='ssh -i id_rsa -D 1337 -f -C -q -N grace@research.cdg.io && /Appli
 
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/luo/google-cloud-sdk/path.bash.inc' ]; then . '/Users/luo/google-cloud-sdk/path.bash.inc'; fi
+if [ -f '/Users/my_path/google-cloud-sdk/path.bash.inc' ]; then . '/Users/my_path/google-cloud-sdk/path.bash.inc'; fi
 
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/luo/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/luo/google-cloud-sdk/completion.bash.inc'; fi
+if [ -f '/Users/my_path/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/my_path/google-cloud-sdk/completion.bash.inc'; fi
 
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/luo/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/my_path/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/luo/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/luo/opt/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/my_path/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/my_path/opt/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/luo/opt/anaconda3/bin:$PATH"
+        export PATH="/Users/my_path/opt/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup

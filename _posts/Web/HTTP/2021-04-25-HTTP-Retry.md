@@ -168,11 +168,11 @@ private T retry(Supplier<T> function) throws RuntimeException {
       catch (Exception ex) {
         exception = ex;
         invokeCnt++;
-        log.error(invokeCnt + " times retur failed of " + maxRetires + " error: " + ex);
+        log.error(invokeCnt + " times return failed of " + maxRetires + " error: " + ex);
         if ( invokeCnt > maxRetires) {...}
       }
     }
-    throw new RuntimeException(maxRetires + " retires all failes", exception);
+    throw new RuntimeException(maxRetires + " retires all fails", exception);
   }
 ```
 
@@ -491,7 +491,7 @@ func Backoff(operation func() (*Response, error), options ...Option) error {
         ctx := context.Background()
 
         // 如果返回结果不为空并且 context 不为空，
-        // 保持 repsonse 的请求上下文。
+        // 保持 response 的请求上下文。
         if resp != nil && resp.Request.ctx != nil {
             ctx = resp.Request.ctx
         }

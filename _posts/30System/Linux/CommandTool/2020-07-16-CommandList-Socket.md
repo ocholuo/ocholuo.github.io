@@ -46,7 +46,7 @@ socket起源于Unix，而Unix/Linux基本哲学之一就是“一切皆文件”
 
 ---
 
-Socket programing is the key API for programming distributed applications on the Internet.
+Socket programming is the key API for programming distributed applications on the Internet.
 
 The basics
 - `Program`: an executable file residing on a disk in a directory.
@@ -418,7 +418,7 @@ buf： 待发送数据的缓冲区
 size： 缓冲区长度
 flags： 调用方式标志位, 一般为0, 改变Flags，将会改变Sendto发送的形式
 addr： （可选）指针，指向目的套接字的地址
-tolen： addr所指地址的长度
+token： addr所指地址的长度
 如果成功，则返回发送的字节数，失败则返回SOCKET_ERROR。
 
 

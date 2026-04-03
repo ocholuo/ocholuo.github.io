@@ -216,7 +216,7 @@ look at the rules that it already has created.
 
 $ sudo ufw show raw
 
-// what iptables actully manually configured
+// what iptables actually manually configured
 IPV4 (raw):
 
 Chain INPUT (policy DROP 0 packets, 0 bytes)

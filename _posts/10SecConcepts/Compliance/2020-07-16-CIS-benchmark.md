@@ -49,11 +49,11 @@ lunch - edit group policy
 
 window setting - security setting - advanced audit policy - system audit policy - account management
 
-select the one to config [hold control] - right klick - properties - configure the selected events to be audited - check 2 box. - close the Windows
+select the one to config [hold control] - right click - properties - configure the selected events to be audited - check 2 box. - close the Windows
 
 # run CIS-CAT-lite vertion
 configuration assessment tools:
-- select CIS benchmarks: ...benchamrk
+- select CIS benchmarks: ...benchmark
 - profile: level 1
 - next
 - assessment 1-2min

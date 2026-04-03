@@ -663,7 +663,7 @@ def A_star(s):
                     new = State(get.m + i, get.c + j, 1)
                     child.append(new)
                     #print(2)
-                #优先级：not>and>ture。如果状态不安全或者要拓展的节点与当前节点的父节点状态一致。
+                #优先级：not>and>True。如果状态不安全或者要拓展的节点与当前节点的父节点状态一致。
                 if not safe(new) or back(new, get):  # 状态非法或new折返了
                     child.pop()
                 #如果要拓展的节点满足以上情况，将它的父亲设为当前节点，计算f，并对open_list排序

@@ -77,3 +77,18 @@ categorie
 possibile
 aci
 smal
+
+# Technical / domain-specific words
+GOST
+varn
+ois
+ECT
+hda
+covert
+serie
+adn
+Marge
+# Locale file words (Slovenian: meni=menu; Swedish: som=some)
+meni
+som
+chambre

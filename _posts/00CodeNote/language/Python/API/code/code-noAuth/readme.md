@@ -81,7 +81,7 @@ $ pip3 install flask-bcrypt
 
 4. To run app:
 
-> 4.1. the user data is in a text file (actully pre-defined inside the python code)
+> 4.1. the user data is in a text file (actually pre-defined inside the python code)
 
 ```bash
 # run the api
