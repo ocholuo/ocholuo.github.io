@@ -19,10 +19,10 @@ package-lock.json
 
 .clj-kondo/
 .lsp/
-.vscode/ 
+.vscode/
 .DS_Store
 
-# Misc 
+# Misc
 _posts/00Abook/Data Structures and Algorithms in Java, 6th Edition.pdf
 _posts/00Abook/GCP/PCSE_Workbook.pdf
 _posts/00Abook/GCP/Preparing for Professional Cloud Security Engineer Journey workbook.pdf
@@ -55,4 +55,4 @@ _posts/00AIssueBook/Application/SU/SketchUp-ag
 _posts/00AIssueBook/Application/SU/SketchUp-ah
 _posts/00AIssueBook/Application/SU/SketchUp-ai
 _posts/00AIssueBook/Application/SU/SketchUp-aj
-_posts/00AIssueBook/M1.md 
+_posts/00AIssueBook/M1.md

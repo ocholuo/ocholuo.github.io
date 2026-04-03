@@ -62,8 +62,8 @@ cd jpm_module_1
 git init
 # Reinitialized existing Git repository in /home/runner/SparklingAnguishedPaintprogram/jpm_module_1/.git/
 git add -A
-git config user.email "Lgraceye@hotmail.com"
-git config user.name "Grace JyL"
+git config user.email "user@example.com"
+git config user.name "user"
 git commit -m 'INIT'
 # [master (root-commit) 8087a49] INIT
 #  4 files changed, 2229 insertions(  )

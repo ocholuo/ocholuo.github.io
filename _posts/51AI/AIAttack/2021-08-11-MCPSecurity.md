@@ -68,7 +68,7 @@ ref:
 - standardizes how AI agents communicate with the outside world.
 
   - Instead of building custom integrations between AI systems and external tools, MCP `provides a common language for these interactions`.
-  
+
   - solves a long-standing challenge in AI: `isolation`. Even the most advanced models are limited by their inability to access or manipulate external data sources.
 
 - it defines `a structured interface` that lets AI systems perform actions, retrieve data, and exchange context in a standardized way.
@@ -81,7 +81,7 @@ ref:
 - MCP [provides a standardized way](https://modelcontextprotocol.io/docs/getting-started/intro) for AI agents to interact with external tools, data sources, and services.
   - Think of it as a universal adapter that lets language models connect to databases, APIs, file systems, and more, without each integration requiring custom code.
 
-- These autonomous systems don’t just respond to commands, they make decisions, coordinate across tools, and access data on behalf of users.  
+- These autonomous systems don’t just respond to commands, they make decisions, coordinate across tools, and access data on behalf of users.
   - Instead of predictable, user-initiated requests, you have autonomous agents making decisions about which tools to invoke, what data to request, and how to chain operations together.
 
 ![](/assets/img/post/2026-03-27-11-40-35.png)
@@ -114,7 +114,7 @@ MCP adoption is surging because it offers an extensive range of benefits to scal
 
 ## MCP Security
 
-But MCP isn’t just another API protocol. It introduces entirely new trust boundaries, access patterns, and attack surfaces that traditional security approaches weren’t built to handle.  
+But MCP isn’t just another API protocol. It introduces entirely new trust boundaries, access patterns, and attack surfaces that traditional security approaches weren’t built to handle.
 
 - most of these agents are cobbled together with brittle 易碎的 authentication patterns, hardcoded API keys, and ad-hoc security controls that weren’t designed for this new world.
 
@@ -122,7 +122,7 @@ But MCP isn’t just another API protocol. It introduces entirely new trust boun
 
 - Unlike traditional request-response patterns, MCP supports `bidirectional communication` where servers can push updates to agents. It also handles context management more explicitly, agents don’t just send isolated requests, they maintain `stateful connections` with rich metadata about capabilities and permissions.
 
-- Traditional API security relies on well-established patterns: `authenticate` the client, `authorize` the request, `validate` inputs, and `log` the transaction.  
+- Traditional API security relies on well-established patterns: `authenticate` the client, `authorize` the request, `validate` inputs, and `log` the transaction.
 
 - The answer is treating every MCP participant as a [workload with a verifiable identity](https://aembit.io/resources/understanding-workload-identity-and-access-management-using-aembit/).
 
@@ -329,9 +329,9 @@ Injection attacks, whether through prompt injection, malicious metadata, or cont
 - MCP tools are granted more permissions than needed
 
 - expanding the attack surface and increasing the potential impact if a tool or server is compromised.
-  
+
   - Confused Deputy scenario: the wrong user’s authority is applied due to flawed delegation logic,
-  
+
   - excessive permissions: a tool is intentionally or mistakenly given overly broad access from the start.
 
 - If such a tool becomes compromised, the attacker can misuse these legitimate privileges to perform actions that were never meant to be allowed.
@@ -451,7 +451,7 @@ build MCP components on pipelines that implement security best practices like St
   - MCP servers and clients often expose `HTTP endpoints, authentication flows, and data exchange interfaces` that closely resemble traditional APIs.
 
   - they inherit many of the same vulnerabilities that affect web applications and APIs, such as:
-    - OWASP Top 10  
+    - OWASP Top 10
     - API Security Top 10
     - broken authorization, excessive data exposure, and improper asset management.
   - Classic web, API, and code-level vulnerabilities, such as:
@@ -590,7 +590,7 @@ This requires `attribute-based access control` where decisions factor in multipl
 
 ### Encryption
 
-- Utilize Context Encryption for all Data  
+- Utilize Context Encryption for all Data
 - Data that flows through the MCP is highly valuable, as it represents both `a direct pathway into AI systems` and also likely `contains elements of user data`.
 - use industry-standard encryption for all data that flows through the MCP and data at rest.
 - Any information that could be valuable or falls in line with data privacy compliance initiatives must be encrypted

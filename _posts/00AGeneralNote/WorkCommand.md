@@ -670,7 +670,7 @@ pyenv install 3.8.13
 # python-build: use tcl-tk from homebrew
 # python-build: use readline from homebrew
 # python-build: use zlib from xcode sdk
-# Installed Python-3.8.13 to /Users/graceluo/.pyenv/versions/3.8.13
+# Installed Python-3.8.13 to /Users/my_path/.pyenv/versions/3.8.13
 ```
 
 
