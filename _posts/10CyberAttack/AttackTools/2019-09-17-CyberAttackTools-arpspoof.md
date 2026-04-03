@@ -13,7 +13,7 @@ image:
 
 - Dug Song
 - for inject between two systems on the network
-- just choose 2 IP, It taks cares the rest of it.
+- just choose 2 IP, It tasks cares the rest of it.
 
 - Not selecting a pair of hosts to sit between, bur sit between the entire network and the default gateway.
   - problem: only one side of the conversation will arrive at this system-the side that is destined for the default gateway.

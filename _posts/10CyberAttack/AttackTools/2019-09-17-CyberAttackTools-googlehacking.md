@@ -72,14 +72,14 @@ site:
   - limits your search to a particular date or range of dates that a page wasindexed. It's important to note that the search is not limited to when a page was created,but when it was indexed by Google. So a page created on February 2 and not indexed byGoogle until April 11 could be found with daterange:
   - search on April 11.Remember also that Google reindexes pages. Whether the date range changes depends onwhether the page content changed. For example, Google indexes a page on June 1.Google reindexes the page on August 13, but the page content hasn't changed. The datefor the purpose of searching with daterange:
   - is still June 1.Note that daterange:
-  - works with Julian, not Gregorian dates (thecalendar we use every day.) There are Gregorian/Julian converters online, but if you wantto search Google without all that nonsense, use the FaganFinder Google interface`(https://www.faganfinder.com/engines/google.shtml)`, offering daterange:searchingvia a Gregorian date pull-down menu. Some of the hacks deal with daterange:searching without headaches, so you'll see this popping up again and again in the book.
+  - works with Julian, not Gregorian dates (thecalendar we use every day.) There are Gregorian/Julian converters online, but if you want to search Google without all that nonsense, use the FaganFinder Google interface`(https://www.faganfinder.com/engines/google.shtml)`, offering daterange:searchingvia a Gregorian date pull-down menu. Some of the hacks deal with daterange:searching without headaches, so you'll see this popping up again and again in the book.
 > "George Bush" daterange:2452389-2452389
 > neurosurgery daterange:2452389-2452389
 
 
 `filetype`:
 - `filetype`:
-  - searches the suffixes or filename extensions. These are usually, but notnecessarily, different file types. I like to make this distinction, because searching forfiletype:htm and `filetype:html` will give you different result counts, eventhough they're the same file type. You can even search for different page generators, suchas ASP, PHP, CGI, and so forth—presuming the site isn't hiding them behind redirectionand proxying. Google indexes several different Microsoft formats, including:PowerPoint(PPT), Excel (XLS), and Word (DOC).
+  - searches the suffixes or filename extensions. These are usually, but notnecessarily, different file types. I like to make this distinction, because searching forfiletype:htm and `filetype:html` will give you different result counts, even though they're the same file type. You can even search for different page generators, suchas ASP, PHP, CGI, and so forth—presuming the site isn't hiding them behind redirectionand proxying. Google indexes several different Microsoft formats, including:PowerPoint(PPT), Excel (XLS), and Word (DOC).
 > homeschooling filetype:pdf
 > leading economic indicators"  filetype:ppt
 
