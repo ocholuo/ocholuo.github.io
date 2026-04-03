@@ -1,15 +1,15 @@
 ---
-title: AI - AIAttack
+title: AIAttack - MCP Security
 date: 2021-08-11 11:11:11 -0400
 description:
-categories: [51AI, AIML]
+categories: [51AI, AIAttack]
 # img: /assets/img/sample/rabbit.png
-tags: [AI, ML]
+tags: [AI, LLM, AIAttack]
 ---
 
-## AI - AIAttack - MCP Security
+## AI Attack - MCP Security
 
-- [AI - AIAttack - MCP Security](#ai---aiattack---mcp-security)
+- [AI Attack - MCP Security](#ai-attack---mcp-security)
 - [Overview](#overview)
   - [MCP](#mcp)
 - [MCP Security](#mcp-security)
