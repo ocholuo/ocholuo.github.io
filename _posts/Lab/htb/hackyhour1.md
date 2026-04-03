@@ -65,10 +65,10 @@ https://passage.htb//CuteNews/cdata/users/lines
 # find the hash type
 $ hash-identifier 7144a8b531c27a60b51d81ae16be3a81cef722e11b43a26fde0ca97f9e1485e1
 
-Possible Hashs:
+Possible Hashes:
 [+] SHA-256
 [+] Haval-256
-Least Possible Hashs:
+Least Possible Hashes:
 [+] GOST R 34.11-94
 [+] RipeMD-256
 [+] SNEFRU-256

@@ -50,7 +50,7 @@
 
 ---
 
-## • Strong experience in Container Security and security orchestration using – WSO2, Docker, Kubernates, Mesos
+## • Strong experience in Container Security and security orchestration using – WSO2, Docker, Kubernetes, Mesos
 
 评估 Docker 的安全性时，主要考虑三个方面:
 - 由内核的命名空间和控制组机制提供的 容器内在安全

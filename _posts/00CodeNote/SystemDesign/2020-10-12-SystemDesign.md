@@ -78,7 +78,7 @@ In some cases, you're being asked to design a single feature or algorithm, but y
 ## Horizontal vs. Vertical Scaling
 
 * Vertical scaling
-  * increasing the resoures of a specific node.
+  * increasing the resources of a specific node.
   * For example
   * add additional memory to a server to improve its ability to handle load changes.
 
@@ -87,7 +87,7 @@ In some cases, you're being asked to design a single feature or algorithm, but y
   * For example
   * add additional servers, thus decreasing the load on any one server.
 
-Vertiacal scaling is generally easer than horizontal scaling, but it's limited.
+Vertiacal scaling is generally easier than horizontal scaling, but it's limited.
 
 ---
 
@@ -160,7 +160,7 @@ A few common ways of partitioning include:
 ## Networking Metrics
 
 * **Bandwidth**: This is the maximum amount of data that can be transferred in a unit of time. It is typically expressed in bits per seconds.
-* **Throughput**: Whereas bandwidth is the maximum data that can be transferred in a unit of time, throughput is the actual amoutn of data that is transferred.
+* **Throughput**: Whereas bandwidth is the maximum data that can be transferred in a unit of time, throughput is the actual amount of data that is transferred.
 * **Latency**: This is how long it takes data to go from one end to the other. That is, it is the delay between the sender sending information (even a very small chunk of data) and the receiver receiving it.
 
 ---
@@ -189,4 +189,4 @@ MapReduce allows us to do a lot of processing in parallel, which makes processin
   * If it's read-heavy, you might want to cache.
 * **Security**:
   * Security threats can, of course, be devastating for a system.
-  * Think about the tyupes of issues a system might face and design around thos.
+  * Think about the tyupes of issues a system might face and design around those.

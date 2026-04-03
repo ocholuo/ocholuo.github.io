@@ -1,12 +1,24 @@
 # quiz
 
-[toc]
+- [quiz](#quiz)
+  - [course 1](#course-1)
+    - [week1 History of Cybersecurity](#week1-history-of-cybersecurity)
+    - [week2 - A brief overview of types of actors and their motives](#week2---a-brief-overview-of-types-of-actors-and-their-motives)
+    - [week3](#week3)
+      - [Frameworks and their purpose](#frameworks-and-their-purpose)
+      - [Key concepts](#key-concepts)
+    - [week4](#week4)
+    - [Firewalls](#firewalls)
+      - [antimalaware](#antimalaware)
+      - [Introduction to Cryptography](#introduction-to-cryptography)
+      - [First look at Penetration Testing and Digital Forensics](#first-look-at-penetration-testing-and-digital-forensics)
+      - [Key security tools](#key-security-tools)
 
+---
 
+## course 1
 
-# course 1
-
-## week1 History of Cybersecurity
+### week1 History of Cybersecurity
 
 1. What was shown in the movie War Games that concerned President Reagan?
 > A teenager hacked into a Pentagon computer that was capable of launching nuclear weapons.
@@ -68,9 +80,9 @@
 > Potential Impacts and Adaptive Capacity
 
 
-## week2 - A brief overview of types of actors and their motives
+### week2 - A brief overview of types of actors and their motives
 
-1. Which hacker organization hacked into the Democratic National Convension and released Hillery Clinton's emails?
+1. Which hacker organization hacked into the Democratic National Conversion and released Hillery Clinton's emails?
 > Fancy Bears
 
 
@@ -121,7 +133,7 @@ Contingent security mechanism
 
 
 True or False: Authentication, Access Control and Data Confidentiality are all addressed by the ITU X.800 standard.
-> Tre
+> True
 
 16. Cryptography, digital signatures, access controls and routing controls considered which?
 > Specific security mechanisms
@@ -158,9 +170,9 @@ True or False: Only acts performed with intention to do harm can be classified a
 > False
 
 
-## week3
+### week3
 
-### Frameworks and their purpose
+#### Frameworks and their purpose
 
 1. In the context of security standards and compliance, which two (2) of these items are goals of frameworks and best practices?
 > They help translate the business needs into technical or operational needs.
@@ -181,7 +193,7 @@ SOX
 5. The OWASP “Top 10” provides guidance on what?
 > The top 10 application vulnerabilities reported each year.
 
-### Key concepts
+#### Key concepts
 
 1. Which two (2) key components are part of incident response? (Select 2)
 > Response team
@@ -240,9 +252,9 @@ Investigation
 
 ---
 
-## week4
+### week4
 
-## Firewalls
+### Firewalls
 
 1. Firewalls contribute to the security of your network in which three (3) ways?
 > Prevent Denial of Service (DOS) attacks.
@@ -264,12 +276,12 @@ They are also known as packet-filtering firewalls.
 They filter packets based upon Layer 3 and 4 information only (IP address and Port number)
 They are faster than Stateful firewalls.
 
-### antimalaware
+#### antimalaware
 
 1. True or False: Most Antivirus/Antimalware software works by comparing each file encountered on your system against a compressed (zipped) version of known malware maintained by the vendor on the local host.
 > false
 
-### Introduction to Cryptography
+#### Introduction to Cryptography
 
 1. How many unique encryption keys are required for 2 people to exchange a series of messages using asymmetric public key cryptogrophy?
 > 4
@@ -288,7 +300,7 @@ Brute force
 5. What is the correct sequence of steps required for Alice to send a message to Bob using asymmetric encryption?
 Alice requests Bob’s public key and uses it to encrypt her message. Alice then sends the encrypted message to Bob who decrypts it using his private key.
 
-### First look at Penetration Testing and Digital Forensics
+#### First look at Penetration Testing and Digital Forensics
 TOTAL POINTS 4
 1. A skilled penetration tester wants to show her employer how smart she is in hopes of getting a promotion. Without obtaining permission, she hacks into the company’s new online store to see if there are any weaknesses that can be hardened before the system goes live. She does not do any damage and writes a useful report which she sends over her boss’s head to the CISO. What color hat was she wearing?
 > A Gray Hat
@@ -304,7 +316,7 @@ Information Systems Security Assessment Framework (`ISSAF`)
 1. In digital forensics, the term Chain of Custody refers to what?
 > The record that documents the sequence of custody, control, transfer, analysis, and disposition of physical or electronic evidence.
 
-### Key security tools
+#### Key security tools
 
 1. What is the primary function of a firewall?
 > Filter traffic between networks.
@@ -342,7 +354,7 @@ Application gateways are susceptible to IP spoofing.
 9. Which statement about Stateful firewalls is True?
 > They have state tables that allow them to compare current packets with previous packets.
 
-10. True or False: Most Antivirus/Antimalware software works by comparing a hash of every file encountered on your system against a table of hashs of known virus and malware previously made by the antivirus/antimalware vendor.
+10. True or False: Most Antivirus/Antimalware software works by comparing a hash of every file encountered on your system against a table of hashes of known virus and malware previously made by the antivirus/antimalware vendor.
 > True
 
 11. Which type of cryptographic attack is characterized by comparing a captured hashed password against a table of many millions of previously hashed words or strings?
@@ -350,7 +362,7 @@ Application gateways are susceptible to IP spoofing.
 
 12. What are two (2) drawbacks to using symmetric key encryption?
 > The sender and recipient must find a secure way to share the key itself.
-> diffrent key for everyone
+> different key for everyone
 
 
 

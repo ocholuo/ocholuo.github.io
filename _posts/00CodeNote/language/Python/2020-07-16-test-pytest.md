@@ -380,7 +380,7 @@ def test_greet(person):
 # E         ?  ^^^^
 # tests/test_4.py:13: AssertionError
 # =========== short test summary info ============
-# FAILED tests/test_4.py::test_greet - Assertio...
+# FAILED tests/test_4.py::test_greet - Assertion...
 # ============== 1 failed in 0.07s ===============
 ```
 

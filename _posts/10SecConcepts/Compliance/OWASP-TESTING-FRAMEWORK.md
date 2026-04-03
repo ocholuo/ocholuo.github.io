@@ -68,7 +68,7 @@ image:
 ```bash
 1. Discover the Supported Method
    # - The OPTIONS HTTP method provides the tester with the most direct and effective way to do that.
-   # RFC 2616 states that, “The OPTIONS method represents a request for information about the communication options available on the request/response chain identi- fied by the Request-URI”.
+   # RFC 2616 states that, “The OPTIONS method represents a request for information about the communication options available on the request/response chain identi- field by the Request-URI”.
 
     $ nc www.victim.com 80 OPTIONS / HTTP/1.1
     Host: www.victim.com

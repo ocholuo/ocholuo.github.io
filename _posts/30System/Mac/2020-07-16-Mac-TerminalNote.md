@@ -90,8 +90,8 @@ reboot
 
 ```
 common-lisp
-J:~ luo$ cd /Users/luo/VirtualBox\ VMs/win0.0
-J:win0.0 luo$ ls
+J:~ my_path$ cd /Users/my_path/VirtualBox\ VMs/win0.0
+J:win0.0 my_path$ ls
 Logs			win0.0.vbox-prev
 share			win0.0.vdi
 win0.0.vbox

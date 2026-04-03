@@ -133,7 +133,7 @@ Implement a priority queue using `sorting` functions and `lists`.
 - returns null if the priority queue is empty.
 
 `removeMin()`:
-- Removes and returns an entry (k,v) having minimal key fromm the priority queue;
+- Removes and returns an entry (k,v) having minimal key from the priority queue;
 - returns null if the priority queue is empty.
 
 `size()`:
@@ -1586,7 +1586,7 @@ public class HeapAdaptablePriorityQueue<K,V> extends HeapPriorityQueue<K,V> impl
     public HeapAdaptablePriorityQueue(){ super(); }
     public HeapAdaptablePriorityQueue(Comparator<K> comp){ super(comp); }
 
-    // protected utilites
+    // protected utilities
     // /∗∗ Validates an entry to ensure it is location-aware. ∗/
     protected AdaptablePQEntry<K,V> validate(Entry<K,V> entry) throws IllegalArgumentException {
         if (!(entry instanceof AdaptablePQEntry)) throw new IllegalArgumentException("Invalid entry"); AdaptablePQEntry<K,V> locator = (AdaptablePQEntry<K,V>) entry;

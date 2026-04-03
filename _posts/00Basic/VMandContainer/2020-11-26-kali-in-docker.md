@@ -26,7 +26,7 @@ $ sudo apt install docker.io
 $ mkdir ~/Pentest
 $ docker run -v ~/Pentest:/Pentest -t -i kalilinux/kali-linux-docker /bin/bash
 # -v: does the folder sync.
-# -v <host direcoty>:<container directory> : in the container we can copy files in and out of “/Pentest/”.
+# -v <host directory>:<container directory> : in the container we can copy files in and out of “/Pentest/”.
 
 
 

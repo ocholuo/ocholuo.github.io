@@ -1,7 +1,7 @@
 package main // same as the file name
 
 import (
-	// formate, bring the output to the console
+	// format, bring the output to the console
 	"fmt"
 )
 

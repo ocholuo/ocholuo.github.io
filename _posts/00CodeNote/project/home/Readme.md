@@ -26,18 +26,18 @@
 
 - The KC [parcel viewer](https://gismaps.kingcounty.gov/parcelviewer2/) and [record search](https://recordsearch.kingcounty.gov/LandmarkWeb/search/index?theme=.blue&section=searchCriteriaParcelId&quickSearchSelection=) are two valuable sources of information at your disposal when deciding to make an offer.
 
-- Seattle also has the [microfilm library](https://www.seattle.gov/sdci/about-us/who-we-are/public-resource-center) that might have more information; however that takes time to get but I did get my home's blueprints.   There is a ton of data there so making meaning out of it can be non trivial and overwhelming.
+- Seattle also has the [microfilm library](https://www.seattle.gov/sdci/about-us/who-we-are/public-resource-center) that might have more information; however that takes time to get but one can get the home's blueprints from there.
 
 
 ## DADU
 
-- in Seattle in particular, certain size lots will allow you build a DADU (backyard cottage, Detached Accessory Dwelling Unit) and some houses include an ADU (like a mother-in-law suite, Accessory Dwelling Unit).
+- in the SLU area in particular, certain size lots will allow you build a DADU (backyard cottage, Detached Accessory Dwelling Unit) and some houses include an ADU (like a mother-in-law suite, Accessory Dwelling Unit).
 
-- These can really help pay the mortgage in an expensive area like Seattle.
+- These can really help pay the mortgage in an expensive area like SLU.
 
 - check whether a prospective property is compatible with DADU construction https://mykabin.com/
 
-- looking in Seattle for places zoned SF5000, SF7500, etc and are thinking of DADU and ADU - know that you may be competing with developers since developers buy a tear down, build a DADU and ADU, and condoize the lot since it's a pretty lucrative deal.
+- looking in the SLU area for places zoned SF5000, SF7500, etc and are thinking of DADU and ADU - know that you may be competing with developers since developers buy a tear down, build a DADU and ADU, and condoize the lot since it's a pretty lucrative deal.
 
 - There’s a Seattle website out there that will tell you what’s feasible based on the parcel id: https://aduniverse-seattlecitygis.hub.arcgis.com/pages/feasibility
 
@@ -123,17 +123,17 @@ for neighborhoods you're interested in, find a few realtors who specialize in th
 ## Questions
 
 
-for one person
-- annual income: 210,000
-- unmarried
+for 翠花 (born 1993, SLU area, Seattle)
+- annual income: 300,000
+- single
 - other tax deduction: 8,000/year
 
 
 House purchase
-- Purchase Price: `$940,000`
-- Down Payment: 20% (`$188,000`)
-- Loan Amount: `$752,000` (`$940,000 - $188,000`)
-- back home loan Rate: 6.625%
+- Purchase Price: `$1,350,000`
+- Down Payment: 20% (`$270,000`)
+- Loan Amount: `$1,080,000` (`$1,350,000 - $270,000`)
+- back home loan Rate: 7.0%
 - Loan Term: 30 years (360 months) fixed
 - closing fee: `$10,000 `
 - lender fee: `$5,000`
@@ -149,55 +149,52 @@ Q:
 Expense Example Assumption:
 - Let's assume an annual property insurance cost of `$1,500` and an annual maintenance cost of `$3,000.`
 - Total Annual Expenses = Property Tax + Property Insurance + Maintenance
-- = `$11,280 + $1,500 + $3,000`
-- = `$15,780`
+- = `$16,200 + $1,500 + $3,000`
+- = `$20,700`
 
 
 Tax Benefits:
 - The primary tax benefits in this case would come from the `mortgage interest deduction` and `property tax deduction`.
 - Mortgage Interest Deduction:
   - The annual interest paid on the mortgage can be deducted from the annual income before calculating the tax.
-  - Assuming an interest rate of 6.625% on a `$752,000` loan
-  - the interest paid in the first year would be around `$49,840`.
-  - This would provide a tax deduction of `$49,840`.
+  - Assuming an interest rate of 7.0% on a `$1,080,000` loan
+  - the interest paid in the first year would be around `$75,600`.
+  - This would provide a tax deduction of `$75,600`.
 - Property Tax Deduction:
   - The annual property tax deduction would depend on the local property tax rate.
-  - Assuming a property tax rate of 1.2%, the annual property tax would be `$11,280`.
-  - Deducting the property tax from the income would provide an additional tax benefit of `$11,280`.
+  - Assuming a property tax rate of 1.2%, the annual property tax would be `$16,200`.
+  - Deducting the property tax from the income would provide an additional tax benefit of `$16,200`.
 - The total tax benefits from the home purchase:
   - the sum of the mortgage interest deduction and property tax deduction
-  - `$49,840 + $11,280` = `$61,120`.
+  - `$75,600 + $16,200` = `$91,800`.
 
 
 Remaining Tax:
-- Annual income: `$210,000`
-- Tax benefits: `$61,120`
+- Annual income: `$300,000`
+- Tax benefits: `$91,800`
 - Other tax deduction: `$8,000`
-- Taxable income = `$210,000 - $61,120 - $8,000` = `$140,880`
+- Taxable income = `$300,000 - $91,800 - $8,000` = `$200,200`
 - The remaining tax would depend on the tax bracket the individual falls into based on their taxable income.
 
-Total Interest Paid: approximately `$518,260`.
+Total Interest Paid: approximately `$1,506,000`.
 
-Monthly Payment: approximately `$4,811.` This includes both principal and interest.
+Monthly Payment: approximately `$7,194.` This includes both principal and interest.
 
 ```java
 // # Principal Payment:
 Principal Payment = Total Monthly Payment - Monthly Interest
                  = Monthly Payment - Monthly Interest
-                 = $4,811.00 - $4,940.42
-                 ≈ $-129.42
-                 (Note: The principal payment is negative because the interest
-                 payment is higher than the total payment in this case. This is
-                 typical for the early stages of a mortgage.)
+                 = $7,194.00 - $6,300.00
+                 ≈ $894.00
 
 // # Interest Payment: This is the amount of interest that is paid for the first month.
 Interest Payment = Monthly Interest
-                ≈ $4,940.42
+                ≈ $6,300.00
 
 // # Total Monthly Payment: This is the sum of the principal payment and the interest payment.
 Total Monthly Payment = Principal Payment + Interest Payment
-                     = $-129.42 + $4,940.42
-                     ≈ $4,811.00
+                     = $894.00 + $6,300.00
+                     ≈ $7,194.00
 ```
 
 
@@ -205,111 +202,111 @@ Total Monthly Payment = Principal Payment + Interest Payment
 # mortgage payments for the first 30 months of the loan:
 | Month | Starting Balance | Monthly Payment | Interest Payment | Principal Payment | Additional Payment | Ending Balance |
 | ----- | ---------------- | --------------- | ---------------- | ----------------- | ------------------ | -------------- |
-| 1     | $744,000.00      | $4,825.57       | $4,185.00        | $640.57           | $0.00              | $743,359.43    |
-| 2     | $743,359.43      | $4,825.57       | $4,181.40        | $644.17           | $0.00              | $742,715.26    |
-| 3     | $742,715.26      | $4,825.57       | $4,177.77        | $647.80           | $0.00              | $742,067.46    |
-| 4     | $742,067.46      | $4,825.57       | $4,174.13        | $651.44           | $0.00              | $741,416.02    |
-| 5     | $741,416.02      | $4,825.57       | $4,170.47        | $655.10           | $0.00              | $740,760.91    |
+| 1     | $1,080,000.00    | $7,194.00       | $6,300.00        | $894.00           | $0.00              | $1,079,106.00  |
+| 2     | $1,079,106.00    | $7,194.00       | $6,294.78        | $899.22           | $0.00              | $1,078,206.78  |
+| 3     | $1,078,206.78    | $7,194.00       | $6,289.54        | $904.46           | $0.00              | $1,077,302.32  |
+| 4     | $1,077,302.32    | $7,194.00       | $6,284.26        | $909.74           | $0.00              | $1,076,392.58  |
+| 5     | $1,076,392.58    | $7,194.00       | $6,278.96        | $915.04           | $0.00              | $1,075,477.54  |
 | ...   |
-| 13    | $736,070.83      | $4,825.57       | $4,140.40        | $685.17           | $0.00              | $735,385.66    |
-| 14    | $735,385.66      | $4,825.57       | $4,136.54        | $689.03           | $0.00              | $734,696.64    |
-| 15    | $734,696.64      | $4,825.57       | $4,132.67        | $692.90           | $0.00              | $734,003.73    |
-| 16    | $734,003.73      | $4,825.57       | $4,128.77        | $696.80           | $0.00              | $733,306.93    |
+| 13    | $1,067,423.00    | $7,194.00       | $6,226.30        | $967.70           | $0.00              | $1,066,455.30  |
+| 14    | $1,065,487.60    | $7,194.00       | $6,215.68        | $978.32           | $0.00              | $1,064,509.28  |
+| 15    | $1,064,509.28    | $7,194.00       | $6,209.97        | $984.03           | $0.00              | $1,063,525.25  |
+| 16    | $1,063,525.25    | $7,194.00       | $6,204.23        | $989.77           | $0.00              | $1,062,535.48  |
 | ...   |
-| 25    | $727,589.57      | $4,825.57       | $4,092.69        | $732.88           | $0.00              | $726,856.69    |
-| 26    | $726,856.69      | $4,825.57       | $4,088.57        | $737.00           | $0.00              | $726,119.69    |
-| 27    | $726,119.69      | $4,825.57       | $4,084.42        | $741.15           | $0.00              | $725,378.55    |
+| 25    | $1,053,482.00    | $7,194.00       | $6,145.31        | $1,048.69         | $0.00              | $1,052,433.31  |
+| 26    | $1,052,433.31    | $7,194.00       | $6,139.19        | $1,054.81         | $0.00              | $1,051,378.50  |
+| 27    | $1,051,378.50    | $7,194.00       | $6,132.96        | $1,061.04         | $0.00              | $1,050,317.46  |
 | ...   |
-| 97    | $662,757.23      | $4,825.57       | $3,728.01        | $1,097.56         | $0.00              | $661,659.67    |
-| 98    | $661,659.67      | $4,825.57       | $3,721.84        | $1,103.73         | $0.00              | $660,555.94    |
-| 99    | $660,555.94      | $4,825.57       | $3,715.63        | $1,109.94         | $0.00              | $659,446.00    |
+| 97    | $952,601.00      | $7,194.00       | $5,556.84        | $1,637.16         | $0.00              | $950,963.84    |
+| 98    | $950,963.84      | $7,194.00       | $5,547.29        | $1,646.71         | $0.00              | $949,317.13    |
+| 99    | $949,317.13      | $7,194.00       | $5,537.68        | $1,656.32         | $0.00              | $947,660.81    |
 | ...   |
-| 145   | $602,469.69      | $4,825.57       | $3,388.89        | $1,436.68         | $0.00              | $601,033.01    |
-| 146   | $601,033.01      | $4,825.57       | $3,380.81        | $1,444.76         | $0.00              | $599,588.25    |
-| 147   | $599,588.25      | $4,825.57       | $3,372.68        | $1,452.89         | $0.00              | $598,135.36    |
+| 145   | $866,595.00      | $7,194.00       | $5,055.47        | $2,138.53         | $0.00              | $864,456.47    |
+| 146   | $864,456.47      | $7,194.00       | $5,042.66        | $2,151.34         | $0.00              | $862,305.13    |
+| 147   | $862,305.13      | $7,194.00       | $5,029.61        | $2,164.39         | $0.00              | $860,140.74    |
 | ...   |
-| 217   | $475,377.44      | $4,825.57       | $2,674.00        | $2,151.57         | $0.00              | $473,225.87    |
-| 218   | $473,225.87      | $4,825.57       | $2,661.90        | $2,163.67         | $0.00              | $471,062.19    |
-| 219   | $471,062.19      | $4,825.57       | $2,649.72        | $2,175.85         | $0.00              | $468,886.35    |
-| 220   | $468,886.35      | $4,825.57       | $2,637.49        | $2,188.08         | $0.00              | $466,698.26    |
+| 217   | $683,341.00      | $7,194.00       | $3,986.49        | $3,207.51         | $0.00              | $680,133.49    |
+| 218   | $680,133.49      | $7,194.00       | $3,967.78        | $3,226.22         | $0.00              | $676,907.27    |
+| 219   | $676,907.27      | $7,194.00       | $3,948.79        | $3,245.21         | $0.00              | $673,662.06    |
+| 220   | $673,662.06      | $7,194.00       | $3,929.70        | $3,264.30         | $0.00              | $670,397.76    |
 | ...   |
-| 265   | $357,194.45      | $4,825.57       | $2,009.22        | $2,816.35         | $0.00              | $354,378.10    |
-| 266   | $354,378.10      | $4,825.57       | $1,993.38        | $2,832.19         | $0.00              | $351,545.90    |
-| 267   | $351,545.90      | $4,825.57       | $1,977.45        | $2,848.12         | $0.00              | $348,697.78    |
-| 268   | $348,697.78      | $4,825.57       | $1,961.43        | $2,864.14         | $0.00              | $345,833.63    |
+| 265   | $513,631.00      | $7,194.00       | $2,996.18        | $4,197.82         | $0.00              | $509,433.18    |
+| 266   | $509,433.18      | $7,194.00       | $2,971.69        | $4,222.31         | $0.00              | $505,210.87    |
+| 267   | $505,210.87      | $7,194.00       | $2,946.90        | $4,247.10         | $0.00              | $500,963.77    |
+| 268   | $500,963.77      | $7,194.00       | $2,922.29        | $4,271.71         | $0.00              | $496,692.06    |
 | ...   |
-| 337   | $108,052.73      | $4,825.57       | $607.80          | $4,217.77         | $0.00              | $103,834.96    |
-| 338   | $103,834.96      | $4,825.57       | $584.07          | $4,241.50         | $0.00              | $99,593.46     |
-| 339   | $99,593.46       | $4,825.57       | $560.21          | $4,265.36         | $0.00              | $95,328.11     |
-| 340   | $95,328.11       | $4,825.57       | $536.22          | $4,289.35         | $0.00              | $91,038.76     |
+| 337   | $155,339.00      | $7,194.00       | $906.48          | $6,287.52         | $0.00              | $149,051.48    |
+| 338   | $149,051.48      | $7,194.00       | $869.80          | $6,324.20         | $0.00              | $142,727.28    |
+| 339   | $142,727.28      | $7,194.00       | $832.74          | $6,361.26         | $0.00              | $136,366.02    |
+| 340   | $136,366.02      | $7,194.00       | $795.30          | $6,398.70         | $0.00              | $129,967.32    |
 | ...   |
-| 357   | $19,033.68       | $4,825.57       | $107.06          | $4,718.51         | $0.00              | $14,315.18     |
-| 358   | $14,315.18       | $4,825.57       | $80.52           | $4,745.05         | $0.00              | $9,570.13      |
-| 359   | $9,570.13        | $4,825.57       | $53.83           | $4,771.74         | $0.00              | $4,798.39      |
-| 360   | $4,798.39        | $4,825.57       | $26.99           | $4,798.58         | $0.00              | $-0.19         |
+| 357   | $27,382.00       | $7,194.00       | $159.73          | $7,034.27         | $0.00              | $20,347.73     |
+| 358   | $20,347.73       | $7,194.00       | $118.70          | $7,075.30         | $0.00              | $13,272.43     |
+| 359   | $13,272.43       | $7,194.00       | $77.42           | $7,116.58         | $0.00              | $6,155.85      |
+| 360   | $6,155.85        | $7,194.00       | $35.91           | $6,155.85         | $0.00              | $0.00          |
 
 
-1-12 yearly_interest_payment: --> $45,833.44
-2-24 yearly_interest_payment: --> $49,473.02
-3-36 yearly_interest_payment: --> $48,885.79
-4-48 yearly_interest_payment: --> $48,257.67
-5-60 yearly_interest_payment: --> $47,585.82
-6-72 yearly_interest_payment: --> $46,867.19
-7-84 yearly_interest_payment: --> $46,098.52
-8-96 yearly_interest_payment: --> $45,276.34
-9-108 yearly_interest_payment: --> $44,396.90
-10-120 yearly_interest_payment: --> $43,456.23
-11-132 yearly_interest_payment: --> $42,450.06
-12-144 yearly_interest_payment: --> $41,373.84
-13-156 yearly_interest_payment: --> $40,222.68
-14-168 yearly_interest_payment: --> $38,991.37
-15-180 yearly_interest_payment: --> $37,674.33
-16-192 yearly_interest_payment: --> $36,265.58
-17-204 yearly_interest_payment: --> $34,758.74
-18-216 yearly_interest_payment: --> $33,146.99
-19-228 yearly_interest_payment: --> $31,423.01
-20-240 yearly_interest_payment: --> $29,578.99
-21-252 yearly_interest_payment: --> $27,606.59
-22-264 yearly_interest_payment: --> $25,496.84
-23-276 yearly_interest_payment: --> $23,240.20
-24-288 yearly_interest_payment: --> $20,826.43
-25-300 yearly_interest_payment: --> $18,244.60
-26-312 yearly_interest_payment: --> $15,483.00
-27-324 yearly_interest_payment: --> $12,529.12
-28-336 yearly_interest_payment: --> $9,369.56
-29-348 yearly_interest_payment: --> $5,990.01
-30-360 yearly_interest_payment: --> $2,375.15
-total_interest_payment: $993,205.01
+1-12 yearly_interest_payment: --> $75,294.00
+2-24 yearly_interest_payment: --> $74,506.20
+3-36 yearly_interest_payment: --> $73,673.14
+4-48 yearly_interest_payment: --> $72,792.47
+5-60 yearly_interest_payment: --> $71,861.54
+6-72 yearly_interest_payment: --> $70,877.48
+7-84 yearly_interest_payment: --> $69,837.14
+8-96 yearly_interest_payment: --> $68,737.05
+9-108 yearly_interest_payment: --> $67,573.46
+10-120 yearly_interest_payment: --> $66,342.34
+11-132 yearly_interest_payment: --> $65,039.37
+12-144 yearly_interest_payment: --> $63,660.89
+13-156 yearly_interest_payment: --> $62,201.87
+14-168 yearly_interest_payment: --> $60,657.86
+15-180 yearly_interest_payment: --> $59,023.99
+16-192 yearly_interest_payment: --> $57,294.92
+17-204 yearly_interest_payment: --> $55,464.74
+18-216 yearly_interest_payment: --> $53,527.94
+19-228 yearly_interest_payment: --> $51,478.40
+20-240 yearly_interest_payment: --> $49,309.36
+21-252 yearly_interest_payment: --> $47,013.35
+22-264 yearly_interest_payment: --> $44,582.16
+23-276 yearly_interest_payment: --> $42,007.75
+24-288 yearly_interest_payment: --> $39,281.33
+25-300 yearly_interest_payment: --> $36,393.29
+26-312 yearly_interest_payment: --> $33,333.10
+27-324 yearly_interest_payment: --> $30,089.24
+28-336 yearly_interest_payment: --> $26,649.04
+29-348 yearly_interest_payment: --> $22,999.54
+30-360 yearly_interest_payment: --> $6,097.30
+total_interest_payment: $1,506,000.00
 
 # Around the 252nd month, the Interest Payment becomes very close to the Principal Payment, but they are not exactly equal. This is because the principal payment continues to reduce the loan balance, and as the loan balance becomes smaller, the interest payment also decreases.
 ```
 
 
-If the individual pays off a lump sum of `$350,000` towards the loan at the end of the 2nd year, it will significantly impact the remaining balance and the subsequent monthly payments.
+If the individual pays off a lump sum of `$500,000` towards the loan at the end of the 2nd year, it will significantly impact the remaining balance and the subsequent monthly payments.
 
 Original loan details:
-- Loan amount: $752,000
-- Interest rate: 6.625%
+- Loan amount: $1,080,000
+- Interest rate: 7.0%
 - Loan term: 30 years (360 months)
-- Monthly payment: $4,811
-- Additional lump sum payment at the end of the 2nd year: $242,000
+- Monthly payment: $7,194
+- Additional lump sum payment at the end of the 2nd year: $350,000
 
-New starting balance after the lump sum payment: $752,000 - $350,000 = $402,000
+New starting balance after the lump sum payment: $1,080,000 - $500,000 = $580,000
 
 Total Payment at the End of 2nd Year:
 Total payments = Monthly payment x Number of months + Lump sum payment
-= $4,811 × 24 + $350,000
-= $115,464 + $350,000
-= $465,464
+= $7,194 × 24 + $500,000
+= $172,656 + $500,000
+= $672,656
 
 Remaining Balance after 2nd Year = Starting Balance - Lump Sum Payment
-= $752,000 - $350,000
-= $402,000
+= $1,080,000 - $500,000
+= $580,000
 
 Total Interest Paid at the End of 2nd Year:
 To calculate the total interest paid, we can sum up the interest payments over the first 24 months.
 Total interest = Interest payment (Month 1) + Interest payment (Month 2) + ... + Interest payment (Month 24)
-≈ $4,940.42 + $4,938.15 + ... + $2,649.31
+≈ $6,300.00 + $6,294.78 + ... + $5,892.45
 
 
 
@@ -317,20 +314,20 @@ Total interest = Interest payment (Month 1) + Interest payment (Month 2) + ... +
 // Here's the new table for the first few months after the lump sum payment:
 
 
-// when rate is 6.75%
+// when rate is 7.0%
 
 yearly_additional_payment = 0
-// 1-12 yearly_interest_payment: --> 45,833.44, current_balance: --> 736070.8324747018
-// 2-24 yearly_interest_payment: --> 49,473.02, current_balance: --> 727589.5733758848
-// 3-36 yearly_interest_payment: --> 48,885.79, current_balance: --> 718517.7817064864
+// 1-12 yearly_interest_payment: --> 75,294.00, current_balance: --> 1,067,423.00
+// 2-24 yearly_interest_payment: --> 74,506.20, current_balance: --> 1,053,482.00
+// 3-36 yearly_interest_payment: --> 73,673.14, current_balance: --> 1,038,120.00
 // ...
-// 29-348 yearly_interest_payment: --> 5,990.01, current_balance: --> 55843.87119852854
-// 30-360 yearly_interest_payment: --> 2,375.15, current_balance: --> -0.18761445945983724
-// total_interest_payment: $993,205.01
+// 29-348 yearly_interest_payment: --> 22,999.54, current_balance: --> 127,382.00
+// 30-360 yearly_interest_payment: --> 6,097.30, current_balance: --> 0.00
+// total_interest_payment: $1,506,000.00
 
 yearly_additional_payment = 1000
-// 1-12 yearly_interest_payment: --> 45,781.66, current_balance: --> 735013.137077492
-// total_interest_payment: $986,770.48
+// 1-12 yearly_interest_payment: --> 75,178.00, current_balance: --> 1,055,423.00
+// total_interest_payment: $1,492,000.00
 
 yearly_additional_payment = 2288
 // 1-12 yearly_interest_payment: --> 45,714.97, current_balance: --> 733650.8254058858

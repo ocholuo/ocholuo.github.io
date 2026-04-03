@@ -919,7 +919,7 @@ unicomp6.unicomp.net - - [01/Jul/1995:00:00:06 -0400] "GET /shuttle/countdown/ H
 
 ```py
 # read the string filename
-filename = "/Users/luo/Downloads/GitHub/ocholuo.github.io/_posts/Lab/interview/num.txt"
+filename = "/Users/my_path/ocholuo.github.io/_posts/Lab/interview/num.txt"
 print(filename)
 
 # open the file

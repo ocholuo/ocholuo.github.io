@@ -24,7 +24,7 @@ public class BTTraversalMorrisInorder {
                 if(predecessor.right == null){
                     predecessor.right = current;
                     current = current.left;
-                }else{ //left is already visit. Go rigth after visiting current.
+                }else{ //left is already visit. Go right after visiting current.
                     predecessor.right = null;
                     System.out.print(current.data + " ");
                     current = current.right;

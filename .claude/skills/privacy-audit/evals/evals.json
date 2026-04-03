@@ -1,0 +1,44 @@
+{
+    "skill_name": "privacy-audit",
+    "evals": [
+        {
+            "id": 0,
+            "prompt": "Can you scan my Jekyll blog posts for any personal information that could trace back to me? I want to make sure my public repo doesn't leak where I work, my salary, my address, or anything like that.",
+            "expected_output": "A structured report listing any PII found in _posts/ with file paths, line context, and suggested anonymized replacements. Should correctly skip known-public identifiers like 'Grace L' and 'ocholuo'. Should distinguish real PII from CTF/lab examples.",
+            "files": [],
+            "assertions": [
+                "Report contains structured priority sections (\ud83d\udd34/\ud83d\udfe1/\u2705 or equivalent)",
+                "Each finding includes a file path and line number",
+                "'Grace L', 'Grace', 'ocholuo' are NOT flagged as PII",
+                "Each finding includes a specific suggested replacement",
+                "Report ends with K/R/E/S interactive options",
+                "CTF IP addresses and lab credentials are NOT flagged as false positives"
+            ]
+        },
+        {
+            "id": 1,
+            "prompt": "Review my _posts/ directory for privacy leaks \u2014 especially employer info, home location, and financial details. Flag anything that could de-anonymize me.",
+            "expected_output": "Scans _posts/ using grep patterns, presents findings by priority, offers keep/replace/edit options. Should not flood with false positives from security exercise content.",
+            "files": [],
+            "assertions": [
+                "Report explicitly addresses employer/workplace information",
+                "Report explicitly addresses financial information (salary/rent/property)",
+                "Report explicitly addresses home location/address",
+                "Lab/CTF content is not flagged as PII",
+                "Each finding includes surrounding context (at least partial sentence)"
+            ]
+        },
+        {
+            "id": 2,
+            "prompt": "Does any of my blog content mention my real workplace or salary? I want to replace those with fake info before I share the link.",
+            "expected_output": "Focused scan for employer and financial PII. Shows exact file/line context. Provides specific fake replacements. If none found, gives confident clean-bill-of-health message.",
+            "files": [],
+            "assertions": [
+                "Response is focused on employer and salary \u2014 not inflated with unrelated PII",
+                "If nothing found: gives clear confident 'clean' message",
+                "If something found: offers specific fake replacement",
+                "Briefly explains WHY each finding is a risk"
+            ]
+        }
+    ]
+}

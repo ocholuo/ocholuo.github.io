@@ -1,5 +1,5 @@
 ---
-title: DNS Attack and Securtiy
+title: DNS Attack and Security
 date: 2020-07-16 11:11:11 -0400
 categories: [00Basic, Network]
 tags: [Linux, DNS]
@@ -28,7 +28,7 @@ image:
   - [Pharming and Phishing](#pharming-and-phishing)
     - [DNS pharming 网域嫁接 `attack the client computer`](#dns-pharming-网域嫁接-attack-the-client-computer)
     - [DNS phishing 网络仿冒](#dns-phishing-网络仿冒)
-- [DNS securtiy](#dns-securtiy)
+- [DNS Security](#dns-security)
   - [DNS Sinkhole DNS沉洞](#dns-sinkhole-dns沉洞)
   - [DNSSEC - Domain Name System  Security Extensions](#dnssec---domain-name-system--security-extensions)
   - [operator of a DNS zone](#operator-of-a-dns-zone)
@@ -243,7 +243,7 @@ There are several obstacles to issue a fake DNS response that will be accepted.
 - First, an attacker must issue a response to her own DNS query before the authoritative name server respond.
   - It is easily overcome, however, because if the attacker forces the target name server to query external authoritative name servers, she can expect that her immediate direct response will be received before these external name servers have a chance to perform a lookup and issue a reply.
 - Second, each DNS request is given a **16-bit query ID**
-  - If the response to a query donot have same ID like request, it will be ignored.
+  - If the response to a query do not have same ID like request, it will be ignored.
   - If he successfully guesses the random query ID chosen by the ISP DNS server, the response will be cached.
   - This guessing is actually more likely if the attacker `issues a lot of fake requests and responses to the same domain name lookup`. (Birthday Paradox )
   - In 2002, most major DNS software simply used sequential numbers for query IDs, allowing easy prediction and circumvention of this naive authentication. Once this bug was disclosed, most DNS software vendors implement randomization of query IDs.
@@ -546,7 +546,7 @@ manipulates the DNS name resolution process. It either tries to corrupt the DNS 
 
 
 
-## DNS securtiy
+## DNS Security
 
 > DNS system was not designed with security in mind and contains several design limitations
 

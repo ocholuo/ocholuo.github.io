@@ -71,7 +71,7 @@ def mergeTwoLists(self, l1, l2):
 
     dummy.next = l1 or l2
     # if any l1 or l2 = None
-    # dummy point to the remaning list
+    # dummy point to the remaining list
 
     return head.next
     # as dummy point to 0 define initially
