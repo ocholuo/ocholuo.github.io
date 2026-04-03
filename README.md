@@ -5,8 +5,8 @@
   - [WRITE-UPS](#write-ups)
 - [Blog Main PROJECTS](#blog-main-projects)
   - [LAB EXERCISES](#lab-exercises)
-- [Installation](#installation)
-  - [Basic setup](#basic-setup)
+  - [Installation](#installation)
+    - [Basic setup](#basic-setup)
 
 ---
 
@@ -48,6 +48,7 @@ I have been fortunate enough to meet great folks, come across ample valuable res
 I have documented the exercises and learning path throughout my journey, and hope it can also be helpful for you in your study.
 
 This blog is all about:
+
 - Knowledge from work
 - Classroom learning
 - Online learning
@@ -59,6 +60,7 @@ This blog is all about:
 # Blog Main PROJECTS
 
 I have worked on a number of projects during my studies, some of which include:
+
 - [Course - Learning Path](https://ocholuo.github.io/posts/CourseREADME/)
 - [InfoSec - Tools](https://ocholuo.github.io/posts/InfoSecREADME/)
 - [Programming - Code & Learning Path](https://ocholuo.github.io/posts/CodeREADME/)
@@ -66,10 +68,10 @@ I have worked on a number of projects during my studies, some of which include:
 
 <!-- To know more about the projects vist the Projects page using the button below. The page has "Learn More" links to navigate to their respective GitHub repository home pages. -->
 
-
 ## LAB EXERCISES
 
 Lab exercises designed by Syracuse university:
+
 - [Syracuse university - SEED Lab - XSS Attack Lab](https://ocholuo.github.io/posts/SEED-Labs-CrossSiteScripting-Attack-Lab/) - Self Replicating Worm attack on vulnerable web app
 <!-- Set UID Attack Lab - Exploiting setuid and LD_PRELOAD env variable. -->
 <!-- MD5 Attack Lab - Attack Merkle Damgard construction of MD5 using collisions. -->
@@ -77,6 +79,7 @@ Lab exercises designed by Syracuse university:
 - [Netdevgroup - PAN8 Cybersecurity Gateway](https://ocholuo.github.io//posts/PAN8-Cybersecurity-Gateway/)
 
 Wargames:
+
 - [Overthewire - bandit](https://ocholuo.github.io/posts/Overthewire-bandit/) - SSH related
 - [Overthewire - natas](https://ocholuo.github.io/posts/Overthewire-natas/) - WebSec related
 - [Hack The Box](https://ocholuo.github.io/tags/hackthebox/)
@@ -88,10 +91,9 @@ Protostar - Based on binary exploitation. -->
 
 ---
 
+## Installation
 
-# Installation
-
-## Basic setup
+### Basic setup
 
 <details>
 
