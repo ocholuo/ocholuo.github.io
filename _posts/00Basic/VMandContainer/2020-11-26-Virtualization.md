@@ -337,7 +337,7 @@ $ qemu-img create -f qcow2 my-image.qcow2 60G
 $ qemu-img create -f raw my-image.qcow2 60G
 
 
-# install os, nedd iso
+# install os, need iso
 $ qemu-system-x86_64 -cdom path/toISO my-image.qcow2 -m 2G -enable-kvm
 
 # start
@@ -468,7 +468,7 @@ $ virsh attach-disk my-ubuntu --source /var/lib/libvirt/images/disk2.qcow2 --dri
 $ sudo fdisk -l
 
 
-#  deattach
+#  detach
 $ virsh detach-disk my-ubuntu --source /var/lib/libvirt/images/disk2.qcow2
 
 ```

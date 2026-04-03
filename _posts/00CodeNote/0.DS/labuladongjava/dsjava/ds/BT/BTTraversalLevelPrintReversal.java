@@ -6,7 +6,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 
-// from bootom line to top line
+// from bottom line to top line
 
 public class BTTraversalLevelPrintReversal {
 

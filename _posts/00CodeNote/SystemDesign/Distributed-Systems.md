@@ -42,7 +42,7 @@ Peer-to-peer networking apps like BitTorrent (for downloading)
 8. What are the types of distributed systems?
 Following are some main types of distributed systems:
 
-Client-serve Sytems
+Client-serve Systems
 Multi-tier distributed systems
 Peer-to-peer distributed systems
 Three-tier
@@ -53,7 +53,7 @@ Layered architecture
 9. Why we use distributed system? Advantages of the distributed system?
 The main advantages of a distributed system is as follows: scalability, fault tolerance and availability. For example, if one node crashes in a distributed database there are multiple other nodes available to keep the work running smoothly without any disruption or downtime for users. That’s why distributed processing has become more popular than centralised computing where all data was stored on a single server that can be easily affected by hardware failure or even an attack from hackers etc. Other advantages include:
 
-Hight Performance
+High Performance
 Reliability
 Communication
 Incremental growth
@@ -171,7 +171,7 @@ primary system controllers, which are computers specialized to manage other node
 systems data stores where all information about users and tasks within a given application lives
 (a database); lastly there’s an external interface that communicates with these two logical units for each client request.
 38. What is the purpose of a locking service in distributed systems?
-The locking system provides efficiency. A lock can save our software from performing unuseful work more times than it is really needed, like triggering a timer twice or sending multiple notifications in quick succession when you are not using them for something else.
+The locking system provides efficiency. A lock can save our software from performing useless work more times than it is really needed, like triggering a timer twice or sending multiple notifications in quick succession when you are not using them for something else.
 A distributed system can use locks to prevent data corruption and loss. A lock is a mechanism that temporarily stops other processes from accessing the same resource, such as blocks in an interstellar cloud database or one file on your computer’s hard drive. This prevents conflicting operations from occurring at once.
 39. What is end-to-end security in distributed systems?
 The process of end-to-end encryption (E2EE) prevents third parties from accessing data while it’s being transferred. In E2EA, the data is encrypted on one side and only decryption keys can unlock that information for recipients; this means both sender and receiver need to be in agreement with every step – something, not all users will want or feel comfortable doing!

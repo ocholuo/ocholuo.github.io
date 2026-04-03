@@ -516,7 +516,7 @@ class BST:
                 node.updateBalance(node.parent)
 
     def reban(self, node):
-        # node.hight
+        # node.height
         return
 
 

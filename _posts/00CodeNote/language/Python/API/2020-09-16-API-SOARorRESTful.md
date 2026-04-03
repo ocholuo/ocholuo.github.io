@@ -110,7 +110,7 @@ As one REST API tutorial put it: SOAP is like an envelope while REST is just a p
 2. Parameter define
 3. Response object define
 4. error define
-5. should had no side effects (doing everthing in one funtion)
+5. should had no side effects (doing everything in one function)
 
 big API
 - paging

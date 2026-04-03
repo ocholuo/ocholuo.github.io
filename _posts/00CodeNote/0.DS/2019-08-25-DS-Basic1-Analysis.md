@@ -230,7 +230,7 @@ O(n!)    | 求具有N个元素的全排列的算法
 
 
 #### The Constant Function `f(n) = c`
-- The simplest functio
+- The simplest function
 - for some fixed constant c, such as c=5, c=27, or c=210.
 - for any argument n, the constant function f(n) assigns the value c.
 - it does not matter what the value of n is; f(n) will always be equal to the constant value c.

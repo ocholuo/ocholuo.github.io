@@ -21,7 +21,7 @@ public class HeapAdaptablePriorityQueue<K,V> extends HeapPriorityQueue<K,V> impl
     public HeapAdaptablePriorityQueue(){ super(); }
     public HeapAdaptablePriorityQueue(Comparator<K> comp){ super(comp); }
 
-    // protected utilites
+    // protected utilities
     // /∗∗ Validates an entry to ensure it is location-aware. ∗/
     protected AdaptablePQEntry<K,V> validate(Entry<K,V> entry) throws IllegalArgumentException {
         if (!(entry instanceof AdaptablePQEntry)) throw new IllegalArgumentException("Invalid entry"); AdaptablePQEntry<K,V> locator = (AdaptablePQEntry<K,V>) entry;
