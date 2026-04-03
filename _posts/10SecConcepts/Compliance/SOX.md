@@ -70,7 +70,7 @@ To prevent fraudulent agents (whether internal or external) from tampering with 
 
 *   **Regularly assess the controls:** Organizations should be able to prove they “have evaluated the effectiveness of the issuer’s internal controls” within the last 90 days.
 
-*   **Provide reports:** Compliancy reports should present this evaluation, note system weaknesses, and assess overall efficacy.
+*   **Provide reports:** Compliance reports should present this evaluation, note system weaknesses, and assess overall efficacy.
 
 To sum up, Section 302 obliges organizational stakeholders—namely, senior-level executives and financial officers—to ensure the security of financial data, to stay informed, and to honestly represent the state of their finances and security systems to SOX auditors.
 

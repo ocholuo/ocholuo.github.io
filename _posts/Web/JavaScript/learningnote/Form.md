@@ -50,7 +50,7 @@ web development
 `value`
 - button: text inside the button.
 - textfield: provide a default value.
-- placeholder: like value, but will disapear.
+- placeholder: like value, but will disappear.
 
 
 ---
@@ -73,7 +73,7 @@ web development
 2. HTML5 `attributes`
     - required, placeholder, min, max
     - halt the submit process if any required elements are empty.
-    - alot of required, paired error novalidate.
+    - a lot of required, paired error novalidate.
     - `pattern`
       - work with input type = text and required the input have a specific form: (Regularexpression)
         - [0-9]{5}

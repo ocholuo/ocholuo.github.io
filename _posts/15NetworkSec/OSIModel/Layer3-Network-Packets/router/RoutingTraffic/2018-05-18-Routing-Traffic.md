@@ -223,7 +223,7 @@ how to reach a specific destination network:
 ---
 
 ## Static Routes
-- `Routing table` been crated manually
+- `Routing table` been created manually
 - used mainly on small networks.
 - losses utility on larger networks because the manual updates hard to keep it up to date.
 

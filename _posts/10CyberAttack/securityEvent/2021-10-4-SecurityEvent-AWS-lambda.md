@@ -10,7 +10,7 @@ image:
 - [Meow's SecurityEvent - 2022 Apr 6 AWS lambda](#meows-securityevent---2022-apr-6-aws-lambda)
   - [basic](#basic)
   - [Analysing Lambda Malware](#analysing-lambda-malware)
-  - [configruation](#configruation)
+  - [configuration](#configuration)
   - [Communication with the Monero server at `116.203.4[.]0`](#communication-with-the-monero-server-at-11620340)
 - [history](#history)
 - [solution](#solution)
@@ -107,7 +107,7 @@ Lambda function handler expects certain data to be set:
 
 
 
-## configruation
+## configuration
 
 - The attacker controlled domain `gw.denonia[.]xyz` resolves to `116.203.4[.]0`
 - written into a config file for **xmrig** at `/tmp/.xmrig.json`:
