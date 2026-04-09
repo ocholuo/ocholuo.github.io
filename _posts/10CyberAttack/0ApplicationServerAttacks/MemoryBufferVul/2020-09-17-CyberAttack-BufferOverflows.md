@@ -102,9 +102,9 @@ A buffer overflow attack is one that should never be successful in modern techno
 
 Example:
 
-1. ![Pasted Graphic 4](/assets/img/Pasted%20Graphic%204.png)
+1. ![Pasted Graphic 4](/assets/img/post/Pasted%20Graphic%204.png)
 
-2. ![Pasted Graphic 8](/assets/img/Pasted%20Graphic%208.png)
+2. ![Pasted Graphic 8](/assets/img/post/Pasted%20Graphic%208.png)
 
 3. sending a long string to the system to create a buffer overflow:
    - GET /index.php?

@@ -33,7 +33,7 @@ image:
 Traditional
 - deploy an application on its own physical computer.
 
-![Screenshot 2024-08-09 at 15.15.41](/assets/img/Screenshot%202024-08-09%20at%2015.15.41.png)
+![Screenshot 2024-08-09 at 15.15.41](/assets/img/post/Screenshot%202024-08-09%20at%2015.15.41.png)
 
 Virtualization
 - takes less time to deploy new solutions
@@ -254,7 +254,7 @@ Containers power to isolate workloads is derived from the composition of several
     - Each layer is, `Read only` When a Container runs from this image
     - have a writable ephemeral top-most layer.
 
-![Screenshot 2024-08-11 at 11.25.39](/assets/img/Screenshot%202024-08-11%20at%2011.25.39.png)
+![Screenshot 2024-08-11 at 11.25.39](/assets/img/post/Screenshot%202024-08-11%20at%2011.25.39.png)
 
 - This Dockerfile will contain four commands, each of which creates a layer.
   - The `FROM` statement starts out by creating a base layer, pulled from a public repository. This one happens to be the Ubuntu Linux runtime environment of a specific version.
@@ -275,7 +275,7 @@ oversimplified
   - And they’re ephemeral: When the container is deleted, the contents of this writable layer are lost forever. The underlying container image remains unchanged.
   - This fact about containers has an implication for your application design: whenever you want to store data permanently, you must do so somewhere other than a running container image.
 
-![Screenshot 2024-08-11 at 11.27.38](/assets/img/Screenshot%202024-08-11%20at%2011.27.38.png)
+![Screenshot 2024-08-11 at 11.27.38](/assets/img/post/Screenshot%202024-08-11%20at%2011.27.38.png)
 
 - Because each container has its own writable container layer, and all changes are stored in this layer, multiple containers can share access to the same underlying image and yet have their own data state.
 - The diagram shows multiple containers sharing the same Ubuntu image. Because each layer is only a set of differences from the layer before it, you get smaller images.

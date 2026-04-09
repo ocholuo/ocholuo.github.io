@@ -176,12 +176,12 @@ Although you would normally know the SLE and ARO and use these to calculate the 
 Example of a binary assessment:
 - two outcomes possible: impact, and probability.
   - 2 levels:
-    - ![Screenshot 2024-07-23 at 17.00.58](/assets/img/Screenshot%202024-07-23%20at%2017.00.58.png)
+    - ![Screenshot 2024-07-23 at 17.00.58](/assets/img/post/Screenshot%202024-07-23%20at%2017.00.58.png)
   - 3 levels:
-    - ![Screenshot 2024-07-23 at 17.01.44](/assets/img/Screenshot%202024-07-23%20at%2017.01.44.png)
+    - ![Screenshot 2024-07-23 at 17.01.44](/assets/img/post/Screenshot%202024-07-23%20at%2017.01.44.png)
     - low- medium-high/red-green-yellow, nine combinations are possible.
   - 5 levels:
-    - ![Screenshot 2024-07-23 at 17.02.28](/assets/img/Screenshot%202024-07-23%20at%2017.02.28.png)
+    - ![Screenshot 2024-07-23 at 17.02.28](/assets/img/post/Screenshot%202024-07-23%20at%2017.02.28.png)
     - 25 values of risk exposure: very low, low, medium, high, or very high.
 
 - different from the exact numbers provided by a quantitative assessment that uses monetary figures. quantitative as using a quantity or a number, whereas qualitative is related to quality, which is often a matter of judgment.
@@ -208,7 +208,7 @@ Qualitative risk assessment can be adapted to a variety of attributes and situat
 - Example, the 对照 comparison of specific risks that have been identified during a security assessment.
 - risk areas, potential impacts, impacts.
 
-![Screenshot 2024-07-23 at 17.05.20](/assets/img/Screenshot%202024-07-23%20at%2017.05.20.png)
+![Screenshot 2024-07-23 at 17.05.20](/assets/img/post/Screenshot%202024-07-23%20at%2017.05.20.png)
 
 
 #### Adding Objectivity to a Qualitative Assessment
@@ -218,13 +218,13 @@ Making a qualitative assessment more objective: assigning numeric values to the 
   - the impacts can be prioritized from highest to lowest and then weighted.
   - values can be assigned to reflect how each risk was assessed.
 
-![Screenshot 2024-07-23 at 17.07.53](/assets/img/Screenshot%202024-07-23%20at%2017.07.53.png)
+![Screenshot 2024-07-23 at 17.07.53](/assets/img/post/Screenshot%202024-07-23%20at%2017.07.53.png)
 
-![Screenshot 2024-07-23 at 17.08.17](/assets/img/Screenshot%202024-07-23%20at%2017.08.17_glz5jtmyl.png)
+![Screenshot 2024-07-23 at 17.08.17](/assets/img/post/Screenshot%202024-07-23%20at%2017.08.17_glz5jtmyl.png)
 
 - The last step is to calculate an overall risk value for each risk area by multiplying the weights times the assessed values: Risk = W1 × V1 + W2 × V2+...W4 × V4
 
-![Screenshot 2024-07-23 at 17.08.51](/assets/img/Screenshot%202024-07-23%20at%2017.08.51.png)
+![Screenshot 2024-07-23 at 17.08.51](/assets/img/post/Screenshot%202024-07-23%20at%2017.08.51.png)
 
 The key assumptions underlie <font color=OrangeRed> any model, different models will produce different results even when given the same input data </font>.
 - Although significant research and development have been invested in <font color=LightSlateBlue> improving and refining the various risk analysis models </font>, expert judgment and experience must still be considered an essential part of any risk-assessment process.
@@ -407,7 +407,7 @@ This is similar to false positives in an intrusion detection system (IDS) where 
 - True Positive (简称TP)：判断为正，且实际为正。
 - True Negative (简称TN)：判断为负，且实际为负。
 
-![Screenshot 2024-07-23 at 17.18.32](/assets/img/Screenshot%202024-07-23%20at%2017.18.32.png)
+![Screenshot 2024-07-23 at 17.18.32](/assets/img/post/Screenshot%202024-07-23%20at%2017.18.32.png)
 
 - 后面的positive和nagative: 测试出来是否为nagative或者positive
 - 如果是false positive，说明测试出来的positive是错的，因此原本为nagative，

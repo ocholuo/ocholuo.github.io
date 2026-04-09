@@ -24,7 +24,7 @@ book: S+ 7th ch9
 
 ## Man-in-the-Middle Attacks
 
-![Pasted Graphic 2](/assets/img/Pasted%20Graphic%202_12uzzw5fi.png)
+![Pasted Graphic 2](/assets/img/post/Pasted%20Graphic%202_12uzzw5fi.png)
 
 - <font color=LightSlateBlue> Clandestinely 秘密地 place something (like software, rouge router) between server and user, and no one is aware </font>.
   - Intercepts data and sends the information to the server as if nothing is wrong.

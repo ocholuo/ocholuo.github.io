@@ -50,7 +50,7 @@ Methodology
 
 [^Chain-of-thought]: JasonWei,XuezhiWang,DaleSchuurmans,MaartenBosma,BrianIchter,FeiXia,EdChi,QuocLe,andDennyZhou. Chain-of-thought prompting elicits reasoning in large language models, 2023.
 
-![Screenshot 2023-11-08 at 10.45.34](/assets/img/Screenshot%202023-11-08%20at%2010.45.34.png)
+![Screenshot 2023-11-08 at 10.45.34](/assets/img/post/Screenshot%202023-11-08%20at%2010.45.34.png)
 
 
 
@@ -60,9 +60,9 @@ Visualizing the Process of Vulnerability Detection
   - second, when it is first asked to perform human-expert like reasoning and then make a decision (Figure 3b).
 - We choose GPT-3.5 as an LLM and a code snip- pet containing an out-of- bound write vulnerability as a running example.
 
-![Screenshot 2023-11-08 at 10.48.39](/assets/img/Screenshot%202023-11-08%20at%2010.48.39.png)
+![Screenshot 2023-11-08 at 10.48.39](/assets/img/post/Screenshot%202023-11-08%20at%2010.48.39.png)
 
-![Screenshot 2023-11-08 at 10.48.52](/assets/img/Screenshot%202023-11-08%20at%2010.48.52.png)
+![Screenshot 2023-11-08 at 10.48.52](/assets/img/post/Screenshot%202023-11-08%20at%2010.48.52.png)
 
 
 
@@ -72,7 +72,7 @@ Evaluation
 - **For each vulnerability** we create vulnerable examples and their patches with varying levels of complexity.
 - We use the ‘gpt-3.5-turbo-16k’ chat API to compare our approach with SoTA tools (Table 1).
 
-![Screenshot 2023-11-08 at 10.50.29](/assets/img/Screenshot%202023-11-08%20at%2010.50.29.png)
+![Screenshot 2023-11-08 at 10.50.29](/assets/img/post/Screenshot%202023-11-08%20at%2010.50.29.png)
 
 Takeaway
 - Following a human-like step-by-step reasoning approach helps LLMs to efficiently analyze code and detect vulnerabilities.

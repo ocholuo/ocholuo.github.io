@@ -150,7 +150,7 @@ FSDL 的課程:
 
 **要選擇各種 ML DL 的技巧之前，先分清楚遇到的問題 + 哪些方法可以解決這個問題**
 
-![Screenshot 2023-11-16 at 14.18.24](/assets/img/Screenshot%202023-11-16%20at%2014.18.24.png)
+![Screenshot 2023-11-16 at 14.18.24](/assets/img/post/Screenshot%202023-11-16%20at%2014.18.24.png)
 
 - 如果 Training Error 比 Testing Error 低一截，那我們遇到的就是`Overfitting`，各種類型的 regularization 或是縮小 model 都可以派上用場。
 - 但是如果我們遇到的是 Training Error 跟 Human 的水平有一截差距，那變成我們是`Underfitting`，反而是要加大 model 甚至是重新定義問題，找到一個更好 fit 的問題。
@@ -205,7 +205,7 @@ FSDL 的課程:
   - Factual 事實相關
   - Reasoning 推理相關
 
-![Screenshot 2023-11-27 at 10.34.11](/assets/img/Screenshot%202023-11-27%20at%2010.34.11.png)
+![Screenshot 2023-11-27 at 10.34.11](/assets/img/post/Screenshot%202023-11-27%20at%2010.34.11.png)
 
 1. **(Factual 相關)LLM 不具備這個知識** ：
 
@@ -295,12 +295,12 @@ FSDL 的課程:
 
 - 一些模型能够识别提示中包含的指令并正确进行 zero-shot 推理，而较小的 LLM 可能在执行任务时失败，
 
-  - ![Screenshot 2024-06-20 at 15.24.07](/assets/img/Screenshot%202024-06-20%20at%2015.24.07.png)
-  - ![Screenshot 2024-06-20 at 15.24.15](/assets/img/Screenshot%202024-06-20%20at%2015.24.15.png)
+  - ![Screenshot 2024-06-20 at 15.24.07](/assets/img/post/Screenshot%202024-06-20%20at%2015.24.07.png)
+  - ![Screenshot 2024-06-20 at 15.24.15](/assets/img/post/Screenshot%202024-06-20%20at%2015.24.15.png)
 
 - 包含一个或多个你希望模型执行的示例(称为一次或几次推理)足以帮助模型识别任务并生成良好的完成结果。
 
-  - ![Screenshot 2024-06-20 at 15.25.53](/assets/img/Screenshot%202024-06-20%20at%2015.25.53.png)
+  - ![Screenshot 2024-06-20 at 15.25.53](/assets/img/post/Screenshot%202024-06-20%20at%2015.25.53.png)
 
   - 然而缺点有:
 
@@ -333,9 +333,9 @@ Google2021 年的 FLAN 模型[《FINETUNED LANGUAGE MODELS ARE ZERO-SHOT LEARNER
 
 - Instruction-Tuning 也是 ICL 的一种，只是 Instruction-Tuning 是将大模型在多种任务上进行微调，提升大模型的自然语言理解能力，**最终实现在新任务上的 zero-shot**
 
-  - ![Screenshot 2024-06-20 at 15.31.42](/assets/img/Screenshot%202024-06-20%20at%2015.31.42.png)
-  - ![Screenshot 2024-06-20 at 15.31.57](/assets/img/Screenshot%202024-06-20%20at%2015.31.57.png)
-  - ![Screenshot 2024-06-20 at 15.43.37](/assets/img/Screenshot%202024-06-20%20at%2015.43.37.png)
+  - ![Screenshot 2024-06-20 at 15.31.42](/assets/img/post/Screenshot%202024-06-20%20at%2015.31.42.png)
+  - ![Screenshot 2024-06-20 at 15.31.57](/assets/img/post/Screenshot%202024-06-20%20at%2015.31.57.png)
+  - ![Screenshot 2024-06-20 at 15.43.37](/assets/img/post/Screenshot%202024-06-20%20at%2015.43.37.png)
 
 - 这些提示完成示例允许模型学习生成遵循`给定指令`的响应。
   - `所有模型权重都会更新`的指令微调过程称为**全微调**
@@ -382,9 +382,9 @@ Finetuned Language Net(FLAN) 的具体训练流程:
 
 - Bert 模型 2018 年横空出世之后，将 Fine-Tuning 推向了新的高度。不过目前来看，Fine-Tuning 逐渐退出了 tuning 研究的舞台中心: **LLM 蓬勃发展，Fine-Tuning 这种大规模更新参数的范式属实无法站稳脚跟**。而更适应于 LLM 的 tuning 范式，便是接下来我们要介绍的 Prompt-Tuning Instruction-Tuning 等。
 
-![Screenshot 2024-06-20 at 15.29.57](/assets/img/Screenshot%202024-06-20%20at%2015.29.57.png)
+![Screenshot 2024-06-20 at 15.29.57](/assets/img/post/Screenshot%202024-06-20%20at%2015.29.57.png)
 
-![Screenshot 2024-06-20 at 15.30.14](/assets/img/Screenshot%202024-06-20%20at%2015.30.14.png)
+![Screenshot 2024-06-20 at 15.30.14](/assets/img/post/Screenshot%202024-06-20%20at%2015.30.14.png)
 
 ## Full Fine-tuning
 
@@ -449,7 +449,7 @@ For example, it can improve model performance for the following types of tasks:
 - **Extractive question answering**
 - **Chat**
 
-![Screenshot 2024-06-25 at 12.23.55](/assets/img/Screenshot%202024-06-25%20at%2012.23.55.png)
+![Screenshot 2024-06-25 at 12.23.55](/assets/img/post/Screenshot%202024-06-25%20at%2012.23.55.png)
 
 ![pic](https://img-blog.csdnimg.cn/beac83f74a584e10aea968a31271a30f.png#pic_center)
 
@@ -855,7 +855,7 @@ fig.update_yaxes(title_text="Loss")
 fig.show()
 ```
 
-![newplot](/assets/img/newplot.png)
+![newplot](/assets/img/post/newplot.png)
 
 10. Load the Tuned Model
 
@@ -911,9 +911,9 @@ print(
 # Mean rougeL_precision is 0.42774974724224635
 ```
 
-![Screenshot 2024-06-27 at 17.33.49](/assets/img/Screenshot%202024-06-27%20at%2017.33.49.png)
+![Screenshot 2024-06-27 at 17.33.49](/assets/img/post/Screenshot%202024-06-27%20at%2017.33.49.png)
 
-![Screenshot 2024-06-28 at 14.24.38](/assets/img/Screenshot%202024-06-28%20at%2014.24.38.png)
+![Screenshot 2024-06-28 at 14.24.38](/assets/img/post/Screenshot%202024-06-28%20at%2014.24.38.png)
 
 ```py
 improvement = round(
@@ -1090,15 +1090,15 @@ Auto-CoT 是 Manual-CoT 和 Zero-shot-CoT 的结合体
 
 - It appears that this algorithm is being implemented into Gemini, a multimodal generative AI that is currently under development by Google.
 
-![Screenshot 2024-06-20 at 10.21.21](/assets/img/Screenshot%202024-06-20%20at%2010.21.21.png)
+![Screenshot 2024-06-20 at 10.21.21](/assets/img/post/Screenshot%202024-06-20%20at%2010.21.21.png)
 
 Image Source: Yao et el. (2023)
 
-![Screenshot 2024-06-20 at 10.24.29](/assets/img/Screenshot%202024-06-20%20at%2010.24.29.png)
+![Screenshot 2024-06-20 at 10.24.29](/assets/img/post/Screenshot%202024-06-20%20at%2010.24.29.png)
 
-![Screenshot 2024-06-20 at 10.22.05](/assets/img/Screenshot%202024-06-20%20at%2010.22.05.png)
+![Screenshot 2024-06-20 at 10.22.05](/assets/img/post/Screenshot%202024-06-20%20at%2010.22.05.png)
 
-![Screenshot 2024-06-20 at 10.25.18](/assets/img/Screenshot%202024-06-20%20at%2010.25.18.png)
+![Screenshot 2024-06-20 at 10.25.18](/assets/img/post/Screenshot%202024-06-20%20at%2010.25.18.png)
 
 Implementation
 
@@ -1252,7 +1252,7 @@ Output:
 
 From the results reported in the figure below, ToT substantially outperforms the other prompting methods:
 
-![Screenshot 2024-06-26 at 17.16.29](/assets/img/Screenshot%202024-06-26%20at%2017.16.29.png)
+![Screenshot 2024-06-26 at 17.16.29](/assets/img/post/Screenshot%202024-06-26%20at%2017.16.29.png)
 
 Image Source: Yao et el. (2023)
 
@@ -1314,7 +1314,7 @@ Sun (2023) benchmarked the Tree-of-Thought Prompting with large-scale experiment
      - **Prompt-Tuning**:
        - 在模型的输入或隐层添加个额外可训练的前缀 tokens(这些前缀是连续的伪 tokens，不对应真实的 tokens)，只训练这些前缀参数，包括 prefix-tuning parameter-efficient Prompt Tuning P-Tuning 等
 
-![Screenshot 2024-09-10 at 17.11.35](/assets/img/Screenshot%202024-09-10%20at%2017.11.35.png)
+![Screenshot 2024-09-10 at 17.11.35](/assets/img/post/Screenshot%202024-09-10%20at%2017.11.35.png)
 
 ---
 
@@ -1344,9 +1344,9 @@ Sun (2023) benchmarked the Tree-of-Thought Prompting with large-scale experiment
 
 - 如何设计输入的 prompt 是很重要的一点
 
-![Screenshot 2023-10-21 at 11.30.26](/assets/img/Screenshot%202023-10-21%20at%2011.30.26.png)
+![Screenshot 2023-10-21 at 11.30.26](/assets/img/post/Screenshot%202023-10-21%20at%2011.30.26.png)
 
-![Screenshot 2023-10-21 at 11.34.54](/assets/img/Screenshot%202023-10-21%20at%2011.34.54.png)
+![Screenshot 2023-10-21 at 11.34.54](/assets/img/post/Screenshot%202023-10-21%20at%2011.34.54.png)
 
 - failed with 5-6 example, fune tune the model
 - Typically, above five or six shots, so full prompt and then completions, you really don't gain much after that. Either the model can do it or it can't do it
@@ -1534,7 +1534,7 @@ Not Prompt Engineering:
 - limited by the length of the context window
 - may still not achieve the performance at the end of the day
 
-![Screenshot 2024-09-10 at 17.20.21](/assets/img/Screenshot%202024-09-10%20at%2017.20.21.png)
+![Screenshot 2024-09-10 at 17.20.21](/assets/img/post/Screenshot%202024-09-10%20at%2017.20.21.png)
 
 With prompt tuning
 
@@ -1543,16 +1543,16 @@ With prompt tuning
 - The soft prompt vectors have the same length as the embedding vectors of the language tokens.
 - including somewhere between 20 and 100 virtual tokens can be sufficient for good performance.
 
-![Screenshot 2024-09-10 at 17.22.30](/assets/img/Screenshot%202024-09-10%20at%2017.22.30.png)
+![Screenshot 2024-09-10 at 17.22.30](/assets/img/post/Screenshot%202024-09-10%20at%2017.22.30.png)
 
 The tokens that represent natural language are hard in the sense that they each correspond to a fixed location in the embedding vector space.
 
 - the soft prompts are not fixed discrete words of natural language, but virtual tokens that can take on any value within the continuous multidimensional embedding space.
 - And through supervised learning, the model learns the values for these virtual tokens that maximize performance for a given task.
 
-![Screenshot 2024-09-10 at 17.25.45](/assets/img/Screenshot%202024-09-10%20at%2017.25.45.png)
+![Screenshot 2024-09-10 at 17.25.45](/assets/img/post/Screenshot%202024-09-10%20at%2017.25.45.png)
 
-![Screenshot 2024-09-10 at 17.26.04](/assets/img/Screenshot%202024-09-10%20at%2017.26.04.png)
+![Screenshot 2024-09-10 at 17.26.04](/assets/img/post/Screenshot%202024-09-10%20at%2017.26.04.png)
 
 full fine tuning & prompt tuning
 
@@ -1572,7 +1572,7 @@ Prompt tuning
 
 how well does prompt tuning perform?
 
-![Screenshot 2024-09-10 at 17.30.19](/assets/img/Screenshot%202024-09-10%20at%2017.30.19.png)
+![Screenshot 2024-09-10 at 17.30.19](/assets/img/post/Screenshot%202024-09-10%20at%2017.30.19.png)
 
 - once models have around 10 billion parameters, prompt tuning can be as effective as full fine tuning and offers a significant boost in performance over prompt engineering alone.
 
@@ -1580,9 +1580,9 @@ interpretability of learned virtual tokens
 
 - because the soft prompt tokens can take any value within the continuous embedding vector space. The trained tokens don't correspond to any known token, word, or phrase in the vocabulary of the LLM. However, an analysis of the nearest neighbor tokens to the soft prompt location shows that they form tight semantic clusters. In other words, the words closest to the soft prompt tokens have similar meanings. The words identified usually have some meaning related to the task, suggesting that the prompts are learning word like representations.
 
-![Screenshot 2024-09-10 at 17.32.21](/assets/img/Screenshot%202024-09-10%20at%2017.32.21.png)
+![Screenshot 2024-09-10 at 17.32.21](/assets/img/post/Screenshot%202024-09-10%20at%2017.32.21.png)
 
-![Screenshot 2024-09-10 at 17.32.35](/assets/img/Screenshot%202024-09-10%20at%2017.32.35.png)
+![Screenshot 2024-09-10 at 17.32.35](/assets/img/post/Screenshot%202024-09-10%20at%2017.32.35.png)
 
 以二分类的情感分析作为例子:
 
@@ -1793,27 +1793,27 @@ Transformer architecture:
 
 1. The input prompt is turned into tokens
 
-   1. ![Screenshot 2024-09-10 at 16.04.55](/assets/img/Screenshot%202024-09-10%20at%2016.04.55.png)
+   1. ![Screenshot 2024-09-10 at 16.04.55](/assets/img/post/Screenshot%202024-09-10%20at%2016.04.55.png)
 
 2. tokens are then converted to embedding vectors and passed into the encoder and/or decoder parts of the transformer.
 
-   1. ![Screenshot 2024-09-10 at 14.24.37](/assets/img/Screenshot%202024-09-10%20at%2014.24.37.png)
+   1. ![Screenshot 2024-09-10 at 14.24.37](/assets/img/post/Screenshot%202024-09-10%20at%2014.24.37.png)
 
 3. In both of these components, there are two kinds of neural networks; self-attention and feedforward networks.
 
    1. The weights of these networks are learned during pre-training.
-   2. ![Screenshot 2024-09-10 at 16.28.53](/assets/img/Screenshot%202024-09-10%20at%2016.28.53.png)
+   2. ![Screenshot 2024-09-10 at 16.28.53](/assets/img/post/Screenshot%202024-09-10%20at%2016.28.53.png)
 
 4. After the embedding vectors are created, they're fed into the self-attention layers where a series of weights are applied to calculate the attention scores.
 
 5. During full fine-tuning, every parameter in these layers is updated.
 
-   1. ![Screenshot 2024-09-10 at 14.24.59](/assets/img/Screenshot%202024-09-10%20at%2014.24.59.png)
+   1. ![Screenshot 2024-09-10 at 14.24.59](/assets/img/post/Screenshot%202024-09-10%20at%2014.24.59.png)
 
 6. LoRA reduces the number of parameters to be trained during fine-tuning by freezing all of the original model parameters and then injecting a pair of rank decomposition matrices alongside the original weights.
-   1. ![Screenshot 2024-09-10 at 16.37.05](/assets/img/Screenshot%202024-09-10%20at%2016.37.05.png)
+   1. ![Screenshot 2024-09-10 at 16.37.05](/assets/img/post/Screenshot%202024-09-10%20at%2016.37.05.png)
    2. You can keep the original weights of the LLM frozen and train the smaller matrices using the same supervised learning process
-   3. ![Screenshot 2024-09-10 at 14.28.18](/assets/img/Screenshot%202024-09-10%20at%2014.28.18.png)
+   3. ![Screenshot 2024-09-10 at 14.28.18](/assets/img/post/Screenshot%202024-09-10%20at%2014.28.18.png)
    4. The dimensions of the smaller matrices are set so their product is a matrix with the same dimensions as the weights been modifying. the two low-rank matrices are multiplied together to create a matrix with the same dimensions as the frozen weights.
    5. You then add this to the original weights and replace them in the model with these updated values.
    6. You now have a LoRA fine-tuned model that can carry out the specific task.
@@ -1826,7 +1826,7 @@ Transformer architecture:
 
 A practical example using the transformer architecture described in the Attention is All You Need paper.
 
-- ![Screenshot 2024-09-10 at 14.27.24](/assets/img/Screenshot%202024-09-10%20at%2014.27.24.png)
+- ![Screenshot 2024-09-10 at 14.27.24](/assets/img/post/Screenshot%202024-09-10%20at%2014.27.24.png)
 - The paper specifies that the transformer weights have dimensions of 512 by 64.
 - each weights matrix has 32,768 trainable parameters.
 - If use LoRA as a fine-tuning method with the rank 8
@@ -1841,13 +1841,13 @@ A practical example using the transformer architecture described in the Attentio
 
   - Suppose you train a pair of LoRA matrices for a specific task; Task A. To carry out inference on this task, you would multiply these matrices together and then add the resulting matrix to the original frozen weights. You then take this new summed weights matrix and replace the original weights where they appear in the model. You can then use this model to carry out inference on Task A.
   - If you want to carry out a different task, Task B, you simply take the LoRA matrices you trained for this task, calculate their product, and then add this matrix to the original weights and update the model again.
-  - ![Screenshot 2024-09-10 at 14.28.38](/assets/img/Screenshot%202024-09-10%20at%2014.28.38.png)
+  - ![Screenshot 2024-09-10 at 14.28.38](/assets/img/post/Screenshot%202024-09-10%20at%2014.28.38.png)
 
 - The memory required to store these LoRA matrices is very small. So you can use LoRA to train for many tasks. Switch out the weights when you need to use them, and avoid having to store multiple full-size versions of the LLM.
 
 How good are these models?
 
-![Screenshot 2024-09-10 at 14.32.01](/assets/img/Screenshot%202024-09-10%20at%2014.32.01.png)
+![Screenshot 2024-09-10 at 14.32.01](/assets/img/post/Screenshot%202024-09-10%20at%2014.32.01.png)
 
 - fine-tuning the FLAN-T5 for dialogue summarization
 - baseline score for the FLAN-T5 base model and the summarization data set, the scores are fairly low. Next,
@@ -1866,7 +1866,7 @@ how to choose the rank of the LoRA matrices.
 - plateau in the loss value for ranks greater than 16. using larger LoRA matrices didn't improve performance.
 - ranks in the range of 4-32 can provide you with a good trade-off between reducing trainable parameters and preserving performance.
 
-![Screenshot 2024-09-10 at 14.33.08](/assets/img/Screenshot%202024-09-10%20at%2014.33.08.png)
+![Screenshot 2024-09-10 at 14.33.08](/assets/img/post/Screenshot%202024-09-10%20at%2014.33.08.png)
 
 ---
 
@@ -1916,9 +1916,9 @@ BitFit
   3. carry out this cycle of a multiple iterations using many different prompts and updates off the model weights until obtain the desired degree of alignment.
   4. end result is a human aligned LLM to use in the application.
 
-![picture 0](/assets/img/8ebe9d39f8295c9a2ca49d90661c5fc3edd17600245b110879517d19e7ced4c0.png)
+![picture 0](/assets/img/post/8ebe9d39f8295c9a2ca49d90661c5fc3edd17600245b110879517d19e7ced4c0.png)
 
-![picture 1](/assets/img/4aa02cea923d64825899c71189beb2a0d00eba09b659884c2e53e840216089b8.png)
+![picture 1](/assets/img/post/4aa02cea923d64825899c71189beb2a0d00eba09b659884c2e53e840216089b8.png)
 
 - 在经过监督 (指令)微调后，LLM 模型已经可以根据指令生成正确的响应了，为什么还要进行强化学习微调？
 
@@ -1931,17 +1931,17 @@ BitFit
   - 当 LLM 无意中从训练数据中复制**个人身份信息**造成的隐私风险。
   - 用户向聊天机器人寻求社交互动和情感支持时可能会造成**心理伤害**。
 
-![Screenshot 2024-09-17 at 21.22.55](/assets/img/Screenshot%202024-09-17%20at%2021.22.55.png)
+![Screenshot 2024-09-17 at 21.22.55](/assets/img/post/Screenshot%202024-09-17%20at%2021.22.55.png)
 
-![Screenshot 2024-09-17 at 21.24.07](/assets/img/Screenshot%202024-09-17%20at%2021.24.07.png)
+![Screenshot 2024-09-17 at 21.24.07](/assets/img/post/Screenshot%202024-09-17%20at%2021.24.07.png)
 
 为了应对以上的风险，需要采取一些策略来防止 LLM 的能力不被滥用
 - 构建一个可以与人类价值观保持一致的 LLM
 - RLHF (从人类反馈中进行强化学习)可以解决这些问题，让 AI 更加的 Helpfulness Truthfulness 和 Harmlessness。
 
-![Screenshot 2024-09-17 at 21.25.36](/assets/img/Screenshot%202024-09-17%20at%2021.25.36.png)
+![Screenshot 2024-09-17 at 21.25.36](/assets/img/post/Screenshot%202024-09-17%20at%2021.25.36.png)
 
-![Screenshot 2024-09-17 at 21.26.15](/assets/img/Screenshot%202024-09-17%20at%2021.26.15.png)
+![Screenshot 2024-09-17 at 21.26.15](/assets/img/post/Screenshot%202024-09-17%20at%2021.26.15.png)
 
 ---
 
@@ -1950,7 +1950,7 @@ BitFit
 
 ##### Obtaining feedback from humans
 
-![Screenshot 2024-09-27 at 23.47.43](/assets/img/Screenshot%202024-09-27%20at%2023.47.43.png)
+![Screenshot 2024-09-27 at 23.47.43](/assets/img/post/Screenshot%202024-09-27%20at%2023.47.43.png)
 
 - The model you choose should have some capability to carry out the task
 
@@ -1958,7 +1958,7 @@ BitFit
 
 - The prompt dataset is comprised of multiple prompts, each of which gets processed by the LLM to produce a set of completions
 
-![Screenshot 2024-09-27 at 23.43.27](/assets/img/Screenshot%202024-09-27%20at%2023.43.27.png)
+![Screenshot 2024-09-27 at 23.43.27](/assets/img/post/Screenshot%202024-09-27%20at%2023.43.27.png)
 
 - decide criterion for humans to assess the completions on.
   - helpfulness or toxicity. etc
@@ -1974,7 +1974,7 @@ BitFit
 
   - The clarity of the instructions can make a big difference on the quality of the human feedback you obtain. Labelers are often drawn from samples of the population that represent diverse and global thinking.
 
-![Screenshot 2024-09-27 at 23.44.02](/assets/img/Screenshot%202024-09-27%20at%2023.44.02.png)
+![Screenshot 2024-09-27 at 23.44.02](/assets/img/post/Screenshot%202024-09-27%20at%2023.44.02.png)
 
 - start with the overall task the labeler should carry out.
 - continue with additional details to guide the labeler on how to complete the task.
@@ -1987,7 +1987,7 @@ BitFit
 - what to do in the case of a nonsensical confusing or irrelevant answer.
   - select F rather than rank, so the poor quality answers can be easily removed
 
-![Screenshot 2024-09-27 at 23.55.27](/assets/img/Screenshot%202024-09-27%20at%2023.55.27.png)
+![Screenshot 2024-09-27 at 23.55.27](/assets/img/post/Screenshot%202024-09-27%20at%2023.55.27.png)
 
 - train the **reward model** instead of humans to classify model completions during the reinforcement learning finetuning process.
 
@@ -2006,7 +2006,7 @@ Once you have completed this data, restructuring, the human responses will be in
 
 ##### Train Reward model
 
-![Screenshot 2024-09-27 at 23.58.52](/assets/img/Screenshot%202024-09-27%20at%2023.58.52.png)
+![Screenshot 2024-09-27 at 23.58.52](/assets/img/post/Screenshot%202024-09-27%20at%2023.58.52.png)
 
 For example:
 - The **reward model** is usually also a language model.
@@ -2014,7 +2014,7 @@ For example:
 - the human-preferred option is always the first one labeled $y_j$
 - For a given prompt X, the **reward model** learns to favor the human-preferred completion $y_j$, while minimizing the lock sigmoid off the reward difference, $r_j-r_k$
 
-![Screenshot 2024-09-28 at 00.00.07](/assets/img/Screenshot%202024-09-28%20at%2000.00.07.png)
+![Screenshot 2024-09-28 at 00.00.07](/assets/img/post/Screenshot%202024-09-28%20at%2000.00.07.png)
 
 with the **reward model**, no need to include any more humans in the loop. Instead, the **reward model** will effectively take place off the human labeler and automatically choose the preferred completion during the oral HF process.
 
@@ -2046,15 +2046,15 @@ use the **reward model** in the reinforcement learning process to `update the LL
 
 - pass this reward value for the prom completion pair to the **reinforcement learning algorithm** to update the weights of the LLM, and move it towards generating more aligned, higher reward responses. Let's call this intermediate version of the model the RL updated LLM. These series of steps together forms a single iteration of the RLHF process. These iterations continue for a given number of epics, similar to other types of fine tuning. Here you can see that the completion generated by the RL updated LLM receives a higher reward score, indicating that the updates to weights have resulted in a more aligned completion. If the process is working well, you'll see the reward improving after each iteration as the model produces text that is increasingly aligned with human preferences. You will continue this iterative process until the model is aligned based on some evaluation criteria. For example, reaching a threshold value for the helpfulness you defined. You can also define a maximum number of steps, for example, 20,000 as the stopping criteria. At this point, let's refer to the fine-tuned model as the human-aligned LLM. One detail we haven't discussed yet is the exact nature of the reinforcement learning algorithm. This is the algorithm that takes the output of the **reward model** and uses it to update the LLM model weights so that the reward score increases over time. There are several different algorithms that you can use for this part of the RLHF process. A popular choice is proximal policy optimization or PPO for short. PPO is a pretty complicated algorithm, and you don't have to be familiar with all of the details to be able to make use of it. However, it can be a tricky algorithm to implement and understanding its inner workings in more detail can help you troubleshoot if you're having problems getting it to work. To explain how the PPO algorithm works in more detail, I invited my AWS colleague, Ek to give you a deeper dive on the technical details. This next video is optional and you should feel free to skip it, and move on to the reward hacking video. You won't need the information here to complete the quizzes or this week's lab. However, I encourage you to check out the details as RLHF is becoming increasingly important to ensure that LLMs behave in a safe and aligned manner in deployment.
 
-![Screenshot 2024-09-28 at 00.08.32](/assets/img/Screenshot%202024-09-28%20at%2000.08.32.png)
+![Screenshot 2024-09-28 at 00.08.32](/assets/img/post/Screenshot%202024-09-28%20at%2000.08.32.png)
 
-![Screenshot 2024-09-28 at 00.08.36](/assets/img/Screenshot%202024-09-28%20at%2000.08.36.png)
+![Screenshot 2024-09-28 at 00.08.36](/assets/img/post/Screenshot%202024-09-28%20at%2000.08.36.png)
 
-![Screenshot 2024-09-28 at 00.08.46](/assets/img/Screenshot%202024-09-28%20at%2000.08.46.png)
+![Screenshot 2024-09-28 at 00.08.46](/assets/img/post/Screenshot%202024-09-28%20at%2000.08.46.png)
 
-![Screenshot 2024-09-28 at 00.08.54](/assets/img/Screenshot%202024-09-28%20at%2000.08.54.png)
+![Screenshot 2024-09-28 at 00.08.54](/assets/img/post/Screenshot%202024-09-28%20at%2000.08.54.png)
 
-![Screenshot 2024-09-28 at 00.09.32](/assets/img/Screenshot%202024-09-28%20at%2000.09.32.png)
+![Screenshot 2024-09-28 at 00.09.32](/assets/img/post/Screenshot%202024-09-28%20at%2000.09.32.png)
 
 ---
 
@@ -2122,7 +2122,7 @@ $$
 
 ##### RLHF - PPO / Proximal Policy Optimization (微调)(近端策略优化)
 
-![Screenshot 2024-09-30 at 18.18.39](/assets/img/Screenshot%202024-09-30%20at%2018.18.39.png)
+![Screenshot 2024-09-30 at 18.18.39](/assets/img/post/Screenshot%202024-09-30%20at%2018.18.39.png)
 
 - 旨在通过`限制策略更新的幅度`来提高学习的稳定性。
 
@@ -2282,23 +2282,23 @@ $$
 
 ###### 微调过程 - PPO 2 phaseS
 
-![Screenshot 2024-09-30 at 19.00.28](/assets/img/Screenshot%202024-09-30%20at%2019.00.28.png)
+![Screenshot 2024-09-30 at 19.00.28](/assets/img/post/Screenshot%202024-09-30%20at%2019.00.28.png)
 
 - start PPO with the initial instruct LLM
 
 - at a high level, each cycle of PPO goes over two phases.
 
 
-![Screenshot 2024-09-30 at 19.00.42](/assets/img/Screenshot%202024-09-30%20at%2019.00.42.png)
+![Screenshot 2024-09-30 at 19.00.42](/assets/img/post/Screenshot%202024-09-30%20at%2019.00.42.png)
 
 Phase I
 
 - the LLM, is used to carry out a number of experiments, completing the given prompts.
 - These experiments allow you to update the LLM against the **reward model** in Phase II.
 
-![picture 0](/assets/img/da0629064cbf97a2987ee8b39e31b18a5bb8ce0ee41bc1a6a49c6f28cd5dd182.png)
+![picture 0](/assets/img/post/da0629064cbf97a2987ee8b39e31b18a5bb8ce0ee41bc1a6a49c6f28cd5dd182.png)
 
-![picture 2](/assets/img/a0e90773ee9768d8a1cdb1919f067974dcbc92c0da6b907203d3e5e221467226.png)
+![picture 2](/assets/img/post/a0e90773ee9768d8a1cdb1919f067974dcbc92c0da6b907203d3e5e221467226.png)
 
 - **reward model**
   - the reward model captures the human preferences.
@@ -2306,7 +2306,7 @@ Phase I
   - The `expected reward` of a completion is an important quantity used in the PPO objective.
   - estimate this quantity through a separate head of the LLM called the `value function`.
 
-![picture 3](/assets/img/890103bbad4c8391044a543026acd3492c3b4c58724ba9457ee465625fc0922d.png)
+![picture 3](/assets/img/post/890103bbad4c8391044a543026acd3492c3b4c58724ba9457ee465625fc0922d.png)
 
 Assume a number of prompts are given.
 - First, generate the LLM responses to the prompts, then calculate the reward for the prompt completions using the **reward model**.
@@ -2331,7 +2331,7 @@ Assume a number of prompts are given.
 
 Phase 2
 
-![picture 5](/assets/img/1042a0e5600112a748f0832464278092a37143da010df02df1caa39ebf6a3143.png)
+![picture 5](/assets/img/post/1042a0e5600112a748f0832464278092a37143da010df02df1caa39ebf6a3143.png)
 
 - In Phase 2, you make a small updates to the model and evaluate the impact of those updates on the alignment goal for the model.
   - The model weights updates are guided by the `prompt completion, losses, and rewards`.
@@ -2344,7 +2344,7 @@ Phase 2
   - trying to make updates to the LLM weights that result in completions more aligned with human preferences and so receive a higher reward.
 
 - The **policy loss** is the main objective that the PPO algorithm tries to optimize during training.
-  - ![picture 6](/assets/img/26a167251ea2800a20f562b58161dd5476703c53e565a28f241b1e2577025703.png)
+  - ![picture 6](/assets/img/post/26a167251ea2800a20f562b58161dd5476703c53e565a28f241b1e2577025703.png)
 
   - The action $a_t$: the next token
   - the state $S_t$ is the completed prompt up to the token t.
@@ -2365,7 +2365,7 @@ Phase 2
     - The advantage term tells how better or worse the current token $A_t$ is with respect to all the possible tokens.
     - the top path which goes higher is better completion, receiving a higher reward.
     - The bottom path goes down which is a worst completion.
-    - ![picture 8](/assets/img/f8db0a3fcbb0ab7a1de597ef966ac336200fa32c1d148d6adabf6c5a52471946.png)
+    - ![picture 8](/assets/img/post/f8db0a3fcbb0ab7a1de597ef966ac336200fa32c1d148d6adabf6c5a52471946.png)
 
 Maximizing advantage term lead to higher rewards:
 - if the advantage is positive for the suggested token.
@@ -2376,7 +2376,7 @@ Maximizing advantage term lead to higher rewards:
   - maximizing the expression will demote the token, which is the correct strategy.
 - overall conclusion: maximizing this expression results in a better aligned LLM.
 
-![picture 9](/assets/img/c30faf15f85998b754bb003c9966ebc1f2e97eaca6d221230ba1d34610da4220.png)
+![picture 9](/assets/img/post/c30faf15f85998b754bb003c9966ebc1f2e97eaca6d221230ba1d34610da4220.png)
 
 Directly maximizing the expression would lead into problems because calculations are reliable under the assumption that advantage estimations are valid.
 - The advantage estimates are valid only when the old and new policies are close to each other.
@@ -2390,7 +2390,7 @@ Directly maximizing the expression would lead into problems because calculations
 - In summary, optimizing the PPO policy objective results in a better LLM without overshooting to unreliable regions.
 
 
-![picture 10](/assets/img/f4178a1a4ae3fb248aff6567ffd294cef2718a21e4af66c921a43271e21b350f.png)
+![picture 10](/assets/img/post/f4178a1a4ae3fb248aff6567ffd294cef2718a21e4af66c921a43271e21b350f.png)
 
 Entropy loss.
 - While the policy loss moves the model towards alignment goal, entropy allows the model to maintain creativity.
@@ -2403,7 +2403,7 @@ Entropy loss.
 
 
 the overall PPO objective.
-- ![picture 11](/assets/img/a3612bc4f5e728449d3a4abaa9416d0f3d8f63fbb8d9c7c0762174ae6a2e7c5e.png)
+- ![picture 11](/assets/img/post/a3612bc4f5e728449d3a4abaa9416d0f3d8f63fbb8d9c7c0762174ae6a2e7c5e.png)
 - Putting all terms together as a weighted sum, get PPO objective, which updates the model towards human preference in a stable manner.
 - The C1 and C2 are hyperparameters.
 - The PPO objective updates the model weights through back propagation over several steps.
@@ -2411,9 +2411,9 @@ the overall PPO objective.
 
 Once the model weights are updated, PPO starts a new cycle.
 - For the next iteration, the LLM is replaced with the updated LLM, and a new PPO cycle starts.
-- ![picture 12](/assets/img/827efa9cd009dd0d1342fb9a1757973c61706d250026d620c313cc74b7990905.png)
+- ![picture 12](/assets/img/post/827efa9cd009dd0d1342fb9a1757973c61706d250026d620c313cc74b7990905.png)
 - After many iterations, arrive at the human-aligned LLM.
-- ![picture 13](/assets/img/0048747332ebf1cf77d8e382f9cc212c234a0049c79d6753403dbdd53c105222.png)
+- ![picture 13](/assets/img/post/0048747332ebf1cf77d8e382f9cc212c234a0049c79d6753403dbdd53c105222.png)
 
 
 other reinforcement learning techniques that are used for RLHF? Yes.
@@ -2611,19 +2611,19 @@ For example,
 - trained a **reward model** that can carry out sentiment analysis and classify model completions as `toxic or non-toxic`.
 
 - select a prompt from the training data, and pass it to the instruct an LLM which generates a completion.
-  - ![picture 0](/assets/img/15101d8a76a27aa99d6a8be3fdaff04c09e24221ddaf8e379666da721e2a9b13.png)
+  - ![picture 0](/assets/img/post/15101d8a76a27aa99d6a8be3fdaff04c09e24221ddaf8e379666da721e2a9b13.png)
   - complete garbage is not very nice, expect it to get a high toxic rating.
 
 - The completion is processed by the **toxicity of reward model**, which generates a score and this is fed to the PPO algorithm, which uses it to update the model weights.
   - As you iterate RHF will update the LLM to create a less toxic responses.
-  - ![picture 2](/assets/img/44ff5d9ad4fd77c5cfb7cb3f0297c1f01cbae16c55649ec8165a76dabccc2d53.png)
+  - ![picture 2](/assets/img/post/44ff5d9ad4fd77c5cfb7cb3f0297c1f01cbae16c55649ec8165a76dabccc2d53.png)
 
 
 - However, as the policy tries to optimize the reward, it can <font color=OrangeRed> diverge too much from the initial language  </font>
-  - ![picture 1](/assets/img/82c9725da6ac0912186c3ecb4be79f34c428cee753e2414dca6c7ecdffbc900f.png)
+  - ![picture 1](/assets/img/post/82c9725da6ac0912186c3ecb4be79f34c428cee753e2414dca6c7ecdffbc900f.png)
     - the model started generating <font color=LightSlateBlue> completions that it has learned will lead to very low toxicity scores </font> by including phrases like most awesome, most incredible.
     - This language sounds very exaggerated.
-  - ![picture 3](/assets/img/92b5422189c58a97c112882254a2bc91557c4b00239cfb64f712a00d738aecec.png)
+  - ![picture 3](/assets/img/post/92b5422189c58a97c112882254a2bc91557c4b00239cfb64f712a00d738aecec.png)
     - The model also start generating <font color=LightSlateBlue> nonsensical, grammatically incorrect text that just happens to maximize the rewards in a similar way </font>, outputs like this are definitely not very useful.
 
 ---
@@ -2651,11 +2651,11 @@ How KL-Divergence works
 - A library that you can use to train transformer language models with reinforcement learning, using techniques such as PPO, is TRL (**Transformer Reinforcement Learning**)
 - In this link you can read more about this library, and its integration with PEFT (Parameter-Efficient Fine-Tuning) methods, such as LoRA (Low-Rank Adaption). The image shows an overview of the PPO training setup in TRL.
 
-![picture 0](/assets/img/c5de2e68b4e8fa25cca7fee20401ac3e4d5e1c2073edd18ffa04c846096569f5.png)
+![picture 0](/assets/img/post/c5de2e68b4e8fa25cca7fee20401ac3e4d5e1c2073edd18ffa04c846096569f5.png)
 
 To prevent Reward hacking:
 
-![picture 4](/assets/img/35e97b8334a4a4a8499e315634fa332d0c41260614e77c5f64544e792b2c87c7.png)
+![picture 4](/assets/img/post/35e97b8334a4a4a8499e315634fa332d0c41260614e77c5f64544e792b2c87c7.png)
 
 - use the initial instruct LLM as performance reference.
   - call it the **reference model**.
@@ -2672,13 +2672,13 @@ To prevent Reward hacking:
     - This can easily be tens or hundreds of thousands of tokens. However, using a softmax function, you've reduced the number of probabilities to much less than the full vocabulary size.
     - a relatively compute expensive process with will almost always benefit from using GPUs.
 
-![picture 5](/assets/img/6c2338493da33cf42bd717443cac01fef38825f3617816ab1dc1cfcccf9c41ff.png)
+![picture 5](/assets/img/post/6c2338493da33cf42bd717443cac01fef38825f3617816ab1dc1cfcccf9c41ff.png)
 
 - calculated the KL divergence between the two models, added acid term to the reward calculation.
   - This will penalize **the RL-updated model** if it shifts too far from the **reference LLM** and generates completions that are two different.
   - now need to full copies of the LLM to calculate the KL divergence, the frozen **reference LLM**, and the **RL-updated PPO LLM**.
 
-![picture 6](/assets/img/b31374b65dbe3ed755cf076d8c35bb5e262dc9a8d054f607f70628be21038fea.png)
+![picture 6](/assets/img/post/b31374b65dbe3ed755cf076d8c35bb5e262dc9a8d054f607f70628be21038fea.png)
 
 - benefit from combining our relationship with puffed.
   - In this case, only update the weights of a path adapter, not the full weights of the LLM.
@@ -2691,13 +2691,13 @@ To prevent Reward hacking:
 
 在强化学习中一般都有个奖励函数，对当前的 $\tfrac{Action}{(State,Action)}$ 进行评价打分，从而使使 Policy 模型产生更好的 `action` 。
 
-- ![Screenshot 2024-09-17 at 21.26.55](/assets/img/Screenshot%202024-09-17%20at%2021.26.55.png)
+- ![Screenshot 2024-09-17 at 21.26.55](/assets/img/post/Screenshot%202024-09-17%20at%2021.26.55.png)
 
-- ![Screenshot 2024-09-17 at 21.27.35](/assets/img/Screenshot%202024-09-17%20at%2021.27.35.png)
+- ![Screenshot 2024-09-17 at 21.27.35](/assets/img/post/Screenshot%202024-09-17%20at%2021.27.35.png)
 
 在 RLHF 微调的过程，也需要一个`Reward Model`来充当奖励函数，它代表着人类的价值观，RM 的输入是 `(prompt, response)`，返回一个分数。
 
-- ![Screenshot 2024-09-17 at 21.30.25](/assets/img/Screenshot%202024-09-17%20at%2021.30.25.png)
+- ![Screenshot 2024-09-17 at 21.30.25](/assets/img/post/Screenshot%202024-09-17%20at%2021.30.25.png)
 
 - response 可以看作 LLM 的 `action` ，LLM 看作 Policy 模型，通过 RL 框架把人类的价值观引入 LLM。
 
@@ -2716,7 +2716,7 @@ To prevent Reward hacking:
 
     - Methods to scale human feedback are an active area of research.
 
-  - ![picture 0](/assets/img/c435035a5efea29019accd1c8d7d10d29e3f7c0852e05a8e6b2be027a05614d4.png)
+  - ![picture 0](/assets/img/post/c435035a5efea29019accd1c8d7d10d29e3f7c0852e05a8e6b2be027a05614d4.png)
 
 
 
@@ -2779,7 +2779,7 @@ constitutional principles
 
   - play some bounds, asking the model to prioritize harmlessness by assessing whether it's response encourages illegal, unethical, or immoral activity.
 
-  - ![picture 1](/assets/img/11639e442bb815327b9582540c69dfe3f4ce7a2599bee82b9077b075c4d316da.png)
+  - ![picture 1](/assets/img/post/11639e442bb815327b9582540c69dfe3f4ce7a2599bee82b9077b075c4d316da.png)
 
 ---
 
@@ -2807,7 +2807,7 @@ implement the Constitutional AI
 
 - When implementing the Constitutional AI method, you train the model in two distinct phases.
 
-![picture 2](/assets/img/0357cae46c90ca513092ce3222e8ce29ffefac60707a64d36931faa50ffd4cc1.png)
+![picture 2](/assets/img/post/0357cae46c90ca513092ce3222e8ce29ffefac60707a64d36931faa50ffd4cc1.png)
 
 - In the first stage: <font color=OrangeRed> supervised learning </font>
   1. start the prompt that try to get it to generate harmful responses, this process is called <font color=OrangeRed> red teaming prompts </font>
@@ -2824,12 +2824,12 @@ implement the Constitutional AI
   - it correctly acknowledges that hacking into someone's WiFi is illegal.
   - put all the parts together and ask the model to write a new response that removes all of the harmful or illegal content.
   - The model generates a new answer that puts the constitutional principles into practice and does not include the reference to the illegal app.
-  - ![picture 2](/assets/img/ab64de4808f178f2c7500eef16ade84236d11a10268901023ac8fc40af0791ee.png)
+  - ![picture 2](/assets/img/post/ab64de4808f178f2c7500eef16ade84236d11a10268901023ac8fc40af0791ee.png)
   - The original red team prompt, and this final constitutional response can then be used as training data.
   - build up a data set of many examples to create a <font color=LightSlateBlue> fine-tuned NLM </font> that has learned how to generate constitutional responses.
-  - ![picture 3](/assets/img/a9cb584ff31d465319ee25bf2cb8a4e490506774d6c533437d2d942487c93561.png)
+  - ![picture 3](/assets/img/post/a9cb584ff31d465319ee25bf2cb8a4e490506774d6c533437d2d942487c93561.png)
 
-![picture 4](/assets/img/c98d7b6d3710fd9aa2fbea58bba367a52a1eb2eba6dc6068afeeac4bd56ed5ee.png)
+![picture 4](/assets/img/post/c98d7b6d3710fd9aa2fbea58bba367a52a1eb2eba6dc6068afeeac4bd56ed5ee.png)
 
 - The second part: <font color=OrangeRed> reinforcement learning from AI feedback / RLAIF </font>.
   1. similar to RLHF, except that instead of human feedback, use feedback generated by a model.
@@ -3257,9 +3257,9 @@ Expert:
 
 ## Assess the RL-updated model's performance.
 
-![picture 7](/assets/img/159f8a587f19133b9f68328dafe9ceeda5c54ff45b887cd3a11b77024014052f.png)
+![picture 7](/assets/img/post/159f8a587f19133b9f68328dafe9ceeda5c54ff45b887cd3a11b77024014052f.png)
 
-![picture 8](/assets/img/cbcb5fb6e218202af2fff65c7b8807fe809a239ea0045b4413f6fe26d378894b.png)
+![picture 8](/assets/img/post/cbcb5fb6e218202af2fff65c7b8807fe809a239ea0045b4413f6fe26d378894b.png)
 
 use the summarization data set to quantify the reduction in toxicity
 - for example: use toxicity score, the probability of the negative class, a toxic or hateful response averaged across the completions.
@@ -3272,7 +3272,7 @@ use the summarization data set to quantify the reduction in toxicity
 
 # Adapt and align large language models
 
-![picture 3](/assets/img/bb10819c3eb310d7f9e9aa260842d0e5ce507798cbebe824e8d8b41f8f17785f.png)
+![picture 3](/assets/img/post/bb10819c3eb310d7f9e9aa260842d0e5ce507798cbebe824e8d8b41f8f17785f.png)
 
 To integrate the model into applications.
 - The first set is related to **how the LLM will function** in deployment.
@@ -3325,7 +3325,7 @@ One of the primary ways to improve application performance is to reduce the size
   1. start with the fine tune LLM (teacher model), create a smaller LLM (student model).
   2. freeze the teacher model's weights, use it to generate completions for the training data.
   3. generate completions for the training data using the student model.
-  4. ![picture 6](/assets/img/6adc0dd4a988354bb26be7eaf27e292988e7973df9d9f929df404ef6a5bf6b1f.png)
+  4. ![picture 6](/assets/img/post/6adc0dd4a988354bb26be7eaf27e292988e7973df9d9f929df404ef6a5bf6b1f.png)
 
   5. The knowledge distillation between teacher and student model is achieved by minimizing a loss function: <font color=LightSlateBlue> distillation loss </font>.
      1. To calculate this loss, distillation uses the probability distribution over tokens that is produced by the teacher model's softmax layer.
@@ -3337,16 +3337,16 @@ One of the primary ways to improve application performance is to reduce the size
      3. With a temperature parameter greater than one, the probability distribution becomes broader and less strongly peaked.
      4. This <font color=OrangeRed> softer distribution </font> provides you with a set of tokens that are similar to the ground truth tokens.
   7. the teacher model's output is often referred to as soft labels and the student model's predictions as soft predictions.
-  8. ![picture 5](/assets/img/2b50776ba288df2d26272a0bde038b6ec9ab24b2b176305734793bec75299b83.png)
+  8. ![picture 5](/assets/img/post/2b50776ba288df2d26272a0bde038b6ec9ab24b2b176305734793bec75299b83.png)
   9. In parallel, train the student model to generate the correct predictions based on the ground truth training data.
      1. don't vary the temperature setting and instead use the standard softmax function.
      2. Distillation refers to the student model outputs as the <font color=LightSlateBlue> hard predictions and hard labels </font>.
      3. The loss between these two is the student loss.
-     4. ![picture 7](/assets/img/4abe8cb5ebc23211b4697ac21e08776aab811bc5dee5cdb44700a1789545f65c.png)
+     4. ![picture 7](/assets/img/post/4abe8cb5ebc23211b4697ac21e08776aab811bc5dee5cdb44700a1789545f65c.png)
 
   10. The combined distillation and student losses are used to update the weights of the student model via back propagation.
   11. the smaller student model can be used for inference in deployment instead of the teacher model.
-  12. ![picture 8](/assets/img/08a41f523a0a9a8d927501c7cb47c0fde89ef563b744ab962c5180148e478d97.png)
+  12. ![picture 8](/assets/img/post/08a41f523a0a9a8d927501c7cb47c0fde89ef563b744ab962c5180148e478d97.png)
 
 - In practice, distillation is not as effective for generative decoder models.
   - It's typically more effective for encoder only models,
@@ -3359,7 +3359,7 @@ One of the primary ways to improve application performance is to reduce the size
 
 ### PTQ - Post training quantization
 
-![picture 9](/assets/img/d4fc111c5a3b206d2349c811f0bd1773a1c3b7165d19ba2f49a43d26b998b147.png)
+![picture 9](/assets/img/post/d4fc111c5a3b206d2349c811f0bd1773a1c3b7165d19ba2f49a43d26b998b147.png)
 
 - model optimization technique that <font color=LightSlateBlue> actually reduces the size of the LLM </font>.
   - Specifically Quantization Aware Training / QAT
@@ -3378,7 +3378,7 @@ One of the primary ways to improve application performance is to reduce the size
 
 ### Pruning
 
-![picture 4](/assets/img/32263d35596ffcba4792b19984f906a6efcdac6332c39be415ac3fccbcd98297.png)
+![picture 4](/assets/img/post/32263d35596ffcba4792b19984f906a6efcdac6332c39be415ac3fccbcd98297.png)
 
 - reduce model size for inference by eliminating <font color=LightSlateBlue> weights that are not contributing much to overall model performance </font>.
   - weights with values very close to or equal to zero.
@@ -3411,9 +3411,9 @@ Epoch vs Batch Size vs Iterations [^Epoch_BatchSize_Iterations]
 
 - The iterative quality of the gradient descent helps a under-fitted graph to make the graph fit optimally to the data.
 
-![Screenshot 2024-06-25 at 17.30.45](/assets/img/Screenshot%202024-06-25%20at%2017.30.45.png)
+![Screenshot 2024-06-25 at 17.30.45](/assets/img/post/Screenshot%202024-06-25%20at%2017.30.45.png)
 
-![Screenshot 2024-06-25 at 17.30.40](/assets/img/Screenshot%202024-06-25%20at%2017.30.40.png)
+![Screenshot 2024-06-25 at 17.30.40](/assets/img/post/Screenshot%202024-06-25%20at%2017.30.40.png)
 
 learning rate
 
@@ -3439,7 +3439,7 @@ One Epoch is when `an ENTIRE dataset is passed forward and backward through the 
 
 > One epoch leads to underfitting of the curve in the graph (below).
 
-![Screenshot 2024-06-25 at 17.38.50](/assets/img/Screenshot%202024-06-25%20at%2017.38.50.png)
+![Screenshot 2024-06-25 at 17.38.50](/assets/img/post/Screenshot%202024-06-25%20at%2017.38.50.png)
 
 - As the number of epochs increases, more number of times the weight are changed in the neural network and the curve goes from underfitting to optimal to overfitting curve.
 

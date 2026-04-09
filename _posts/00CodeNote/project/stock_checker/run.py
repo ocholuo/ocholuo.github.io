@@ -23,25 +23,21 @@ LOG_FILE = "/tmp/stock_checker.log"
 #  WATCHLIST  — add / edit / disable items here
 # ══════════════════════════════════════════════════════════════════════════════
 WATCHLIST = [
-
     # ── Item 0: Costco — Kohler Rodean Faucet ────────────────────────────────
     {
-        "active":    True,
-        "name":      "Kohler Rodean Faucet (Stainless / Touchless)",
-        "store":     "Costco",
-        "url":       "https://www.costco.com/p/-/kohler-rodean-kitchen-sink-faucet/4000404952?langId=-1",
-        "item_id":   "1000104",
-        "model":     "R38473-RT2-LVS",
-
+        "active": True,
+        "name": "Kohler Rodean Faucet (Stainless / Touchless)",
+        "store": "Costco",
+        "url": "https://www.costco.com/p/-/kohler-rodean-kitchen-sink-faucet/4000404952?langId=-1",
+        "item_id": "1000104",
+        "model": "R38473-RT2-LVS",
         # Variant selectors: text labels to click on the product page (in order).
         # Costco shows attribute buttons like "Stainless Steel" and "Touchless".
         "variant_selectors": ["Stainless Steel", "Touchless"],
-
         "store_profile": "costco",
-        "use_selenium":  True,   # use headless Chrome — required for JS-rendered pages
+        "use_selenium": True,  # use headless Chrome — required for JS-rendered pages
         "open_on_stock": True,
     },
-
     # {
     #     "active":    True,                   # set False to pause without deleting
     #     "name":      "Kohler Rodean Faucet (Matte Black / Touchless)",
@@ -49,19 +45,15 @@ WATCHLIST = [
     #     "url":       "https://www.costco.com/p/-/kohler-rodean-kitchen-sink-faucet/4000404952?langId=-1",
     #     "item_id":   "1000105",              # Costco item # (for your reference)
     #     "model":     "R38473-RT2-BL",       # model number (for your reference)
-
     #     # All these words must appear on the page to confirm it's the right variant.
     #     # Case-insensitive. Leave empty [] to skip variant check.
     #     "variant_keywords": ["matte black", "touchless"],
-
     #     # Store-specific in-stock / out-of-stock HTML signals.
     #     # Uses "costco" profile by default — see STORE_PROFILES below.
     #     "store_profile": "costco",
-
     #     # Open the URL in browser automatically when IN STOCK?
     #     "open_on_stock": True,
     # },
-
     # ── Add more items below this line ───────────────────────────────────────
     # Example (commented out — uncomment and fill in when ready):
     #
@@ -76,7 +68,6 @@ WATCHLIST = [
     #     "store_profile": "lululemon",
     #     "open_on_stock": True,
     # },
-
 ]
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -84,7 +75,6 @@ WATCHLIST = [
 #  Add a new profile when you add a store for the first time.
 # ══════════════════════════════════════════════════════════════════════════════
 STORE_PROFILES = {
-
     "costco": {
         "referer": "https://www.costco.com/",
         # Use Costco's real-time inventory API instead of HTML scraping.
@@ -96,52 +86,50 @@ STORE_PROFILES = {
         ),
         "inventory_api_headers": {
             "client_identifier": "481b1aec-aa3b-454b-b81b-48187e28f205",
-            "costco-env":        "ECOM",
-            "costco-service":    "restInventory",
-            "Origin":            "https://www.costco.com",
+            "costco-env": "ECOM",
+            "costco-service": "restInventory",
+            "Origin": "https://www.costco.com",
         },
         # Fallback HTML signals — NOTE: isbuyable is catalog data, not live inventory.
         # These fire for ALL variants regardless of stock. Only used if API fails.
         # Set item_id_window=0 to disable HTML fallback for Costco (prefer unknown over wrong).
-        "in_stock_signals":     [],
+        "in_stock_signals": [],
         "out_of_stock_signals": [],
         "item_id_window": 0,
     },
-
     "lululemon": {
         "referer": "https://www.lululemon.com/",
         "in_stock_signals": [
-            'add to bag',
+            "add to bag",
             '"availability":"instock"',
             '"instockstatus":true',
             '"isavailable":true',
         ],
         "out_of_stock_signals": [
-            'notify me when available',
-            'out of stock',
-            'sold out',
+            "notify me when available",
+            "out of stock",
+            "sold out",
             '"availability":"outofstock"',
             '"instockstatus":false',
         ],
     },
-
     # Generic fallback — works for many sites
     "generic": {
         "referer": "",
         "in_stock_signals": [
             '"availability":"instock"',
-            'add to cart',
-            'add to bag',
+            "add to cart",
+            "add to bag",
             '"instock":true',
             '"available":true',
         ],
         "out_of_stock_signals": [
-            'out of stock',
-            'sold out',
-            'currently unavailable',
+            "out of stock",
+            "sold out",
+            "currently unavailable",
             '"availability":"outofstock"',
             '"instock":false',
-            'notify me when available',
+            "notify me when available",
         ],
     },
 }
@@ -150,6 +138,7 @@ STORE_PROFILES = {
 # ══════════════════════════════════════════════════════════════════════════════
 #  CORE UTILITIES
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 def log(msg: str):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -162,9 +151,9 @@ def log(msg: str):
 def send_notification(title: str, message: str, subtitle: str = ""):
     """Send a native macOS notification via osascript."""
     # Escape double quotes inside strings
-    message  = message.replace('"', '\\"')
+    message = message.replace('"', '\\"')
     subtitle = subtitle.replace('"', '\\"')
-    title    = title.replace('"', '\\"')
+    title = title.replace('"', '\\"')
     subtitle_part = f'subtitle "{subtitle}"' if subtitle else ""
     script = f'display notification "{message}" with title "{title}" {subtitle_part}'
     try:
@@ -181,10 +170,10 @@ def fetch_page(url: str, referer: str = "") -> str:
             "AppleWebKit/537.36 (KHTML, like Gecko) "
             "Chrome/123.0.0.0 Safari/537.36"
         ),
-        "Accept":          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.9",
-        "Accept-Encoding": "gzip",          # only advertise what we can decompress
-        "Connection":      "keep-alive",
+        "Accept-Encoding": "gzip",  # only advertise what we can decompress
+        "Connection": "keep-alive",
     }
     if referer:
         headers["Referer"] = referer
@@ -213,16 +202,27 @@ def _parse_availability(data) -> bool | None:
     """
     if isinstance(data, dict):
         # Direct boolean/string fields
-        for key in ("available", "inStock", "isAvailable", "availableToOrder",
-                    "isOrderable", "buyable", "isBuyable"):
+        for key in (
+            "available",
+            "inStock",
+            "isAvailable",
+            "availableToOrder",
+            "isOrderable",
+            "buyable",
+            "isBuyable",
+        ):
             val = data.get(key)
-            if val is True  or val == "true"  or val == "True":  return True
-            if val is False or val == "false" or val == "False": return False
+            if val is True or val == "true" or val == "True":
+                return True
+            if val is False or val == "false" or val == "False":
+                return False
         # Status string fields
         for key in ("inventoryStatus", "onlineInventoryStatus", "availabilityStatus"):
             val = str(data.get(key, "")).lower()
-            if val in ("available", "instock", "in_stock"):        return True
-            if val in ("outofstock", "out_of_stock", "unavailable"): return False
+            if val in ("available", "instock", "in_stock"):
+                return True
+            if val in ("outofstock", "out_of_stock", "unavailable"):
+                return False
         # availableQty > 0 means in stock
         qty = data.get("availableQty") or data.get("quantity") or data.get("qty")
         if qty is not None:
@@ -287,7 +287,11 @@ def check_item_with_selenium(item: dict) -> dict:
         from selenium.webdriver.support.ui import WebDriverWait
     except ImportError:
         log("  [error] selenium not installed — run: pip install selenium")
-        return {"status": "error", "variant_found": False, "message": "selenium not installed"}
+        return {
+            "status": "error",
+            "variant_found": False,
+            "message": "selenium not installed",
+        }
 
     opts = webdriver.ChromeOptions()
     opts.add_argument("--headless")
@@ -315,7 +319,7 @@ def check_item_with_selenium(item: dict) -> dict:
                 el = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
                 driver.execute_script("arguments[0].scrollIntoView(true);", el)
                 el.click()
-                time.sleep(0.8)   # let the page update after each selection
+                time.sleep(0.8)  # let the page update after each selection
                 log(f"  [debug] clicked variant: '{label}'")
             except Exception as e:
                 log(f"  [debug] could not select variant '{label}': {e}")
@@ -325,21 +329,41 @@ def check_item_with_selenium(item: dict) -> dict:
         try:
             btn = wait.until(EC.presence_of_element_located((By.ID, "add-to-cart-btn")))
             btn_html = btn.get_attribute("outerHTML").lower()
-            btn_val  = btn.get_attribute("value") or ""
-            log(f"  [debug] button value='{btn_val}'  html snippet: {repr(btn_html[:200])}")
+            btn_val = btn.get_attribute("value") or ""
+            log(
+                f"  [debug] button value='{btn_val}'  html snippet: {repr(btn_html[:200])}"
+            )
 
             if "out of stock" in btn_html or "out of stock" in btn_val.lower():
-                return {"status": "out_of_stock", "variant_found": variant_found, "message": "selenium"}
+                return {
+                    "status": "out_of_stock",
+                    "variant_found": variant_found,
+                    "message": "selenium",
+                }
             if "add to cart" in btn_html or "add to cart" in btn_val.lower():
-                return {"status": "in_stock",     "variant_found": variant_found, "message": "selenium"}
+                return {
+                    "status": "in_stock",
+                    "variant_found": variant_found,
+                    "message": "selenium",
+                }
 
             # Button present but neither text matched — log full value for debugging
-            log(f"  [debug] unrecognized button state; full html: {repr(btn_html[:400])}")
-            return {"status": "unknown", "variant_found": variant_found, "message": "selenium: unrecognized button"}
+            log(
+                f"  [debug] unrecognized button state; full html: {repr(btn_html[:400])}"
+            )
+            return {
+                "status": "unknown",
+                "variant_found": variant_found,
+                "message": "selenium: unrecognized button",
+            }
 
         except Exception as e:
             log(f"  [debug] add-to-cart button not found: {e}")
-            return {"status": "error", "variant_found": False, "message": f"button not found: {e}"}
+            return {
+                "status": "error",
+                "variant_found": False,
+                "message": f"button not found: {e}",
+            }
 
     finally:
         driver.quit()
@@ -357,7 +381,7 @@ def check_item(item: dict) -> dict:
         return check_item_with_selenium(item)
 
     profile_key = item.get("store_profile", "generic")
-    profile     = STORE_PROFILES.get(profile_key, STORE_PROFILES["generic"])
+    profile = STORE_PROFILES.get(profile_key, STORE_PROFILES["generic"])
 
     # ── Inventory API path (e.g. Costco) ─────────────────────────────────────
     if "inventory_api" in profile and item.get("item_id"):
@@ -365,10 +389,20 @@ def check_item(item: dict) -> dict:
         if data is not None:
             available = _parse_availability(data)
             if available is True:
-                return {"status": "in_stock",     "variant_found": True, "message": "inventory API"}
+                return {
+                    "status": "in_stock",
+                    "variant_found": True,
+                    "message": "inventory API",
+                }
             if available is False:
-                return {"status": "out_of_stock", "variant_found": True, "message": "inventory API"}
-            log(f"  [debug] inventory API: unrecognized response shape — falling back to HTML")
+                return {
+                    "status": "out_of_stock",
+                    "variant_found": True,
+                    "message": "inventory API",
+                }
+            log(
+                f"  [debug] inventory API: unrecognized response shape — falling back to HTML"
+            )
 
     # ── HTML scraping fallback ────────────────────────────────────────────────
     try:
@@ -383,7 +417,7 @@ def check_item(item: dict) -> dict:
     if variant_keywords:
         variant_found = all(kw in lower for kw in variant_keywords)
     else:
-        variant_found = True   # no keywords required → treat as found
+        variant_found = True  # no keywords required → treat as found
 
     # Stock signals — prefer item_id-scoped window when available
     item_id = item.get("item_id", "").lower()
@@ -391,16 +425,20 @@ def check_item(item: dict) -> dict:
     if item_id and window_size:
         pos = lower.find(item_id)
         if pos >= 0:
-            window = lower[max(0, pos - window_size // 2): pos + window_size]
-            is_in  = any(sig in window for sig in profile["in_stock_signals"])
+            window = lower[max(0, pos - window_size // 2) : pos + window_size]
+            is_in = any(sig in window for sig in profile["in_stock_signals"])
             is_out = any(sig in window for sig in profile["out_of_stock_signals"])
-            log(f"  [debug] item_id '{item_id}' found at pos {pos}; window in={is_in} out={is_out}")
+            log(
+                f"  [debug] item_id '{item_id}' found at pos {pos}; window in={is_in} out={is_out}"
+            )
         else:
-            log(f"  [debug] item_id '{item_id}' NOT found on page — falling back to full-page signals")
-            is_in  = any(sig in lower for sig in profile["in_stock_signals"])
+            log(
+                f"  [debug] item_id '{item_id}' NOT found on page — falling back to full-page signals"
+            )
+            is_in = any(sig in lower for sig in profile["in_stock_signals"])
             is_out = any(sig in lower for sig in profile["out_of_stock_signals"])
     else:
-        is_in  = any(sig in lower for sig in profile["in_stock_signals"])
+        is_in = any(sig in lower for sig in profile["in_stock_signals"])
         is_out = any(sig in lower for sig in profile["out_of_stock_signals"])
 
     if is_in and not is_out:
@@ -417,11 +455,11 @@ def check_item(item: dict) -> dict:
 
 def notify_result(item: dict, result: dict):
     """Send the right macOS notification based on the check result."""
-    name  = item["name"]
+    name = item["name"]
     store = item["store"]
-    url   = item["url"]
+    url = item["url"]
 
-    status        = result["status"]
+    status = result["status"]
     variant_found = result["variant_found"]
 
     if status == "error":
@@ -429,15 +467,13 @@ def notify_result(item: dict, result: dict):
         send_notification(
             f"⚠️ Stock Checker Error — {store}",
             f"Could not reach page for: {name}",
-            "Will retry next run"
+            "Will retry next run",
         )
 
     elif status == "in_stock" and variant_found:
         log(f"  ✓ IN STOCK")
         send_notification(
-            f"✅ IN STOCK — {store}",
-            f"{name} is AVAILABLE! Tap to order.",
-            store
+            f"✅ IN STOCK — {store}", f"{name} is AVAILABLE! Tap to order.", store
         )
         if item.get("open_on_stock"):
             subprocess.run(["open", url])
@@ -447,7 +483,7 @@ def notify_result(item: dict, result: dict):
         send_notification(
             f"❌ Out of Stock — {store}",
             f"{name}: not available today.",
-            "Will check again next run"
+            "Will check again next run",
         )
 
     elif not variant_found:
@@ -455,15 +491,13 @@ def notify_result(item: dict, result: dict):
         send_notification(
             f"⚠️ {store} — Check Manually",
             f"Could not confirm variant for: {name}",
-            "Page content may have changed"
+            "Page content may have changed",
         )
 
     else:  # unknown
         log(f"  ? Stock status ambiguous — check manually")
         send_notification(
-            f"⚠️ {store} — Status Unclear",
-            f"Could not determine stock for: {name}",
-            url
+            f"⚠️ {store} — Status Unclear", f"Could not determine stock for: {name}", url
         )
 
 
@@ -471,10 +505,15 @@ def notify_result(item: dict, result: dict):
 #  MAIN
 # ══════════════════════════════════════════════════════════════════════════════
 
+
 def main():
     parser = argparse.ArgumentParser(description="Universal Stock Checker")
-    parser.add_argument("--list", action="store_true",  help="List all tracked items and exit")
-    parser.add_argument("--item", type=int, default=None, help="Check only item at this index")
+    parser.add_argument(
+        "--list", action="store_true", help="List all tracked items and exit"
+    )
+    parser.add_argument(
+        "--item", type=int, default=None, help="Check only item at this index"
+    )
     args = parser.parse_args()
 
     # ── --list mode ──────────────────────────────────────────────────────────
@@ -492,7 +531,9 @@ def main():
     if args.item is not None:
         items_to_check = [(args.item, WATCHLIST[args.item])]
     else:
-        items_to_check = [(i, item) for i, item in enumerate(WATCHLIST) if item.get("active")]
+        items_to_check = [
+            (i, item) for i, item in enumerate(WATCHLIST) if item.get("active")
+        ]
 
     log(f"═══ Stock Checker — checking {len(items_to_check)} item(s) ═══")
 

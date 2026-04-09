@@ -9,7 +9,7 @@ tags: [SOC]
 math: true
 # pin: true
 toc: true
-image: /assets/img/note/prisma.png
+image: /assets/img/post/prisma.png
 ---
 
 [toc]

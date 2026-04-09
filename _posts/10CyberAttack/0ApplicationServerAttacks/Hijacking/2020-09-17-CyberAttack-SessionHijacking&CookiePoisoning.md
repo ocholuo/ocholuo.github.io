@@ -119,15 +119,15 @@ Session Hijacking process is categorized into the following three techniques:
   - Authentication process initiates at the start of TCP session only, once the attacker successfully hijacks the authenticated TCP session, traffic can be monitored, or attacker can get the role of the legitimate authenticated user.
   - Session hijacking becomes successful because of weak session IDs or no blocking upon receiving an invalid session ID.
 
-![page3image53171280](/assets/img/page3image53171280.png)
+![page3image53171280](/assets/img/post/page3image53171280.png)
 
-![page4image53267920](/assets/img/page4image53267920.png)
+![page4image53267920](/assets/img/post/page4image53267920.png)
 
 ---
 
 ## Types of Session Hijacking
 
-![page5image53150736](/assets/img/page5image53150736.png)
+![page5image53150736](/assets/img/post/page5image53150736.png)
 
 - Active Attack
   - includes interception in the active session from the attacker.
@@ -135,7 +135,7 @@ Session Hijacking process is categorized into the following three techniques:
   - In an active attack, the attacker is manipulating the legitimate users of the connection.
   - As the result of an active attack, <font color=OrangeRed> the legitimate user is disconnected from the attacker </font>.
 
-![page5image53153440](/assets/img/page5image53153440.png)
+![page5image53153440](/assets/img/post/page5image53153440.png)
 
 - Paccive Attack
   - The passive attack includes <font color=OrangeRed> hijacking a session and monitoring the communication </font> between hosts without sending any packet.
@@ -230,7 +230,7 @@ Session IDs can be compromised easily by using Client-side attacks such as:
 2. Malicious JavaScript Code
 3. Trojans
 
-![page8image53166496](/assets/img/page8image53166496.png)
+![page8image53166496](/assets/img/post/page8image53166496.png)
 
 
 ##### Crocc-site Script Attack
@@ -273,7 +273,7 @@ The 3-Way Handshake
 - TCP communication initiates with the 3-way handshaking between requesting host and target host.
 - In this handshaking Synchronization (SVN) packets and Acknowledgment (ACK) packets are communicated between them.
 
-![page10image53172320](/assets/img/page10image53172320.png)
+![page10image53172320](/assets/img/post/page10image53172320.png)
 
 ---
 
@@ -348,7 +348,7 @@ A man-in-the-middle attack can also be performed by using Forged ICMP packet and
   - Hashed Message Authentication (HMAC) can also be used for checking the data integrity.
 - Authentication algorithms. <font color=OrangeRed> RGA digital signatures </font> and <font color=OrangeRed> pre-shared keys (PGK) </font> are two methods used for authentication purposes.
 
-![page13image53150320](/assets/img/page13image53150320.png)
+![page13image53150320](/assets/img/post/page13image53150320.png)
 
 #### Components ofIPcec
 - Components of IPsec includes:
@@ -371,7 +371,7 @@ two working modes:
 - This shows IPGec Tunnel Mode with EGP header:
 - ![page14image53149904](/assets/img/page14image53149904.jpg)
 - Similarly, when AH is used; new IP Packet format will be:
-- ![page14image53149696](/assets/img/page14image53149696.png)
+- ![page14image53149696](/assets/img/post/page14image53149696.png)
 
 **IPsec Transport Mode**
 - IPsec VPN secures the data field or payload of originating IP traffic by <font color=OrangeRed> using encryption, hashing or both </font>.
@@ -382,6 +382,6 @@ two working modes:
   - From a configuration point of view, both tunnel and transport modes are defined in the configuration of trancform cet.
 
 - This diagram shows IPsec Transport Mode with EGP header:
-- ![page14image53151360](/assets/img/page14image53151360.png)
+- ![page14image53151360](/assets/img/post/page14image53151360.png)
 - Similarly, in case of AH:
-- ![page15image53151568](/assets/img/page15image53151568.png)
+- ![page15image53151568](/assets/img/post/page15image53151568.png)

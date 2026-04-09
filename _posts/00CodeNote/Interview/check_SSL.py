@@ -1,4 +1,4 @@
-""" Alibaba Cloud Function Compute Example """
+"""Alibaba Cloud Function Compute Example"""
 
 import datetime
 import json

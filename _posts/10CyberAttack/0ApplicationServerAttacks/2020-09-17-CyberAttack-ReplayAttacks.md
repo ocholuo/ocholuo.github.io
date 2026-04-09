@@ -49,4 +49,4 @@ Example:
 
   - the attacker later relays information to gain access.
 
-  - ![Pasted Graphic 4](/assets/img/Pasted%20Graphic%204_kqpjk952x.png)
+  - ![Pasted Graphic 4](/assets/img/post/Pasted%20Graphic%204_kqpjk952x.png)

@@ -56,4 +56,4 @@ Example:
 
   - connects the malicious DLL within the allocated memory, executes functions within the DLL.
 
-![Pasted Graphic 1](/assets/img/Pasted%20Graphic%201.png)
+![Pasted Graphic 1](/assets/img/post/Pasted%20Graphic%201.png)

@@ -23,13 +23,13 @@ image:
 - CIEM 解决方案旨在管理对云资源的访问，使组织能够实施最小权限原则和零信任安全模型。
 - CSPM 提供对云安全配置的关键可见性，使组织能够识别和解决将基于云的资源置于风险之中的错误配置。
 
-![Screenshot 2023-06-27 at 11.49.24](/assets/img/Screenshot%202023-06-27%20at%2011.49.24.png)
+![Screenshot 2023-06-27 at 11.49.24](/assets/img/post/Screenshot%202023-06-27%20at%2011.49.24.png)
 
-![Screenshot 2023-06-27 at 11.49.29](/assets/img/Screenshot%202023-06-27%20at%2011.49.29.png)
+![Screenshot 2023-06-27 at 11.49.29](/assets/img/post/Screenshot%202023-06-27%20at%2011.49.29.png)
 
-![Screenshot 2023-06-27 at 11.49.35](/assets/img/Screenshot%202023-06-27%20at%2011.49.35.png)
+![Screenshot 2023-06-27 at 11.49.35](/assets/img/post/Screenshot%202023-06-27%20at%2011.49.35.png)
 
-![Screenshot 2023-06-27 at 11.49.40](/assets/img/Screenshot%202023-06-27%20at%2011.49.40.png)
+![Screenshot 2023-06-27 at 11.49.40](/assets/img/post/Screenshot%202023-06-27%20at%2011.49.40.png)
 
 
 
@@ -94,17 +94,17 @@ CSPM 解决方案的一些关键特性包括：
   - 提供对云资产及其配置设置的可见性。
 
 
-![Screenshot 2023-06-27 at 11.40.04](/assets/img/Screenshot%202023-06-27%20at%2011.40.04.png)
+![Screenshot 2023-06-27 at 11.40.04](/assets/img/post/Screenshot%202023-06-27%20at%2011.40.04.png)
 
-![Screenshot 2023-06-27 at 11.40.29](/assets/img/Screenshot%202023-06-27%20at%2011.40.29.png)
+![Screenshot 2023-06-27 at 11.40.29](/assets/img/post/Screenshot%202023-06-27%20at%2011.40.29.png)
 
-![Screenshot 2023-06-27 at 11.47.44](/assets/img/Screenshot%202023-06-27%20at%2011.47.44.png)
+![Screenshot 2023-06-27 at 11.47.44](/assets/img/post/Screenshot%202023-06-27%20at%2011.47.44.png)
 
-![Screenshot 2023-06-27 at 11.48.00](/assets/img/Screenshot%202023-06-27%20at%2011.48.00.png)
+![Screenshot 2023-06-27 at 11.48.00](/assets/img/post/Screenshot%202023-06-27%20at%2011.48.00.png)
 
-![Screenshot 2023-06-27 at 11.48.05](/assets/img/Screenshot%202023-06-27%20at%2011.48.05.png)
+![Screenshot 2023-06-27 at 11.48.05](/assets/img/post/Screenshot%202023-06-27%20at%2011.48.05.png)
 
-![Screenshot 2023-06-27 at 11.48.09](/assets/img/Screenshot%202023-06-27%20at%2011.48.09.png)
+![Screenshot 2023-06-27 at 11.48.09](/assets/img/post/Screenshot%202023-06-27%20at%2011.48.09.png)
 
 
 ---
@@ -116,11 +116,11 @@ CSPM 解决方案的一些关键特性包括：
 
 - Complex cloud innovations can result in gaps in your security. unifies visibility across workloads, cloud logs, and threat intelligence feeds, so teams are better prepared to detect quickly and respond together.
 
-![Screenshot 2023-06-27 at 11.51.14](/assets/img/Screenshot%202023-06-27%20at%2011.51.14.png)
+![Screenshot 2023-06-27 at 11.51.14](/assets/img/post/Screenshot%202023-06-27%20at%2011.51.14.png)
 
-![Screenshot 2023-06-27 at 11.51.26](/assets/img/Screenshot%202023-06-27%20at%2011.51.26.png)
+![Screenshot 2023-06-27 at 11.51.26](/assets/img/post/Screenshot%202023-06-27%20at%2011.51.26.png)
 
-![Screenshot 2023-06-27 at 11.51.30](/assets/img/Screenshot%202023-06-27%20at%2011.51.30.png)
+![Screenshot 2023-06-27 at 11.51.30](/assets/img/post/Screenshot%202023-06-27%20at%2011.51.30.png)
 
 
 ---
@@ -141,9 +141,9 @@ CSPM 解决方案的一些关键特性包括：
 - Live and historical query investigations
 
 
-![Screenshot 2023-06-27 at 11.52.29](/assets/img/Screenshot%202023-06-27%20at%2011.52.29.png)
+![Screenshot 2023-06-27 at 11.52.29](/assets/img/post/Screenshot%202023-06-27%20at%2011.52.29.png)
 
-![Screenshot 2023-06-27 at 11.53.11](/assets/img/Screenshot%202023-06-27%20at%2011.53.11.png)
+![Screenshot 2023-06-27 at 11.53.11](/assets/img/post/Screenshot%202023-06-27%20at%2011.53.11.png)
 
 ---
 

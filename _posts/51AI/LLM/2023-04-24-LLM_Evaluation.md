@@ -42,7 +42,7 @@ In traditional machine learning, assess how well a model is doing by looking at 
 - calculate simple metrics such as accuracy, which states the fraction of all predictions that are correct
 - because the models are **deterministic**.
 
-![Screenshot 2024-09-03 at 23.43.39](/assets/img/Screenshot%202024-09-03%20at%2023.43.39.png)
+![Screenshot 2024-09-03 at 23.43.39](/assets/img/post/Screenshot%202024-09-03%20at%2023.43.39.png)
 
 
 But with large language models
@@ -55,7 +55,7 @@ But with large language models
 
   - Now, for humans like us with squishy organic brains, we can see the similarities and differences. But when you train a model on millions of sentences, you need an automated, structured way to make measurements.
 
-  - ![Screenshot 2024-09-03 at 23.46.28](/assets/img/Screenshot%202024-09-03%20at%2023.46.28.png)
+  - ![Screenshot 2024-09-03 at 23.46.28](/assets/img/post/Screenshot%202024-09-03%20at%2023.46.28.png)
 
 ---
 
@@ -67,7 +67,7 @@ terminology
 - bigram: two words
 - n-gram is a group of n-words.
 
-![Screenshot 2024-09-03 at 23.49.45](/assets/img/Screenshot%202024-09-03%20at%2023.49.45.png)
+![Screenshot 2024-09-03 at 23.49.45](/assets/img/post/Screenshot%202024-09-03%20at%2023.49.45.png)
 
 
 ---
@@ -107,7 +107,7 @@ These are very basic metrics that only focused on individual words and don't con
   - it is not cold outside.
   - The scores would be the same.
 
-![Screenshot 2024-09-03 at 23.55.50](/assets/img/Screenshot%202024-09-03%20at%2023.55.50.png)
+![Screenshot 2024-09-03 at 23.55.50](/assets/img/post/Screenshot%202024-09-03%20at%2023.55.50.png)
 
 ---
 
@@ -121,7 +121,7 @@ These are very basic metrics that only focused on individual words and don't con
 
 - With longer sentences, they're a greater chance that bigrams don't match, and the scores may be even lower.
 
-![Screenshot 2024-09-03 at 23.57.23](/assets/img/Screenshot%202024-09-03%20at%2023.57.23.png)
+![Screenshot 2024-09-03 at 23.57.23](/assets/img/post/Screenshot%202024-09-03%20at%2023.57.23.png)
 
 ----
 
@@ -142,7 +142,7 @@ Rather than continue on with ROUGE numbers growing bigger to n-grams of three or
 
 - now use the LCS value to calculate the recall precision and F1 score, where the numerator in both the recall and precision calculations is the length of the longest common subsequence, in this case, two.
 
-![Screenshot 2024-09-03 at 23.58.17](/assets/img/Screenshot%202024-09-03%20at%2023.58.17.png)
+![Screenshot 2024-09-03 at 23.58.17](/assets/img/post/Screenshot%202024-09-03%20at%2023.58.17.png)
 
 
 As with all of the rouge scores, you need to take the values in context.
@@ -162,14 +162,14 @@ problem with simple rouge scores: it's possible for a bad completion to result i
 
   - One way to counter this issue: use clipping function to limit the number of unigram matches to the maximum count for that unigram within the reference.
     - there is one appearance of `cold` and the reference and so a modified precision with a clip on the unigram matches results in a dramatically reduced score.
-    - ![Screenshot 2024-09-09 at 21.20.14](/assets/img/Screenshot%202024-09-09%20at%2021.20.14.png)
+    - ![Screenshot 2024-09-09 at 21.20.14](/assets/img/post/Screenshot%202024-09-09%20at%2021.20.14.png)
 
 
 
   - However, you'll still be challenged if their generated words are all present, but just in a different order.
     - For example, with this generated sentence, outside cold it is.
     - This sentence was called perfectly even on the modified precision with the clipping function as all of the words and the generated output are present in the reference.
-    - ![Screenshot 2024-09-09 at 21.20.18](/assets/img/Screenshot%202024-09-09%20at%2021.20.18.png)
+    - ![Screenshot 2024-09-09 at 21.20.18](/assets/img/post/Screenshot%202024-09-09%20at%2021.20.18.png)
 
   - Whilst using a different rouge score can help experimenting with a n-gram size that will calculate the most useful score will be dependent on the sentence, the sentence size, and the use case.
 
@@ -194,7 +194,7 @@ For example,
 - The first candidate: I am very happy that I am drinking a cup of tea. The BLEU score is 0.495.
 - As we get closer and closer to the original sentence, we get a score that is closer and closer to one.
 
-![Screenshot 2024-09-09 at 21.22.59](/assets/img/Screenshot%202024-09-09%20at%2021.22.59.png)
+![Screenshot 2024-09-09 at 21.22.59](/assets/img/post/Screenshot%202024-09-09%20at%2021.22.59.png)
 
 ---
 
@@ -220,7 +220,7 @@ Benchmarks cover a wide range of tasks and scenarios.
 
 benchmarks that are pushing LLMs further.
 
-![Screenshot 2024-09-09 at 22.25.16](/assets/img/Screenshot%202024-09-09%20at%2022.25.16.png)
+![Screenshot 2024-09-09 at 22.25.16](/assets/img/post/Screenshot%202024-09-09%20at%2022.25.16.png)
 
 - GLUE:
   - General Language Understanding Evaluation
@@ -229,7 +229,7 @@ benchmarks that are pushing LLMs further.
   - to encourage the development of models that can generalize across multiple tasks
   - use the benchmark to measure and compare the model performance.
 
-![Screenshot 2024-09-09 at 22.25.45](/assets/img/Screenshot%202024-09-09%20at%2022.25.45.png)
+![Screenshot 2024-09-09 at 22.25.45](/assets/img/post/Screenshot%202024-09-09%20at%2022.25.45.png)
 
 - SuperGLUE:
   - introduced in 2019
@@ -237,7 +237,7 @@ benchmarks that are pushing LLMs further.
   - It consists of a series of tasks, which are not included in GLUE, or more challenging versions of the same tasks.
   - includes tasks such as multi-sentence reasoning, and reading comprehension. Both the GLUE and SuperGLUE benchmarks have leaderboards that can be used to compare and contrast evaluated models.
 
-![Screenshot 2024-09-09 at 22.26.03](/assets/img/Screenshot%202024-09-09%20at%2022.26.03.png)
+![Screenshot 2024-09-09 at 22.26.03](/assets/img/post/Screenshot%202024-09-09%20at%2022.26.03.png)
 
 - As models get larger, their performance against benchmarks such as SuperGLUE start to match human ability on specific tasks.
   - models are able to perform as well as humans on the benchmarks tests, but subjectively we can see that they're not performing at human level at tasks in general.
@@ -252,7 +252,7 @@ benchmarks that are pushing LLMs further.
   - Models are tested on tasks that extend way beyond basic language understanding.
     - `elementary mathematics, US history, computer science, law, and more`.
 
-![Screenshot 2024-09-09 at 22.27.23](/assets/img/Screenshot%202024-09-09%20at%2022.27.23.png)
+![Screenshot 2024-09-09 at 22.27.23](/assets/img/post/Screenshot%202024-09-09%20at%2022.27.23.png)
 
 - BIG-bench
   - consists of 204 tasks, ranging through `linguistics, childhood development, math, common sense reasoning, biology, physics, social bias, software development and more`.
@@ -267,7 +267,7 @@ benchmarks that are pushing LLMs further.
   - includes metrics for fairness, bias, and toxicity, which are becoming increasingly important to assess as LLMs become more capable of human-like language generation, and in turn of exhibiting potentially harmful behavior.
   - a living benchmark that aims to continuously evolve with the addition of new scenarios, metrics, and models.
 
-![Screenshot 2024-09-09 at 22.28.03](/assets/img/Screenshot%202024-09-09%20at%2022.28.03.png)
+![Screenshot 2024-09-09 at 22.28.03](/assets/img/post/Screenshot%202024-09-09%20at%2022.28.03.png)
 
 
 ---
@@ -375,20 +375,20 @@ from deepeval.integrations.llama_index import (
 )
 ```
 
-![Screenshot 2024-04-29 at 12.15.14](/assets/img/Screenshot%202024-04-29%20at%2012.15.14_xjzmg6dsi.png)
+![Screenshot 2024-04-29 at 12.15.14](/assets/img/post/Screenshot%202024-04-29%20at%2012.15.14_xjzmg6dsi.png)
 
-![Screenshot 2024-04-29 at 12.16.25](/assets/img/Screenshot%202024-04-29%20at%2012.16.25_1t3jx1uox.png)
+![Screenshot 2024-04-29 at 12.16.25](/assets/img/post/Screenshot%202024-04-29%20at%2012.16.25_1t3jx1uox.png)
 
 Evaluating Response Faithfulness (i.e. Hallucination)
 
 - The `FaithfulnessEvaluator` evaluates if the answer is <font color=LightSlateBlue> faithful </font> to the retrieved contexts (in other words, whether if there's hallucination).
 
-![Screenshot 2024-04-29 at 12.33.12](/assets/img/Screenshot%202024-04-29%20at%2012.33.12_frl8djwa0.png)
+![Screenshot 2024-04-29 at 12.33.12](/assets/img/post/Screenshot%202024-04-29%20at%2012.33.12_frl8djwa0.png)
 
 Evaluating Query + Response Relevancy
 
 - The `RelevancyEvaluator` evaluates if the retrieved context and the answer is <font color=LightSlateBlue> relevant and consistent </font> for the given query.
 
-![Screenshot 2024-04-29 at 12.39.39](/assets/img/Screenshot%202024-04-29%20at%2012.39.39.png)
+![Screenshot 2024-04-29 at 12.39.39](/assets/img/post/Screenshot%202024-04-29%20at%2012.39.39.png)
 
-![Screenshot 2024-04-29 at 12.39.24](/assets/img/Screenshot%202024-04-29%20at%2012.39.24.png)
+![Screenshot 2024-04-29 at 12.39.24](/assets/img/post/Screenshot%202024-04-29%20at%2012.39.24.png)

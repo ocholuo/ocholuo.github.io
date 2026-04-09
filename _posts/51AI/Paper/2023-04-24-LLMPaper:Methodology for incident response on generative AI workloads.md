@@ -41,7 +41,7 @@ Methodology for incident response on Gen-AI workloads
 
 ## Components of a Gen-AI workload
 
-![Screenshot 2024-10-03 at 09.16.26](/assets/img/Screenshot%202024-10-03%20at%2009.16.26.png)
+![Screenshot 2024-10-03 at 09.16.26](/assets/img/post/Screenshot%202024-10-03%20at%2009.16.26.png)
 
 Generative AI applications include the following five components:
 

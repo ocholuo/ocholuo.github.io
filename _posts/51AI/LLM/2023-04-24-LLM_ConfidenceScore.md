@@ -181,7 +181,7 @@ Next generation data labeling tools
 
 [^Datasets_civil_comments]: Datasets:civil_comments, https://huggingface.co/datasets/civil_comments
 
-![Screenshot 2023-11-13 at 16.46.44](/assets/img/Screenshot%202023-11-13%20at%2016.46.44.png)
+![Screenshot 2023-11-13 at 16.46.44](/assets/img/post/Screenshot%202023-11-13%20at%2016.46.44.png)
 
 ---
 
@@ -207,7 +207,7 @@ What do LLMs Know about Financial Markets? A Case Study on Reddit Market Sentime
 
   - 第二步：更小的任务模型(T5/BERT等)直接从weakly labeled data中进行监督学习.
 
-![Screenshot 2023-11-13 at 22.20.24](/assets/img/Screenshot%202023-11-13%20at%2022.20.24.png)
+![Screenshot 2023-11-13 at 22.20.24](/assets/img/post/Screenshot%202023-11-13%20at%2022.20.24.png)
 
 - 用LLM标注的原因
 
@@ -229,7 +229,7 @@ What do LLMs Know about Financial Markets? A Case Study on Reddit Market Sentime
   - 笔者认为, 这个调整让任务更加具体, 对LLM以及人类来说, 判断股票涨跌 要比 判断抽象的金融情绪 更好理解.`“具体”本就是prompt的原则之一`.
   - 在`PaLM-540B COT` * 8(8代表self-consistency中sample的次数)的设置下, 在各项数据集上可以取得远超Baseline的结果, 在Reddit上Acc=72%, 而`FinBERT-HKUST`仅为50%.
 
-![Screenshot 2023-11-13 at 22.28.59](/assets/img/Screenshot%202023-11-13%20at%2022.28.59.png)
+![Screenshot 2023-11-13 at 22.28.59](/assets/img/post/Screenshot%202023-11-13%20at%2022.28.59.png)
 
 
 - 需要着重说明的是, 作者进行了prompt enginerring之后, LLM才被逐步调优到最佳效果.
@@ -241,12 +241,12 @@ What do LLMs Know about Financial Markets? A Case Study on Reddit Market Sentime
     - 论文中, 使用了6个examples(每个类别随机挑2个), COT则是先总结对股票涨跌的opinion, 然后再给出最终答案.
     - 生成opinion是为了让LLM给自己引入金融领域的知识, 这种方法对特定domain的任务有启发性；
 
-    - ![Screenshot 2023-11-13 at 22.33.11](/assets/img/Screenshot%202023-11-13%20at%2022.33.11.png)
+    - ![Screenshot 2023-11-13 at 22.33.11](/assets/img/post/Screenshot%202023-11-13%20at%2022.33.11.png)
 
   - **self-consistency**[^Self_Consistency_Improves_Chain_of_Thought_Reasoning_in_LLMs]
     - 多次sample LLM的结果(进行sampling, 而非greedy decoding), 再将最频繁出现的结果作为最终结果(即所谓`majority vote`).
     - 论文中, temperature设置为0.5, 最佳sample次数为8次.
-    - ![Screenshot 2023-11-13 at 22.33.56](/assets/img/Screenshot%202023-11-13%20at%2022.33.56.png)
+    - ![Screenshot 2023-11-13 at 22.33.56](/assets/img/post/Screenshot%202023-11-13%20at%2022.33.56.png)
 
 > [^Chain-of-Thought_Prompting_Elicits_Reasoning_in_LLMs]: Chain-of-Thought Prompting Elicits Reasoning in Large Language Models: https://proceedings.neurips.cc/paper_files/paper/2022/file/9d5609613524ecf4f15af0f7b31abca4-Paper-Conference.pdf
 
@@ -273,14 +273,14 @@ What do LLMs Know about Financial Markets? A Case Study on Reddit Market Sentime
 
   - REG：每个样本得到soft label(把sample 8次结果的agreement ratio, 转换为label分布), 通过regression loss(MSE)来学习.
 
-  - ![Screenshot 2023-11-13 at 22.37.19](/assets/img/Screenshot%202023-11-13%20at%2022.37.19.png)
+  - ![Screenshot 2023-11-13 at 22.37.19](/assets/img/post/Screenshot%202023-11-13%20at%2022.37.19.png)
 
 - 根据实验结果, CLS和REG的最佳效果接近(80.5 + 68.0 vs 84.2 + 65.5), 但两种方法有不同的特性：
 
   - CLS需要更准确的数据.随着agreement减小, 尽管数据多了, 但precision会下降, 当agreement=8(即8次预测完全一样)时, 效果最佳, 但此时仅使用了31%的数据(用作蒸馏的数据共20000)；
   - REG的包容性更强.可以使用更多的、更难的(LLM预测更不一致)数据, 在agreement=5时, 效果最佳, 可以使用85%的数据.
   - 最终作者选择了REG.一方面, REG用了更多的、更难的数据；另一方面, REG的P-R曲线更平滑一些(在部署时, 需要根据预期presion来选择threshold, 更平滑的话选点的效果更好).
-  - ![Screenshot 2023-11-13 at 22.38.24](/assets/img/Screenshot%202023-11-13%20at%2022.38.24.png)
+  - ![Screenshot 2023-11-13 at 22.38.24](/assets/img/post/Screenshot%202023-11-13%20at%2022.38.24.png)
 
   - 笔者认为, 从知识蒸馏的研究[^Distilling_the_Knowledge_in_a_Neural_Network]来看, 从soft label中学习的确是更好的方式, 本论文的实验也证明要稍优一些；用self-consistency来产生soft label, 进而蒸馏的思想, 具有启发性
 
@@ -305,7 +305,7 @@ What do LLMs Know about Financial Markets? A Case Study on Reddit Market Sentime
     - 两个Pretrained model, FinBERT-ProsusAI、FinBERT-HKUST, 未再做微调.对应下图第二列模型；
     - 用于标注的LLM(PaLM COT * 8)、蒸馏后的任务模型.对应下图第三列模型.
 
-    - ![Screenshot 2023-11-13 at 22.40.29](/assets/img/Screenshot%202023-11-13%20at%2022.40.29.png)
+    - ![Screenshot 2023-11-13 at 22.40.29](/assets/img/post/Screenshot%202023-11-13%20at%2022.40.29.png)
 
 
 - 根据对比实验, 结论如下：
@@ -318,7 +318,7 @@ What do LLMs Know about Financial Markets? A Case Study on Reddit Market Sentime
 - 错误分析
 
   - 更进一步, 论文作者对蒸馏后的任务模型进行了错误分析, 绘制了混淆矩阵.
-  - ![Screenshot 2023-11-13 at 22.43.58](/assets/img/Screenshot%202023-11-13%20at%2022.43.58.png)
+  - ![Screenshot 2023-11-13 at 22.43.58](/assets/img/post/Screenshot%202023-11-13%20at%2022.43.58.png)
 
   - 通过结果可以看出, 任务模型主要是误判或漏判了Neural类别, 作者观察数据后发现是因为模型对于包含了矛盾观点的帖子、包含了更高级的投资动作的帖子难以准确分类, 因此有两个针对性的优化点：
 
@@ -367,7 +367,7 @@ Key takeaways and learnings:
   - calibrate the model’s label quality (% agreement with ground truth labels) at any given confidence score.
   - then decide an `operating point` (**confidence threshold**) for the LLM, and reject all labels below this threshold.
 
-![Screenshot 2023-12-04 at 05.02.35](/assets/img/Screenshot%202023-12-04%20at%2005.02.35.png)
+![Screenshot 2023-12-04 at 05.02.35](/assets/img/post/Screenshot%202023-12-04%20at%2005.02.35.png)
 
 
 ---
@@ -376,7 +376,7 @@ Key takeaways and learnings:
 
 ##### Setup
 
-![Screenshot 2023-11-13 at 21.55.35](/assets/img/Screenshot%202023-11-13%20at%2021.55.35.png)
+![Screenshot 2023-11-13 at 21.55.35](/assets/img/post/Screenshot%202023-11-13%20at%2021.55.35.png)
 
 1. For an `input x`, generate a `label y` by prompting the Labeling LLM (GPT-4).
 1. Next, estimate the confidence `c`, given `x` and `y` using a Verifier LLM (FLAN-T5-XXL or GPT-4). This score quantifies the Verifier LLM’s confidence in the given `label y` being correct. We describe 4 confidence calculation methods that benchmark in the section below.
@@ -393,13 +393,13 @@ The **AUROC** is a scalar value that summarizes the overall performance of the c
 - It provides a measure of the classifier's ability to distinguish between the positive and negative classes across all possible classification thresholds.
 - The confidence score that are calculating can be thought of as a binary classifier where the labels are whether the model got a specific label `correct` (true positive) or `incorrect` (false positive).
 
-![Screenshot 2023-12-04 at 04.43.33](/assets/img/Screenshot%202023-12-04%20at%2004.43.33.png) [^Metric]
+![Screenshot 2023-12-04 at 04.43.33](/assets/img/post/Screenshot%202023-12-04%20at%2004.43.33.png) [^Metric]
 
 [^Metric]: https://vitalflux.com/roc-curve-auc-python-false-positive-true-positive-rate/
 ‍
 - Using the plot above as a reference, can see that a random classifier would have an AUROC of 0.5.
 
-![Screenshot 2023-12-04 at 04.45.30](/assets/img/Screenshot%202023-12-04%20at%2004.45.30.png)
+![Screenshot 2023-12-04 at 04.45.30](/assets/img/post/Screenshot%202023-12-04%20at%2004.45.30.png)
 
 
 **Datasets**
@@ -408,12 +408,12 @@ We included the following datasets for this evaluation. These datasets are avail
 
 List of datasets used for labeling in this report
 
-![Screenshot 2023-12-04 at 05.08.34](/assets/img/Screenshot%202023-12-04%20at%2005.08.34.png)
+![Screenshot 2023-12-04 at 05.08.34](/assets/img/post/Screenshot%202023-12-04%20at%2005.08.34.png)
 
 
 ##### Results
 
-![Screenshot 2023-12-04 at 04.45.30](/assets/img/Screenshot%202023-12-04%20at%2004.45.30.png)
+![Screenshot 2023-12-04 at 04.45.30](/assets/img/post/Screenshot%202023-12-04%20at%2004.45.30.png)
 
 > evaluated the performance of five different confidence estimation techniques across different NLP tasks and datasets.
 
@@ -431,7 +431,7 @@ List of datasets used for labeling in this report
 
 Here’s a breakdown of the performance by dataset:
 
-![Screenshot 2023-12-04 at 08.00.06](/assets/img/Screenshot%202023-12-04%20at%2008.00.06.png)
+![Screenshot 2023-12-04 at 08.00.06](/assets/img/post/Screenshot%202023-12-04%20at%2008.00.06.png)
 
 
 
@@ -448,14 +448,14 @@ We illustrate this with the Banking complaints classification dataset below.
 - clusters of low confidence inputs correspond q unite well to incorrect LLM labels
 - Overlaying confidence score and whether `the LLM label (y) == Ground truth label (gt)` for the Banking Dataset
 
-![Screenshot 2023-12-04 at 08.03.07](/assets/img/Screenshot%202023-12-04%20at%2008.03.07.png)
+![Screenshot 2023-12-04 at 08.03.07](/assets/img/post/Screenshot%202023-12-04%20at%2008.03.07.png)
 
 
 
 Further, examine a few rows with low confidence LLM labels (<= 0.2).
 - Many of these inputs are ambiguous 模稜兩可, and it is hard even for a human annotator to tell which of the labels (the one provided as ground truth in the dataset, or the LLM generated one) is “correct”.
 
-![Screenshot 2023-12-04 at 08.12.58](/assets/img/Screenshot%202023-12-04%20at%2008.12.58.png)
+![Screenshot 2023-12-04 at 08.12.58](/assets/img/post/Screenshot%202023-12-04%20at%2008.12.58.png)
 
 
 ---
@@ -487,7 +487,7 @@ We study whether language models can evaluate the validity of their own claims a
 - Autolabel library relies on `token level generation probabilities` to estimate LLM label confidence.
 - Generating confidence scores alongside labels is a simple config change - setting the key `compute_confidence = True` should initiate confidence score computation:
 - Enabling confidence estimation in the library is a one line config change
-![Screenshot 2023-12-04 at 08.15.00](/assets/img/Screenshot%202023-12-04%20at%2008.15.00.png)
+![Screenshot 2023-12-04 at 08.15.00](/assets/img/post/Screenshot%202023-12-04%20at%2008.15.00.png)
 
 However, very few LLM providers today support extraction of token level generation probabilities alongside the completion.
 
@@ -500,7 +500,7 @@ For all other models, Refuel provides access to a hosted Verifier LLM (currently
 
 **Techniques**
 
-![Screenshot 2023-12-04 at 05.09.23](/assets/img/Screenshot%202023-12-04%20at%2005.09.23.png)
+![Screenshot 2023-12-04 at 05.09.23](/assets/img/post/Screenshot%202023-12-04%20at%2005.09.23.png)
 
 >Is the first option still a good method to try?
 
@@ -512,7 +512,7 @@ We benchmark the following four methods for confidence estimation:
 2. Using this, prompt the verifier LLM to complete the following sentence.
 3. The token generation probability of `“Yes”` is used as the confidence score
 
-![Screenshot 2023-12-04 at 05.11.26](/assets/img/Screenshot%202023-12-04%20at%2005.11.26.png)
+![Screenshot 2023-12-04 at 05.11.26](/assets/img/post/Screenshot%202023-12-04%20at%2005.11.26.png)
 
 
 ### Prompting for Confidence Score
@@ -522,7 +522,7 @@ We benchmark the following four methods for confidence estimation:
 - The value output by the verifier LLM is parsed as a float and used as the confidence score.
 - If parsing is unsuccessful, give the sample a confidence score of 0.0 by default.
 
-![Screenshot 2023-12-04 at 05.13.40](/assets/img/Screenshot%202023-12-04%20at%2005.13.40.png)
+![Screenshot 2023-12-04 at 05.13.40](/assets/img/post/Screenshot%202023-12-04%20at%2005.13.40.png)
 
 ### Token probabilities
 
@@ -541,7 +541,7 @@ We benchmark the following four methods for confidence estimation:
 - ‍Semantic Entropy
   - This method is used to calculate entropy for generation-like tasks. We prompt the LLM to produce N predictions at a temperature of 0.5 and then group them using a pairwise ROGUE score. Then, will calculate the average probability of each group of predictions and calculate the entropy of that prediction distribution.
 ‍
-![Screenshot 2023-12-04 at 07.53.10](/assets/img/Screenshot%202023-12-04%20at%2007.53.10.png)
+![Screenshot 2023-12-04 at 07.53.10](/assets/img/post/Screenshot%202023-12-04%20at%2007.53.10.png)
 
 
 ----
@@ -652,12 +652,12 @@ for headline in headlines:
 
 - 这里虽然为每个标题指出了类别，但是我们并不知道模型对其预测的置信度。
 
-![Screenshot 2024-01-29 at 16.43.28](/assets/img/Screenshot%202024-01-29%20at%2016.43.28.png)
+![Screenshot 2024-01-29 at 16.43.28](/assets/img/post/Screenshot%202024-01-29%20at%2016.43.28.png)
 
 - 接下来启用logprobs并将top_logprobs设置为2，重新跑一下。
 - 此外还将对数概率转换为通常比较容易理解的百分比形式。
 
-![Screenshot 2024-01-29 at 16.43.50](/assets/img/Screenshot%202024-01-29%20at%2016.43.50.png)
+![Screenshot 2024-01-29 at 16.43.50](/assets/img/post/Screenshot%202024-01-29%20at%2016.43.50.png)
 
 ```py
 for headline in headlines:
@@ -768,7 +768,7 @@ display(HTML(html_output))
 ```
 
 
-![Screenshot 2024-01-29 at 16.48.18](/assets/img/Screenshot%202024-01-29%20at%2016.48.18.png)
+![Screenshot 2024-01-29 at 16.48.18](/assets/img/post/Screenshot%202024-01-29%20at%2016.48.18.png)
 
 
 - 对于前两个问题，模型有100%的信心说上下文已经包含了完整的答案。
@@ -830,7 +830,7 @@ for sentence in sentence_list:
 display(HTML(html_output))
 ```
 
-![Screenshot 2024-01-29 at 16.56.23](/assets/img/Screenshot%202024-01-29%20at%2016.56.23.png)
+![Screenshot 2024-01-29 at 16.56.23](/assets/img/post/Screenshot%202024-01-29%20at%2016.56.23.png)
 
 ```py
 # 高置信度的补全结果：
@@ -888,7 +888,7 @@ def highlight_text(api_response):
 highlight_text(API_RESPONSE)
 ```
 
-![Screenshot 2024-01-29 at 16.59.35](/assets/img/Screenshot%202024-01-29%20at%2016.59.35.png)
+![Screenshot 2024-01-29 at 16.59.35](/assets/img/post/Screenshot%202024-01-29%20at%2016.59.35.png)
 
 
 通过byte参数重新构造一句话。
@@ -925,7 +925,7 @@ print(f"Decoded bytes: {aggregated_text}")
 print("Joint prob:", np.round(exp(joint_logprob) * 100, 2), "%")
 ```
 
-![Screenshot 2024-01-29 at 17.01.22](/assets/img/Screenshot%202024-01-29%20at%2017.01.22.png)
+![Screenshot 2024-01-29 at 17.01.22](/assets/img/post/Screenshot%202024-01-29%20at%2017.01.22.png)
 
 - 这里我们看到，开头的token是`\xf0\x9f\x92`，我们得到其ASCII编码之后追加到一个字节数组中
 - 再将这个数组中的内容解码为一个完整的句子，验证可知解码的内容和原本补全的内容一致。
@@ -958,27 +958,27 @@ print("Joint prob:", np.round(exp(joint_logprob) * 100, 2), "%")
 - 随着层数越来越高, 大模型可越来越清晰地区分出, 前者为假, 后者为真.
 - 作者MIT教授Max Tegmark表示这个证据表明, LLM绝不仅仅是大家炒作的"随机鹦鹉", 它的确理解自己在说什么
 
-![Screenshot 2023-12-04 at 10.49.11](/assets/img/Screenshot%202023-12-04%20at%2010.49.11.png)
+![Screenshot 2023-12-04 at 10.49.11](/assets/img/post/Screenshot%202023-12-04%20at%2010.49.11.png)
 
 
 这篇论文中, 研究们探讨了一个有趣的问题——LLM如何表现真话.
 - LLM是否知道一个语句是真还是假？如果它们知道, 那我们该用什么方法, 读懂LLM的想法呢？
 - 第一步, 研究人员建立了简单、明确的真/假陈述数据集, 并且把LLM对这些陈述的表征做了可视化.
 
-![Screenshot 2023-12-04 at 10.55.55](/assets/img/Screenshot%202023-12-04%20at%2010.55.55.png)
+![Screenshot 2023-12-04 at 10.55.55](/assets/img/post/Screenshot%202023-12-04%20at%2010.55.55.png)
 
 - 从中可以看到清晰的线性结构, 真/假语句是完全分开的.
 - 这种线性结构是分层出现的.
 
-![Screenshot 2023-12-04 at 10.56.03](/assets/img/Screenshot%202023-12-04%20at%2010.56.03.png)
+![Screenshot 2023-12-04 at 10.56.03](/assets/img/post/Screenshot%202023-12-04%20at%2010.56.03.png)
 
 - 如果是简单的陈述, 真假语句的分离会更早出现, 如果是"芝加哥在马达加斯加, 北京在中国"这类复杂的陈述, 分离就会更晚.
 
-![Screenshot 2023-12-04 at 10.58.04](/assets/img/Screenshot%202023-12-04%20at%2010.58.04.png)
+![Screenshot 2023-12-04 at 10.58.04](/assets/img/post/Screenshot%202023-12-04%20at%2010.58.04.png)
 
 - 鉴于以上这些结果, 研究人员发现, LLM确实能代表单一的"真理方向", 来表征真话和假话！
 
-![Screenshot 2023-12-04 at 10.58.49](/assets/img/Screenshot%202023-12-04%20at%2010.58.49.png)
+![Screenshot 2023-12-04 at 10.58.49](/assets/img/post/Screenshot%202023-12-04%20at%2010.58.49.png)
 
 
 
@@ -990,7 +990,7 @@ print("Joint prob:", np.round(exp(joint_logprob) * 100, 2), "%")
 2. 更令人惊喜的是, 人类可以用确定的真相方向给LLM"洗脑", 让它们将虚假陈述视为真实, 或者将真实陈述视为虚假.
    1. 在"洗脑"前, 对于"西班牙语单词"uno"的意思是"地板"", LLM有72%的可能认为这句话是错误的.
    2. 但如果确定LLM存储这个信息的位置, 覆盖这种说法, LLM就有70%的可能认为这句话是对的.
-   3. ![Screenshot 2023-12-04 at 11.21.36](/assets/img/Screenshot%202023-12-04%20at%2011.21.36.png)
+   3. ![Screenshot 2023-12-04 at 11.21.36](/assets/img/post/Screenshot%202023-12-04%20at%2011.21.36.png)
 
 研究人员表示, 最令人兴奋的部分, 无疑就是从`标注的真/假数据集中, 提取真值方向`了.
 
@@ -1000,22 +1000,22 @@ print("Joint prob:", np.round(exp(joint_logprob) * 100, 2), "%")
   1. 构建真实文本与可能文本不同的数据集.
      1. 例如, LLM判断"中国不在___", 很可能以"亚洲"结尾
   2. 上面的神经外科实验"洗脑术"
-     1. ![Screenshot 2023-12-04 at 11.23.07](/assets/img/Screenshot%202023-12-04%20at%2011.23.07.png)
+     1. ![Screenshot 2023-12-04 at 11.23.07](/assets/img/post/Screenshot%202023-12-04%20at%2011.23.07.png)
 
 **真理方向的提取**
 - 最常用的就是逻辑回归.
   - 然而, 因为叠加假说引起的集合问题, 逻辑回归的效果实际上相当糟糕.
-  - ![Screenshot 2023-12-04 at 11.32.57](/assets/img/Screenshot%202023-12-04%20at%2011.32.57.png)
+  - ![Screenshot 2023-12-04 at 11.32.57](/assets/img/post/Screenshot%202023-12-04%20at%2011.32.57.png)
 
 - 研究人员意外地发现, 将假数据点的平均值指向真数据点的平均值, 反而效果更好
   - 这些"质量均值"方向比LR效果更有效, 尤其在神经外科"洗脑"效果上.
-  - ![Screenshot 2023-12-04 at 11.33.02](/assets/img/Screenshot%202023-12-04%20at%2011.33.02.png)
+  - ![Screenshot 2023-12-04 at 11.33.02](/assets/img/post/Screenshot%202023-12-04%20at%2011.33.02.png)
 
 
 - 提取真值方向时, 会遇到一个有趣的障碍：从不同数据集得到的真值方向有时看起来非常不同.
   - 研究人员在实验中发现了原因：混淆特征与真理不一致.
   - 而解决方案, 就是使用更多样化的数据.
-  - ![Screenshot 2023-12-04 at 11.34.00](/assets/img/Screenshot%202023-12-04%20at%2011.34.00.png)
+  - ![Screenshot 2023-12-04 at 11.34.00](/assets/img/post/Screenshot%202023-12-04%20at%2011.34.00.png)
 
 
 大语言模型如何理解人类的"真"与"假"
@@ -1048,11 +1048,11 @@ print("Joint prob:", np.round(exp(joint_logprob) * 100, 2), "%")
 - 研究人员用自回归`Transformer——LLaMA-13B`作为测试平台, 依据以下几个方面的证据, 研究人员详细研究了LLM真理表征的结构.
 - LLM表征`真/假陈述的PCA`可视化显示出明确的线性结构, 真实陈述在顶部PCs中与假陈述分离(见下图)
 
-![Screenshot 2023-12-04 at 11.38.08](/assets/img/Screenshot%202023-12-04%20at%2011.38.08.png)
+![Screenshot 2023-12-04 at 11.38.08](/assets/img/post/Screenshot%202023-12-04%20at%2011.38.08.png)
 
 - 虽然在数据集之间视觉上明显的分离轴并不总是对齐(如下图), 但研究人员认为这与LLM表征中存在真理方向是兼容的.
 
-![Screenshot 2023-12-04 at 11.39.24](/assets/img/Screenshot%202023-12-04%20at%2011.39.24.png)
+![Screenshot 2023-12-04 at 11.39.24](/assets/img/post/Screenshot%202023-12-04%20at%2011.39.24.png)
 
 - 研究显示:
 
@@ -1067,7 +1067,7 @@ print("Joint prob:", np.round(exp(joint_logprob) * 100, 2), "%")
 
 总的来说, 这项工作为LLM表征包含真理方向提供了有力证据, 并且在获得对真/假数据集的访问后, 取得了提取这个方向的进展.
 
-![Screenshot 2023-12-04 at 11.42.41](/assets/img/Screenshot%202023-12-04%20at%2011.42.41.png)
+![Screenshot 2023-12-04 at 11.42.41](/assets/img/post/Screenshot%202023-12-04%20at%2011.42.41.png)
 
 
 ### create "真假"数据集
@@ -1075,7 +1075,7 @@ print("Joint prob:", np.round(exp(joint_logprob) * 100, 2), "%")
 在这项工作中, 研究人员将`真理`定义为`事实陈述的真实性或虚假性`.
 - 下表展示了该定义及其与其他地方使用的定义的关系.
 
-![Screenshot 2023-12-04 at 11.43.06](/assets/img/Screenshot%202023-12-04%20at%2011.43.06.png)
+![Screenshot 2023-12-04 at 11.43.06](/assets/img/post/Screenshot%202023-12-04%20at%2011.43.06.png)
 
 - 研究人员引入了两类数据集, 如上表所示.
 
@@ -1100,14 +1100,14 @@ print("Joint prob:", np.round(exp(joint_logprob) * 100, 2), "%")
 - 研究人员使用第12层中的残差流, 该层被选为所有真/假数据集中出现线性结构的最浅层.
 - 访问： https://saprmarks.github.io/geometry-of-truth/dataexplorer, 进一步探索这些可视化的交互式呈现版本.
 
-![Screenshot 2023-12-04 at 11.49.49](/assets/img/Screenshot%202023-12-04%20at%2011.49.49.png)
+![Screenshot 2023-12-04 at 11.49.49](/assets/img/post/Screenshot%202023-12-04%20at%2011.49.49.png)
 
 
 正确和错误的陈述在前几名PC中是分开的:
 
-![Screenshot 2023-12-04 at 11.38.08](/assets/img/Screenshot%202023-12-04%20at%2011.38.08.png)
+![Screenshot 2023-12-04 at 11.38.08](/assets/img/post/Screenshot%202023-12-04%20at%2011.38.08.png)
 
-![Screenshot 2023-12-04 at 11.39.24](/assets/img/Screenshot%202023-12-04%20at%2011.39.24.png)
+![Screenshot 2023-12-04 at 11.39.24](/assets/img/post/Screenshot%202023-12-04%20at%2011.39.24.png)
 
 - 此外, 在投影掉这些个人计算机之后, 基本上没有线性可访问的信息来区分正确/错误陈述.
 - 给定数据集D, 将从错误陈述表征指向真实陈述的向量称为D的朴素真值方向(NTD).
@@ -1429,7 +1429,7 @@ for i, (clf, name) in enumerate(clf_list):
     score_df.round(decimals=3)
 ```
 
-![Screenshot 2023-12-07 at 11.37.12](/assets/img/Screenshot%202023-12-07%20at%2011.37.12_vfy0vvt0e.png)
+![Screenshot 2023-12-07 at 11.37.12](/assets/img/post/Screenshot%202023-12-07%20at%2011.37.12_vfy0vvt0e.png)
 
 - Notice that although calibration improves the `Brier score loss` and `Log loss`, it does not significantly alter the `prediction accuracy measures` (precision, recall and F1 score).
 - This is because calibration should not significantly change prediction probabilities at the location of the decision threshold (at x = 0.5 on the graph).
@@ -1522,9 +1522,9 @@ plt.tight_layout()
 plt.show()
 ```
 
-![Screenshot 2023-12-07 at 11.44.41](/assets/img/Screenshot%202023-12-07%20at%2011.44.41.png)
+![Screenshot 2023-12-07 at 11.44.41](/assets/img/post/Screenshot%202023-12-07%20at%2011.44.41.png)
 
-![Screenshot 2023-12-07 at 11.44.48](/assets/img/Screenshot%202023-12-07%20at%2011.44.48.png)
+![Screenshot 2023-12-07 at 11.44.48](/assets/img/post/Screenshot%202023-12-07%20at%2011.44.48.png)
 
 Calibration plots (SVC), Logistic, SVC, SVC + Isotonic, SVC + Sigmoid
 LinearSVC shows the opposite behavior to GaussianNB; the calibration curve has a sigmoid shape, which is typical for an under-confident classifier. In the case of LinearSVC, this is caused by the margin property of the hinge loss, which focuses on samples that are close to the decision boundary (support vectors). Samples that are far away from the decision boundary do not impact the hinge loss. It thus makes sense that LinearSVC does not try to separate samples in the high confidence region regions. This leads to flatter calibration curves near 0 and 1 and is empirically shown with a variety of datasets in Niculescu-Mizil & Caruana [1].
@@ -1712,9 +1712,9 @@ plt.tight_layout()
 plt.show()
 ```
 
-![Screenshot 2023-12-07 at 10.15.48](/assets/img/Screenshot%202023-12-07%20at%2010.15.48.png)
+![Screenshot 2023-12-07 at 10.15.48](/assets/img/post/Screenshot%202023-12-07%20at%2010.15.48.png)
 
-![Screenshot 2023-12-07 at 10.15.57](/assets/img/Screenshot%202023-12-07%20at%2010.15.57.png)
+![Screenshot 2023-12-07 at 10.15.57](/assets/img/post/Screenshot%202023-12-07%20at%2010.15.57.png)
 
 
 > [LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression)returns well calibrated predictions as it directly optimizes log-loss.

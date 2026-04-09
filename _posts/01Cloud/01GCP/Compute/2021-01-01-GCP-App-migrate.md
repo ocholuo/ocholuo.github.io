@@ -141,7 +141,7 @@ runtime: python38
    4. 之后，导航到Body标头并选择raw，以便插入示例实例。选择send。
    5. 您向/predict端点发送了 POST 请求，其中包含一些定义模型输入的原始数据。在响应中，模型返回[‘Iris-setosa’]，这是模型成功部署的积极指示。
 
-![predict-endpoint](/assets/img/predict-endpoint.png)
+![predict-endpoint](/assets/img/post/predict-endpoint.png)
 
 ---
 

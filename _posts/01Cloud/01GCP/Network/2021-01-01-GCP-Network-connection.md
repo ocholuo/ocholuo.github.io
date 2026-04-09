@@ -43,7 +43,7 @@ image:
 
 VPC sharing and peering
 
-![Screenshot 2024-08-07 at 11.56.14](/assets/img/Screenshot%202024-08-07%20at%2011.56.14.png)
+![Screenshot 2024-08-07 at 11.56.14](/assets/img/post/Screenshot%202024-08-07%20at%2011.56.14.png)
 
 ---
 
@@ -163,7 +163,7 @@ different Cloud Interconnect and Peering services available to connect the infra
 - Layer three connections
   - provide access to G Suite services, YouTube and Google Cloud APIs using public IP addresses.
 
-![Screenshot 2024-08-07 at 12.48.49](/assets/img/Screenshot%202024-08-07%20at%2012.48.49.png)
+![Screenshot 2024-08-07 at 12.48.49](/assets/img/post/Screenshot%202024-08-07%20at%2012.48.49.png)
 
 ![Screen Shot 2021-07-31 at 1.38.32 AM](https://i.imgur.com/jT3nmfU.png)
 
@@ -176,7 +176,7 @@ xcd0opAKI
 
 ### 1. Cloud VPN
 
-![Screenshot 2024-08-07 at 12.45.08](/assets/img/Screenshot%202024-08-07%20at%2012.45.08.png)
+![Screenshot 2024-08-07 at 12.45.08](/assets/img/post/Screenshot%202024-08-07%20at%2012.45.08.png)
 
 - securely connects the on-premise network to the GCP VPC network through an **IPSec VPN tunnel**.
 - Traffic traveling between the two networks is encrypted by one VPN gateway. Then decrypted by the other VPN gateway.
@@ -279,7 +279,7 @@ Direct Peering and Carrier Peering
 
 ### 2. Direct Peering
 
-![Screenshot 2024-08-07 at 12.46.51](/assets/img/Screenshot%202024-08-07%20at%2012.46.51.png)
+![Screenshot 2024-08-07 at 12.46.51](/assets/img/post/Screenshot%202024-08-07%20at%2012.46.51.png)
 
 - useful when you require access to Google and Google cloud properties.
 - Google allows you to establish a direct peering connection between the business network and Google's.
@@ -297,7 +297,7 @@ Direct Peering and Carrier Peering
 
 ### 3. Carrier Peering
 
-![Screenshot 2024-08-07 at 12.47.20](/assets/img/Screenshot%202024-08-07%20at%2012.47.20.png)
+![Screenshot 2024-08-07 at 12.47.20](/assets/img/post/Screenshot%202024-08-07%20at%2012.47.20.png)
 
 - nowhere near one of these locations, consider Carrier Peering.
 
@@ -333,7 +333,7 @@ Dedicated and Partner Interconnect
 
 #### 4. Dedicated Interconnect
 
-![Screenshot 2024-08-07 at 12.47.47](/assets/img/Screenshot%202024-08-07%20at%2012.47.47.png)
+![Screenshot 2024-08-07 at 12.47.47](/assets/img/post/Screenshot%202024-08-07%20at%2012.47.47.png)
 
 ![Screen Shot 2021-07-31 at 1.16.20 AM](https://i.imgur.com/DIbFWPL.png)
 
@@ -359,7 +359,7 @@ Dedicated and Partner Interconnect
 
 #### 5. Partner Interconnect
 
-![Screenshot 2024-08-07 at 12.48.31](/assets/img/Screenshot%202024-08-07%20at%2012.48.31.png)
+![Screenshot 2024-08-07 at 12.48.31](/assets/img/post/Screenshot%202024-08-07%20at%2012.48.31.png)
 
 ![Screen Shot 2021-07-31 at 1.25.22 AM](https://i.imgur.com/UEvvgNo.png)
 
@@ -388,7 +388,7 @@ Dedicated and Partner Interconnect
 
 #### 5. Cross-Cloud Interconnect
 
-![Screenshot 2024-08-07 at 12.49.34](/assets/img/Screenshot%202024-08-07%20at%2012.49.34.png)
+![Screenshot 2024-08-07 at 12.49.34](/assets/img/post/Screenshot%202024-08-07%20at%2012.49.34.png)
 
 - helps establish <font color=OrangeRed> high-bandwidth dedicated connectivity between Google Cloud and another cloud service provider </font>.
 

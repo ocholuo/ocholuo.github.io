@@ -31,7 +31,7 @@ tags: [AI, ML]
 JSON Schema is a declarative language that you can use to annotate and validate the structure, constraints, and data types of the JSON documents. It provides a way to standardize and define expectations for the JSON data.
 
 
-![Screenshot 2024-05-13 at 15.07.47](/assets/img/Screenshot%202024-05-13%20at%2015.07.47.png)
+![Screenshot 2024-05-13 at 15.07.47](/assets/img/post/Screenshot%202024-05-13%20at%2015.07.47.png)
 
 
 Using JSON Schema, you can define rules and constraints that JSON data should adhere to.

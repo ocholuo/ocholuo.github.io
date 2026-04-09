@@ -62,7 +62,7 @@ ref:
 
 ### Beginner Level: Develop a Football Statistics App
 
-![Screenshot 2023-07-12 at 11.00.09](/assets/img/Screenshot%202023-07-12%20at%2011.00.09.png)
+![Screenshot 2023-07-12 at 11.00.09](/assets/img/post/Screenshot%202023-07-12%20at%2011.00.09.png)
 
 In this mongodb project
 
@@ -83,7 +83,7 @@ In this mongodb project
 
 ### Create a Project for Product Catalog Management
 
-![Screenshot 2023-07-12 at 11.02.44](/assets/img/Screenshot%202023-07-12%20at%2011.02.44.png)
+![Screenshot 2023-07-12 at 11.02.44](/assets/img/post/Screenshot%202023-07-12%20at%2011.02.44.png)
 
 - E-commerce enterprises need a `product catalog` to store a lot of information, including product availability, pricing, shipping details, discount offers, etc., with different attributes.
 
@@ -97,7 +97,7 @@ In this project
 
 ### Build a REST API with Node, `Express`, and MongoDB
 
-![Screenshot 2023-07-12 at 11.05.19](/assets/img/Screenshot%202023-07-12%20at%2011.05.19.png)
+![Screenshot 2023-07-12 at 11.05.19](/assets/img/post/Screenshot%202023-07-12%20at%2011.05.19.png)
 
 - API is a pre-defined instance of communication between the database management system and the front end. All websites use APIs (application programming interfaces) to bring applications together to perform specific tasks around sharing and executing processes. They work as a `middleman` between business applications and target customers.
 
@@ -128,7 +128,7 @@ In this project
 
 ### Developing a Content Management System
 
-![Screenshot 2023-07-12 at 11.07.02](/assets/img/Screenshot%202023-07-12%20at%2011.07.02.png)
+![Screenshot 2023-07-12 at 11.07.02](/assets/img/post/Screenshot%202023-07-12%20at%2011.07.02.png)
 
 - A content management system helps create and manage content on websites without any technical tools or knowledge.
 
@@ -147,7 +147,7 @@ In this project, get a hands-on experience in full-stack web development and dat
 
 ### Create a Project for LDAP Authorization
 
-![Screenshot 2023-07-12 at 11.11.41](/assets/img/Screenshot%202023-07-12%20at%2011.11.41.png)
+![Screenshot 2023-07-12 at 11.11.41](/assets/img/post/Screenshot%202023-07-12%20at%2011.11.41.png)
 
 - An authentication system is handy for authenticating people in events and granting them access without manually approving them.
 
@@ -167,7 +167,7 @@ In this project, develop an authentication system to authorize users based on th
 
 > https://youtu.be/_xKCi5OI_Mg
 
-![Screenshot 2023-07-12 at 11.12.02](/assets/img/Screenshot%202023-07-12%20at%2011.12.02.png)
+![Screenshot 2023-07-12 at 11.12.02](/assets/img/post/Screenshot%202023-07-12%20at%2011.12.02.png)
 
 In this project, develop a “File transferring web application” with MongoDB and `Node.js`. Typically, the application has a few administrators and will provide access to large files that can be shared with specific permissions.
 
@@ -186,7 +186,7 @@ In this project, develop a “File transferring web application” with MongoDB 
 
 ### Developing a Habit-Tracking App
 
-![Screenshot 2023-07-12 at 11.12.25](/assets/img/Screenshot%202023-07-12%20at%2011.12.25.png)
+![Screenshot 2023-07-12 at 11.12.25](/assets/img/post/Screenshot%202023-07-12%20at%2011.12.25.png)
 
 - Habit tracking applications help users track how well they abide by their daily, weekly, and monthly habits. They visually represent your progress and failure in following a habit. Users can utilize this data for self-analysis of their lifestyle.
 
@@ -194,12 +194,12 @@ In this project, create a full-stack habit-tracking web application using the Mo
 
 - You can also extend the application code to enhance calendar functionality to store tasks and due dates. Use the search icon in the navigation bar to fetch details about the scheduled tasks.
 
-![Screenshot 2023-07-12 at 11.13.42](/assets/img/Screenshot%202023-07-12%20at%2011.13.42.png)
+![Screenshot 2023-07-12 at 11.13.42](/assets/img/post/Screenshot%202023-07-12%20at%2011.13.42.png)
 
 
 ### Create a Project to Fetch and Stream Data
 
-![Screenshot 2023-07-12 at 11.14.33](/assets/img/Screenshot%202023-07-12%20at%2011.14.33.png)
+![Screenshot 2023-07-12 at 11.14.33](/assets/img/post/Screenshot%202023-07-12%20at%2011.14.33.png)
 
 In this project, integrate MongoDB and PubNub to build a web application for updating real-time stock market and pricing data.
 
@@ -216,7 +216,7 @@ In this project, integrate MongoDB and PubNub to build a web application for upd
 
 > https://github.com/richard534/nodeMongoAudioUploadStreamTest/tree/master
 
-![Screenshot 2023-07-12 at 11.17.09](/assets/img/Screenshot%202023-07-12%20at%2011.17.09.png)
+![Screenshot 2023-07-12 at 11.17.09](/assets/img/post/Screenshot%202023-07-12%20at%2011.17.09.png)
 
 - The growing popularity of radio stations presents a window of opportunity for several enterprises to stand out. The upsides only increase when you create your radio broadcasting software.
 
@@ -243,6 +243,6 @@ In this project, create a chatting application using the `MERN stack` with JavaS
 
 - The `MERN Stack` Framework
 
-![Screenshot 2023-07-12 at 11.18.38](/assets/img/Screenshot%202023-07-12%20at%2011.18.38.png)
+![Screenshot 2023-07-12 at 11.18.38](/assets/img/post/Screenshot%202023-07-12%20at%2011.18.38.png)
 
 .
