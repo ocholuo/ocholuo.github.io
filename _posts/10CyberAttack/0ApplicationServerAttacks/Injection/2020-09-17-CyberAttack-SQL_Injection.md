@@ -553,7 +553,7 @@ Testing option:
 
 ### Input: <font color=OrangeRed> SQL ignores ; and -- </font>
 - Query sent by amazon wen app:
-  - ![Pasted Graphic 2](/assets/img/post/Pasted%20Graphic%202.png)
+  - ![Pasted Graphic 2](/assets/img/post/Pasted%20Graphic%6.png)
     - Input: `Darril Gibson`
     - `SELECT * FROM Books WHERE Author='Darril Gibson'`
   - attacker input:
