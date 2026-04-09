@@ -13,6 +13,7 @@
 # Output: [[1,5]]
 # Explanation: Intervals [1,4] and [4,5] are considered overlapping.
 
+
 # # ---------------------- solution py ----------------------
 class Solution:
     def merge(self, intervals):

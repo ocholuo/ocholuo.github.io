@@ -47,4 +47,4 @@ image:
 Prevented smurf
 - Command for cisco routers: No ip directed-broadcasts
 
-![Screenshot 2024-03-05 at 17.58.54](/assets/img/Screenshot%202024-03-05%20at%2017.58.54.png)
+![Screenshot 2024-03-05 at 17.58.54](/assets/img/post/Screenshot%202024-03-05%20at%2017.58.54.png)

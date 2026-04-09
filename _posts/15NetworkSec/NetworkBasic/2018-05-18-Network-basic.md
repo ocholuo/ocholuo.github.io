@@ -9,7 +9,7 @@ tags: [NetworkSec, TCP]
 math: true
 # pin: true
 toc: true
-image: /assets/img/note/tls-ssl-handshake.png
+image: /assets/img/post/tls-ssl-handshake.png
 ---
 
 - [网络协议](#网络协议)

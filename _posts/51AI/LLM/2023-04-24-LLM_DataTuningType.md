@@ -227,13 +227,13 @@ tags: [AI, ML]
   - 训练过程中更新包括模型在内的所有参数
   - 例如 `Fine-Tuning`, `Prompt-Orient Fine-Tuning` 等；
 
-![Screenshot 2024-09-09 at 22.33.21](/assets/img/Screenshot%202024-09-09%20at%2022.33.21.png)
+![Screenshot 2024-09-09 at 22.33.21](/assets/img/post/Screenshot%202024-09-09%20at%2022.33.21.png)
 
 - **部分参数微调**:
   - 训练过程中只更新`部分模型参数`，或者固定模型参数只更新`少量额外添加的参数`，
   - 如 `Parameter-Efficient Prompt Tuning`, `P-Tuning`, `Prompt-Tuning` 等。
 
-![Screenshot 2024-09-09 at 22.34.32](/assets/img/Screenshot%202024-09-09%20at%2022.34.32.png)
+![Screenshot 2024-09-09 at 22.34.32](/assets/img/post/Screenshot%202024-09-09%20at%2022.34.32.png)
 
 **部分参数微调**模式的提出:
 
@@ -246,9 +246,9 @@ tags: [AI, ML]
 
   - PEFT updates only a small subset of parameters. This helps prevent catastrophic forgetting.
 
-![Screenshot 2024-09-09 at 22.34.43](/assets/img/Screenshot%202024-09-09%20at%2022.34.43.png)
+![Screenshot 2024-09-09 at 22.34.43](/assets/img/post/Screenshot%202024-09-09%20at%2022.34.43.png)
 
-![Screenshot 2024-09-09 at 22.35.20](/assets/img/Screenshot%202024-09-09%20at%2022.35.20.png)
+![Screenshot 2024-09-09 at 22.35.20](/assets/img/post/Screenshot%202024-09-09%20at%2022.35.20.png)
 
 ---
 
@@ -282,7 +282,7 @@ tags: [AI, ML]
 
 ### Single task Fine-tuning
 
-![Screenshot 2024-07-20 at 21.22.35](/assets/img/Screenshot%202024-07-20%20at%2021.22.35.png)
+![Screenshot 2024-07-20 at 21.22.35](/assets/img/post/Screenshot%202024-07-20%20at%2021.22.35.png)
 
 ### Catastrophic forgetting
 
@@ -302,15 +302,15 @@ tags: [AI, ML]
   - while fine-tuning can improve the ability of a model to perform sentiment analysis on a review and result in a quality completion, the model may forget how to do other tasks.
   - This model knew how to carry out named entity recognition before fine-tuning correctly identifying Charlie as the name of the cat in the sentence.
 
-    - ![Screenshot 2024-06-20 at 15.49.08](/assets/img/Screenshot%202024-06-20%20at%2015.49.08.png)
+    - ![Screenshot 2024-06-20 at 15.49.08](/assets/img/post/Screenshot%202024-06-20%20at%2015.49.08.png)
 
-    - ![Screenshot 2024-06-20 at 15.54.58](/assets/img/Screenshot%202024-06-20%20at%2015.54.58.png)
+    - ![Screenshot 2024-06-20 at 15.54.58](/assets/img/post/Screenshot%202024-06-20%20at%2015.54.58.png)
 
   - But after fine-tuning, the model can no longer carry out this task, confusing both the entity it is supposed to identify and exhibiting behavior related to the new task.
 
-    - ![Screenshot 2024-06-20 at 15.49.22](/assets/img/Screenshot%202024-06-20%20at%2015.49.22.png)
+    - ![Screenshot 2024-06-20 at 15.49.22](/assets/img/post/Screenshot%202024-06-20%20at%2015.49.22.png)
 
-    - ![Screenshot 2024-06-20 at 15.49.30](/assets/img/Screenshot%202024-06-20%20at%2015.49.30.png)
+    - ![Screenshot 2024-06-20 at 15.49.30](/assets/img/post/Screenshot%202024-06-20%20at%2015.49.30.png)
 
 avoid catastrophic forgetting
 
@@ -345,7 +345,7 @@ avoid catastrophic forgetting
 - drawback
   - requires a lot of data: as many as 50-100,000 examples in the training set.
 
-![Screenshot 2024-09-03 at 23.01.01](/assets/img/Screenshot%202024-09-03%20at%2023.01.01.png)
+![Screenshot 2024-09-03 at 23.01.01](/assets/img/post/Screenshot%202024-09-03%20at%2023.01.01.png)
 
 <font color=OrangeRed> FLAN (Fine-tuned Language Net) </font>
 
@@ -359,12 +359,12 @@ avoid catastrophic forgetting
 - One example of a prompt dataset used for summarization tasks in FLAN-T5 is `SAMSum`.
 - It's part of the muffin collection of tasks and datasets and is used to train language models to summarize dialogue.
 
-![Screenshot 2024-09-03 at 23.03.01](/assets/img/Screenshot%202024-09-03%20at%2023.03.01.png)
+![Screenshot 2024-09-03 at 23.03.01](/assets/img/post/Screenshot%202024-09-03%20at%2023.03.01.png)
 
 
 the fine-tuning tasks and datasets employed in training FLAN. The task selection expands on previous works by incorporating dialogue and program synthesis tasks from Muffin and integrating them with new Chain of Thought Reasoning tasks. It also includes subsets of other task collections, such as T0 and Natural Instructions v2. Some tasks were held-out during training, and they were later used to evaluate the model's performance on unseen tasks.
 
-![Screenshot 2024-09-03 at 23.14.48](/assets/img/Screenshot%202024-09-03%20at%2023.14.48.png)
+![Screenshot 2024-09-03 at 23.14.48](/assets/img/post/Screenshot%202024-09-03%20at%2023.14.48.png)
 
 
 **SAMSum**
@@ -374,7 +374,7 @@ the fine-tuning tasks and datasets employed in training FLAN. The task selection
   - The linguists were asked to create conversations similar to those that they would write on a daily basis, reflecting their proportion of topics of their real life messenger conversations.
   - language experts then created short summaries of those conversations that included important pieces of information and names of the people in the dialogue.
 
-![Screenshot 2024-09-03 at 23.04.29](/assets/img/Screenshot%202024-09-03%20at%2023.04.29.png)
+![Screenshot 2024-09-03 at 23.04.29](/assets/img/post/Screenshot%202024-09-03%20at%2023.04.29.png)
 
 - Here is a prompt template designed to work with this SAMSum dialogue summary dataset.
 - The template is actually comprised of several different instructions that all basically ask the model to do this same thing. Summarize a dialogue.
@@ -389,7 +389,7 @@ the fine-tuning tasks and datasets employed in training FLAN. The task selection
 
 - After applying this template to each row in the SAMSum dataset, you can use it to fine tune a dialogue summarization task.
 
-![Screenshot 2024-07-20 at 22.31.17](/assets/img/Screenshot%202024-07-20%20at%2022.31.17.png)
+![Screenshot 2024-07-20 at 22.31.17](/assets/img/post/Screenshot%202024-07-20%20at%2022.31.17.png)
 
 While FLAN-T5 is a great general use model that shows good capability in many tasks. You may still find that it has room for improvement on tasks for the specific use case.
 
@@ -405,16 +405,16 @@ While FLAN-T5 is a great general use model that shows good capability in many ta
     - example from dialogsum and discuss how a further round of fine-tuning can improve the model.
       - This is a support chat that is typical of the examples in the dialogsum dataset. The conversation is between a customer and a staff member at a hotel check-in desk.
       - The chat `has had a template applied so that the instruction to summarize the conversation` is included at the start of the text.
-    - ![Screenshot 2024-09-03 at 23.08.28](/assets/img/Screenshot%202024-09-03%20at%2023.08.28.png)
+    - ![Screenshot 2024-09-03 at 23.08.28](/assets/img/post/Screenshot%202024-09-03%20at%2023.08.28.png)
 
 
 how FLAN-T5 responds to this prompt before doing any additional fine-tuning
 
-![Screenshot 2024-09-03 at 23.09.08](/assets/img/Screenshot%202024-09-03%20at%2023.09.08.png)
+![Screenshot 2024-09-03 at 23.09.08](/assets/img/post/Screenshot%202024-09-03%20at%2023.09.08.png)
 
 how the model does after fine-tuning on the dialogue some dataset, no fabricated information and the summary includes all of the important details, including the names of both people participating in the conversation.
 
-![Screenshot 2024-09-03 at 23.09.31](/assets/img/Screenshot%202024-09-03%20at%2023.09.31.png)
+![Screenshot 2024-09-03 at 23.09.31](/assets/img/post/Screenshot%202024-09-03%20at%2023.09.31.png)
 
 
 > This example, use the public dialogue, some dataset to demonstrate fine-tuning on custom data.

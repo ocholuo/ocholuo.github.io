@@ -97,7 +97,7 @@ There are multiple repository modes.
 
 ## Repository usage example
 
-![Screenshot 2024-07-19 at 15.59.46](/assets/img/Screenshot%202024-07-19%20at%2015.59.46.png)
+![Screenshot 2024-07-19 at 15.59.46](/assets/img/post/Screenshot%202024-07-19%20at%2015.59.46.png)
 
 1. In the development project, a Java development team uses Cloud Build to build a Java application.
 

@@ -326,7 +326,7 @@ prompt = f"""
 
 ### One Shot Prompting / In-contect learning (ICL)
 
-![Screenshot 2023-10-21 at 11.33.27](/assets/img/Screenshot%202023-10-21%20at%2011.33.27.png)
+![Screenshot 2023-10-21 at 11.33.27](/assets/img/post/Screenshot%202023-10-21%20at%2011.33.27.png)
 
 One shot inference involves providing an example question with answer followed by a second question to be answered by the LLM.
 
@@ -397,9 +397,9 @@ Few shot inference provides multiple example prompts and answers while zero shot
 
 - N-shot prompting encompasses zero-shot and few-shot prompting approaches.
 
-![Screenshot 2023-10-21 at 11.33.27](/assets/img/Screenshot%202023-10-21%20at%2011.33.27_dn2czimtk.png)
+![Screenshot 2023-10-21 at 11.33.27](/assets/img/post/Screenshot%202023-10-21%20at%2011.33.27_dn2czimtk.png)
 
-![Screenshot 2023-10-21 at 11.34.16](/assets/img/Screenshot%202023-10-21%20at%2011.34.16.png)
+![Screenshot 2023-10-21 at 11.34.16](/assets/img/post/Screenshot%202023-10-21%20at%2011.34.16.png)
 
 
 #### Few Shot Inference

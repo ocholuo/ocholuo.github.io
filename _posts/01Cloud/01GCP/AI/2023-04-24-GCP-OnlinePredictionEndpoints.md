@@ -50,7 +50,7 @@ ref:
 
 ## Introduction
 
-![picture 0](/assets/img/00fad834c06a29ac71caa4170773048579fbb656d08d4f88efe51669d1eeb03a.png)
+![picture 0](/assets/img/post/00fad834c06a29ac71caa4170773048579fbb656d08d4f88efe51669d1eeb03a.png)
 
 - On-premises hosts can reach an Online Prediction from the on-premises network
   - natively through the **public internet** (option 1)
@@ -68,7 +68,7 @@ In this tutorial we will demonstrate how to use **High-Availability VPN (HA VPN)
 
 ### What you'll build
 
-![picture 1](/assets/img/878e17db608ca7ab4188f29a4ad657b16d2c631aa1e8571c429f1deafcbc7a44.png)
+![picture 1](/assets/img/post/878e17db608ca7ab4188f29a4ad657b16d2c631aa1e8571c429f1deafcbc7a44.png)
 
 > Note: The lab makes use of an existing model and online prediction endpoint codelab required to validate prediction connectivity, when creating the notebook ensure to use the `aiml-vpc` network and workbench-subnet subnetwork part of the tutorial. You will be asked to deploy the codelab in the step Deploy the Model and Online Prediction.
 
@@ -281,7 +281,7 @@ gcloud compute vpn-gateways create on-prem-vpn-gw \
 
 Using the console, navigate to `HYBRID CONNECTIVITY → VPN → CLOUD VPN GATEWAYS` and validate that the gateway IPs are generated.
 
-![picture 2](/assets/img/0879f4fb2bc6311ff90b189bba0cddd7a5d7b3b83785cd713eb9dc5904106953.png)
+![picture 2](/assets/img/post/0879f4fb2bc6311ff90b189bba0cddd7a5d7b3b83785cd713eb9dc5904106953.png)
 
 
 Create the **Cloud Router** for both vpc
@@ -357,7 +357,7 @@ gcloud compute vpn-tunnels create on-prem-tunnel1 \
 
 Using the console, navigate to `HYBRID CONNECTIVITY → VPN → CLOUD VPN TUNNELS`.
 
-![picture 3](/assets/img/38d70e479a6428da507596e987bddd23ff0129bfb451fe09be3bed35a13052b9.png)
+![picture 3](/assets/img/post/38d70e479a6428da507596e987bddd23ff0129bfb451fe09be3bed35a13052b9.png)
 
 ---
 
@@ -449,7 +449,7 @@ Note:
 
 Navigate to Hybrid `CONNECTIVITY → VPN` to view the VPN tunnel details.
 
-![picture 5](/assets/img/4f8c24ca358cc58811e71ff799650112263e0866902fd694b59583b1d7fced63.png)
+![picture 5](/assets/img/post/4f8c24ca358cc58811e71ff799650112263e0866902fd694b59583b1d7fced63.png)
 
 
 ### Validate
@@ -460,14 +460,14 @@ Using the console, navigate to `VPC network → VPC networks → `aiml-vpc`→ R
 
 Observe the `aiml-vpc` has learned routes from the `on-prem-vpc` nat-subnet and private-ip-subnet
 
-![picture 6](/assets/img/257f8899de31e0020eb2cbc8b7f13a6355092e65b224fc07d6e1470ec680e252.png)
+![picture 6](/assets/img/post/257f8899de31e0020eb2cbc8b7f13a6355092e65b224fc07d6e1470ec680e252.png)
 
 
 Validate that `on-prem-vpc` has learned the workbench-subnet over HA-VPN
 
 Using the console, navigate to `VPC network → VPC networks → `on-prem-vpc` → ROUTES → REGION → US-CENTRAL1 → VIEW`
 
-![picture 7](/assets/img/72147ea497f6a8f0b674c300949cc68782dcb416c75c31aff67596240702f371.png)
+![picture 7](/assets/img/post/72147ea497f6a8f0b674c300949cc68782dcb416c75c31aff67596240702f371.png)
 
 ---
 

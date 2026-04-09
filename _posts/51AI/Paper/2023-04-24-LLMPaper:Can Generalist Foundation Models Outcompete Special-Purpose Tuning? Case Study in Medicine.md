@@ -66,7 +66,7 @@ tags: [LLM]
 
 - Some of these models are tuned via a learning objective to perform general instruction-following via prompts.
 
-![Screenshot 2024-01-29 at 17.35.07](/assets/img/Screenshot%202024-01-29%20at%2017.35.07.png)
+![Screenshot 2024-01-29 at 17.35.07](/assets/img/post/Screenshot%202024-01-29%20at%2017.35.07.png)
 
 (a) Comparison of performance on MedQA.
 (b) GPT-4 with `Medprompt` achieves SoTA on a wide range of medical challenge questions.
@@ -274,7 +274,7 @@ briefly introduce a few key concepts that serve as building blocks for the `Medp
 
 #### 4.2 Self-Generated Chain of Thought
 
-![Screenshot 2024-01-29 at 22.03.32](/assets/img/Screenshot%202024-01-29%20at%2022.03.32.png)
+![Screenshot 2024-01-29 at 22.03.32](/assets/img/post/Screenshot%202024-01-29%20at%2022.03.32.png)
 
 Figure 2:
 
@@ -333,7 +333,7 @@ Figure 2:
 
 #### 4.4 Putting it all together: `Medprompt`
 
-![Screenshot 2024-01-29 at 22.18.37](/assets/img/Screenshot%202024-01-29%20at%2022.18.37.png)
+![Screenshot 2024-01-29 at 22.18.37](/assets/img/post/Screenshot%202024-01-29%20at%2022.18.37.png)
 
 - `Medprompt` combines intelligent few-shot exemplar selection, self-generated chain of thought steps, and a majority vote ensemble respectively.
 - The composition of these methods yields a general purpose prompt-engineering strategy.
@@ -346,7 +346,7 @@ Figure 2:
 
 - `Medprompt` consists of two stages: a **preprocessing** phase and an **inference** step, where a final prediction is produced on a test case.
 
-![Screenshot 2024-01-29 at 22.24.14](/assets/img/Screenshot%202024-01-29%20at%2022.24.14.png)
+![Screenshot 2024-01-29 at 22.24.14](/assets/img/post/Screenshot%202024-01-29%20at%2022.24.14.png)
 
 - **preprocessing**:
 
@@ -373,7 +373,7 @@ Figure 2:
 - Table 1: Performance of different foundation models on multiple choice components of `MultiMedQA` [^29].
 - GPT-4 with `Medprompt` outperforms all other models on every benchmark.
 
-![Screenshot 2024-01-29 at 22.28.42](/assets/img/Screenshot%202024-01-29%20at%2022.28.42.png)
+![Screenshot 2024-01-29 at 22.28.42](/assets/img/post/Screenshot%202024-01-29%20at%2022.28.42.png)
 
 - Sourced directly from [^29] and [^30]. “Choose best” refers to a process used in the Med-Palm studies of executing several distinct approaches and selecting the best performing strategy for each dataset among the variety of experimental methods tried. Flan-PaLM 540B and `Med-PaLM 2` are also both fine-tuned on subsets of these benchmark datasets. By contrast, every GPT-4 reported number uses a single, consistent strategy across all datasets.
 
@@ -381,7 +381,7 @@ Figure 2:
 
 - With harnessing the prompt engineering methods described in Section 4 and their effective combination as `Medprompt`, GPT-4 achieves state-of-the-art performance on every one of the nine benchmark datasets in `MultiMedQA`.
 
-![Screenshot 2024-01-29 at 22.29.35](/assets/img/Screenshot%202024-01-29%20at%2022.29.35.png)
+![Screenshot 2024-01-29 at 22.29.35](/assets/img/post/Screenshot%202024-01-29%20at%2022.29.35.png)
 
 - Figure 5: `Medprompt` evaluation against 20% eyes-off holdout. `Medprompt` performs better on the eyes-off dataset in the majority of cases.
 
@@ -391,7 +391,7 @@ Figure 2:
 
 #### 5.2 Insights about `Medprompt` Components via Ablation Studies
 
-![Screenshot 2024-01-29 at 22.30.43](/assets/img/Screenshot%202024-01-29%20at%2022.30.43.png)
+![Screenshot 2024-01-29 at 22.30.43](/assets/img/post/Screenshot%202024-01-29%20at%2022.30.43.png)
 
 Figure 6: Identification of the relative contributions of different components of `Medprompt` via an ablation study.
 
@@ -408,7 +408,7 @@ Figure 6: Identification of the relative contributions of different components o
 
 - The techniques we use are not statistically independent – therefore, the order in which we test the contribution of each method matters. Our choice of ordering for this ablation study is subjective and based on the relative complexity of the technique introduced. A more theoretically sound method for credit allocation in the ablation study would involve the calculation of game-theoretic Shapley values [^28], which takes exponentially more model evaluations to test every potential permutation of orderings. We leave this to future work and encourage readers to think of the specific numbers in the ablation studies as reasonable approximations of relative contributions.
 
-![Screenshot 2024-01-29 at 22.32.41](/assets/img/Screenshot%202024-01-29%20at%2022.32.41.png)
+![Screenshot 2024-01-29 at 22.32.41](/assets/img/post/Screenshot%202024-01-29%20at%2022.32.41.png)
 
 - Table 2: Ablation study on expert-crafted chain-of-thought (CoT) vs. GPT-4 self-generated CoT. Both use fixed 5-shot examples, with no ensemble.
 
@@ -426,7 +426,7 @@ Figure 6: Identification of the relative contributions of different components o
 
 - We further sourced two additional datasets answering NCLEX (National Council Licensure Examination) style questions, the exam required to practice as a registered nurse in the United States.
 
-![Screenshot 2024-01-29 at 22.34.43](/assets/img/Screenshot%202024-01-29%20at%2022.34.43.png)
+![Screenshot 2024-01-29 at 22.34.43](/assets/img/post/Screenshot%202024-01-29%20at%2022.34.43.png)
 
 Figure 7:
 

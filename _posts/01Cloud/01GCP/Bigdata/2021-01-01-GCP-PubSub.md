@@ -173,7 +173,7 @@ Pub/Sub offers 3 types of message delivery that corresponds to the following the
 
 **Pull subscription workflow**
 
-![Screenshot 2023-07-17 at 21.10.36](/assets/img/Screenshot%202023-07-17%20at%2021.10.36.png)
+![Screenshot 2023-07-17 at 21.10.36](/assets/img/post/Screenshot%202023-07-17%20at%2021.10.36.png)
 
 
 - For a pull subscription, the `subscriber client initiates requests` to a Pub/Sub server to retrieve messages.
@@ -201,7 +201,7 @@ The following two images show the workflow between a subscriber client and a pul
 1. The subscriber client explicitly calls the acknowledge method.
    - The client uses the returned acknowledgment ID to acknowledge that the message is processed and need not be delivered again.
 
-![Screenshot 2023-07-17 at 21.34.03](/assets/img/Screenshot%202023-07-17%20at%2021.34.03.png)
+![Screenshot 2023-07-17 at 21.34.03](/assets/img/post/Screenshot%202023-07-17%20at%2021.34.03.png)
 
 
 ##### APIs
@@ -483,7 +483,7 @@ with subscriber:
 
 **Push subscription workflow**
 
-![Screenshot 2023-07-17 at 21.10.55](/assets/img/Screenshot%202023-07-17%20at%2021.10.55.png)
+![Screenshot 2023-07-17 at 21.10.55](/assets/img/post/Screenshot%202023-07-17%20at%2021.10.55.png)
 
 - Pub/Sub server initiates a request to your subscriber client to deliver messages.
 
@@ -684,7 +684,7 @@ Minimizes monitoring. BigQuery subscriptions are part of the multi-tenant Pub/Su
 
 ### Integrating microservices with Pub/Sub and GKE
 
-![Screenshot 2023-07-17 at 23.09.55](/assets/img/Screenshot%202023-07-17%20at%2023.09.55.png)
+![Screenshot 2023-07-17 at 23.09.55](/assets/img/post/Screenshot%202023-07-17%20at%2023.09.55.png)
 
 Objectives
 

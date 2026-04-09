@@ -20,6 +20,7 @@
 # Constraints:
 # 1 <= n <= 45
 
+
 # botoon up
 # solution -----------------
 # Runtime: 19 ms, faster than 49.07% of Python online submissions for Climbing Stairs.

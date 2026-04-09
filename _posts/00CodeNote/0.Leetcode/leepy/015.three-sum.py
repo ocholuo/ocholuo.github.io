@@ -88,30 +88,32 @@ class Solution:
         for index, x in enumerate(nums[:-2]):
 
             # [1,2,3] no way to become 0
-            if (nums[index] + nums[index+1] + nums[index+2] > 0):
+            if nums[index] + nums[index + 1] + nums[index + 2] > 0:
                 return res
             #  [-100, ....., 1, 13] no way to become 0
-            if (nums[index] + nums[-2] + nums[-1] < 0):
+            if nums[index] + nums[-2] + nums[-1] < 0:
                 continue
 
             # minus duplicate
-            if index >= 1 and x == nums[index-1]:
+            if index >= 1 and x == nums[index - 1]:
                 continue
 
             dic = {}
             # loop from x+1 to end
-            for y in nums[index+1:]:
-                if target-x-y not in dic:
+            for y in nums[index + 1 :]:
+                if target - x - y not in dic:
                     # 2 number sum
                     dic[y] = 1
                 else:
-                    res.add((x, target-x-y, y))
+                    res.add((x, target - x - y, y))
         return res
+
+
 # Runtime: 596 ms, faster than 97.83% of Python3 online submissions for 3Sum.
 # Memory Usage: 18.1 MB, less than 16.93% of Python3 online submissions for 3Sum.
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # begin
     s = Solution()
     print(s.threeSum([-1, 0, 1, 2, -1, -4]))

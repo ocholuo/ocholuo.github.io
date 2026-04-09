@@ -634,7 +634,7 @@ docker ps |grep prometheus
 - 启动之后可以访问web页面https://localhost:9090/graph,在status下拉菜单中可以看到配置文件和目标的状态
 - 此时目标状态为DOWN，因为所需要监控的服务还没有启动起来
 
-![Screenshot 2022-11-02 at 11.39.11](https://github.com/ocholuo/ocholuo.github.io/blob/master/assets/img/note/Screenshot%202022-11-02%20at%2011.39.11_4alo4l7ok.png)
+![Screenshot 2022-11-02 at 11.39.11](https://github.com/ocholuo/ocholuo.github.io/blob/master/assets/img/post/Screenshot%202022-11-02%20at%2011.39.11_4alo4l7ok.png)
 
 
 步入正文，用pro golang client来实现程序吧。
@@ -736,7 +736,7 @@ hd_errors_total{device="/dev/sda"} 1
   - 这就是基本数据类型和对应Vec版本的差别。
 - 此时再查看https://localhost:9090/graph 就会发现服务状态已经变为UP了。
 
-![Screenshot 2022-11-02 at 12.21.31](https://github.com/ocholuo/ocholuo.github.io/blob/master/assets/img/note/Screenshot%202022-11-02%20at%2012.21.31.png)
+![Screenshot 2022-11-02 at 12.21.31](https://github.com/ocholuo/ocholuo.github.io/blob/master/assets/img/post/Screenshot%202022-11-02%20at%2012.21.31.png)
 
 上面的例子只是一个简单的demo0
 - 因为在prometheus.yml配置文件中指定采集服务器信息的时间间隔为60s

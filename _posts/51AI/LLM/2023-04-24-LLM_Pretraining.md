@@ -42,14 +42,14 @@ Source:
 3 variance of the transformer model:
 - encoder-only, encoder-decoder models, and decode-only.
 
-![Screenshot 2024-05-01 at 11.29.07](/assets/img/Screenshot%202024-05-01%20at%2011.29.07.png)
+![Screenshot 2024-05-01 at 11.29.07](/assets/img/post/Screenshot%202024-05-01%20at%2011.29.07.png)
 
 - Each of these is trained on a different objective, and so learns how to carry out different tasks.
   - **Autoencoding models**: pre-trained using `masked language modeling`, correspond to the encoder part of the original transformer architecture, and are often used with `sentence classification or token classification`.
   - **Autoregressive models**: pre-trained using `causal language modeling`, make use of the decoder component of the original transformer architecture, and often used for `text generation`.
   - **Sequence-to-sequence models**: use both the encoder and decoder part off the original transformer architecture. The exact details of the pre-training objective vary from model to model. often used for `translation, summarization, and question-answering`
 
-![Screenshot 2024-05-01 at 11.34.13](/assets/img/Screenshot%202024-05-01%20at%2011.34.13.png)
+![Screenshot 2024-05-01 at 11.34.13](/assets/img/post/Screenshot%202024-05-01%20at%2011.34.13.png)
 
 ---
 
@@ -67,9 +67,9 @@ Source:
     - carry out sentence classification tasks, for example, sentiment analysis or token-level tasks like <font color=OrangeRed> named entity recognition or word classification. </font>
     - autoencoder model: BERT and RoBERTa.
 
-![Screenshot 2024-05-01 at 11.29.41](/assets/img/Screenshot%202024-05-01%20at%2011.29.41.png)
+![Screenshot 2024-05-01 at 11.29.41](/assets/img/post/Screenshot%202024-05-01%20at%2011.29.41.png)
 
-![Screenshot 2024-05-01 at 11.30.18](/assets/img/Screenshot%202024-05-01%20at%2011.30.18.png)
+![Screenshot 2024-05-01 at 11.30.18](/assets/img/post/Screenshot%202024-05-01%20at%2011.30.18.png)
 
 ---
 
@@ -90,9 +90,9 @@ Source:
     - Decoder-only models are often used for <font color=OrangeRed> text generation </font>, although larger decoder-only models show strong zero-shot inference abilities, and can often perform a range of tasks well.
     - decoder-based autoregressive models: GBT and BLOOM.
 
-![Screenshot 2024-05-01 at 11.31.14](/assets/img/Screenshot%202024-05-01%20at%2011.31.14.png)
+![Screenshot 2024-05-01 at 11.31.14](/assets/img/post/Screenshot%202024-05-01%20at%2011.31.14.png)
 
-![Screenshot 2024-05-01 at 11.31.42](/assets/img/Screenshot%202024-05-01%20at%2011.31.42.png)
+![Screenshot 2024-05-01 at 11.31.42](/assets/img/post/Screenshot%202024-05-01%20at%2011.31.42.png)
 
 ---
 
@@ -109,14 +109,14 @@ Source:
   - use sequence-to-sequence models for <font color=OrangeRed> translation, summarization, and question-answering </font>. cases where you have a body of texts as both input and output.
   - well-known encoder-decoder model: T5. BART
 
-![Screenshot 2024-05-01 at 11.33.09](/assets/img/Screenshot%202024-05-01%20at%2011.33.09.png)
+![Screenshot 2024-05-01 at 11.33.09](/assets/img/post/Screenshot%202024-05-01%20at%2011.33.09.png)
 
-![Screenshot 2024-05-01 at 11.33.02](/assets/img/Screenshot%202024-05-01%20at%2011.33.02.png)
+![Screenshot 2024-05-01 at 11.33.02](/assets/img/post/Screenshot%202024-05-01%20at%2011.33.02.png)
 
 - the larger a model, the more likely it is to work as you needed to without additional in-context learning or further training.
 - training these enormous models is difficult and very expensive, so that it may be infeasible to continuously train larger and larger models.
 
-![Screenshot 2024-05-01 at 11.36.11](/assets/img/Screenshot%202024-05-01%20at%2011.36.11.png)
+![Screenshot 2024-05-01 at 11.36.11](/assets/img/post/Screenshot%202024-05-01%20at%2011.36.11.png)
 
 ---
 
@@ -131,7 +131,7 @@ Source:
 
 - Variance of the transformer model architecture are suited to different language tasks, largely because of differences in how the models are trained.
 
-![Screenshot 2024-05-01 at 11.23.17](/assets/img/Screenshot%202024-05-01%20at%2011.23.17.png)
+![Screenshot 2024-05-01 at 11.23.17](/assets/img/post/Screenshot%202024-05-01%20at%2011.23.17.png)
 
 ### Pre-training objective
 
@@ -154,7 +154,7 @@ Source:
 
   5. The **encoder** generates an `embedding or vector representation` for each **token**.
 
-![Screenshot 2024-05-01 at 11.26.33](/assets/img/Screenshot%202024-05-01%20at%2011.26.33.png)
+![Screenshot 2024-05-01 at 11.26.33](/assets/img/post/Screenshot%202024-05-01%20at%2011.26.33.png)
 
 - Pre-training also requires a large amount of compute and the use of GPUs.
 
@@ -163,7 +163,7 @@ Source:
   - As a result of this data quality curation, often `only 1-3% of tokens` are used for pre-training.
   - You should consider this when you estimate how much data you need to collect to pre-train the own model.
 
-![Screenshot 2024-05-01 at 11.28.54](/assets/img/Screenshot%202024-05-01%20at%2011.28.54.png)
+![Screenshot 2024-05-01 at 11.28.54](/assets/img/post/Screenshot%202024-05-01%20at%2011.28.54.png)
 
 ---
 
@@ -171,13 +171,13 @@ Source:
 
 One of the most common issues you still counter when you try to train llms is running out of memory.
 
-![Screenshot 2024-05-01 at 11.52.37](/assets/img/Screenshot%202024-05-01%20at%2011.52.37.png)
+![Screenshot 2024-05-01 at 11.52.37](/assets/img/post/Screenshot%202024-05-01%20at%2011.52.37.png)
 
 - on Nvidia GPUs, CUDA, short for `Compute Unified Device Architecture`, is a collection of libraries and tools developed for Nvidia GPUs.
 - Libraries such as PyTorch and TensorFlow use CUDA to boost performance on metrics multiplication and other operations common to deep learning.
 - You'll encounter these out-of-memory issues because most LLMs are huge, and require a ton of memory to store and train all of their parameters.
 
-![Screenshot 2024-05-01 at 11.58.17](/assets/img/Screenshot%202024-05-01%20at%2011.58.17.png)
+![Screenshot 2024-05-01 at 11.58.17](/assets/img/post/Screenshot%202024-05-01%20at%2011.58.17.png)
 
 - A single parameter is typically represented by a `32-bit float`, which is a way computers represent real numbers. A 32-bit float takes up four bytes of memory.
 - So to store `1B parameter`s -> four gigabyte of GPU RAM at 32-bit full precision.
@@ -189,26 +189,26 @@ to train the model, you'll have to plan for `the memory to store the model weigh
 - to account for all of these overhead during training, you'll actually require approximately 6 times the amount of GPU RAM that the model weights alone take up.
 - To train a `1b parameter` model at 32-bit full precision -> approximately 24 gigabyte of GPU RAM.
 
-![Screenshot 2024-05-01 at 12.00.53](/assets/img/Screenshot%202024-05-01%20at%2012.00.53.png)
+![Screenshot 2024-05-01 at 12.00.53](/assets/img/post/Screenshot%202024-05-01%20at%2012.00.53.png)
 
-![Screenshot 2024-05-01 at 12.02.35](/assets/img/Screenshot%202024-05-01%20at%2012.02.35.png)
+![Screenshot 2024-05-01 at 12.02.35](/assets/img/post/Screenshot%202024-05-01%20at%2012.02.35.png)
 
 To reduce the memory required for training
 
 #### quantization
 
-![Screenshot 2024-05-01 at 12.03.52](/assets/img/Screenshot%202024-05-01%20at%2012.03.52.png)
+![Screenshot 2024-05-01 at 12.03.52](/assets/img/post/Screenshot%202024-05-01%20at%2012.03.52.png)
 
 - reduce the memory required to store the weights of the model by reducing their precision from `32-bit floating point numbers` to `16-bit floating point numbers`, or `8-bit integer numbers`.
 
 - Quantization statistically projects the original `32-bit floating point numbers` into a lower precision space, using scaling factors calculated based on the range of the original `32-bit floating point numbers`.
 
 - Let's look at an example.
-- ![Screenshot 2024-05-01 at 12.05.48](/assets/img/Screenshot%202024-05-01%20at%2012.05.48.png)
-- ![Screenshot 2024-05-01 at 12.06.14](/assets/img/Screenshot%202024-05-01%20at%2012.06.14.png)
-- ![Screenshot 2024-05-01 at 12.06.14](/assets/img/Screenshot%202024-05-01%20at%2012.06.14_774fet8i4.png)
+- ![Screenshot 2024-05-01 at 12.05.48](/assets/img/post/Screenshot%202024-05-01%20at%2012.05.48.png)
+- ![Screenshot 2024-05-01 at 12.06.14](/assets/img/post/Screenshot%202024-05-01%20at%2012.06.14.png)
+- ![Screenshot 2024-05-01 at 12.06.14](/assets/img/post/Screenshot%202024-05-01%20at%2012.06.14_774fet8i4.png)
 
-![Screenshot 2024-05-01 at 12.06.55](/assets/img/Screenshot%202024-05-01%20at%2012.06.55.png)
+![Screenshot 2024-05-01 at 12.06.55](/assets/img/post/Screenshot%202024-05-01%20at%2012.06.55.png)
 
 - Suppose you want to store a PI to six decimal places in different positions.
 
@@ -229,7 +229,7 @@ To reduce the memory required for training
     - reduce the `memory consumption` required to store the model parameters down to only two gigabyte using 16-bit half precision of 50% saving
     - further reduce the `memory footprint` by another 50% by representing the model parameters as eight bit integers, which requires only one gigabyte of GPU RAM.
 
-![Screenshot 2024-05-01 at 12.10.36](/assets/img/Screenshot%202024-05-01%20at%2012.10.36.png)
+![Screenshot 2024-05-01 at 12.10.36](/assets/img/post/Screenshot%202024-05-01%20at%2012.10.36.png)
 
 - the goal of quantization is to <font color=OrangeRed> reduce the memory required to store and train models by reducing the precision off the model weights </font>.
 - Quantization statistically projects the original `32-bit floating point numbers` into lower precision spaces using scaling factors calculated based on the range of the original 32-bit floats.
@@ -252,7 +252,7 @@ To reduce the memory required for training
 - when the model becomes too big to fit in a single GPU.
 - or speed up the training even if the model does fit onto a single GPU.
 
-![Screenshot 2024-06-10 at 17.52.20](/assets/img/Screenshot%202024-06-10%20at%2017.52.20.png)
+![Screenshot 2024-06-10 at 17.52.20](/assets/img/post/Screenshot%202024-06-10%20at%2017.52.20.png)
 
 
 **scaling model training**
@@ -280,12 +280,12 @@ To reduce the memory required for training
 - FSDP is motivated by a paper published by researchers at Microsoft in 2019 that proposed a technique called `ZeRO`.
   - ZeRO stands for zero redundancy optimizer
   - the goal of ZeRO is to optimize memory by distributing or sharding model states across GPUs with ZeRO data overlap.
-  - ![Screenshot 2024-06-10 at 17.31.53](/assets/img/Screenshot%202024-06-10%20at%2017.31.53.png)
+  - ![Screenshot 2024-06-10 at 17.31.53](/assets/img/post/Screenshot%202024-06-10%20at%2017.31.53.png)
 
 
 - FSDP allows reduce the overall GPU memory utilization.
   - Optionally, you can specify that FSDP offloads part of the training computation to GPUs to further reduce the GPU memory utilization.
-  - ![Screenshot 2024-06-17 at 12.10.37](/assets/img/Screenshot%202024-06-17%20at%2012.10.37.png)
+  - ![Screenshot 2024-06-17 at 12.10.37](/assets/img/post/Screenshot%202024-06-17%20at%2012.10.37.png)
   - To manage the trade-off between performance and memory utilization, you can configure the level of sharding using `FSDP charting factor`.
     - full replication:
       - sharding factor:1
@@ -303,20 +303,20 @@ To reduce the memory required for training
 > - the largest memory requirement was fożr the `optimizer` states, which take up twice as much space as the weights,
 > - followed by `weights` and the `gradieżnts`.
 > - Baseline:
->   - ![Screenshot 2024-06-10 at 17.32.38](/assets/img/Screenshot%202024-06-10%20at%2017.32.38.png)
+>   - ![Screenshot 2024-06-10 at 17.32.38](/assets/img/post/Screenshot%202024-06-10%20at%2017.32.38.png)
 > - DDP:
 >   - the parameters as this blue box,
 >   - the gradients and yellow and
 >   - the optimizer states in green.
->   - ![Screenshot 2024-06-17 at 11.48.59](/assets/img/Screenshot%202024-06-17%20at%2011.48.59.png)
+>   - ![Screenshot 2024-06-17 at 11.48.59](/assets/img/post/Screenshot%202024-06-17%20at%2011.48.59.png)
 > - ZeRO:
->   - ![Screenshot 2024-06-10 at 17.33.25](/assets/img/Screenshot%202024-06-10%20at%2017.33.25.png)
+>   - ![Screenshot 2024-06-10 at 17.33.25](/assets/img/post/Screenshot%202024-06-10%20at%2017.33.25.png)
 
 
 - DDP
   - One limitation off the model replication strategy is it <font color=OrangeRed> keep a full model copy on each GPU, which leads to redundant memory consumption </font>.
   - storing the same numbers on every GPU.
-  - ![Screenshot 2024-06-10 at 17.31.24](/assets/img/Screenshot%202024-06-10%20at%2017.31.24.png)
+  - ![Screenshot 2024-06-10 at 17.31.24](/assets/img/post/Screenshot%202024-06-10%20at%2017.31.24.png)
 
 
 - ZeRO
@@ -326,19 +326,19 @@ To reduce the memory required for training
     - ZeRO Stage 1, shots only `optimizer states across GPUs`, this can reduce the memory footprint by up to a factor of four.
     - ZeRO Stage 2 also `shots the gradients across chips`. When applied together with Stage 1, this can reduce the memory footprint by up to eight times.
     - ZeRO Stage 3 `shots all components including the model parameters across GPUs`.
-    - ![Screenshot 2024-06-10 at 17.34.09](/assets/img/Screenshot%202024-06-10%20at%2017.34.09.png)
+    - ![Screenshot 2024-06-10 at 17.34.09](/assets/img/post/Screenshot%202024-06-10%20at%2017.34.09.png)
   - When applied together with Stages 1 and 2, memory reduction is linear with a number of GPUs.
     - For example, sharding across 64 GPUs could reduce the memory by a factor of 64.
 
 
 - FSDP
   - distribute the data across multiple GPUs as DDP, and also distributed or shard the model parameters, gradients, and optimize the states across the GPU nodes using one of the strategies specified in the ZeRO.
-  - ![Screenshot 2024-06-10 at 17.34.42](/assets/img/Screenshot%202024-06-10%20at%2017.34.42.png)
+  - ![Screenshot 2024-06-10 at 17.34.42](/assets/img/post/Screenshot%202024-06-10%20at%2017.34.42.png)
 
 - forward and backward pass
   - DDP: each GPU has all of the model states required for processing each batch of data available locally,
   - FSDP: collect this data from all of the GPUs before the forward and backward pass.
-  - ![Screenshot 2024-06-10 at 17.35.00](/assets/img/Screenshot%202024-06-10%20at%2017.35.00.png)
+  - ![Screenshot 2024-06-10 at 17.35.00](/assets/img/post/Screenshot%202024-06-10%20at%2017.35.00.png)
   - Each CPU requests data from the other GPUs on-demand to materialize the sharded data into uncharted data for the duration of the operation.
   - After the operation:
     - release the uncharted non-local data back to the other GPUs as original sharded data
@@ -355,7 +355,7 @@ Impact of using FSDP
 - one teraflop corresponds to one trillion floating-point operations per second.
 
 - The first figure shows FSDP performance for different size T5 models.
-  - ![Screenshot 2024-06-17 at 12.20.34](/assets/img/Screenshot%202024-06-17%20at%2012.20.34.png)
+  - ![Screenshot 2024-06-17 at 12.20.34](/assets/img/post/Screenshot%202024-06-17%20at%2012.20.34.png)
 
   - You can see the different performance numbers for FSDP, full sharding in blue, hyper shard in orange and full replication in green, DDP performance is shown in red.
   - For the first 25 models with 611 million parameters and 2.28 billion parameters, the performance of FSDP and DDP is similar.
@@ -363,7 +363,7 @@ Impact of using FSDP
 
 
 - The second figure shows 7% decrease in per GPU teraflops when increasing the number of GPUs from 8-512 for the 11 billion T5 model, plotted here using a batch size of 16 and orange and a batch size of eight in blue.
-  - ![Screenshot 2024-06-17 at 12.25.25](/assets/img/Screenshot%202024-06-17%20at%2012.25.25.png)
+  - ![Screenshot 2024-06-17 at 12.25.25](/assets/img/post/Screenshot%202024-06-17%20at%2012.25.25.png)
 
   - As the model grows in size and is distributed across more and more GPUs, the increase in communication volume between chips starts to impact the performance, slowing down the computation.
 
@@ -396,7 +396,7 @@ the relationship between model size, training, configuration and performance in 
 
 In theory, you could scale either of both of these quantities to improve performance. However, consideration is the <font color=OrangeRed> compute budget </font>, factors like the number of GPUs you have access to and the time you have available for training models.
 
-![Screenshot 2024-06-17 at 17.08.21](/assets/img/Screenshot%202024-06-17%20at%2017.08.21.png)
+![Screenshot 2024-06-17 at 17.08.21](/assets/img/post/Screenshot%202024-06-17%20at%2017.08.21.png)
 
 ### unit of compute that quantifies the required resources
 
@@ -405,20 +405,20 @@ In theory, you could scale either of both of these quantities to improve perform
 - `1 petaFLOP/s = one quadrillion` floating point operations per second.
 - in training transformers, `1 petaFLOP/s = 8 NVIDIA V100 GPUs`, operating at full efficiency for one full day.
 
-![Screenshot 2024-06-17 at 17.12.58](/assets/img/Screenshot%202024-06-17%20at%2017.12.58.png)
+![Screenshot 2024-06-17 at 17.12.58](/assets/img/post/Screenshot%202024-06-17%20at%2017.12.58.png)
 
 
 
 - If you have a more powerful processor that can carry out more operations at once, then a petaFLOP/s-day requires fewer chips.
   - For example, 2 NVIDIA A100 GPUs give equivalent compute to the 8 V100 chips.
-  - ![Screenshot 2024-06-17 at 17.15.16](/assets/img/Screenshot%202024-06-17%20at%2017.15.16.png)
+  - ![Screenshot 2024-06-17 at 17.15.16](/assets/img/post/Screenshot%202024-06-17%20at%2017.15.16.png)
 
 
 - <font color=OrangeRed> huge amount of computers is required to train the largest models </font>
   - bigger models take more compute resources to train and generally also require more data to achieve good performance.
   - they are actually well-defined relationships between these three scaling choices.
   - compute budgets: this chart shows a comparison of `the petaFLOP/s-day required to pre-train different variance of Bert and Roberta (encoder only models), T5 (encoder-decoder model) and GPT-3 (decoder only model)`.
-  - ![Screenshot 2024-06-17 at 17.19.29](/assets/img/Screenshot%202024-06-17%20at%2017.19.29.png)
+  - ![Screenshot 2024-06-17 at 17.19.29](/assets/img/post/Screenshot%202024-06-17%20at%2017.19.29.png)
   - The difference between the models in each family is <font color=OrangeRed> the number of parameters that were trained </font>
   - the y-axis is logarithmic. Each increment vertically is a power of 10.
     - T5 XL with three billion parameters required close to 100 petaFLOP/s-day.
@@ -432,20 +432,20 @@ In theory, you could scale either of both of these quantities to improve perform
 - larger numbers can be achieved by either using more compute power or, training for longer, or both.
 
   - paper by researchers at OpenAI, explores `the impact of compute budget on model performance`.
-    - ![Screenshot 2024-06-17 at 17.23.44](/assets/img/Screenshot%202024-06-17%20at%2017.23.44.png)
+    - ![Screenshot 2024-06-17 at 17.23.44](/assets/img/post/Screenshot%202024-06-17%20at%2017.23.44.png)
     - `y-axis`: test loss, consider as a proxy for model performance where smaller values are better.
     - `x-axis`: the compute budget in units of petaFLOP/s-day.
     - Each `thin blue line`: shows the model loss over a single training run. where the loss starts to decline more slowly for each run, reveals a clear relationship between the compute budget and the model's performance.
 
 - power-law relationship: pink line.
-  - ![Screenshot 2024-06-17 at 17.24.18](/assets/img/Screenshot%202024-06-17%20at%2017.24.18.png)
+  - ![Screenshot 2024-06-17 at 17.24.18](/assets/img/post/Screenshot%202024-06-17%20at%2017.24.18.png)
   - a mathematical relationship between two variables, where one is proportional to the other, raised to some power.
     - When plotted on a graph where both axes are logarithmic, power-law relationships appear as straight lines.
 
   - The relationship here holds as long as model size and training dataset size don't inhibit the training process -> you can just increase the `compute budget` to achieve better model performance.
     - In practice however, the compute resources available for training will generally be a hard constraint set by factors such as the `hardware you have access to, the time available for training and the financial budget of the project`.
     - If you hold the compute budget fixed, the two levers you have to improve the model's performance are `the size of the training dataset` and `the number of parameters in the model`.
-    - ![Screenshot 2024-06-18 at 19.41.04](/assets/img/Screenshot%202024-06-18%20at%2019.41.04.png)
+    - ![Screenshot 2024-06-18 at 19.41.04](/assets/img/post/Screenshot%202024-06-18%20at%2019.41.04.png)
 
   - The OpenAI researchers found that these two quantities also show a power-law relationship with a test loss in the case where the other two variables are held fixed.
 
@@ -454,7 +454,7 @@ In theory, you could scale either of both of these quantities to improve perform
 
     - when `compute budget and training dataset size` are held constant. Models of varying numbers of parameters are trained. As the model increases in size, the test loss decreases indicating better performance.
 
-    - ![Screenshot 2024-06-18 at 19.44.10](/assets/img/Screenshot%202024-06-18%20at%2019.44.10.png)
+    - ![Screenshot 2024-06-18 at 19.44.10](/assets/img/post/Screenshot%202024-06-18%20at%2019.44.10.png)
 
 
 ideal balance between these three quantities?
@@ -479,7 +479,7 @@ ideal balance between these three quantities?
   - Chinchilla was determined to be compute optimal.
 
   - a selection of models along with their size and information about the dataset they were trained on.
-    - ![Screenshot 2024-06-18 at 19.46.04](/assets/img/Screenshot%202024-06-18%20at%2019.46.04.png)
+    - ![Screenshot 2024-06-18 at 19.46.04](/assets/img/post/Screenshot%202024-06-18%20at%2019.46.04.png)
 
     - For a 70 billion parameter model, the ideal training dataset contains 1.4 trillion tokens or 20 times the number of parameters.
     - The last three models in the table were trained on datasets that are smaller than the Chinchilla optimal size. These models may actually be under trained.
@@ -490,7 +490,7 @@ ideal balance between these three quantities?
 
 - expect to see a deviation from the bigger is always better trends of the last few years
 
-![Screenshot 2024-06-18 at 19.47.28](/assets/img/Screenshot%202024-06-18%20at%2019.47.28.png)
+![Screenshot 2024-06-18 at 19.47.28](/assets/img/post/Screenshot%202024-06-18%20at%2019.47.28.png)
 
 ---
 
@@ -528,7 +528,7 @@ ideal balance between these three quantities?
 
 - tradeoffs
   - These two graphs compare a number of LLMs, including BloombergGPT, to scaling laws that have been discussed by researchers.
-  - ![Screenshot 2024-06-18 at 20.55.09](/assets/img/Screenshot%202024-06-18%20at%2020.55.09.png)
+  - ![Screenshot 2024-06-18 at 20.55.09](/assets/img/post/Screenshot%202024-06-18%20at%2020.55.09.png)
 
 
   - On the left, the diagonal lines trace the optimal model size in billions of parameters for a range of compute budgets.

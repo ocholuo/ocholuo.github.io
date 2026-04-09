@@ -9,7 +9,7 @@ tags: [Terraform]
 # math: true
 # pin: true
 toc: true
-# image: /assets/img/note/tls-ssl-handshake.png
+# image: /assets/img/post/tls-ssl-handshake.png
 ---
 
 # Terraform Example - ali-cs

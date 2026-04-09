@@ -65,9 +65,9 @@ Compute Engine
 
 ![Screen Shot 2021-06-27 at 11.31.34 PM](https://i.imgur.com/E1QdnJw.png)
 
-![Screenshot 2024-08-07 at 11.52.50](/assets/img/Screenshot%202024-08-07%20at%2011.52.50.png)
+![Screenshot 2024-08-07 at 11.52.50](/assets/img/post/Screenshot%202024-08-07%20at%2011.52.50.png)
 
-![Screenshot 2024-08-07 at 11.53.04](/assets/img/Screenshot%202024-08-07%20at%2011.53.04.png)
+![Screenshot 2024-08-07 at 11.53.04](/assets/img/post/Screenshot%202024-08-07%20at%2011.53.04.png)
 
 ---
 
@@ -213,7 +213,7 @@ Virtual machines need <font color=OrangeRed> block storage </font>
 
 ![Screen Shot 2021-06-27 at 11.32.27 PM](https://i.imgur.com/RyUriRl.png)
 
-![Screenshot 2024-08-07 at 11.49.42](/assets/img/Screenshot%202024-08-07%20at%2011.49.42.png)
+![Screenshot 2024-08-07 at 11.49.42](/assets/img/post/Screenshot%202024-08-07%20at%2011.49.42.png)
 
 1. **bills by the second**
    - with a one-minute minimum for virtual machine usage.
@@ -232,9 +232,9 @@ Virtual machines need <font color=OrangeRed> block storage </font>
 
    - Preemptible 可優先的 VMs can run for up to 24 hours, while Spot VMs have no maximum runtime.
 
-   - ![Screenshot 2024-08-07 at 11.50.07](/assets/img/Screenshot%202024-08-07%20at%2011.50.07.png)
+   - ![Screenshot 2024-08-07 at 11.50.07](/assets/img/post/Screenshot%202024-08-07%20at%2011.50.07.png)
 
-   - ![Screenshot 2024-08-07 at 11.50.15](/assets/img/Screenshot%202024-08-07%20at%2011.50.15.png)
+   - ![Screenshot 2024-08-07 at 11.50.15](/assets/img/post/Screenshot%202024-08-07%20at%2011.50.15.png)
 
    - ![Screen Shot 2021-06-27 at 11.39.50 PM](https://i.imgur.com/Yp597og.png)
 

@@ -48,7 +48,7 @@ tags:
 
 > an example of an input sequence received by the model (in NL), the output of the model (in PL) and the target code (called gold standard or reference code).
 
-![Screenshot 2024-02-13 at 12.59.44](/assets/img/Screenshot%202024-02-13%20at%2012.59.44.png)
+![Screenshot 2024-02-13 at 12.59.44](/assets/img/post/Screenshot%202024-02-13%20at%2012.59.44.png)
 
 - `JaCoText`
 
@@ -119,7 +119,7 @@ tags:
 
     - Based on the previous highlighted points, we carried out additional pretraining on unimodal java data.
 
-    - ![Screenshot 2024-02-13 at 16.24.27](/assets/img/Screenshot%202024-02-13%20at%2016.24.27.png)
+    - ![Screenshot 2024-02-13 at 16.24.27](/assets/img/post/Screenshot%202024-02-13%20at%2016.24.27.png)
 
     - step
 
@@ -149,7 +149,7 @@ tags:
       - dataset that contains context of a real world Java programming environment.
       - aims to generate Java member functions that have class member variables from documentation.
       - `CONCODE` dataset:
-      - ![Screenshot 2024-02-13 at 16.32.48](/assets/img/Screenshot%202024-02-13%20at%2016.32.48.png)
+      - ![Screenshot 2024-02-13 at 16.32.48](/assets/img/post/Screenshot%202024-02-13%20at%2016.32.48.png)
 
   - C. **Additional Pretraining Dataset**
 
@@ -205,13 +205,13 @@ tags:
 
   - Table II provides the **scores of each type of T5 models** directly after the fine-tuning using `CONCODE` dataset.
 
-    - ![Screenshot 2024-02-13 at 16.46.14](/assets/img/Screenshot%202024-02-13%20at%2016.46.14.png)
+    - ![Screenshot 2024-02-13 at 16.46.14](/assets/img/post/Screenshot%202024-02-13%20at%2016.46.14.png)
     - all score improves as the number of steps increases.
     - the `most sophisticated T53B model gets the best results`, followed by T5large and T5base, while T53B takes more time to converge.
 
   - **Table III** provides results obtained when varying the number of steps and the length of input and output sequences while fine tuning `CoTexT-2CC` and `CoTexT-1CC` checkpoints on `CONCODE` dataset.
 
-    - ![Screenshot 2024-02-13 at 16.44.10](/assets/img/Screenshot%202024-02-13%20at%2016.44.10.png)
+    - ![Screenshot 2024-02-13 at 16.44.10](/assets/img/post/Screenshot%202024-02-13%20at%2016.44.10.png)
 
     - Results show that using 60000 steps provides better results than using 45000 steps in the fine-tuning
 
@@ -222,7 +222,7 @@ tags:
 
   - **Table IV** provides fine-tuning results after performing the additional pretraining using the Java dataset.
 
-    - ![Screenshot 2024-02-13 at 16.49.03](/assets/img/Screenshot%202024-02-13%20at%2016.49.03.png)
+    - ![Screenshot 2024-02-13 at 16.49.03](/assets/img/post/Screenshot%202024-02-13%20at%2016.49.03.png)
 
     - The models are
 
@@ -244,7 +244,7 @@ tags:
 
   - Finally, Fig. 3 shows the improvements of the model `JaCoText`-B-2CC-PL with an additional training using the Java dataset.
     - For a fair comparison, the three models are fine-tuned for 60, 000 steps, and they all follow the T 5base architecture.
-    - ![Screenshot 2024-02-13 at 16.51.33](/assets/img/Screenshot%202024-02-13%20at%2016.51.33.png)
+    - ![Screenshot 2024-02-13 at 16.51.33](/assets/img/post/Screenshot%202024-02-13%20at%2016.51.33.png)
 
 - **RELATED WORK**
 

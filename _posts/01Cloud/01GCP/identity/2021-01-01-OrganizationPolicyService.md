@@ -75,7 +75,7 @@ Organization Policy
 
 ### Organization policy
 
-![Screenshot 2023-08-11 at 14.03.22](/assets/img/Screenshot%202023-08-11%20at%2014.03.22.png)
+![Screenshot 2023-08-11 at 14.03.22](/assets/img/post/Screenshot%202023-08-11%20at%2014.03.22.png)
 
 - An organization policy is a configuration of restrictions.
 

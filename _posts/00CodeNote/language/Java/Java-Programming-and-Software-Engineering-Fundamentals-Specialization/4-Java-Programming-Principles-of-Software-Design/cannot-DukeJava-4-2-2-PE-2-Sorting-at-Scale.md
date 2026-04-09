@@ -13,19 +13,17 @@ toc: true
 
 # Programming Exercise 2 `Sorting at Scale`
 
-Resource Link: https://www.dukelearntoprogram.com/course4/index.php
+Resource Link: <https://www.dukelearntoprogram.com/course4/index.php>
 
-ProjectCode: https://github.com/ocholuo/language/tree/master/0.project/javademo
+ProjectCode: <https://github.com/ocholuo/language/tree/master/0.project/javademo>
 
 ![2020-09-13-EfficientSortStarterProgram](https://github.com/ocholuo/ocholuo.github.io/blob/master/_posts/1.JAVA/img/javademo-EfficientSortStarterProgram.png)
 
-![2020-09-13-EfficientSortStarterProgram](../../assets/img/Javaimg/javademo-EfficientSortStarterProgram.png)
-
+![2020-09-13-EfficientSortStarterProgram](../../assets/img/webdemoimage/javademo-EfficientSortStarterProgram.png)
 
 ---
 
 ## Assignment 1: compareTo Method
-
 
 - Modify the compareTo method in the QuakeEntry class. (You may want to comment out the current code first). The compareTo method should now sort quake by magnitude first, from smallest magnitude to largest magnitude, and then break ties (use == operator to determine whether magnitudes are equal) by depth, from smallest (most negative)
 depth to largest depth.
@@ -48,14 +46,11 @@ depth to largest depth.
          - If q1 depth is greater than q2 depth, then this method should return a positive integer.
          - Otherwise, this method should return 0.
 
-
 2. Write the void method sortByTitleAndDepth in the DifferentSorters class.
    - This method should create an EarthQuakeParser, read data from a file on earthquakes and create an ArrayList of QuakeEntry.
    - Then this method should call `Collections.sort on` this ArrayList and use the TitleAndDepthComparator to sort the earthquakes.
    - You should be able to see that the earthquakes are sorted by title first, and those with the same title are sorted by depth.
    - Modify this method to print out the QuakeEntry in the ArrayList in position 10 (which is actually the 11th element in the ArrayList) after sorting and printing out all the elements.
-
-
 
 ---
 
@@ -70,7 +65,6 @@ depth to largest depth.
    - If q1 last word is the same as q2 last word, then this method should compare the magnitude of the two earthquakes.
        - If q1 magnitude is less than q2 magnitude, then this method should return a negative number.
        - If q1 magnitude is greater than q2 magnitude, then this method should return a positive integer. Otherwise, this method should return 0.
-
 
 2. Write the void method sortByLastWordInTitleThenByMagnitude in the DifferentSorters class.
    - This method should create an EarthQuakeParser, read data from a file on earthquakes and create an ArrayList of QuakeEntry.

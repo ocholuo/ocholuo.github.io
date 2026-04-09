@@ -22,6 +22,9 @@ package-lock.json
 .vscode/
 .DS_Store
 
+# iCloud conflict copies (e.g. "foo 2.png" duplicate of "foo.png")
+* 2.*
+
 # Misc
 _posts/00Abook/Data Structures and Algorithms in Java, 6th Edition.pdf
 _posts/00Abook/GCP/PCSE_Workbook.pdf
@@ -56,3 +59,4 @@ _posts/00AIssueBook/Application/SU/SketchUp-ah
 _posts/00AIssueBook/Application/SU/SketchUp-ai
 _posts/00AIssueBook/Application/SU/SketchUp-aj
 _posts/00AIssueBook/M1.md
+/.claude

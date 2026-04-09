@@ -14,12 +14,13 @@ toc: true
 ---
 
 In Java, reuse code using an `Is-A relationship` or `Has-A relationship`.
+
 - Is-A relationship is also known as inheritance
 - Has-A relationship is also known as composition in Java.
 - both used for code reusability in Java.
 
-
 ## Is-A Relationship in Java
+
 - In Java, Is-A relationship depends on inheritance.
   - Further inheritance is of two types, `class inheritance` and `interface inheritance`.
 - **inheritance is unidirectional in nature**.
@@ -30,18 +31,16 @@ In Java, reuse code using an `Is-A relationship` or `Has-A relationship`.
   - `extends` or `implement` keyword in the class declaration in Java
   - then the specific class is said to be following the Is-A relationship.
 
-
 ## Has-A Relationship in Java
+
 - In Java, Has-A relationship is also known as composition.
 - Has-A relationship: an instance of one class has a reference to an instance of another class or an other instance of the same class.
   - For example, a car has an engine, a dog has a tail and so on.
 - In Java, there is no such keyword that implements a Has-A relationship. But we mostly use new keywords to implement a Has-A relationship in Java.
 
+![IS-A and HAS-A relationship](https://github.com/ocholuo/ocholuo.github.io/tree/master/assets/img/webdemoimage/IS-A-and-HAS-A-relationship.jpg)
 
-![IS-A and HAS-A relationship](https://github.com/ocholuo/ocholuo.github.io/tree/master/assets/img/Javaimg/IS-A-and-HAS-A-relationship.jpg)
-
-![IS-A and HAS-A relationship](/assets/img/Javaimg/IS-A-and-HAS-A-relationship.jpg)
-
+![IS-A and HAS-A relationship](/assets/img/webdemoimage/IS-A-and-HAS-A-relationship.jpg)
 
 ## code example
 

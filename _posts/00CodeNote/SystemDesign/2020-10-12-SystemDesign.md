@@ -9,7 +9,7 @@ tags: []
 math: true
 # pin: true
 toc: true
-# image: /assets/img/note/tls-ssl-handshake.png
+# image: /assets/img/post/tls-ssl-handshake.png
 ---
 
 - [System Design - Key Concepts](#system-design---key-concepts)

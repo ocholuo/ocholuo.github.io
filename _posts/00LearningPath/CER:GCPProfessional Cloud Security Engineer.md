@@ -36,58 +36,58 @@ link:
 
 Planning Cymbal Bank’s cloud identity and access management
 
-![Screenshot 2023-06-25 at 23.44.37](/assets/img/Screenshot%202023-06-25%20at%2023.44.37.png)
+![Screenshot 2023-06-25 at 23.44.37](/assets/img/post/Screenshot%202023-06-25%20at%2023.44.37.png)
 
-![Screenshot 2023-06-25 at 23.44.52](/assets/img/Screenshot%202023-06-25%20at%2023.44.52_wc48t0cji.png)
+![Screenshot 2023-06-25 at 23.44.52](/assets/img/post/Screenshot%202023-06-25%20at%2023.44.52_wc48t0cji.png)
 
-![Screenshot 2023-06-25 at 23.45.52](/assets/img/Screenshot%202023-06-25%20at%2023.45.52.png)
+![Screenshot 2023-06-25 at 23.45.52](/assets/img/post/Screenshot%202023-06-25%20at%2023.45.52.png)
 
-![Screenshot 2023-06-25 at 23.46.50](/assets/img/Screenshot%202023-06-25%20at%2023.46.50.png)
+![Screenshot 2023-06-25 at 23.46.50](/assets/img/post/Screenshot%202023-06-25%20at%2023.46.50.png)
 
-![Screenshot 2023-06-25 at 23.47.36](/assets/img/Screenshot%202023-06-25%20at%2023.47.36.png)
+![Screenshot 2023-06-25 at 23.47.36](/assets/img/post/Screenshot%202023-06-25%20at%2023.47.36.png)
 
-![Screenshot 2023-06-25 at 23.47.53](/assets/img/Screenshot%202023-06-25%20at%2023.47.53.png)
+![Screenshot 2023-06-25 at 23.47.53](/assets/img/post/Screenshot%202023-06-25%20at%2023.47.53.png)
 
-![Screenshot 2023-06-25 at 23.48.10](/assets/img/Screenshot%202023-06-25%20at%2023.48.10.png)
+![Screenshot 2023-06-25 at 23.48.10](/assets/img/post/Screenshot%202023-06-25%20at%2023.48.10.png)
 
 
 ### Boundary Security
 
 
-![Screenshot 2023-07-01 at 23.29.58](/assets/img/Screenshot%202023-07-01%20at%2023.29.58.png)
+![Screenshot 2023-07-01 at 23.29.58](/assets/img/post/Screenshot%202023-07-01%20at%2023.29.58.png)
 
-![Screenshot 2023-07-01 at 23.30.27](/assets/img/Screenshot%202023-07-01%20at%2023.30.27.png)
+![Screenshot 2023-07-01 at 23.30.27](/assets/img/post/Screenshot%202023-07-01%20at%2023.30.27.png)
 
-![Screenshot 2023-07-01 at 23.31.02](/assets/img/Screenshot%202023-07-01%20at%2023.31.02.png)
+![Screenshot 2023-07-01 at 23.31.02](/assets/img/post/Screenshot%202023-07-01%20at%2023.31.02.png)
 
-![Screenshot 2023-07-01 at 23.31.19](/assets/img/Screenshot%202023-07-01%20at%2023.31.19.png)
+![Screenshot 2023-07-01 at 23.31.19](/assets/img/post/Screenshot%202023-07-01%20at%2023.31.19.png)
 
-![Screenshot 2023-07-01 at 23.32.08](/assets/img/Screenshot%202023-07-01%20at%2023.32.08.png)
+![Screenshot 2023-07-01 at 23.32.08](/assets/img/post/Screenshot%202023-07-01%20at%2023.32.08.png)
 
-![Screenshot 2023-07-01 at 23.32.18](/assets/img/Screenshot%202023-07-01%20at%2023.32.18.png)
+![Screenshot 2023-07-01 at 23.32.18](/assets/img/post/Screenshot%202023-07-01%20at%2023.32.18.png)
 
-![Screenshot 2023-07-01 at 23.32.37](/assets/img/Screenshot%202023-07-01%20at%2023.32.37.png)
+![Screenshot 2023-07-01 at 23.32.37](/assets/img/post/Screenshot%202023-07-01%20at%2023.32.37.png)
 
-![Screenshot 2023-07-01 at 23.32.53](/assets/img/Screenshot%202023-07-01%20at%2023.32.53.png)
+![Screenshot 2023-07-01 at 23.32.53](/assets/img/post/Screenshot%202023-07-01%20at%2023.32.53.png)
 
-![Screenshot 2023-07-01 at 23.33.56](/assets/img/Screenshot%202023-07-01%20at%2023.33.56.png)
+![Screenshot 2023-07-01 at 23.33.56](/assets/img/post/Screenshot%202023-07-01%20at%2023.33.56.png)
 
 
 ### Data Protection
 
-![Screenshot 2023-07-02 at 14.23.23](/assets/img/Screenshot%202023-07-02%20at%2014.23.23.png)
+![Screenshot 2023-07-02 at 14.23.23](/assets/img/post/Screenshot%202023-07-02%20at%2014.23.23.png)
 
-![Screenshot 2023-07-02 at 14.23.44](/assets/img/Screenshot%202023-07-02%20at%2014.23.44.png)
+![Screenshot 2023-07-02 at 14.23.44](/assets/img/post/Screenshot%202023-07-02%20at%2014.23.44.png)
 
-![Screenshot 2023-07-02 at 14.24.46](/assets/img/Screenshot%202023-07-02%20at%2014.24.46.png)
+![Screenshot 2023-07-02 at 14.24.46](/assets/img/post/Screenshot%202023-07-02%20at%2014.24.46.png)
 
-![Screenshot 2023-07-02 at 14.25.43](/assets/img/Screenshot%202023-07-02%20at%2014.25.43.png)
+![Screenshot 2023-07-02 at 14.25.43](/assets/img/post/Screenshot%202023-07-02%20at%2014.25.43.png)
 
-![Screenshot 2023-07-02 at 14.26.07](/assets/img/Screenshot%202023-07-02%20at%2014.26.07.png)
+![Screenshot 2023-07-02 at 14.26.07](/assets/img/post/Screenshot%202023-07-02%20at%2014.26.07.png)
 
-![Screenshot 2023-07-02 at 14.26.42](/assets/img/Screenshot%202023-07-02%20at%2014.26.42.png)
+![Screenshot 2023-07-02 at 14.26.42](/assets/img/post/Screenshot%202023-07-02%20at%2014.26.42.png)
 
-![Screenshot 2023-07-02 at 14.27.03](/assets/img/Screenshot%202023-07-02%20at%2014.27.03.png)
+![Screenshot 2023-07-02 at 14.27.03](/assets/img/post/Screenshot%202023-07-02%20at%2014.27.03.png)
 
 
 

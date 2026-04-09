@@ -79,6 +79,7 @@ usrlist = {
 # initialize Flask
 api = Flask(__name__)
 
+
 # declare a route for endpoint.
 # When a consumer visits /usrlist using a GET request, the list of two usrlist will be returned.
 @api.route("/usr/usrlist", methods=["GET"])

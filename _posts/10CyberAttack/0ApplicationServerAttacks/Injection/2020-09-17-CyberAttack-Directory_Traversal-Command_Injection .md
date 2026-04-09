@@ -67,7 +67,7 @@ Example:
 
   - Attackers use commands: `../../etc/passwd` or `/etc/passwd` to read the file.
 
-- ![Pasted Graphic](/assets/img/Pasted%20Graphic_c414rj7mt.png)
+- ![Pasted Graphic](/assets/img/post/Pasted%20Graphic_c414rj7mt.png)
 
   - a command was entered
 

@@ -12,7 +12,7 @@ custom build configuration files
   - and even deploying them to Kubernetes Engine.
 
 
-![Screenshot 2024-07-30 at 21.30.40](/assets/img/Screenshot%202024-07-30%20at%2021.30.40.png)
+![Screenshot 2024-07-30 at 21.30.40](/assets/img/post/Screenshot%202024-07-30%20at%2021.30.40.png)
 
 
 1. 2 Git repositories:
@@ -29,7 +29,7 @@ custom build configuration files
    2. The main users of the `env repository` are automated systems (such as Cloud Build), and this repository might be shared by several applications.
       1. The env repository can have several branches that each map to a specific environment (you only use production in this lab) and reference a specific container image, whereas the app repository does not.
 
-![Screenshot 2024-07-30 at 21.33.44](/assets/img/Screenshot%202024-07-30%20at%2021.33.44.png)
+![Screenshot 2024-07-30 at 21.33.44](/assets/img/post/Screenshot%202024-07-30%20at%2021.33.44.png)
 
 
 ```bash

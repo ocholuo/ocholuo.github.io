@@ -22,7 +22,7 @@ def send_notification():
     twilio_client.messages.create(
         body="Costco item is available for purchase!",
         from_=os.getenv("SEND_PHONE_NUMBER"),
-        to=os.getenv("RECEIVE_PHONE_NUMBER")
+        to=os.getenv("RECEIVE_PHONE_NUMBER"),
     )
 
 
@@ -35,7 +35,7 @@ def get_page_html(url):
 
 
 def check_item_in_stock(page_html):
-    soup = BeautifulSoup(page_html, 'html.parser')
+    soup = BeautifulSoup(page_html, "html.parser")
     out_of_stock_divs = soup.findAll("img", {"class": "oos-overlay hide"})
     return len(out_of_stock_divs) != 0
 
@@ -52,7 +52,7 @@ def check_inventory(url):
 
 
 def main():
-    load_dotenv(os.path.join(os.path.expanduser(os.getcwd()), '.env'))
+    load_dotenv(os.path.join(os.path.expanduser(os.getcwd()), ".env"))
     while True:
         if check_inventory(PAGE_URL):
             break

@@ -814,9 +814,9 @@ The cons:
 > SAML
 > Security Assertion 断言 Markup Language
 
-![Saml-Authentication-Final](/assets/img/Saml-Authentication-Final.png)
+![Saml-Authentication-Final](/assets/img/post/Saml-Authentication-Final.png)
 
-![Pasted Graphic](/assets/img/Pasted%20Graphic.png)
+![Pasted Graphic](/assets/img/post/Pasted%20Graphic.png)
 
 - Security Assertion Markup Language (SAML)
 
@@ -838,7 +838,7 @@ The cons:
   - (TACACS+, RADIUS, Kerberos cannot do this)!!!
 
 
-![Pasted Graphic 1](/assets/img/Pasted%20Graphic%201.jpg)
+![Pasted Graphic 1](/assets/img/post/Pasted%20Graphic%201.jpg)
 
 
 
@@ -857,7 +857,7 @@ The cons:
 - 用户登录SP，SP向IDP发起请求来确认用户身份为例子
 	- 比如SP是Google的Apps，IDP是一所大学的身份服务器，Alice是该大学的一名学生。
 
-![3297585-50f9c9530cef962d](/assets/img/3297585-50f9c9530cef962d.png)
+![3297585-50f9c9530cef962d](/assets/img/post/3297585-50f9c9530cef962d.png)
 
 ---
 

@@ -28,8 +28,10 @@ jobs:
         with:
           fetch-depth: 0 # for posts's lastmod
 
+      - name: Install dependencies
+        run: pip install -r ./_posts/00CodeNote/project/rate_tracker/requirements.txt -q
+
       - name: run script
-        # run: bash ./wh.sh \
         run: python ./_posts/00CodeNote/project/rate_tracker/rate_tracker.py
 
       - name: Commit and push changes

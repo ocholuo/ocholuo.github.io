@@ -15,8 +15,10 @@ LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 logging.basicConfig(
     stream=sys.stdout,
     level=LOG_LEVEL,
-    format="%(lineno)d:%(levelname)s:%(name)s:%(message)s",)
+    format="%(lineno)d:%(levelname)s:%(name)s:%(message)s",
+)
 LOGGER = logging.getLogger(__name__)
+
 
 # APT Object
 class _DeHTMLParser_General(HTMLParser):

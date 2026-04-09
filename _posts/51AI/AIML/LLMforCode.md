@@ -85,7 +85,7 @@ Paper: LLMs for Code: Security Hardening and Adversarial Testing
     - For security hardening, this preserves LMs’ usefulness, while for adversarial testing, maintaining functional correctness is crucial for imperceptibility.
     - An LM with security control but severely 嚴重 deteriorated 惡化 functional correctness is of little practical value, as it can be easily detected and abandoned by the end user.
     - Figure 1 provides a conceptual illustration of our objective which requires simultaneously achieving strong security control (dashed curve) and preserving functional correctness (solid curve). The key challenge is to design a training mechanism that successfully realizes this dual objective.
-    - ![Screenshot 2023-12-13 at 11.49.47](/assets/img/Screenshot%202023-12-13%20at%2011.49.47.png)
+    - ![Screenshot 2023-12-13 at 11.49.47](/assets/img/post/Screenshot%202023-12-13%20at%2011.49.47.png)
 
 
   - **Challenge III**: Ensuring High-quality Training Data
@@ -162,7 +162,7 @@ Paper: LLMs for Code: Security Hardening and Adversarial Testing
 - $h_𝑡$ consists of key-value pairs used for attention computations. The number of pairs is equal to the number of layers in the LM.
 - The LM further transforms $h_𝑡$ into the next-token probability distribution $𝑃 (𝑥 |h_{≤𝑡})$. The probability of the entire program is computed by multiplying the next-token probabilities using the chain rule:
 
-![Screenshot 2023-12-13 at 22.53.57](/assets/img/Screenshot%202023-12-13%20at%2022.53.57.png)
+![Screenshot 2023-12-13 at 22.53.57](/assets/img/post/Screenshot%202023-12-13%20at%2022.53.57.png)
 
 - The initial hidden states $h_<1$ are usually empty.
 
@@ -174,7 +174,7 @@ Paper: LLMs for Code: Security Hardening and Adversarial Testing
   - A temperature is usually applied on $𝑃 (𝑥 |h_{<𝑡})$ to adjust sampling certainty [^LLMs_for_Code_26].
   - The lower the temperature, the more certain the sampling. LM training typically leverages the negative log-likelihood loss:
 
-![Screenshot 2023-12-13 at 23.03.00](/assets/img/Screenshot%202023-12-13%20at%2023.03.00.png)
+![Screenshot 2023-12-13 at 23.03.00](/assets/img/post/Screenshot%202023-12-13%20at%2023.03.00.png)
 
 - For state-of-the-art LMs [^LLMs_for_Code_26] [^LLMs_for_Code_28] [^LLMs_for_Code_57], training is performed on a massive dataset of both program and natural language text.
 
@@ -220,7 +220,7 @@ Paper: LLMs for Code: Security Hardening and Adversarial Testing
 > We aim to enable **controlled code generation** on an LM.
 
 The visual representation of controlled code generation.
-![Screenshot 2023-12-14 at 10.49.49](/assets/img/Screenshot%202023-12-14%20at%2010.49.49.png)
+![Screenshot 2023-12-14 at 10.49.49](/assets/img/post/Screenshot%202023-12-14%20at%2010.49.49.png)
 
 In addition to a prompt, we provide a property $𝑐$ to guide the LM to generate code that satisfies property $𝑐$.
 - Our focus is a binary security property: $𝑐 = {sec, vul}$.
@@ -244,7 +244,7 @@ The differentiation between our work and related works from controlled text gene
 
 - In Figure 2, we highlight the differences between `controlled code generation` and three classical security tasks: `vulnerability detection, repair, and injection`.
 
-![Screenshot 2023-12-14 at 10.49.49](/assets/img/Screenshot%202023-12-14%20at%2010.49.49.png)
+![Screenshot 2023-12-14 at 10.49.49](/assets/img/post/Screenshot%202023-12-14%20at%2010.49.49.png)
 
 - A general difference is that
   - controlled code generation targets a code completion setting and takes effect on code that the user is about to write
@@ -257,13 +257,13 @@ The differentiation between our work and related works from controlled text gene
 
 #### Illustrative Code Example
 
-![Figure 4](/assets/img/Screenshot%202023-12-14%20at%2011.07.47.png)
+![Figure 4](/assets/img/post/Screenshot%202023-12-14%20at%2011.07.47.png)
 
 two versions of a Python function before and after a security vulnerability gets fixed. T
 - his example is from `SVEN`’s training dataset, which is constructed from real-world GitHub commits.
 - We choose it for illustration purposes and note that other samples in our dataset are usually more complex.
 
-![Figure 3](/assets/img/Screenshot%202023-12-14%20at%2012.13.21.png)
+![Figure 3](/assets/img/post/Screenshot%202023-12-14%20at%2012.13.21.png)
 
 In Figure 3, `self.content` may contain malicious scripts from untrusted users.
 - Before the commit, the malicious scripts can flow into the return value of the function, causing a cross-site scripting vulnerability.
@@ -296,7 +296,7 @@ To enable controlled code generation, `SVEN` leverages **continuous prompts**, p
 ##### Visualization: LM vs. SVEN
 
 
-![Figure 4](/assets/img/Screenshot%202023-12-14%20at%2011.07.47.png)
+![Figure 4](/assets/img/post/Screenshot%202023-12-14%20at%2011.07.47.png)
 
 
 Figure 4 visually compares the inference procedures of LM and $SVEN_{sec}$, as well as their effect on security.
@@ -311,7 +311,7 @@ Figure 4 visually compares the inference procedures of LM and $SVEN_{sec}$, as w
 
 Similarly, $SVEN_{vul}$ can drive the LM to generate unsafe code with higher probability.
 
-![Figure 3](/assets/img/Screenshot%202023-12-14%20at%2012.13.21.png)
+![Figure 3](/assets/img/post/Screenshot%202023-12-14%20at%2012.13.21.png)
 
 - Take Figure 3 as an example.
 - Given a partial program `async def html_content(self):`
@@ -343,7 +343,7 @@ Similarly, $SVEN_{vul}$ can drive the LM to generate unsafe code with higher pro
 - `SVEN`’s training requires a dataset where each `program` $x$ is annotated with a `ground truth property` $𝑐$.
 
 
-![Figure 3](/assets/img/Screenshot%202023-12-14%20at%2012.13.21.png)
+![Figure 3](/assets/img/post/Screenshot%202023-12-14%20at%2012.13.21.png)
 
 - We construct such a dataset by extracting security fixes from GitHub, where we consider the version before a fix as unsafe and the version after as secure.
   - example:
@@ -385,25 +385,25 @@ Similarly, $SVEN_{vul}$ can drive the LM to generate unsafe code with higher pro
 
 The first loss term is a conditional language modeling loss masked with m:
 
-![Screenshot 2023-12-18 at 10.57.27](/assets/img/Screenshot%202023-12-18%20at%2010.57.27.png)
+![Screenshot 2023-12-18 at 10.57.27](/assets/img/post/Screenshot%202023-12-18%20at%2010.57.27.png)
 
 LLM only takes effects on tokens whose masks are set to 1.
 - Essentially, LLM encourages $SVEN_𝑐$ to produce code in security-sensitive regions that satisfies property $𝑐$.
 
 - example:
-- ![Figure 3](/assets/img/Screenshot%202023-12-14%20at%2012.13.21.png)
+- ![Figure 3](/assets/img/post/Screenshot%202023-12-14%20at%2012.13.21.png)
 - for the insecure training program, LLM optimizes $SVEN_{vul}$ to generate the tokens in the red line.
 
 
 In addition to LLM, we need to discourage the opposite prefix `SVEN¬𝑐` from generating $x$, which has property $𝑐$.
 - In this way, we provide the **prefixes** with negative samples.
 - example:
-- ![Figure 3](/assets/img/Screenshot%202023-12-14%20at%2012.13.21.png)
+- ![Figure 3](/assets/img/post/Screenshot%202023-12-14%20at%2012.13.21.png)
 - we desire that $SVEN_{sec}$ generates the sanitizer
 - at the same time, $SVEN_{vul}$ does not generate the sanitizer.
 - To achieve this, we employ a loss term LCT that contrasts the conditional next-token probabilities produced from $SVEN_𝑐$ and `SVEN¬𝑐` [^LLMs_for_Code_62]:
 
-![Screenshot 2023-12-18 at 11.09.48](/assets/img/Screenshot%202023-12-18%20at%2011.09.48.png)
+![Screenshot 2023-12-18 at 11.09.48](/assets/img/post/Screenshot%202023-12-18%20at%2011.09.48.png)
 
 - LCT jointly optimizes both prefixes, minimizing $𝑃 (𝑥_𝑡 |h_{<𝑡} , ¬𝑐)$ in relative to $𝑃 (𝑥_𝑡 |h_{<𝑡} , 𝑐)$.
 - Similar to LLM, LCT is applied on tokens in security-sensitive code regions whose masks are set to 1.

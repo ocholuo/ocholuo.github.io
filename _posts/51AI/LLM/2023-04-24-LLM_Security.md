@@ -238,7 +238,7 @@ Although all the training, tuning and aligning techniques you've explored can he
 
 - There are some broader challenges with LLMs that can't be solved by training alone.
 
-![picture 1](/assets/img/3947d047b200c1a5d0ebdeffade0e408fdfd270e1cd8fbeb5079e5e9f0cea3e2.png)
+![picture 1](/assets/img/post/3947d047b200c1a5d0ebdeffade0e408fdfd270e1cd8fbeb5079e5e9f0cea3e2.png)
 
 ---
 
@@ -270,7 +270,7 @@ Although all the training, tuning and aligning techniques you've explored can he
 
 ## Hallucination
 
-![Screenshot 2024-08-07 at 15.51.53](/assets/img/Screenshot%202024-08-07%20at%2015.51.53.png)
+![Screenshot 2024-08-07 at 15.51.53](/assets/img/post/Screenshot%202024-08-07%20at%2015.51.53.png)
 
 - An infamous outcome of Microsoft’s Sydney were instances when the AI gave responses that were either bizarre 异乎寻常, untrue, or seemed sentient 有感情.
 
@@ -411,7 +411,7 @@ connecting to external data sources and applications.
 
     - One implementation example: `Langchain`
 
-![picture 1](/assets/img/e188b9172ea06e3ecd16a8ad851c8a2293160c8a1f6e34e71d20c352af79f7f8.png)
+![picture 1](/assets/img/post/e188b9172ea06e3ecd16a8ad851c8a2293160c8a1f6e34e71d20c352af79f7f8.png)
 
 ---
 
@@ -441,7 +441,7 @@ connecting to external data sources and applications.
 
   - By encoding the user input prompt as a SQL query, RAG can also interact with databases.
 
-  - ![picture 2](/assets/img/629e1cbe4e6feae8cff981b9b4d8686f84b56cde0cffa2e6576ff2e714b3987c.png)
+  - ![picture 2](/assets/img/post/629e1cbe4e6feae8cff981b9b4d8686f84b56cde0cffa2e6576ff2e714b3987c.png)
 
 
 - **Providing the model with external information**
@@ -475,15 +475,15 @@ connecting to external data sources and applications.
 - key considerations
 
   - the size of the **context window**.
-    - ![picture 3](/assets/img/f9d02724124d47e253d7ef830942c7aa31da1b1616fd639e96e3ba1890a55ed2.png)
+    - ![picture 3](/assets/img/post/f9d02724124d47e253d7ef830942c7aa31da1b1616fd639e96e3ba1890a55ed2.png)
 
     - Most text sources are too long to fit into the limited context window (few thousand tokens) of the model
     - the external data sources are chopped up into many chunks to fit in the context window.
     - Packages like `Langchain` can handle this work
 
   - the data must be available in a format that **allows for easy retrieval** of the most relevant text.
-    - ![picture 4](/assets/img/5eaeeb45e3be611bf44de8ea70b7df7b259134db785f6b4468a7d2a9deb29190.png)
-    - ![picture 5](/assets/img/94e259e94d0ac43b27ae40341e27de5131b2e3f7c82ab1e5686641096ba0b387.png)
+    - ![picture 4](/assets/img/post/5eaeeb45e3be611bf44de8ea70b7df7b259134db785f6b4468a7d2a9deb29190.png)
+    - ![picture 5](/assets/img/post/94e259e94d0ac43b27ae40341e27de5131b2e3f7c82ab1e5686641096ba0b387.png)
 
 
 
@@ -523,7 +523,7 @@ connecting to external data sources and applications.
   - lawyer using a LLM in the discovery phase of a case.
 
   - A Rag architecture can help ask questions of a corpus of documents, for example, previous court filings.
-  - ![picture 0](/assets/img/405f49ec82dd9238831806c9216f30c9bcd03ae9207b5f968d9cfd01788ef91d.png)
+  - ![picture 0](/assets/img/post/405f49ec82dd9238831806c9216f30c9bcd03ae9207b5f968d9cfd01788ef91d.png)
 
 
   - ask the model about the plaintiff named in a specific case number.
@@ -533,7 +533,7 @@ connecting to external data sources and applications.
     - searches for a relevant entry in the corpus of documents.
     - Having found a piece of text that contains the requested information
     - then combines the new text with the original prompt.
-    - ![picture 1](/assets/img/1794027121b14a353448343b7766f53c46c667a25d12f74c0005a96006c08448.png)
+    - ![picture 1](/assets/img/post/1794027121b14a353448343b7766f53c46c667a25d12f74c0005a96006c08448.png)
 
     - The expanded prompt that now contains information about the specific case of interest is then passed to the LLM.
 
@@ -541,7 +541,7 @@ connecting to external data sources and applications.
 
   - use Rag to generate summaries of filings or identify specific people, places and organizations within the full corpus of the legal documents.
 
-![picture 11](/assets/img/c36e540ca92aef5b49d464b436c52f08cabaf43c0f6470526914f0cf3b65bda7.png)
+![picture 11](/assets/img/post/c36e540ca92aef5b49d464b436c52f08cabaf43c0f6470526914f0cf3b65bda7.png)
 
 ---
 
@@ -560,9 +560,9 @@ One strategy that has demonstrated some success is prompting the model to think 
 - Thinking through the problem has helped the model come to the correct answer.
 - while the input prompt is shown here in a condensed format to save space, the entire prompt is actually included in the output.
 
-![picture 3](/assets/img/bce0f8c899ad73d4669287c1eb4199225b1365e2e04557f3e79fb21a40e6e097.png)
+![picture 3](/assets/img/post/bce0f8c899ad73d4669287c1eb4199225b1365e2e04557f3e79fb21a40e6e097.png)
 
-![picture 4](/assets/img/3be4fe7d04f21c970d6399a63a0a16ed810ba8da9df93c11c7b92789babef61e.png)
+![picture 4](/assets/img/post/3be4fe7d04f21c970d6399a63a0a16ed810ba8da9df93c11c7b92789babef61e.png)
 
 - use chain of thought prompting to `help LLMs improve their reasoning of other types of problems`
 > - an example
@@ -571,7 +571,7 @@ One strategy that has demonstrated some success is prompting the model to think 
 > - When pass this prompt to the LLM, it generates a similarly structured completion.
 > - The model correctly identifies the density of gold, which it learned from its training data, and then reasons that the ring would sink because gold is much more dense than water.
 
-![picture 5](/assets/img/55c85fba0c0592ed0bc6ff9a254f162cc2afdc53feb64520ea94d93836d84d95.png)
+![picture 5](/assets/img/post/55c85fba0c0592ed0bc6ff9a254f162cc2afdc53feb64520ea94d93836d84d95.png)
 
 
 Chain of thought prompting is a powerful technique that improves the ability of the model to reason through problems. While this can greatly improve the performance of the model, the limited math skills of LLMs can still cause problems if the task requires accurate calculations, like totaling sales on an e-commerce site, calculating tax, or applying a discount.
@@ -584,7 +584,7 @@ Chain of thought prompting is a powerful technique that improves the ability of 
 
 > letting the LLM talk to a program that is much better at math.
 
-![picture 0](/assets/img/0daaf0bc77ec09503998b8d869664e03092ca4dd5ee8d4451eee3d7fac654c23.png)
+![picture 0](/assets/img/post/0daaf0bc77ec09503998b8d869664e03092ca4dd5ee8d4451eee3d7fac654c23.png)
 
 <font color=OrangeRed> The model isn't actually doing any real math here. </font>
 
@@ -626,9 +626,9 @@ The strategy behind PAL
 - This code is then passed to an interpreter to carry out the calculations necessary to solve the problem.
 
 
-![picture 1](/assets/img/199deccaa2b6ae327db6f8d609bd6950d45b64847665150caa37e819f79b98a1.png)
+![picture 1](/assets/img/post/199deccaa2b6ae327db6f8d609bd6950d45b64847665150caa37e819f79b98a1.png)
 
-![picture 2](/assets/img/838bbd89848306f7cb669438bb1c46eb4243ec1eb90e2c25f4ca2e92674a54f2.png)
+![picture 2](/assets/img/post/838bbd89848306f7cb669438bb1c46eb4243ec1eb90e2c25f4ca2e92674a54f2.png)
 
 example prompts:
 
@@ -659,20 +659,20 @@ How the PAL framework enables an LLM to interact with an external interpreter.
 
    - For the bakery example script you saw on the previous slide, the answer is 74.
 
-   - ![picture 3](/assets/img/4dfc3e9acdbb6dc76d2fed28aceaa9db69ebf000539092b620d131abca820ff4.png)
+   - ![picture 3](/assets/img/post/4dfc3e9acdbb6dc76d2fed28aceaa9db69ebf000539092b620d131abca820ff4.png)
 
 6. append the text containing the answer, have a prompt that includes the correct answer in context.
    - accurate because the calculation was carried out in Python to the PAL formatted prompt you started with.
-   - ![picture 5](/assets/img/13a64ec71c12a2d2a70a05e95720833d8f2e4c29cbaadf8a1331cf52c2cbdd11.png)
+   - ![picture 5](/assets/img/post/13a64ec71c12a2d2a70a05e95720833d8f2e4c29cbaadf8a1331cf52c2cbdd11.png)
 
 7. pass the updated prompt to the LLM, it generates a completion that contains the correct answer.
-   - ![picture 4](/assets/img/93f7cbf66bdf79258b8c373d79cee1b30bd1fe9050186b356e7fa68edf84271e.png)
+   - ![picture 4](/assets/img/post/93f7cbf66bdf79258b8c373d79cee1b30bd1fe9050186b356e7fa68edf84271e.png)
 
 
 Automate this process
 - so that you don't have to pass information back and forth between the LLM, and the interpreter by hand.
 
-![picture 6](/assets/img/8fa2f590f47cca16fa3121f039173f861b8be4a1e5fddf73cb9d01b2935f1075.png)
+![picture 6](/assets/img/post/8fa2f590f47cca16fa3121f039173f861b8be4a1e5fddf73cb9d01b2935f1075.png)
 
 - The orchestrator
   - a technical component that can manage the flow of information and the initiation of calls to external data sources or applications.
@@ -683,7 +683,7 @@ Automate this process
 
   - it creates the plan that the orchestrator will interpret and execute.
 
-![picture 7](/assets/img/cd5a825c71a82cd1438572b78c7c9eedb8c801f29ef33e5896f06f825883477c.png)
+![picture 7](/assets/img/post/cd5a825c71a82cd1438572b78c7c9eedb8c801f29ef33e5896f06f825883477c.png)
 
 - In PAL there's only one action to be carried out, <font color=OrangeRed> the execution of Python code </font>.
 
@@ -716,7 +716,7 @@ Automate this process
 
 - This strategy can be extended for the specific use case by creating examples that work through the decisions and actions that will take place in the application.
 
-![picture 12](/assets/img/ef3ec18db5a8313583b1f566d140583c5b72408e0c1700edc9144de4f363c3f9.png)
+![picture 12](/assets/img/post/ef3ec18db5a8313583b1f566d140583c5b72408e0c1700edc9144de4f363c3f9.png)
 
 - a prompting strategy
   - combines chain of thought reasoning with action planning.
@@ -728,7 +728,7 @@ Automate this process
 
 > bridges the gap between reasoning and acting in LLMs, yielding remarkable results across language reasoning and decision making tasks.
 
-![picture 9](/assets/img/88c88dee02b58663812d7b16035f3f0bac26d0a57a9bafbb6b0e083fce844ed2.png)
+![picture 9](/assets/img/post/88c88dee02b58663812d7b16035f3f0bac26d0a57a9bafbb6b0e083fce844ed2.png)
 
 
 ---
@@ -737,7 +737,7 @@ Automate this process
 
 ReAct uses structured examples to show a large language model how to reason through a problem and decide on actions to take that move it closer to a solution.
 
-![picture 13](/assets/img/30e0f0790091aa77087f4beebc540b5a5041a5a055b02b0a8fbe771ae276b717.png)
+![picture 13](/assets/img/post/30e0f0790091aa77087f4beebc540b5a5041a5a055b02b0a8fbe771ae276b717.png)
 
 - **question**
 
@@ -745,7 +745,7 @@ ReAct uses structured examples to show a large language model how to reason thro
 
   > - example: determine which of two magazines was created first.
 
-![picture 14](/assets/img/44022f8881bfc78c7c601f5167820a0d92392ddceac3bc2228f90e65e3bd1aee.png)
+![picture 14](/assets/img/post/44022f8881bfc78c7c601f5167820a0d92392ddceac3bc2228f90e65e3bd1aee.png)
 
 - **thought**
 
@@ -755,7 +755,7 @@ ReAct uses structured examples to show a large language model how to reason thro
 
   > - example: the prompt specifies that the model will search for both magazines and determine which one was published first.
 
-![picture 15](/assets/img/7be072286434a4588fe00cdd7800f9f3c9db8a699ea00803b3737e64c2106f1f.png)
+![picture 15](/assets/img/post/7be072286434a4588fe00cdd7800f9f3c9db8a699ea00803b3737e64c2106f1f.png)
 
 - **action**
 
@@ -774,7 +774,7 @@ ReAct uses structured examples to show a large language model how to reason thro
   > - the thought in the prompt identified two searches to carry out one for each magazine.
   > - the first search will be for Arthur's magazine.
 
-![picture 16](/assets/img/af385b15c8fc0add6adb1bd5a2a70af10503509506ac2f3bcd55073e51863fdb.png)
+![picture 16](/assets/img/post/af385b15c8fc0add6adb1bd5a2a70af10503509506ac2f3bcd55073e51863fdb.png)
 
 - **observation**
 
@@ -782,7 +782,7 @@ ReAct uses structured examples to show a large language model how to reason thro
 
 - the prompt then repeats the cycle as many times as is necessary to obtain the final answer.
 
-![picture 17](/assets/img/e8edcea0ba08ea9de99a42dfd79e80ef165aec056d61174be63d5f75d9efe040.png)
+![picture 17](/assets/img/post/e8edcea0ba08ea9de99a42dfd79e80ef165aec056d61174be63d5f75d9efe040.png)
 
 - In the second thought, the prompt states the start year of Arthur's magazine and identifies the next step needed to solve the problem.
 
@@ -790,7 +790,7 @@ ReAct uses structured examples to show a large language model how to reason thro
 
   - At this point, all the information required to answer the question is known.
 
-![picture 18](/assets/img/376c4ecf4797085ff78b685b65c5be469f195fc7a46d217a1e2ce98e0ce89483.png)
+![picture 18](/assets/img/post/376c4ecf4797085ff78b685b65c5be469f195fc7a46d217a1e2ce98e0ce89483.png)
 
 - The third thought states the start year of first for women and then gives the explicit logic used to determine which magazine was published first.
 
@@ -802,7 +802,7 @@ ReAct uses structured examples to show a large language model how to reason thro
 
 The full text of the instructions:
 
-![picture 19](/assets/img/5b57241d915d348773d7b450f1d767d9a0e3cf9021a4affd83619afc495347d7.png)
+![picture 19](/assets/img/post/5b57241d915d348773d7b450f1d767d9a0e3cf9021a4affd83619afc495347d7.png)
 
 1. the task is defined, telling the model to answer a question using the prompt structure you just explored in detail.
 
@@ -819,7 +819,7 @@ The full text of the instructions:
 
 ---
 
-![picture 20](/assets/img/b9035111fd03882b0c5e53a60a740366ec0a3786f6a09bfeaff0f9f983815663.png)
+![picture 20](/assets/img/post/b9035111fd03882b0c5e53a60a740366ec0a3786f6a09bfeaff0f9f983815663.png)
 
 All the pieces together
 
@@ -841,7 +841,7 @@ All the pieces together
 - built around LLMs and allows the chaining of various components to create more advanced applications for LLMs.
   - It supports use cases like chatbots, Generative Question-Answering (GQA), and summarization.
 
-![picture 21](/assets/img/98978143e4771480d02e6a53d888994b4c4afbe295b20d1aca26058f02edc03a.png)
+![picture 21](/assets/img/post/98978143e4771480d02e6a53d888994b4c4afbe295b20d1aca26058f02edc03a.png)
 
 - Sometimes the application workflow could take multiple paths depending on the information the user provides, instead of use a pre-determined chain, will need the flexibility to decide which actions to take as the user moves through the workflow.
 
@@ -858,7 +858,7 @@ All the pieces together
 
   - **pre-built tools**: enable to carry out a wide variety of tasks, including calls to external datasets and various APIs.
 
-![picture 22](/assets/img/bf6fab4984dfb5230d1551af1e0e05bdd075948f43f82b900950f7cef886aab5.png)
+![picture 22](/assets/img/post/bf6fab4984dfb5230d1551af1e0e05bdd075948f43f82b900950f7cef886aab5.png)
 
 - LangChain defines another construct, known as an **agent**, that you can use to interpret the input from the user and determine which tool or tools to use to complete the task.
 

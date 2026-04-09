@@ -78,11 +78,11 @@ image:
 
 container:
 
-![Screenshot 2024-08-07 at 14.49.51](/assets/img/Screenshot%202024-08-07%20at%2014.49.51.png)
+![Screenshot 2024-08-07 at 14.49.51](/assets/img/post/Screenshot%202024-08-07%20at%2014.49.51.png)
 
-![Screenshot 2024-08-07 at 14.51.13](/assets/img/Screenshot%202024-08-07%20at%2014.51.13.png)
+![Screenshot 2024-08-07 at 14.51.13](/assets/img/post/Screenshot%202024-08-07%20at%2014.51.13.png)
 
-![Screenshot 2024-08-07 at 14.52.06](/assets/img/Screenshot%202024-08-07%20at%2014.52.06.png)
+![Screenshot 2024-08-07 at 14.52.06](/assets/img/post/Screenshot%202024-08-07%20at%2014.52.06.png)
 
 ---
 
@@ -244,13 +244,13 @@ cc3cd263c581        gcr.io/google_containers/etcd:2.0.9          "/usr/local/bin
 
 ![k8s_architecture](https://i.imgur.com/ibs26v8.png)
 
-![Screenshot 2024-08-07 at 15.00.57](/assets/img/Screenshot%202024-08-07%20at%2015.00.57.png)
+![Screenshot 2024-08-07 at 15.00.57](/assets/img/post/Screenshot%202024-08-07%20at%2015.00.57.png)
 
 - 节点(`Node`)
   - 一个 Node 是一个运行 Kubernetes 中的主机。
   - A node represents a computing instance like a machine.
 
-![Screenshot 2024-08-07 at 15.01.25](/assets/img/Screenshot%202024-08-07%20at%2015.01.25.png)
+![Screenshot 2024-08-07 at 15.01.25](/assets/img/post/Screenshot%202024-08-07%20at%2015.01.25.png)
 
 - 容器组 (`Pod`)
   - 一个 Pod 对应于由若干 Pod 成的一个 Pod
@@ -267,7 +267,7 @@ cc3cd263c581        gcr.io/google_containers/etcd:2.0.9          "/usr/local/bin
 - `Replication Controllers`
   - 主要负责指定数量的 pod 在同一时间一起运行。
 
-![Screenshot 2024-08-07 at 15.04.32](/assets/img/Screenshot%202024-08-07%20at%2015.04.32.png)
+![Screenshot 2024-08-07 at 15.04.32](/assets/img/post/Screenshot%202024-08-07%20at%2015.04.32.png)
 
 - 服务(`services`)
   - 一个 Kubernetes 服务是 Pod 逻辑的高级抽象, 同时也对外提供访问 Pod 的策略。
@@ -292,7 +292,7 @@ cc3cd263c581        gcr.io/google_containers/etcd:2.0.9          "/usr/local/bin
   - `kubecfg`命令。
   - To update a new version of your app, you can use kubectl rollout or change your deployment configuration file and apply the change.
 
-![Screenshot 2024-08-07 at 15.06.23](/assets/img/Screenshot%202024-08-07%20at%2015.06.23.png)
+![Screenshot 2024-08-07 at 15.06.23](/assets/img/post/Screenshot%202024-08-07%20at%2015.06.23.png)
 
 - deployment
   - A deployment represents a group of replicas of the same pod and keeps your pods running even when the nodes they run on fail.

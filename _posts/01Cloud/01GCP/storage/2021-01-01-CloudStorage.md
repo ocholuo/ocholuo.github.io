@@ -156,7 +156,7 @@ image:
 
 ### access control lists - ACLs
 
-![Screenshot 2024-08-07 at 13.40.27](/assets/img/Screenshot%202024-08-07%20at%2013.40.27.png)
+![Screenshot 2024-08-07 at 13.40.27](/assets/img/post/Screenshot%202024-08-07%20at%2013.40.27.png)
 
 ![Screen Shot 2021-06-29 at 1.01.52 AM](https://i.imgur.com/ZVXekXM.png)
 
@@ -166,7 +166,7 @@ image:
 
 ![Screen Shot 2021-06-29 at 1.05.15 AM](https://i.imgur.com/lmWwwgY.png)
 
-![Screenshot 2024-08-07 at 13.39.16](/assets/img/Screenshot%202024-08-07%20at%2013.39.16.png)
+![Screenshot 2024-08-07 at 13.39.16](/assets/img/post/Screenshot%202024-08-07%20at%2013.39.16.png)
 
 ![Screen Shot 2021-06-29 at 1.05.41 AM](https://i.imgur.com/LA9i41y.png)
 
@@ -174,7 +174,7 @@ image:
 
 ### lifecycle policy
 
-![Screenshot 2024-08-07 at 13.41.54](/assets/img/Screenshot%202024-08-07%20at%2013.41.54.png)
+![Screenshot 2024-08-07 at 13.41.54](/assets/img/post/Screenshot%202024-08-07%20at%2013.41.54.png)
 
 ![Screen Shot 2021-06-29 at 1.06.52 AM](https://i.imgur.com/5cYKp9r.png)
 
@@ -194,7 +194,7 @@ image:
 
 ### storage class
 
-![Screenshot 2024-08-07 at 13.43.09](/assets/img/Screenshot%202024-08-07%20at%2013.43.09.png)
+![Screenshot 2024-08-07 at 13.43.09](/assets/img/post/Screenshot%202024-08-07%20at%2013.43.09.png)
 
 4 type of storage class:
 - Regional
@@ -206,7 +206,7 @@ image:
 
 ![Screen Shot 2021-02-03 at 22.38.07](https://i.imgur.com/zQFaWOA.png)
 
-![Screenshot 2024-08-07 at 13.43.50](/assets/img/Screenshot%202024-08-07%20at%2013.43.50.png)
+![Screenshot 2024-08-07 at 13.43.50](/assets/img/post/Screenshot%202024-08-07%20at%2013.43.50.png)
 
 ![Screen Shot 2021-06-29 at 1.12.07 AM](https://i.imgur.com/DeMifDh.png)
 
@@ -233,7 +233,7 @@ image:
 
 #### Autoclass
 
-![Screenshot 2024-08-07 at 13.44.26](/assets/img/Screenshot%202024-08-07%20at%2013.44.26.png)
+![Screenshot 2024-08-07 at 13.44.26](/assets/img/post/Screenshot%202024-08-07%20at%2013.44.26.png)
 
 ---
 
@@ -320,7 +320,7 @@ used in
 
 ## bring data into cloud storage.
 
-![Screenshot 2024-08-07 at 13.45.53](/assets/img/Screenshot%202024-08-07%20at%2013.45.53.png)
+![Screenshot 2024-08-07 at 13.45.53](/assets/img/post/Screenshot%202024-08-07%20at%2013.45.53.png)
 
 ![Screen Shot 2021-02-03 at 23.54.12](https://i.imgur.com/suMHyqx.png)
 

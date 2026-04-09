@@ -70,7 +70,7 @@ image:
 
 - Google realized that the virtualization model was limiting their ability to innovate, so they switched to a **container-based architecture**.
 
-![Screenshot 2024-08-07 at 09.49.50](/assets/img/Screenshot%202024-08-07%20at%2009.49.50.png)
+![Screenshot 2024-08-07 at 09.49.50](/assets/img/post/Screenshot%202024-08-07%20at%2009.49.50.png)
 
 ---
 
@@ -88,11 +88,11 @@ image:
 
 ### compare
 
-![Screenshot 2024-08-11 at 12.29.51](/assets/img/Screenshot%202024-08-11%20at%2012.29.51.png)
+![Screenshot 2024-08-11 at 12.29.51](/assets/img/post/Screenshot%202024-08-11%20at%2012.29.51.png)
 
-![Screenshot 2024-08-11 at 12.29.50](/assets/img/Screenshot%202024-08-11%20at%2012.29.50.png)
+![Screenshot 2024-08-11 at 12.29.50](/assets/img/post/Screenshot%202024-08-11%20at%2012.29.50.png)
 
-![Screenshot 2024-08-11 at 12.29.49](/assets/img/Screenshot%202024-08-11%20at%2012.29.49.png)
+![Screenshot 2024-08-11 at 12.29.49](/assets/img/post/Screenshot%202024-08-11%20at%2012.29.49.png)
 
 ---
 
@@ -100,7 +100,7 @@ image:
 
 [link](https://github.com/ocholuo/ocholuo.github.io/tree/master/_posts/01Cloud/01GCP/2021-01-01-GCP.md#iaas-vs-paas-vs-serverless-vs-saas)
 
-![Screenshot 2024-08-07 at 23.04.21](/assets/img/Screenshot%202024-08-07%20at%2023.04.21.png)
+![Screenshot 2024-08-07 at 23.04.21](/assets/img/post/Screenshot%202024-08-07%20at%2023.04.21.png)
 
 ---
 
@@ -123,7 +123,7 @@ image:
   - no upfront investments
   - run thousands of virtual CPUs on a system that is designed to be fast and to offer consistent performance.
 
-![Screenshot 2024-08-11 at 12.20.41](/assets/img/Screenshot%202024-08-11%20at%2012.20.41.png)
+![Screenshot 2024-08-11 at 12.20.41](/assets/img/post/Screenshot%202024-08-11%20at%2012.20.41.png)
 
 - <font color=OrangeRed> use case </font>:
   - have complete control over your infrastructure
@@ -171,7 +171,7 @@ image:
     - standard and flexible
   - App Engine supports popular languages like Java and Node.js, Python, PHP, C#, .NET, Ruby, and Go.
 
-![Screenshot 2024-08-11 at 12.23.07](/assets/img/Screenshot%202024-08-11%20at%2012.23.07.png)
+![Screenshot 2024-08-11 at 12.23.07](/assets/img/post/Screenshot%202024-08-11%20at%2012.23.07.png)
 
 - <font color=OrangeRed> use case </font>:
   - suited for applications where the workload is highly variable or unpredictable
@@ -237,7 +237,7 @@ image:
       - such as virtual assistance, chat bots
       - video or image analysis, and sentiment analysis.
 
-![Screenshot 2024-08-11 at 12.26.17](/assets/img/Screenshot%202024-08-11%20at%2012.26.17_3lo65tiy3.png)
+![Screenshot 2024-08-11 at 12.26.17](/assets/img/post/Screenshot%202024-08-11%20at%2012.26.17_3lo65tiy3.png)
 
 - <font color=OrangeRed> use cases </font>
   - used as part of a microservices application architecture.
@@ -285,7 +285,7 @@ image:
   - enables you to deploy stateless containers
     - that listen for requests or events delivered via HTTP requests.
 
-![Screenshot 2024-08-11 at 12.26.17](/assets/img/Screenshot%202024-08-11%20at%2012.26.17.png)
+![Screenshot 2024-08-11 at 12.26.17](/assets/img/post/Screenshot%202024-08-11%20at%2012.26.17.png)
 
 - use case:
   - build your applications in any language using whatever frameworks and tools you wish and deploy them in seconds without having to manage and maintain that server infrastructure.
@@ -307,7 +307,7 @@ image:
   - containerization, a way to package code that's designed to be highly portable and to use resources very efficiently.
   - Kubernetes, a way to orchestrate code in those containers.
 
-![Screenshot 2024-08-11 at 12.24.30](/assets/img/Screenshot%202024-08-11%20at%2012.24.30.png)
+![Screenshot 2024-08-11 at 12.24.30](/assets/img/post/Screenshot%202024-08-11%20at%2012.24.30.png)
 
 - <font color=OrangeRed> use case </font>:
   - containerized applications
