@@ -432,6 +432,8 @@
     html[data-theme="midnight"] .badge.green  { background: rgba(74,222,128,.1); border-color: rgba(74,222,128,.25); }
     html[data-theme="midnight"] .badge.orange { background: rgba(124,58,237,.15); border-color: rgba(124,58,237,.3); color: #a78bfa; }
     html[data-theme="midnight"] .lang-btn.active { box-shadow: 0 2px 12px rgba(124,58,237,.35); }
+    /* WHY: midnight is emoji-free — nav icons are pure emoji containers, hide entirely */
+    html[data-theme="midnight"] .nav-icon { display: none; }
 
     /* ── Theme: Terminal ─────────────────────────────────────────── */
     html[data-theme="terminal"] {
@@ -1070,6 +1072,8 @@ let _lang = localStorage.getItem('mortgage_lang') || 'en';
     document.querySelectorAll('.theme-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.themeId === theme);
     });
+    // WHY: re-run applyLang so emoji-strip logic reflects the new theme
+    if (typeof applyLang === 'function') applyLang();
   }
   // Init theme immediately (before paint to avoid flash)
   setTheme(_theme);
@@ -1089,13 +1093,17 @@ function t(key) {
 }
 
 function applyLang() {
-  // Apply to all data-i18n elements
+  // WHY: strip emojis from translated text when midnight theme is active
+  // Regex covers main emoji unicode blocks (pictographs, symbols, misc)
+  const emojiRe = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F9FF}\u{FE00}-\u{FE0F}]/gu;
+  const clean = str => _theme === 'midnight' ? str.replace(emojiRe, '').replace(/\s+/g, ' ').trim() : str;
+
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     const val = t(key);
     // Use innerHTML for footer sources (contain <strong> tags)
     if (key.startsWith('footer.')) el.innerHTML = val;
-    else el.textContent = val;
+    else el.textContent = clean(val);
   });
 }
 
