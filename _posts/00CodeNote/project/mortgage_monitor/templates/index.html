@@ -9,177 +9,352 @@
     /* ── Reset & Base ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #fdf6f0;
+      --bg: #f1f5f9;
       --surface: #ffffff;
-      --border: #e8ddd4;
-      --accent: #e07b39;
-      --accent-light: #fef3ea;
-      --accent-dark: #c4622b;
+      --border: #e2e8f0;
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --accent-dark: #1d4ed8;
+      --nav-bg: #0f172a;
       --blue: #3b82f6;
       --blue-light: #eff6ff;
       --purple: #a78bfa;
       --purple-light: #f5f3ff;
-      --teal: #10b981;
-      --teal-light: #ecfdf5;
+      --teal: #0891b2;
+      --teal-light: #ecfeff;
       --green: #22c55e;
       --green-light: #f0fdf4;
       --red: #ef4444;
       --red-light: #fef2f2;
       --gold: #f59e0b;
-      --text: #1c1917;
-      --text-muted: #78716c;
-      --text-light: #a8a29e;
-      --shadow: 0 2px 12px rgba(0,0,0,.07);
-      --shadow-md: 0 4px 24px rgba(0,0,0,.10);
-      --radius: 16px;
-      --radius-sm: 8px;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --shadow: 0 1px 6px rgba(0,0,0,.06), 0 2px 12px rgba(0,0,0,.04);
+      --shadow-md: 0 4px 20px rgba(0,0,0,.10);
+      --radius: 8px;
+      --radius-sm: 4px;
     }
-    html { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
-    body { background: var(--bg); color: var(--text); min-height: 100vh; }
+    html { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
 
+    /* ── Left Sidebar Navigation ─────────────────────────────────── */
+    /* WHY: persistent left sidebar on desktop; mobile uses nav-grid instead */
+    .sidebar {
+      width: 220px; position: fixed; left: 0; top: 0; bottom: 0;
+      background: var(--nav-bg);
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex; flex-direction: column; overflow-y: auto; z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 20px 18px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .brand-mark {
+      width: 32px; height: 32px; border-radius: 6px;
+      background: var(--accent); color: white;
+      font-size: .8rem; font-weight: 900; letter-spacing: -.02em;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 8px;
+    }
+    .sidebar-logo-title { font-size: .95rem; font-weight: 800; color: #f1f5f9; line-height: 1.3; }
+    .sidebar-logo-sub { font-size: .68rem; color: #64748b; margin-top: 2px; }
+    .sidebar-nav { list-style: none; padding: 8px 0; flex: 1; }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 18px; cursor: pointer;
+      font-size: .83rem; font-weight: 500; color: #94a3b8;
+      transition: background 0.12s, color 0.12s;
+      border-left: 3px solid transparent;
+      white-space: nowrap;
+    }
+    .sidebar-item:hover { background: rgba(255,255,255,0.06); color: #e2e8f0; }
+    .sidebar-item.active {
+      background: rgba(37,99,235,0.18); color: #93c5fd;
+      border-left-color: var(--accent);
+    }
+    .sidebar-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 5px 12px; }
+    /* Sidebar bottom controls (theme + lang) */
+    .sidebar-controls {
+      padding: 12px 18px 20px; border-top: 1px solid rgba(255,255,255,0.07);
+      margin-top: auto;
+    }
+    .sidebar-controls-label {
+      font-size: .65rem; color: #64748b; text-transform: uppercase;
+      letter-spacing: .07em; font-weight: 700; margin-bottom: 7px;
+    }
+    .sidebar .theme-switcher { flex-wrap: wrap; gap: 3px; margin-bottom: 10px; }
+    .sidebar .lang-switcher  { flex-wrap: wrap; gap: 4px; }
+    .theme-switcher { display: flex; gap: 3px; }
+    .theme-btn {
+      width: 30px; height: 30px; border-radius: 6px; font-size: .88rem; line-height: 1;
+      border: 1px solid transparent; background: transparent;
+      cursor: pointer; transition: all .15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .theme-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); }
+    .theme-btn.active { background: rgba(37,99,235,0.3); border-color: rgba(37,99,235,0.5); box-shadow: 0 0 0 2px rgba(37,99,235,0.2); }
+    .lang-switcher { display: flex; gap: 4px; }
+    .lang-btn {
+      padding: 4px 10px; border-radius: 4px; font-size: .72rem; font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.12); background: transparent; color: #94a3b8;
+      cursor: pointer; transition: all .15s; letter-spacing: .02em;
+    }
+    .lang-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+    .lang-btn:hover:not(.active) { background: rgba(255,255,255,0.07); color: #e2e8f0; }
+
+    /* ── App Main — clear fixed left sidebar ─────────────────────── */
+    .app-main { margin-left: 220px; min-width: 0; overflow-x: hidden; }
+    /* Mobile: hide sidebar, restore nav-grid, no left margin */
+    @media (max-width: 767px) {
+      .sidebar { display: none; }
+      .app-main { margin-left: 0; }
+    }
+    /* Desktop: sidebar replaces in-page nav-grid */
+    @media (min-width: 768px) { .nav-grid { display: none; } }
+
     /* ── Layout ──────────────────────────────────────────────────── */
-    .container { max-width: 960px; margin: 0 auto; padding: 24px 16px 80px; }
+    /* WHY: no max-width so content fills available width after 220px sidebar without overflow */
+    .container { padding: 20px 24px 64px; }
 
     /* ── Header ──────────────────────────────────────────────────── */
-    .header { margin-bottom: 24px; }
-    .header h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; }
-    .header-sub { color: var(--text-muted); font-size: .9rem; margin-top: 4px; }
-    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .header { margin-bottom: 20px; }
+    .header h1 { font-size: 1.55rem; font-weight: 800; letter-spacing: -0.03em; }
+    .header-sub { color: var(--text-muted); font-size: .85rem; margin-top: 3px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
     .badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 4px 12px; border-radius: 999px;
-      font-size: .78rem; font-weight: 600;
-      border: 1.5px solid var(--border); background: var(--surface);
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 4px;
+      font-size: .72rem; font-weight: 600;
+      border: 1px solid var(--border); background: var(--surface);
     }
-    .badge.green { color: var(--green); border-color: #bbf7d0; background: var(--green-light); }
-    .badge.orange { color: var(--accent); border-color: #fed7aa; background: var(--accent-light); }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; display: inline-block; }
+    .badge.green { color: #16a34a; border-color: #bbf7d0; background: var(--green-light); }
+    .badge.orange { color: var(--accent); border-color: #bfdbfe; background: var(--accent-light); }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; display: inline-block; }
 
-    /* ── Rate Cards ──────────────────────────────────────────────── */
-    .rate-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-    /* WHY: 10-YR Treasury is the benchmark — give it a full-width top row;
-       30-YR and 15-YR sit side by side in the row below, same total width */
-    .rate-cards .rate-card.teal { grid-column: 1 / -1; }
-    @media(max-width: 600px) { .rate-cards { grid-template-columns: 1fr; } }
-    .rate-card {
-      background: var(--surface); border-radius: var(--radius);
-      border: 1.5px solid var(--border); box-shadow: var(--shadow);
-      padding: 20px 22px; border-left-width: 5px;
+    /* ── Rate Cards — 3 equal columns ────────────────────────────── */
+    .rate-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
     }
-    .rate-card.blue { border-left-color: var(--blue); }
-    .rate-card.purple { border-left-color: var(--purple); }
-    .rate-card.teal { border-left-color: var(--teal); }
-    .rate-card-label { font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
-    .rate-card-big { font-size: 2.6rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1.1; margin: 6px 0; }
+    /* All three cards equal width — TNX is NOT full width */
+    .rate-cards .rate-card.teal { grid-column: auto; }
+    @media (max-width: 680px) { .rate-cards { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) and (min-width: 681px) { .rate-cards { grid-template-columns: 1fr 1fr; } }
+    .rate-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 16px 18px;
+      border-top: 3px solid transparent;
+    }
+    .rate-card.blue { border-top-color: var(--blue); }
+    .rate-card.purple { border-top-color: var(--purple); }
+    .rate-card.teal { border-top-color: var(--teal); }
+    .rate-card-label { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
+    .rate-card-big {
+      font-size: 2.4rem; font-weight: 900; letter-spacing: -0.04em;
+      line-height: 1.1; margin: 5px 0;
+      font-variant-numeric: tabular-nums;
+    }
     .rate-card-big.blue { color: var(--blue); }
     .rate-card-big.purple { color: var(--purple); }
     .rate-card-big.teal { color: var(--teal); }
-    .spread-badge { display: inline-block; margin-top: 6px; font-size: .72rem; font-weight: 600; color: var(--text-muted); background: var(--teal-light); padding: 2px 8px; border-radius: 999px; }
-    .rate-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+    .spread-badge { display: inline-block; margin-top: 5px; font-size: .68rem; font-weight: 600; color: var(--text-muted); background: var(--teal-light); padding: 2px 7px; border-radius: 4px; }
+    .rate-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
     .meta-item { display: flex; flex-direction: column; }
-    .meta-label { font-size: .68rem; color: var(--text-light); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
-    .meta-value { font-size: .92rem; font-weight: 700; margin-top: 1px; }
-    .meta-value.green { color: var(--green); }
+    .meta-label { font-size: .65rem; color: var(--text-light); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .meta-value { font-size: .88rem; font-weight: 700; margin-top: 1px; font-variant-numeric: tabular-nums; }
+    .meta-value.green { color: #16a34a; }
     .meta-value.red { color: var(--red); }
-    .range-bar-wrap { margin-top: 14px; }
-    .range-bar-labels { display: flex; justify-content: space-between; font-size: .7rem; color: var(--text-muted); margin-bottom: 4px; }
-    .range-bar-track { height: 6px; background: #f0ebe6; border-radius: 999px; position: relative; }
+    .range-bar-wrap { margin-top: 12px; }
+    .range-bar-labels { display: flex; justify-content: space-between; font-size: .67rem; color: var(--text-muted); margin-bottom: 3px; }
+    .range-bar-track { height: 5px; background: #e2e8f0; border-radius: 999px; position: relative; }
     .range-bar-fill { position: absolute; left: 0; top: 0; height: 100%; border-radius: 999px; }
     .range-bar-fill.blue { background: var(--blue); }
     .range-bar-fill.purple { background: var(--purple); }
     .range-bar-fill.teal { background: var(--teal); }
     .range-bar-thumb {
       position: absolute; top: 50%; transform: translate(-50%, -50%);
-      width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;
-      box-shadow: 0 1px 4px rgba(0,0,0,.25);
+      width: 10px; height: 10px; border-radius: 50%; border: 2px solid white;
+      box-shadow: 0 1px 4px rgba(0,0,0,.2);
     }
     .range-bar-thumb.blue { background: var(--blue); }
     .range-bar-thumb.purple { background: var(--purple); }
     .range-bar-thumb.teal { background: var(--teal); }
 
+    /* ── Dashboard Row: Chart full-width, Forecast on next row ─────── */
+    /* WHY: user requested chart 独占一行 (full row), forecast below it */
+    .dash-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+      align-items: start;
+    }
+
     /* ── Chart Card ──────────────────────────────────────────────── */
     .chart-card {
       background: var(--surface); border-radius: var(--radius);
-      border: 1.5px solid var(--border); box-shadow: var(--shadow);
-      padding: 20px 22px; margin-bottom: 24px;
+      border: 1px solid var(--border); box-shadow: var(--shadow);
+      padding: 16px 18px;
+      min-width: 0; overflow: hidden;
     }
-    .chart-wrap { position: relative; height: 300px; }
-    .chart-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
-    .chart-title { font-size: 1rem; font-weight: 700; letter-spacing: -.01em; }
-    .tab-group { display: flex; gap: 6px; }
+    /* WHY: overflow:hidden prevents Chart.js canvas from bleeding outside card on resize */
+    .chart-wrap { position: relative; height: 260px; overflow: hidden; }
+    .chart-wrap canvas { max-width: 100%; }
+    .chart-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .chart-title { font-size: .95rem; font-weight: 700; letter-spacing: -.01em; }
+    .tab-group { display: flex; gap: 4px; }
     .tab-btn {
-      padding: 5px 16px; border-radius: 999px; font-size: .8rem; font-weight: 600;
-      border: 1.5px solid var(--border); background: transparent; color: var(--text-muted);
+      padding: 4px 13px; border-radius: 4px; font-size: .76rem; font-weight: 600;
+      border: 1px solid var(--border); background: transparent; color: var(--text-muted);
       cursor: pointer; transition: all .15s; letter-spacing: .01em;
     }
-    .tab-btn.active { background: var(--accent); border-color: var(--accent); color: white; box-shadow: 0 2px 8px rgba(224,123,57,.25); }
+    .tab-btn.active { background: var(--accent); border-color: var(--accent); color: white; box-shadow: 0 2px 6px rgba(37,99,235,.2); }
     .tab-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
-    .chart-legend { display: flex; gap: 20px; margin-top: 12px; }
-    .legend-item { display: flex; align-items: center; gap: 6px; font-size: .76rem; color: var(--text-muted); font-weight: 500; }
+    .chart-legend { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 5px; font-size: .72rem; color: var(--text-muted); font-weight: 500; }
     .legend-dot { width: 10px; height: 3px; border-radius: 2px; }
 
     /* ── Forecast Card ───────────────────────────────────────────── */
     .forecast-card {
       background: var(--surface); border-radius: var(--radius);
-      border: 1.5px solid var(--border); box-shadow: var(--shadow);
-      padding: 20px 22px; margin-bottom: 24px;
+      border: 1px solid var(--border); box-shadow: var(--shadow);
+      padding: 16px 18px;
+      /* WHY: min-width:0 + overflow:hidden keeps forecast card within grid column */
+      min-width: 0; overflow: hidden;
     }
-    .forecast-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-    .forecast-title { font-size: 1rem; font-weight: 700; }
+    .forecast-header { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .forecast-title { font-size: .95rem; font-weight: 700; }
     .trend-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 3px 10px; border-radius: 999px; font-size: .78rem; font-weight: 700;
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 9px; border-radius: 4px; font-size: .74rem; font-weight: 700;
     }
-    .trend-badge.green { background: var(--green-light); color: var(--green); border: 1.5px solid #bbf7d0; }
-    .trend-badge.red { background: var(--red-light); color: var(--red); border: 1.5px solid #fecaca; }
-    .trend-badge.yellow { background: #fefce8; color: #854d0e; border: 1.5px solid #fde68a; }
-    .forecast-analysis { font-size: .87rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 14px; }
-    .ma-badges { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-    .ma-badge { padding: 3px 10px; border-radius: 999px; font-size: .77rem; font-weight: 700; }
-    .ma-badge.yellow { background: #fef9c3; color: #713f12; border: 1.5px solid #fde68a; }
-    .ma-badge.red-o { background: #fff7ed; color: #9a3412; border: 1.5px solid #fed7aa; }
-    .projections { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-    @media(max-width: 500px) { .projections { grid-template-columns: 1fr; } }
+    .trend-badge.green { background: var(--green-light); color: #16a34a; border: 1px solid #bbf7d0; }
+    .trend-badge.red { background: var(--red-light); color: var(--red); border: 1px solid #fecaca; }
+    .trend-badge.yellow { background: #fefce8; color: #854d0e; border: 1px solid #fde68a; }
+    .forecast-analysis { font-size: .82rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 12px; word-break: break-word; overflow-wrap: break-word; }
+    .ma-badges { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+    .ma-badge { padding: 2px 9px; border-radius: 4px; font-size: .72rem; font-weight: 700; }
+    .ma-badge.yellow { background: #fef9c3; color: #713f12; border: 1px solid #fde68a; }
+    .ma-badge.red-o { background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; }
+    .projections { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+    @media (max-width: 500px) { .projections { grid-template-columns: 1fr; } }
     .proj-box {
-      border-radius: var(--radius-sm); padding: 14px;
-      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); padding: 12px;
+      border: 1px solid var(--border);
     }
     .proj-box.blue { background: var(--blue-light); border-color: #bfdbfe; }
     .proj-box.purple { background: var(--purple-light); border-color: #ddd6fe; }
-    .proj-label { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); }
-    .proj-value { font-size: 1.4rem; font-weight: 800; margin: 4px 0; }
-    .proj-range { font-size: .78rem; color: var(--text-muted); }
+    .proj-label { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); }
+    .proj-value { font-size: 1.3rem; font-weight: 800; margin: 3px 0; font-variant-numeric: tabular-nums; }
+    .proj-range { font-size: .72rem; color: var(--text-muted); }
     .pct-section { margin-top: 4px; }
-    .pct-label { font-size: .78rem; color: var(--text-muted); margin-bottom: 6px; }
-    .pct-track { height: 8px; background: #f0ebe6; border-radius: 999px; position: relative; margin-bottom: 4px; }
+    .pct-label { font-size: .74rem; color: var(--text-muted); margin-bottom: 5px; }
+    .pct-track { height: 7px; background: #e2e8f0; border-radius: 999px; position: relative; margin-bottom: 3px; }
     .pct-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--accent); border-radius: 999px; }
-    .pct-markers { display: flex; justify-content: space-between; font-size: .7rem; color: var(--text-muted); }
-    .pct-note { font-size: .75rem; color: var(--text-muted); margin-top: 6px; font-style: italic; }
+    .pct-markers { display: flex; justify-content: space-between; font-size: .67rem; color: var(--text-muted); }
+    .pct-note { font-size: .72rem; color: var(--text-muted); margin-top: 5px; font-style: italic; }
 
-    /* ── Nav Grid ────────────────────────────────────────────────── */
-    .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
-    @media(max-width: 700px) { .nav-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media(max-width: 400px) { .nav-grid { grid-template-columns: 1fr; } }
+
+    /* ── Mobile Tab Bar (top nav, mobile only) ── */
+    /* WHY: horizontal sticky tab bar replaces sidebar on mobile;
+       clicking shows content inline, not as a popup */
+    .mobile-tab-bar {
+      display: none;
+      position: sticky; top: 0; z-index: 90;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 6px rgba(0,0,0,.06);
+      overflow-x: auto; white-space: nowrap;
+      padding: 0 8px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .mobile-tab-bar::-webkit-scrollbar { display: none; }
+    @media (max-width: 767px) { .mobile-tab-bar { display: flex; } }
+    .mobile-tab {
+      flex-shrink: 0; padding: 10px 13px;
+      font-size: .8rem; font-weight: 600;
+      border: none; background: transparent;
+      color: var(--text-muted); cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+      font-family: inherit;
+    }
+    .mobile-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .mobile-tab:hover:not(.active) { color: var(--text); }
+    /* WHY: mobile inline section mode uses top tab bar, no sidebar margin */
+    @media (max-width: 767px) {
+      body[data-section] .app-main { display: none; }
+      body[data-section] .modal-overlay { display: none !important; }
+      body[data-section] .modal-overlay.open {
+        display: block !important;
+        position: static;
+        background: none;
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+        padding: 16px 16px 60px;
+        margin-left: 0;
+        min-height: 100vh;
+        overflow: visible;
+      }
+      body[data-section] .modal-overlay.open .modal {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: none !important;
+        width: 100%;
+        max-height: none;
+        overflow: visible;
+        animation: none;
+        margin: 0;
+      }
+      body[data-section] .modal-overlay.open .modal-header { margin-bottom: 16px; }
+      body[data-section] .modal-overlay.open .modal-title {
+        font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em;
+      }
+      body[data-section] .modal-overlay.open .section-card {
+        background: var(--surface);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        padding: 16px;
+        margin-bottom: 10px;
+      }
+      body[data-section] .modal-close { display: none; }
+      body[data-section] .modal-overlay.open { pointer-events: auto; }
+    }
+
+    /* ── Nav Grid (mobile only) ──────────────────────────────────── */
+    .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+    @media (max-width: 700px) { .nav-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 400px) { .nav-grid { grid-template-columns: 1fr; } }
+    @media (min-width: 768px) { .nav-grid { display: none; } }
     .nav-card {
-      background: var(--surface); border-radius: var(--radius-sm);
-      border: 1.5px solid var(--border); box-shadow: var(--shadow);
-      padding: 16px 14px; cursor: pointer; transition: all .18s;
+      background: var(--surface); border-radius: var(--radius);
+      border: 1px solid var(--border); box-shadow: var(--shadow);
+      padding: 14px 12px; cursor: pointer; transition: all .18s;
       position: relative;
     }
     .nav-card:hover { border-top: 3px solid var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-    .nav-icon { font-size: 1.4rem; margin-bottom: 6px; }
-    .nav-title { font-size: .9rem; font-weight: 700; }
-    .nav-desc { font-size: .75rem; color: var(--text-muted); margin-top: 3px; }
-    .nav-arrow { position: absolute; top: 12px; right: 14px; font-size: .9rem; color: var(--text-light); }
+    .nav-icon { font-size: 1.3rem; margin-bottom: 5px; }
+    .nav-title { font-size: .85rem; font-weight: 700; }
+    .nav-desc { font-size: .72rem; color: var(--text-muted); margin-top: 2px; }
+    .nav-arrow { position: absolute; top: 10px; right: 12px; font-size: .85rem; color: var(--text-light); }
 
     /* ── Footer ──────────────────────────────────────────────────── */
-    .footer { border-top: 1.5px solid var(--border); padding-top: 20px; margin-top: 8px; }
-    .footer-title { font-size: .8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
-    .footer-sources { display: flex; flex-direction: column; gap: 6px; }
-    .footer-source { font-size: .75rem; color: var(--text-muted); line-height: 1.45; }
+    .footer { border-top: 1px solid var(--border); padding-top: 16px; margin-top: 8px; }
+    .footer-title { font-size: .75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+    .footer-sources { display: flex; flex-direction: column; gap: 5px; }
+    .footer-source { font-size: .72rem; color: var(--text-muted); line-height: 1.45; }
     .footer-source strong { color: var(--text); }
-    .footer-disclaimer { font-size: .7rem; color: var(--text-light); margin-top: 12px; font-style: italic; }
+    .footer-disclaimer { font-size: .67rem; color: var(--text-light); margin-top: 10px; font-style: italic; }
 
     /* ── Modals ──────────────────────────────────────────────────── */
     .modal-overlay {
@@ -192,73 +367,70 @@
     .modal-overlay.open { display: flex; }
     .modal {
       background: var(--surface); border-radius: var(--radius);
-      box-shadow: var(--shadow-md); padding: 24px;
+      box-shadow: var(--shadow-md); padding: 22px;
       width: 100%; max-width: 580px; position: relative;
       animation: slideUp .2s ease;
     }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-    .modal-title { font-size: 1.1rem; font-weight: 800; }
+    .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+    .modal-title { font-size: 1.05rem; font-weight: 800; }
     .modal-close {
-      background: none; border: none; font-size: 1.3rem; cursor: pointer;
+      background: none; border: none; font-size: 1.2rem; cursor: pointer;
       color: var(--text-muted); padding: 0 0 0 8px; line-height: 1;
     }
     .modal-close:hover { color: var(--text); }
     .live-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--green-light); border: 1.5px solid #bbf7d0;
-      color: #16a34a; padding: 4px 12px; border-radius: 999px;
-      font-size: .76rem; font-weight: 600; margin-bottom: 16px;
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--green-light); border: 1px solid #bbf7d0;
+      color: #16a34a; padding: 3px 10px; border-radius: 4px;
+      font-size: .72rem; font-weight: 600; margin-bottom: 14px;
     }
 
     /* ── Calculator inputs ───────────────────────────────────────── */
-    .preset-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .preset-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
     .preset-chip {
-      padding: 6px 14px; border-radius: 999px; font-size: .78rem; font-weight: 600;
-      border: 1.5px solid var(--border); background: transparent; cursor: pointer; transition: all .15s;
+      padding: 5px 12px; border-radius: 4px; font-size: .76rem; font-weight: 600;
+      border: 1px solid var(--border); background: transparent; cursor: pointer; transition: all .15s;
     }
     .preset-chip.selected { border-color: var(--accent); background: var(--accent-light); color: var(--accent-dark); }
     .preset-chip:hover:not(.selected) { border-color: var(--accent); }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
-    @media(max-width: 480px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    @media (max-width: 480px) { .form-grid { grid-template-columns: 1fr; } }
     .form-group { display: flex; flex-direction: column; gap: 4px; }
     .form-group.full { grid-column: 1 / -1; }
-    .form-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
-    .input-row { display: flex; align-items: center; gap: 6px; }
-    .input-prefix { font-size: .88rem; color: var(--text-muted); font-weight: 600; }
+    .form-label { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+    .input-row { display: flex; align-items: center; gap: 5px; }
+    .input-prefix { font-size: .85rem; color: var(--text-muted); font-weight: 600; }
     .form-input {
-      flex: 1; padding: 8px 10px; border-radius: var(--radius-sm);
-      border: 1.5px solid var(--border); font-size: .92rem; font-family: inherit;
-      background: #fafaf9; transition: border-color .15s;
+      flex: 1; padding: 7px 9px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border); font-size: .88rem; font-family: inherit;
+      background: #f8fafc; transition: border-color .15s;
     }
     .form-input:focus { outline: none; border-color: var(--accent); background: white; }
-    .form-input.sm { width: 70px; flex: none; }
+    .form-input.sm { width: 66px; flex: none; }
     .form-select {
-      padding: 8px 10px; border-radius: var(--radius-sm);
-      border: 1.5px solid var(--border); font-size: .92rem; font-family: inherit;
-      background: #fafaf9; width: 100%;
+      padding: 7px 9px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border); font-size: .88rem; font-family: inherit;
+      background: #f8fafc; width: 100%;
     }
-    .slider-row { display: flex; align-items: center; gap: 10px; }
+    .slider-row { display: flex; align-items: center; gap: 8px; }
     input[type=range] {
-      flex: 1; -webkit-appearance: none; height: 6px; border-radius: 999px;
-      background: #f0ebe6; outline: none;
+      flex: 1; -webkit-appearance: none; height: 5px; border-radius: 999px;
+      background: #e2e8f0; outline: none;
     }
     input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 18px; height: 18px;
+      -webkit-appearance: none; width: 16px; height: 16px;
       border-radius: 50%; background: var(--accent); border: 2px solid white;
-      box-shadow: 0 1px 4px rgba(0,0,0,.25); cursor: pointer;
+      box-shadow: 0 1px 4px rgba(0,0,0,.2); cursor: pointer;
     }
     .rate-display {
-      min-width: 56px; padding: 5px 8px; border-radius: var(--radius-sm);
-      border: 1.5px solid var(--border); font-size: .88rem; font-weight: 700;
+      min-width: 52px; padding: 4px 7px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border); font-size: .85rem; font-weight: 700;
       text-align: center; background: var(--accent-light); color: var(--accent-dark);
     }
-    /* WHY: rate-input-wrap upgrades the read-only rate-display box into a typed
-       number entry. The inner input is transparent/borderless so the outer div
-       keeps its existing pill appearance; the % symbol is a sibling span. */
     .rate-input-wrap { display: flex; align-items: center; gap: 1px; cursor: text; }
     .rate-input-field {
-      width: 42px; border: none; outline: none; background: transparent;
+      width: 40px; border: none; outline: none; background: transparent;
       color: inherit; font-weight: inherit; font-size: inherit; text-align: right;
       -moz-appearance: textfield; padding: 0;
     }
@@ -269,125 +441,110 @@
     }
 
     /* ── Calc results ────────────────────────────────────────────── */
-    .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
-    @media(max-width: 480px) { .results-grid { grid-template-columns: 1fr 1fr; } }
+    .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+    @media (max-width: 480px) { .results-grid { grid-template-columns: 1fr 1fr; } }
     .result-box {
-      background: var(--accent-light); border: 1.5px solid #fed7aa;
-      border-radius: var(--radius-sm); padding: 12px 14px; text-align: center;
+      background: var(--accent-light); border: 1px solid #bfdbfe;
+      border-radius: var(--radius-sm); padding: 10px 12px; text-align: center;
     }
-    .result-box.large .result-value { font-size: 1.4rem; }
-    .result-label { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); }
-    .result-value { font-size: 1.1rem; font-weight: 800; color: var(--accent-dark); margin: 3px 0; }
-    .result-sub { font-size: .68rem; color: var(--text-muted); }
-    .pi-bar-wrap { margin-bottom: 14px; }
-    .pi-bar { height: 14px; border-radius: 999px; overflow: hidden; display: flex; margin: 8px 0; }
+    .result-box.large .result-value { font-size: 1.35rem; }
+    .result-label { font-size: .64rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); }
+    .result-value { font-size: 1.05rem; font-weight: 800; color: var(--accent-dark); margin: 2px 0; font-variant-numeric: tabular-nums; }
+    .result-sub { font-size: .65rem; color: var(--text-muted); }
+    .pi-bar-wrap { margin-bottom: 12px; }
+    .pi-bar { height: 12px; border-radius: 999px; overflow: hidden; display: flex; margin: 7px 0; }
     .pi-principal { background: var(--blue); height: 100%; transition: width .3s; }
     .pi-interest { background: var(--accent); height: 100%; transition: width .3s; }
-    .pi-legend { display: flex; gap: 16px; flex-wrap: wrap; }
-    .pi-leg { display: flex; align-items: center; gap: 5px; font-size: .76rem; }
-    .pi-dot { width: 9px; height: 9px; border-radius: 50%; }
-    .amort-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+    .pi-legend { display: flex; gap: 14px; flex-wrap: wrap; }
+    .pi-leg { display: flex; align-items: center; gap: 4px; font-size: .72rem; }
+    .pi-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .amort-table { width: 100%; border-collapse: collapse; font-size: .76rem; }
     .amort-table th {
-      background: #f9f5f1; padding: 7px 8px; text-align: left;
-      font-size: .68rem; text-transform: uppercase; letter-spacing: .06em;
-      color: var(--text-muted); border-bottom: 1.5px solid var(--border);
+      background: #dde3ec; padding: 6px 7px; text-align: left;
+      font-size: .65rem; text-transform: uppercase; letter-spacing: .06em;
+      color: var(--text-muted); border-bottom: 2px solid #b8c4d4;
+      /* WHY: sticky + distinct bg + bottom shadow so header is clearly separate from data rows */
+      position: sticky; top: 0; z-index: 2;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
     }
-    .amort-table td { padding: 6px 8px; border-bottom: 1px solid #f0ebe6; }
+    .amort-table td { padding: 5px 7px; border-bottom: 1px solid #f1f5f9; }
     .amort-table tr:last-child td { border-bottom: none; }
-    .section-title { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); margin-bottom: 8px; }
+    .section-title { font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); margin-bottom: 7px; }
 
-    /* ── Refi modal ──────────────────────────────────────────────── */
-    .hero-savings { text-align: center; padding: 16px; background: var(--green-light); border: 1.5px solid #bbf7d0; border-radius: var(--radius-sm); margin-bottom: 16px; }
-    .hero-savings-value { font-size: 2rem; font-weight: 900; color: var(--green); }
-    .hero-savings-sub { font-size: .82rem; color: var(--text-muted); margin-top: 4px; }
-    .comparison-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-    .comp-box { border-radius: var(--radius-sm); padding: 14px; border: 1.5px solid var(--border); text-align: center; }
+    /* ── Refi modal ──────────────────────────────────────────���───── */
+    .hero-savings { text-align: center; padding: 14px; background: var(--green-light); border: 1px solid #bbf7d0; border-radius: var(--radius-sm); margin-bottom: 14px; }
+    .hero-savings-value { font-size: 1.85rem; font-weight: 900; color: #16a34a; }
+    .hero-savings-sub { font-size: .78rem; color: var(--text-muted); margin-top: 3px; }
+    .comparison-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    .comp-box { border-radius: var(--radius-sm); padding: 12px; border: 1px solid var(--border); text-align: center; }
     .comp-box.current { background: #fff7ed; border-color: #fed7aa; }
     .comp-box.new { background: var(--green-light); border-color: #bbf7d0; }
-    .comp-label { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); }
-    .comp-rate { font-size: 1.5rem; font-weight: 900; margin: 4px 0; }
-    .comp-payment { font-size: .85rem; font-weight: 600; color: var(--text-muted); }
-    .summary-box { background: var(--green-light); border: 1.5px solid #bbf7d0; border-radius: var(--radius-sm); padding: 14px 16px; }
-    .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #d1fae5; }
+    .comp-label { font-size: .64rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); }
+    .comp-rate { font-size: 1.4rem; font-weight: 900; margin: 3px 0; font-variant-numeric: tabular-nums; }
+    .comp-payment { font-size: .82rem; font-weight: 600; color: var(--text-muted); }
+    .summary-box { background: var(--green-light); border: 1px solid #bbf7d0; border-radius: var(--radius-sm); padding: 12px 14px; }
+    .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid #d1fae5; }
     .summary-row:last-child { border-bottom: none; }
-    .summary-key { font-size: .82rem; color: var(--text-muted); }
-    .summary-val { font-size: .92rem; font-weight: 700; }
-    .summary-val.green { color: var(--green); }
+    .summary-key { font-size: .78rem; color: var(--text-muted); }
+    .summary-val { font-size: .88rem; font-weight: 700; }
+    .summary-val.green { color: #16a34a; }
     .summary-val.gold { color: var(--gold); }
 
     /* ── History modal ───────────────────────────────────────────── */
-    .history-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+    /* WHY: give the history table a scroll container so sticky header works */
+    #history-table-wrap { max-height: 400px; overflow-y: auto; border-radius: var(--radius-sm); }
+    .history-table { width: 100%; border-collapse: collapse; font-size: .76rem; }
     .history-table th {
-      background: #f9f5f1; padding: 7px 8px; text-align: left;
-      font-size: .68rem; text-transform: uppercase; letter-spacing: .06em;
-      color: var(--text-muted); border-bottom: 1.5px solid var(--border);
+      background: #dde3ec; padding: 6px 7px; text-align: left;
+      font-size: .65rem; text-transform: uppercase; letter-spacing: .06em;
+      color: var(--text-muted); border-bottom: 2px solid #b8c4d4;
+      /* WHY: sticky + distinct bg + bottom shadow so header is clearly separate from data rows */
+      position: sticky; top: 0; z-index: 2;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
     }
-    .history-table td { padding: 7px 8px; border-bottom: 1px solid #f0ebe6; }
-    .history-table tr.today-row td { background: #fff3e0; }
+    .history-table td { padding: 6px 7px; border-bottom: 1px solid #f1f5f9; }
+    .history-table tr.today-row td { background: #eff6ff; }
     .up-arrow { color: var(--red); }
-    .down-arrow { color: var(--green); }
+    .down-arrow { color: #16a34a; }
 
     /* ── News modal ──────────────────────────────────────────────── */
-    .signal-section { margin-bottom: 16px; }
-    .signal-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); margin-bottom: 8px; }
-    .signal-bars { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
-    .signal-row { display: flex; align-items: center; gap: 8px; }
-    .signal-name { font-size: .78rem; width: 70px; font-weight: 600; }
-    .signal-name.green { color: var(--green); }
+    .signal-section { margin-bottom: 14px; }
+    .signal-label { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); margin-bottom: 7px; }
+    .signal-bars { display: flex; flex-direction: column; gap: 7px; margin-bottom: 10px; }
+    .signal-row { display: flex; align-items: center; gap: 7px; }
+    .signal-name { font-size: .74rem; width: 68px; font-weight: 600; }
+    .signal-name.green { color: #16a34a; }
     .signal-name.red { color: var(--red); }
-    .signal-track { flex: 1; height: 8px; background: #f0ebe6; border-radius: 999px; overflow: hidden; }
+    .signal-track { flex: 1; height: 7px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
     .signal-fill { height: 100%; border-radius: 999px; }
-    .signal-pct { font-size: .75rem; font-weight: 700; min-width: 35px; text-align: right; }
-    .signal-analysis { font-size: .82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; padding: 10px 12px; background: #fafaf9; border-radius: var(--radius-sm); border: 1px solid var(--border); }
-    .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .signal-pct { font-size: .72rem; font-weight: 700; min-width: 34px; text-align: right; }
+    .signal-analysis { font-size: .78rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px; padding: 9px 11px; background: #f8fafc; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+    .filter-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
     .filter-chip {
-      padding: 4px 12px; border-radius: 999px; font-size: .75rem; font-weight: 600;
-      border: 1.5px solid var(--border); background: transparent; cursor: pointer; transition: all .15s;
+      padding: 3px 10px; border-radius: 4px; font-size: .72rem; font-weight: 600;
+      border: 1px solid var(--border); background: transparent; cursor: pointer; transition: all .15s;
     }
     .filter-chip.active { background: var(--accent); border-color: var(--accent); color: white; }
-    .news-list { display: flex; flex-direction: column; gap: 12px; max-height: 360px; overflow-y: auto; padding-right: 4px; }
-    .news-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; }
-    .news-card-top { display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
-    .cat-badge { padding: 2px 8px; border-radius: 999px; font-size: .68rem; font-weight: 700; background: var(--accent-light); color: var(--accent-dark); }
-    .news-headline { font-size: .85rem; font-weight: 700; line-height: 1.4; flex: 1; min-width: 200px; }
-    .news-meta { font-size: .72rem; color: var(--text-muted); margin-bottom: 6px; }
-    .sentiment-badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .68rem; font-weight: 700; margin-right: 6px; }
+    .news-list { display: flex; flex-direction: column; gap: 10px; max-height: 360px; overflow-y: auto; padding-right: 3px; }
+    .news-card { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+    .news-card-top { display: flex; align-items: flex-start; gap: 7px; flex-wrap: wrap; margin-bottom: 5px; }
+    .cat-badge { padding: 2px 7px; border-radius: 4px; font-size: .64rem; font-weight: 700; background: var(--accent-light); color: var(--accent-dark); }
+    .news-headline { font-size: .82rem; font-weight: 700; line-height: 1.4; flex: 1; min-width: 180px; }
+    .news-meta { font-size: .68rem; color: var(--text-muted); margin-bottom: 5px; }
+    .sentiment-badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: .64rem; font-weight: 700; margin-right: 5px; }
     .sentiment-badge.up { background: var(--red-light); color: var(--red); }
     .sentiment-badge.down { background: var(--green-light); color: #16a34a; }
     .sentiment-badge.neutral { background: #f1f5f9; color: #475569; }
-    .news-snippet { font-size: .75rem; color: var(--text-muted); background: #fafaf9; border-radius: 6px; padding: 7px 9px; margin-top: 6px; line-height: 1.45; }
+    .news-snippet { font-size: .72rem; color: var(--text-muted); background: #f8fafc; border-radius: var(--radius-sm); padding: 6px 8px; margin-top: 5px; line-height: 1.45; }
 
     /* ── Utilities ───────────────────────────────────────────────── */
-    .divider { height: 1px; background: var(--border); margin: 16px 0; }
-    .loading { color: var(--text-muted); font-size: .85rem; padding: 20px; text-align: center; }
-    .error-msg { color: var(--red); font-size: .8rem; padding: 10px; text-align: center; }
-
-    /* ── Language Switcher ───────────────────────────────────────── */
+    .divider { height: 1px; background: var(--border); margin: 14px 0; }
+    .loading { color: var(--text-muted); font-size: .82rem; padding: 18px; text-align: center; }
+    .error-msg { color: var(--red); font-size: .78rem; padding: 10px; text-align: center; }
     .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
-    .header-controls { display: flex; align-items: center; gap: 10px; flex-shrink: 0; padding-top: 2px; }
-    .controls-divider { width: 1px; height: 22px; background: var(--border); }
-    .lang-switcher { display: flex; gap: 5px; }
-    .lang-btn {
-      padding: 4px 13px; border-radius: 999px; font-size: .73rem; font-weight: 700;
-      border: 1.5px solid var(--border); background: transparent; color: var(--text-muted);
-      cursor: pointer; transition: all .15s; letter-spacing: .02em;
-    }
-    .lang-btn.active { background: var(--accent); border-color: var(--accent); color: white; box-shadow: 0 2px 8px rgba(224,123,57,.25); }
-    .lang-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
-
-    /* ── Theme Switcher ──────────────────────────────────────────── */
-    .theme-switcher { display: flex; gap: 4px; }
-    .theme-btn {
-      width: 30px; height: 30px; border-radius: 50%; font-size: .9rem; line-height: 1;
-      border: 2px solid transparent; background: transparent;
-      cursor: pointer; transition: all .15s; display: flex; align-items: center; justify-content: center;
-    }
-    .theme-btn:hover { border-color: var(--border); transform: scale(1.15); }
-    .theme-btn.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+    .header-controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; padding-top: 2px; }
 
     /* ── Theme: Midnight — Glassmorphism ────────────────────────── */
-    /* WHY: futuristic dark UI — deep purple-navy gradient, frosted glass cards
-       with backdrop-blur, neon purple accent, glow effects, rgba borders */
     html[data-theme="midnight"] {
       --bg: #07060f;
       --surface: rgba(255,255,255,0.06);
@@ -411,46 +568,55 @@
       --text-light: #475569;
       --shadow: 0 8px 32px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.07);
       --shadow-md: 0 20px 60px rgba(0,0,0,.6), 0 0 40px rgba(124,58,237,.12);
-      --radius: 18px;
-      --radius-sm: 12px;
     }
-    /* Deep purple-navy gradient background — the glassmorphism backdrop */
     html[data-theme="midnight"] body {
       background: linear-gradient(135deg, #07060f 0%, #130d2e 35%, #0d1a35 70%, #07060f 100%);
       background-attachment: fixed;
     }
-    /* Frosted glass cards */
+    /* Midnight/Terminal sidebar overrides are already covered in the sidebar-specific block above */
     html[data-theme="midnight"] .rate-card,
     html[data-theme="midnight"] .chart-card,
     html[data-theme="midnight"] .forecast-card,
     html[data-theme="midnight"] .nav-card,
     html[data-theme="midnight"] .modal {
       background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255,255,255,0.09);
       box-shadow: 0 8px 32px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.08);
     }
-    /* Neon left-border glow per card type */
-    html[data-theme="midnight"] .rate-card.teal   { border-left-color: #34d399; box-shadow: 0 8px 32px rgba(0,0,0,.4), -4px 0 20px rgba(52,211,153,.25), inset 0 1px 0 rgba(255,255,255,.08); }
-    html[data-theme="midnight"] .rate-card.blue   { border-left-color: #818cf8; box-shadow: 0 8px 32px rgba(0,0,0,.4), -4px 0 20px rgba(129,140,248,.25), inset 0 1px 0 rgba(255,255,255,.08); }
-    html[data-theme="midnight"] .rate-card.purple { border-left-color: #c084fc; box-shadow: 0 8px 32px rgba(0,0,0,.4), -4px 0 20px rgba(192,132,252,.25), inset 0 1px 0 rgba(255,255,255,.08); }
-    /* Rate number glow effect */
+    html[data-theme="midnight"] .rate-card.teal   { border-top-color: #34d399; box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 -4px 20px rgba(52,211,153,.2), inset 0 1px 0 rgba(255,255,255,.08); }
+    html[data-theme="midnight"] .rate-card.blue   { border-top-color: #818cf8; box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 -4px 20px rgba(129,140,248,.2), inset 0 1px 0 rgba(255,255,255,.08); }
+    html[data-theme="midnight"] .rate-card.purple { border-top-color: #c084fc; box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 -4px 20px rgba(192,132,252,.2), inset 0 1px 0 rgba(255,255,255,.08); }
     html[data-theme="midnight"] .rate-card-big.blue   { color: #818cf8; text-shadow: 0 0 24px rgba(129,140,248,.6); }
     html[data-theme="midnight"] .rate-card-big.purple { color: #c084fc; text-shadow: 0 0 24px rgba(192,132,252,.6); }
     html[data-theme="midnight"] .rate-card-big.teal   { color: #34d399; text-shadow: 0 0 24px rgba(52,211,153,.6); }
-    /* Nav card hover glow */
     html[data-theme="midnight"] .nav-card:hover { border-color: rgba(124,58,237,.5); box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 0 24px rgba(124,58,237,.25), inset 0 1px 0 rgba(255,255,255,.1); }
-    /* Tab active: neon purple gradient pill */
     html[data-theme="midnight"] .tab-btn.active { background: linear-gradient(135deg, #7c3aed, #6d28d9); border-color: transparent; box-shadow: 0 4px 20px rgba(124,58,237,.5); }
     html[data-theme="midnight"] .tab-btn:hover:not(.active) { border-color: rgba(124,58,237,.4); color: #a78bfa; }
-    /* Badges */
     html[data-theme="midnight"] .badge { border-color: rgba(255,255,255,.09); background: rgba(255,255,255,.05); }
     html[data-theme="midnight"] .badge.green  { background: rgba(74,222,128,.1); border-color: rgba(74,222,128,.25); }
     html[data-theme="midnight"] .badge.orange { background: rgba(124,58,237,.15); border-color: rgba(124,58,237,.3); color: #a78bfa; }
     html[data-theme="midnight"] .lang-btn.active { box-shadow: 0 2px 12px rgba(124,58,237,.35); }
-    /* WHY: midnight is emoji-free — nav icons are pure emoji containers, hide entirely */
     html[data-theme="midnight"] .nav-icon { display: none; }
+    html[data-theme="midnight"] .range-bar-track,
+    html[data-theme="midnight"] .pct-track,
+    html[data-theme="midnight"] .signal-track { background: rgba(255,255,255,.08); }
+    html[data-theme="midnight"] .amort-table th,
+    html[data-theme="midnight"] .history-table th {
+      background: rgba(255,255,255,.10); color: #94a3b8;
+      border-bottom-color: rgba(255,255,255,.18);
+      box-shadow: 0 2px 6px rgba(0,0,0,.35);
+    }
+    html[data-theme="midnight"] .amort-table td,
+    html[data-theme="midnight"] .history-table td { border-bottom-color: rgba(255,255,255,.06); }
+    html[data-theme="midnight"] .form-input,
+    html[data-theme="midnight"] .form-select { background: rgba(255,255,255,.07); color: var(--text); border-color: rgba(255,255,255,.12); }
+    html[data-theme="midnight"] .form-input:focus { border-color: rgba(124,58,237,.6); box-shadow: 0 0 0 3px rgba(124,58,237,.15); }
+    html[data-theme="midnight"] .news-snippet,
+    html[data-theme="midnight"] .signal-analysis { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); }
+    html[data-theme="midnight"] .news-card,
+    html[data-theme="midnight"] .proj-box { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); }
+    html[data-theme="midnight"] .history-table tr.today-row td { background: rgba(124,58,237,.12); }
 
     /* ── Theme: Terminal ─────────────────────────────────────────── */
     html[data-theme="terminal"] {
@@ -463,6 +629,22 @@
     }
     html[data-theme="terminal"] body { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; }
     html[data-theme="terminal"] .rate-card-big { letter-spacing: -0.02em; }
+    html[data-theme="terminal"] .range-bar-track,
+    html[data-theme="terminal"] .pct-track,
+    html[data-theme="terminal"] .signal-track { background: #2a2a2a; }
+    html[data-theme="terminal"] .amort-table th,
+    html[data-theme="terminal"] .history-table th {
+      background: #2a2a2a; border-bottom-color: #444;
+      box-shadow: 0 2px 4px rgba(0,0,0,.5);
+    }
+    html[data-theme="terminal"] .amort-table td,
+    html[data-theme="terminal"] .history-table td { border-bottom-color: #2a2a2a; }
+    html[data-theme="terminal"] .form-input,
+    html[data-theme="terminal"] .form-select { background: #1a1a1a; color: var(--text); }
+    html[data-theme="terminal"] .news-snippet,
+    html[data-theme="terminal"] .signal-analysis { background: #1a1a1a; }
+    html[data-theme="terminal"] .history-table tr.today-row td { background: #2d1f00; }
+    html[data-theme="terminal"] .lang-btn.active { box-shadow: none; }
 
     /* ── Theme: Frost ────────────────────────────────────────────── */
     html[data-theme="frost"] {
@@ -471,161 +653,102 @@
       --text: #0f172a; --text-muted: #475569; --text-light: #94a3b8;
       --shadow: 0 2px 12px rgba(99,102,241,.07); --shadow-md: 0 4px 24px rgba(99,102,241,.12);
     }
-
-    /* ── Dark theme surface overrides (hardcoded bg colors) ──────── */
-    html[data-theme="midnight"] .range-bar-track,
-    html[data-theme="midnight"] .pct-track,
-    html[data-theme="midnight"] .signal-track { background: rgba(255,255,255,.08); }
-    html[data-theme="terminal"] .range-bar-track,
-    html[data-theme="terminal"] .pct-track,
-    html[data-theme="terminal"] .signal-track { background: #2a2a2a; }
-
-    html[data-theme="midnight"] .amort-table th,
-    html[data-theme="midnight"] .history-table th { background: rgba(255,255,255,.05); color: #94a3b8; border-bottom-color: rgba(255,255,255,.08); }
-    html[data-theme="terminal"] .amort-table th,
-    html[data-theme="terminal"] .history-table th { background: #1a1a1a; }
-
-    html[data-theme="midnight"] .amort-table td,
-    html[data-theme="midnight"] .history-table td { border-bottom-color: rgba(255,255,255,.06); }
-    html[data-theme="terminal"] .amort-table td,
-    html[data-theme="terminal"] .history-table td { border-bottom-color: #2a2a2a; }
-
-    html[data-theme="midnight"] .form-input,
-    html[data-theme="midnight"] .form-select { background: rgba(255,255,255,.07); color: var(--text); border-color: rgba(255,255,255,.12); }
-    html[data-theme="midnight"] .form-input:focus { border-color: rgba(124,58,237,.6); box-shadow: 0 0 0 3px rgba(124,58,237,.15); }
-    html[data-theme="terminal"] .form-input,
-    html[data-theme="terminal"] .form-select { background: #1a1a1a; color: var(--text); }
-
-    html[data-theme="midnight"] .news-snippet,
-    html[data-theme="midnight"] .signal-analysis { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); }
-    html[data-theme="midnight"] .news-card,
-    html[data-theme="midnight"] .proj-box { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); }
-    html[data-theme="terminal"] .news-snippet,
-    html[data-theme="terminal"] .signal-analysis { background: #1a1a1a; }
-
-    html[data-theme="midnight"] .history-table tr.today-row td { background: rgba(124,58,237,.12); }
-    html[data-theme="terminal"] .history-table tr.today-row td { background: #2d1f00; }
-
-    html[data-theme="terminal"] .lang-btn.active { box-shadow: none; }
-
-    /* ── App Layout — Desktop Left Sidebar ─────────────────────────── */
-    /* WHY: desktop gets a persistent fixed sidebar so users can navigate
-       sections without scrolling; mobile keeps the existing nav-grid */
-    .sidebar {
-      width: 220px; position: fixed; left: 0; top: 0; bottom: 0;
-      background: var(--surface); border-right: 1.5px solid var(--border);
-      display: flex; flex-direction: column; overflow-y: auto; z-index: 100;
-    }
-    .sidebar-logo {
-      padding: 20px 18px 16px; border-bottom: 1px solid var(--border);
-    }
-    .sidebar-logo-title { font-size: .95rem; font-weight: 800; color: var(--text); line-height: 1.3; }
-    .sidebar-logo-sub { font-size: .7rem; color: var(--text-muted); margin-top: 3px; }
-    .sidebar-nav { list-style: none; padding: 8px 0; flex: 1; }
-    .sidebar-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 18px; cursor: pointer;
-      font-size: .84rem; font-weight: 600; color: var(--text-muted);
-      transition: background 0.12s, color 0.12s; border-left: 3px solid transparent;
-    }
-    .sidebar-item:hover { background: var(--accent-light); color: var(--text); }
-    .sidebar-item.active {
-      background: var(--accent-light); color: var(--accent-dark);
-      border-left-color: var(--accent);
-    }
-    .sidebar-icon { font-size: .95rem; flex-shrink: 0; }
-    .sidebar-divider { height: 1px; background: var(--border); margin: 6px 12px; }
-    /* Shift main content right on desktop to clear fixed sidebar */
-    .app-main { margin-left: 220px; }
-    /* Mobile: hide sidebar, restore nav-grid, remove left margin */
-    @media (max-width: 767px) {
-      .sidebar { display: none; }
-      .app-main { margin-left: 0; }
-    }
-    /* Desktop: sidebar replaces the in-page nav-grid */
-    @media (min-width: 768px) {
-      .nav-grid { display: none; }
-    }
-    /* Midnight theme sidebar */
+    /* ── Midnight sidebar ────────────────────────────────────────── */
     html[data-theme="midnight"] .sidebar {
-      background: rgba(7,6,15,0.88);
-      border-right-color: rgba(255,255,255,0.08);
+      background: rgba(7,6,15,0.92);
+      border-right-color: rgba(255,255,255,0.07);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     }
-    html[data-theme="midnight"] .sidebar-logo { border-bottom-color: rgba(255,255,255,0.08); }
-    html[data-theme="midnight"] .sidebar-divider { background: rgba(255,255,255,0.08); }
-    html[data-theme="midnight"] .sidebar-item:hover {
-      background: rgba(124,58,237,0.12); color: #a78bfa; border-left-color: transparent;
-    }
-    html[data-theme="midnight"] .sidebar-item.active {
-      background: rgba(124,58,237,0.18); color: #a78bfa; border-left-color: #7c3aed;
-    }
-    /* Hide sidebar icons in midnight theme (same treatment as .nav-icon) */
-    html[data-theme="midnight"] .sidebar-icon { display: none; }
-    /* Terminal theme sidebar */
+    html[data-theme="midnight"] .sidebar-logo { border-bottom-color: rgba(255,255,255,0.07); }
+    html[data-theme="midnight"] .sidebar-divider { background: rgba(255,255,255,0.07); }
+    html[data-theme="midnight"] .sidebar-controls { border-top-color: rgba(255,255,255,0.07); }
+    html[data-theme="midnight"] .sidebar-item:hover { background: rgba(124,58,237,0.12); color: #a78bfa; }
+    html[data-theme="midnight"] .sidebar-item.active { background: rgba(124,58,237,0.18); color: #a78bfa; border-left-color: #7c3aed; }
+    /* Terminal sidebar */
     html[data-theme="terminal"] .sidebar { background: #0d0d0d; border-right-color: #2a2a2a; }
     html[data-theme="terminal"] .sidebar-logo { border-bottom-color: #2a2a2a; }
     html[data-theme="terminal"] .sidebar-divider { background: #2a2a2a; }
-    html[data-theme="terminal"] .sidebar-item:hover,
-    html[data-theme="terminal"] .sidebar-item.active {
-      background: #1a1a0a; color: #c8b400; border-left-color: #c8b400;
-    }
-
-    /* ── Sidebar — bottom controls (theme + lang) ───────────────────── */
-    /* WHY: on desktop the header controls are hidden; theme/lang switchers
-       live at the bottom of the sidebar for a cleaner header */
-    .sidebar-controls {
-      padding: 12px 18px 20px; border-top: 1px solid var(--border); margin-top: auto;
-    }
-    .sidebar-controls-label {
-      font-size: .68rem; color: var(--text-muted); text-transform: uppercase;
-      letter-spacing: .07em; font-weight: 700; margin-bottom: 7px;
-    }
-    .sidebar .theme-switcher { flex-wrap: wrap; gap: 3px; margin-bottom: 10px; }
-    .sidebar .lang-switcher  { flex-wrap: wrap; gap: 4px; }
-    /* On desktop, header controls are replaced by the sidebar */
-    @media (min-width: 768px) { .header-controls { display: none; } }
-    html[data-theme="midnight"] .sidebar-controls { border-top-color: rgba(255,255,255,0.08); }
     html[data-theme="terminal"] .sidebar-controls { border-top-color: #2a2a2a; }
+    html[data-theme="terminal"] .sidebar-item:hover,
+    html[data-theme="terminal"] .sidebar-item.active { background: #1a1a0a; color: #c8b400; border-left-color: #c8b400; }
+    /* Frost sidebar */
+    html[data-theme="frost"] .sidebar { background: #1e1b4b; border-right-color: rgba(255,255,255,.08); }
+
+    /* ── Section Card — used inside tab pages ─────────────────────── */
+    /* WHY: wraps logical sections in tab modals; becomes a Dashboard-style
+       card in inline mode; invisible structural wrapper in popup mode */
+    .section-card { margin-bottom: 14px; }
+    .section-card:last-child { margin-bottom: 0; }
+    .section-card-title {
+      font-size: .7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--text-muted);
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
 
     /* ── Desktop Inline Section Mode ────────────────────────────────── */
-    /* WHY: when a sidebar item is selected on desktop, its content renders
-       directly in the right-hand area (no popup overlay). body[data-section]
-       is set by JS to the active modal id (calc, refi, history, etc.) */
+    /* WHY: when sidebar item is selected on desktop, content renders inline
+       in the right area rather than as a popup overlay, matching Dashboard style */
     @media (min-width: 768px) {
-      /* Hide the dashboard content area when a section is active */
       body[data-section] .app-main { display: none; }
-      /* Turn off all modals then selectively show the open one inline */
       body[data-section] .modal-overlay { display: none !important; }
       body[data-section] .modal-overlay.open {
         display: block !important;
         position: static;
         background: none;
         backdrop-filter: none; -webkit-backdrop-filter: none;
-        padding: 24px 16px 80px;
+        padding: 20px 24px 60px;
         margin-left: 220px;
         min-height: 100vh;
         overflow: visible;
       }
-      /* Expand the modal card to fill the content width */
+      /* WHY: transparent wrapper — visual card styling is handled per section-card */
       body[data-section] .modal-overlay.open .modal {
-        max-width: 960px; max-height: none;
-        overflow: visible; animation: none;
-        margin: 0 auto;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: none !important;
+        width: 100%;
+        max-height: none;
+        overflow: visible;
+        animation: none;
+        margin: 0;
       }
-      /* Hide the ✕ close button — navigation is via sidebar */
+      /* WHY: page title matches Dashboard h1 style */
+      body[data-section] .modal-overlay.open .modal-header {
+        margin-bottom: 20px;
+      }
+      body[data-section] .modal-overlay.open .modal-title {
+        font-size: 1.55rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--text);
+      }
+      /* WHY: live-badge sits under the page title like a status badge */
+      body[data-section] .modal-overlay.open .live-badge {
+        margin-bottom: 16px;
+      }
+      /* WHY: each section-card becomes a Dashboard-style card in inline mode */
+      body[data-section] .modal-overlay.open .section-card {
+        background: var(--surface);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+        margin-bottom: 12px;
+      }
+      body[data-section] .modal-overlay.open .section-card:last-child { margin-bottom: 0; }
       body[data-section] .modal-close { display: none; }
-      /* Disable backdrop-click close (overlay has no background) */
       body[data-section] .modal-overlay.open { pointer-events: auto; }
     }
 
     /* ── Print styles (Share Rate Card) ─────────────────────────────── */
-    /* WHY: when printing, hide chrome so only the content area is captured */
     @media print {
       .sidebar { display: none !important; }
       .app-main { margin-left: 0 !important; }
       body[data-section] .modal-overlay.open { margin-left: 0 !important; }
-      .header-controls, .modal-close, .badges { display: none !important; }
+      .modal-close, .badges { display: none !important; }
     }
   </style>
 </head>
@@ -634,6 +757,7 @@
 <!-- ── Sidebar Navigation (desktop only; hidden on mobile) ── -->
 <nav class="sidebar" id="sidebar">
   <div class="sidebar-logo">
+    <div class="brand-mark">MM</div>
     <div class="sidebar-logo-title">Mortgage Monitor</div>
     <div class="sidebar-logo-sub">Daily Rate Tracker</div>
   </div>
@@ -662,11 +786,11 @@
       <span data-i18n="nav.alert">Rate Alert</span>
     </li>
   </ul>
-  <!-- Bottom: theme + language controls (replaces header controls on desktop) -->
+  <!-- Bottom: theme + language controls -->
   <div class="sidebar-controls">
     <div class="sidebar-controls-label">Theme</div>
     <div class="theme-switcher">
-      <button class="theme-btn active" data-theme-id="parchment" onclick="setTheme('parchment')" title="Parchment">🌿</button>
+      <button class="theme-btn active" data-theme-id="parchment" onclick="setTheme('parchment')" title="Blueprint">🌿</button>
       <button class="theme-btn" data-theme-id="midnight" onclick="setTheme('midnight')" title="Midnight">🌙</button>
       <button class="theme-btn" data-theme-id="terminal" onclick="setTheme('terminal')" title="Terminal">💻</button>
       <button class="theme-btn" data-theme-id="frost" onclick="setTheme('frost')" title="Frost">❄️</button>
@@ -696,46 +820,57 @@
     </div>
   </div>
 
-  <!-- ── Rate Cards ── -->
-  <!-- WHY: 10Y Treasury moved first — it's the benchmark that drives mortgage pricing -->
+  <!-- ── Mobile Tab Bar (sticky top nav, mobile only) ── -->
+  <div class="mobile-tab-bar" id="mobile-tab-bar">
+    <button class="mobile-tab active" id="mtab-home" onclick="mobileGoHome()">Dashboard</button>
+    <button class="mobile-tab" id="mtab-calc" onclick="mobileTabOpen(this,'calc')">Calculator</button>
+    <button class="mobile-tab" id="mtab-refi" onclick="mobileTabOpen(this,'refi')">Refi</button>
+    <button class="mobile-tab" id="mtab-history" onclick="mobileTabOpen(this,'history')">History</button>
+    <button class="mobile-tab" id="mtab-news" onclick="mobileTabOpen(this,'news')">News</button>
+    <button class="mobile-tab" id="mtab-alert" onclick="mobileTabOpen(this,'alert')">Alert</button>
+    <button class="mobile-tab" id="mtab-share" onclick="shareCard()">Share</button>
+  </div>
+
+  <!-- ── Rate Cards — 3 equal columns: TNX | 30yr | 15yr ── -->
   <div class="rate-cards">
-    <!-- 10yr Treasury (first: benchmark indicator) -->
+    <!-- 10yr Treasury -->
     <div class="rate-card teal">
-    <div class="rate-card-label" data-i18n="rate.tnx">10-YR TREASURY</div>
-    <div class="rate-card-big teal" id="rtnx-big">—</div>
-    <div class="rate-meta">
-      <div class="meta-item">
-        <span class="meta-label" data-i18n="rate.1wk">1-Wk Change</span>
-        <span class="meta-value" id="rtnx-1wk">—</span>
+      <div class="rate-card-label" data-i18n="rate.tnx">10-YR TREASURY</div>
+      <div class="rate-card-big teal" id="rtnx-big">—</div>
+      <div class="rate-meta">
+        <div class="meta-item">
+          <span class="meta-label" data-i18n="rate.1wk">1-Wk Change</span>
+          <span class="meta-value" id="rtnx-1wk">—</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label" data-i18n="rate.1yr">1-Yr Change</span>
+          <span class="meta-value" id="rtnx-1yr">—</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label" data-i18n="rate.mavg">Monthly Avg</span>
+          <span class="meta-value" id="rtnx-mavg">—</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label" data-i18n="rate.52avg">52-Wk Avg</span>
+          <span class="meta-value" id="rtnx-52avg">—</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label" data-i18n="rate.spread">Spread to 30yr</span>
+          <span class="meta-value" id="rtnx-spread">—</span>
+        </div>
       </div>
-      <div class="meta-item">
-        <span class="meta-label" data-i18n="rate.1yr">1-Yr Change</span>
-        <span class="meta-value" id="rtnx-1yr">—</span>
+      <div class="range-bar-wrap">
+        <div class="range-bar-labels">
+          <span id="rtnx-min">—</span><span data-i18n="rate.range">52-Week Range</span><span id="rtnx-max">—</span>
+        </div>
+        <div class="range-bar-track">
+          <div class="range-bar-fill teal" id="rtnx-bar" style="width:50%"></div>
+          <div class="range-bar-thumb teal" id="rtnx-thumb" style="left:50%"></div>
+        </div>
       </div>
-      <div class="meta-item">
-        <span class="meta-label" data-i18n="rate.mavg">Monthly Avg</span>
-        <span class="meta-value" id="rtnx-mavg">—</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label" data-i18n="rate.52avg">52-Wk Avg</span>
-        <span class="meta-value" id="rtnx-52avg">—</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label" data-i18n="rate.spread">Spread to 30yr</span>
-        <span class="meta-value" id="rtnx-spread">—</span>
-      </div>
-    </div>
-    <div class="range-bar-wrap">
-      <div class="range-bar-labels">
-        <span id="rtnx-min">—</span><span data-i18n="rate.range">52-Week Range</span><span id="rtnx-max">—</span>
-      </div>
-      <div class="range-bar-track">
-        <div class="range-bar-fill teal" id="rtnx-bar" style="width:50%"></div>
-        <div class="range-bar-thumb teal" id="rtnx-thumb" style="left:50%"></div>
-      </div>
-    </div>
     </div><!-- end teal card -->
-    <!-- 30yr -->
+
+    <!-- 30yr Fixed -->
     <div class="rate-card blue">
       <div class="rate-card-label" data-i18n="rate.30yr">30-YR FIXED</div>
       <div class="rate-card-big blue" id="r30-big">—</div>
@@ -767,7 +902,8 @@
         </div>
       </div>
     </div>
-    <!-- 15yr -->
+
+    <!-- 15yr Fixed -->
     <div class="rate-card purple">
       <div class="rate-card-label" data-i18n="rate.15yr">15-YR FIXED</div>
       <div class="rate-card-big purple" id="r15-big">—</div>
@@ -801,62 +937,65 @@
     </div>
   </div><!-- end .rate-cards grid -->
 
-  <!-- ── Chart Card ── -->
-  <div class="chart-card">
-    <div class="chart-header">
-    <div class="chart-title" data-i18n="chart.title">Daily Rate Chart</div>
-      <div class="tab-group" id="chart-tabs">
-        <button class="tab-btn" data-range="2W">2W</button>
-        <button class="tab-btn active" data-range="3M">3M</button>
-        <button class="tab-btn" data-range="1Y">1Y</button>
-        <button class="tab-btn" data-range="20Y">20Y</button>
+  <!-- ── Dashboard Row: Chart (left) + Forecast (right) ── -->
+  <div class="dash-row">
+    <!-- Chart Card -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title" data-i18n="chart.title">Daily Rate Chart</div>
+        <div class="tab-group" id="chart-tabs">
+          <button class="tab-btn" data-range="2W">2W</button>
+          <button class="tab-btn active" data-range="3M">3M</button>
+          <button class="tab-btn" data-range="1Y">1Y</button>
+          <button class="tab-btn" data-range="20Y">20Y</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="rateChart"></canvas></div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div> <span data-i18n="legend.30">30yr Fixed</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> <span data-i18n="legend.15">15yr Fixed</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div> <span data-i18n="legend.tnx">10yr Treasury</span></div>
       </div>
     </div>
-    <div class="chart-wrap"><canvas id="rateChart"></canvas></div>
-    <div class="chart-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div> <span data-i18n="legend.30">30yr Fixed</span></div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> <span data-i18n="legend.15">15yr Fixed</span></div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div> <span data-i18n="legend.tnx">10yr Treasury</span></div>
-    </div>
-  </div>
 
-  <!-- ── Forecast Card ── -->
-  <div class="forecast-card">
-    <div class="forecast-header">
-      <div class="forecast-title" data-i18n="forecast.title">Rate Forecast &amp; Analysis</div>
-      <span class="trend-badge" id="trend-badge">—</span>
-    </div>
-    <div class="forecast-analysis" id="forecast-analysis">Loading analysis…</div>
-    <div class="ma-badges">
-      <span class="ma-badge yellow">MA 7d: <span id="ma7-val">—</span>%</span>
-      <span class="ma-badge red-o">MA 30d: <span id="ma30-val">—</span>%</span>
-    </div>
-    <div class="projections">
-      <div class="proj-box blue">
-        <div class="proj-label" data-i18n="proj.30d">30-Day Projection</div>
-        <div class="proj-value" id="proj30-val">—</div>
-        <div class="proj-range" id="proj30-range">—</div>
+    <!-- Forecast Card -->
+    <div class="forecast-card">
+      <div class="forecast-header">
+        <div class="forecast-title" data-i18n="forecast.title">Rate Forecast And Analysis</div>
+        <span class="trend-badge" id="trend-badge">—</span>
       </div>
-      <div class="proj-box purple">
-        <div class="proj-label" data-i18n="proj.60d">60-Day Projection</div>
-        <div class="proj-value" id="proj60-val">—</div>
-        <div class="proj-range" id="proj60-range">—</div>
+      <div class="forecast-analysis" id="forecast-analysis">Loading analysis…</div>
+      <div class="ma-badges">
+        <span class="ma-badge yellow">MA 7d: <span id="ma7-val">—</span>%</span>
+        <span class="ma-badge red-o">MA 30d: <span id="ma30-val">—</span>%</span>
+      </div>
+      <div class="projections">
+        <div class="proj-box blue">
+          <div class="proj-label" data-i18n="proj.30d">30-Day Projection</div>
+          <div class="proj-value" id="proj30-val">—</div>
+          <div class="proj-range" id="proj30-range">—</div>
+        </div>
+        <div class="proj-box purple">
+          <div class="proj-label" data-i18n="proj.60d">60-Day Projection</div>
+          <div class="proj-value" id="proj60-val">—</div>
+          <div class="proj-range" id="proj60-range">—</div>
+        </div>
+      </div>
+      <div class="pct-section">
+        <div class="pct-label" id="pct-label">Historical percentile loading…</div>
+        <div class="pct-track">
+          <div class="pct-fill" id="pct-fill" style="width:50%"></div>
+        </div>
+        <div class="pct-markers">
+          <span id="hist-min-label">—</span>
+          <span id="hist-max-label">—</span>
+        </div>
+        <div class="pct-note" id="pct-note">—</div>
       </div>
     </div>
-    <div class="pct-section">
-      <div class="pct-label" id="pct-label">Historical percentile loading…</div>
-      <div class="pct-track">
-        <div class="pct-fill" id="pct-fill" style="width:50%"></div>
-      </div>
-      <div class="pct-markers">
-        <span id="hist-min-label">—</span>
-        <span id="hist-max-label">—</span>
-      </div>
-      <div class="pct-note" id="pct-note">—</div>
-    </div>
-  </div>
+  </div><!-- end .dash-row -->
 
-  <!-- ── Navigation Grid ── -->
+  <!-- ── Navigation Grid (mobile only, hidden on desktop) ── -->
   <div class="nav-grid">
     <div class="nav-card" onclick="openModal('calc')">
       <div class="nav-arrow">↗</div>
@@ -909,9 +1048,6 @@
 </div>
 </div><!-- end .app-main -->
 
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- MODALS                                                          -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
 
 <!-- ── Modal: Payment Calculator ── -->
 <div class="modal-overlay" id="modal-calc" onclick="closeModalOutside(event,'modal-calc')">
@@ -922,81 +1058,89 @@
     </div>
     <div class="live-badge"><span class="dot"></span> Live: <span id="calc-live-badge">loading…</span></div>
 
-    <div class="preset-chips" id="calc-presets">
-      <button class="preset-chip selected" data-price="940000" data-down="100000" data-term="30">Starter home<br><small>$940K · 20% · 30yr</small></button>
-      <button class="preset-chip" data-price="670000" data-down="" data-term="15">Re-fin<br><small>$670K · 0% · 15yr</small></button>
-      <button class="preset-chip" data-price="800000" data-down="160000" data-term="30">Move-up<br><small>$800K · 20% · 30yr</small></button>
-      <button class="preset-chip" data-price="1200000" data-down="240000" data-term="15">Jumbo 15yr<br><small>$1.2M · 20% · 15yr</small></button>
-    </div>
-
-    <div class="form-grid">
-      <div class="form-group">
-        <div class="form-label" data-i18n="form.price">House Price</div>
-        <div class="input-row"><span class="input-prefix">$</span><input class="form-input" type="number" id="calc-price" value="500000" oninput="calcSync('price')"></div>
+    <!-- Section 1: Loan Inputs -->
+    <div class="section-card">
+      <div class="section-card-title">Loan Details</div>
+      <div class="preset-chips" id="calc-presets">
+        <button class="preset-chip selected" data-price="940000" data-down="100000" data-term="30">Starter home<br><small>$940K · 20% · 30yr</small></button>
+        <button class="preset-chip" data-price="670000" data-down="" data-term="15">Re-fin<br><small>$670K · 0% · 15yr</small></button>
+        <button class="preset-chip" data-price="800000" data-down="160000" data-term="30">Move-up<br><small>$800K · 20% · 30yr</small></button>
+        <button class="preset-chip" data-price="1200000" data-down="240000" data-term="15">Jumbo 15yr<br><small>$1.2M · 20% · 15yr</small></button>
       </div>
-      <div class="form-group">
-        <div class="form-label" data-i18n="form.down">Down Payment</div>
-        <div class="input-row">
-          <span class="input-prefix">$</span><input class="form-input" type="number" id="calc-down" value="100000" oninput="calcSync('down')">
-          <input class="form-input sm" type="number" id="calc-down-pct" value="20" oninput="calcSync('downpct')">
-          <span class="input-prefix">%</span>
+      <div class="form-grid">
+        <div class="form-group">
+          <div class="form-label" data-i18n="form.price">House Price</div>
+          <div class="input-row"><span class="input-prefix">$</span><input class="form-input" type="number" id="calc-price" value="500000" oninput="calcSync('price')"></div>
+        </div>
+        <div class="form-group">
+          <div class="form-label" data-i18n="form.down">Down Payment</div>
+          <div class="input-row">
+            <span class="input-prefix">$</span><input class="form-input" type="number" id="calc-down" value="100000" oninput="calcSync('down')">
+            <input class="form-input sm" type="number" id="calc-down-pct" value="20" oninput="calcSync('downpct')">
+            <span class="input-prefix">%</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label" data-i18n="form.term">Loan Term</div>
+          <select class="form-select" id="calc-term" onchange="calcUpdate()">
+            <option value="10">10 years</option>
+            <option value="15">15 years</option>
+            <option value="20">20 years</option>
+            <option value="30" selected>30 years</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label" data-i18n="form.rate">Interest Rate</div>
+          <div class="slider-row">
+            <input type="range" id="calc-rate-slider" min="2" max="10" step="0.05" value="6.5" oninput="calcRateSync()">
+            <div class="rate-display rate-input-wrap"><input type="number" class="rate-input-field" id="calc-rate-display" min="2" max="10" step="0.05" value="6.50" oninput="calcRateFromInput()"><span>%</span></div>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <div class="form-label" data-i18n="form.term">Loan Term</div>
-        <select class="form-select" id="calc-term" onchange="calcUpdate()">
-          <option value="10">10 years</option>
-          <option value="15">15 years</option>
-          <option value="20">20 years</option>
-          <option value="30" selected>30 years</option>
-        </select>
+    </div>
+
+    <!-- Section 2: Payment Results -->
+    <div class="section-card">
+      <div class="section-card-title">Payment Summary</div>
+      <div class="results-grid">
+        <div class="result-box large" style="grid-column:1/2">
+          <div class="result-label" data-i18n="res.monthly">Monthly Payment</div>
+          <div class="result-value" id="res-monthly">—</div>
+        </div>
+        <div class="result-box">
+          <div class="result-label" data-i18n="res.interest">Total Interest</div>
+          <div class="result-value" id="res-interest">—</div>
+          <div class="result-sub" id="res-interest-pct">—</div>
+        </div>
+        <div class="result-box">
+          <div class="result-label" data-i18n="res.total">Total Cost</div>
+          <div class="result-value" id="res-total">—</div>
+          <div class="result-sub" id="res-total-sub">—</div>
+        </div>
       </div>
-      <div class="form-group">
-        <div class="form-label" data-i18n="form.rate">Interest Rate</div>
-        <div class="slider-row">
-          <input type="range" id="calc-rate-slider" min="2" max="10" step="0.05" value="6.5" oninput="calcRateSync()">
-          <div class="rate-display rate-input-wrap"><input type="number" class="rate-input-field" id="calc-rate-display" min="2" max="10" step="0.05" value="6.50" oninput="calcRateFromInput()"><span>%</span></div>
+      <div class="pi-bar-wrap">
+        <div class="section-title">Principal vs. Interest</div>
+        <div class="pi-bar">
+          <div class="pi-principal" id="pi-principal-bar" style="width:50%"></div>
+          <div class="pi-interest" id="pi-interest-bar" style="width:50%"></div>
+        </div>
+        <div class="pi-legend">
+          <div class="pi-leg"><div class="pi-dot" style="background:var(--blue)"></div> Principal <span id="pi-principal-lbl" style="margin-left:3px;font-weight:700"></span></div>
+          <div class="pi-leg"><div class="pi-dot" style="background:var(--accent)"></div> Interest <span id="pi-interest-lbl" style="margin-left:3px;font-weight:700"></span></div>
         </div>
       </div>
     </div>
 
-    <div class="results-grid">
-      <div class="result-box large" style="grid-column:1/2">
-        <div class="result-label" data-i18n="res.monthly">Monthly Payment</div>
-        <div class="result-value" id="res-monthly">—</div>
+    <!-- Section 3: Amortization Schedule -->
+    <div class="section-card">
+      <div class="section-card-title" data-i18n="amort.title">Amortization Schedule</div>
+      <!-- WHY: wrap in scrollable div so 30yr table doesn't overflow -->
+      <div style="max-height:360px;overflow-y:auto;border-radius:var(--radius-sm);">
+        <table class="amort-table" id="amort-table">
+          <thead><tr><th data-i18n="amort.year">Year</th><th data-i18n="amort.prin">Principal Paid</th><th data-i18n="amort.int">Interest Paid</th><th data-i18n="amort.bal">Balance</th></tr></thead>
+          <tbody id="amort-body"></tbody>
+        </table>
       </div>
-      <div class="result-box">
-        <div class="result-label" data-i18n="res.interest">Total Interest</div>
-        <div class="result-value" id="res-interest">—</div>
-        <div class="result-sub" id="res-interest-pct">—</div>
-      </div>
-      <div class="result-box">
-        <div class="result-label" data-i18n="res.total">Total Cost</div>
-        <div class="result-value" id="res-total">—</div>
-        <div class="result-sub" id="res-total-sub">—</div>
-      </div>
-    </div>
-
-    <div class="pi-bar-wrap">
-      <div class="section-title">Principal vs. Interest</div>
-      <div class="pi-bar">
-        <div class="pi-principal" id="pi-principal-bar" style="width:50%"></div>
-        <div class="pi-interest" id="pi-interest-bar" style="width:50%"></div>
-      </div>
-      <div class="pi-legend">
-        <div class="pi-leg"><div class="pi-dot" style="background:var(--blue)"></div> Principal <span id="pi-principal-lbl" style="margin-left:3px;font-weight:700"></span></div>
-        <div class="pi-leg"><div class="pi-dot" style="background:var(--accent)"></div> Interest <span id="pi-interest-lbl" style="margin-left:3px;font-weight:700"></span></div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-    <div class="section-title" data-i18n="amort.title">Amortization — All Years</div>
-    <!-- WHY: wrap in scrollable div so 30yr table doesn't overflow the modal -->
-    <div style="max-height:360px;overflow-y:auto;border-radius:var(--radius-sm);">
-    <table class="amort-table" id="amort-table">
-      <thead><tr><th data-i18n="amort.year">Year</th><th data-i18n="amort.prin">Principal Paid</th><th data-i18n="amort.int">Interest Paid</th><th data-i18n="amort.bal">Balance</th></tr></thead>
-      <tbody id="amort-body"></tbody>
-    </table>
     </div>
   </div>
 </div>
@@ -1010,71 +1154,82 @@
     </div>
     <div class="live-badge"><span class="dot"></span> <span data-i18n="refi.auto">New rate auto-filled from today's live data · Current rate set to last year's high</span></div>
 
-    <div class="hero-savings" id="refi-hero">
-      <div class="hero-savings-value" id="refi-savings-hero">—</div>
-      <div class="hero-savings-sub" id="refi-savings-sub">Calculating savings…</div>
+    <!-- Section 1: Savings Summary -->
+    <div class="section-card">
+      <div class="section-card-title">Potential Savings</div>
+      <div class="hero-savings" id="refi-hero">
+        <div class="hero-savings-value" id="refi-savings-hero">—</div>
+        <div class="hero-savings-sub" id="refi-savings-sub">Calculating savings…</div>
+      </div>
     </div>
 
-    <div class="form-grid">
-      <div class="form-group">
-        <div class="form-label" data-i18n="form.balance">Loan Balance</div>
-        <div class="input-row"><span class="input-prefix">$</span><input class="form-input" type="number" id="refi-balance" value="400000" oninput="refiUpdate()"></div>
-      </div>
-      <div class="form-group">
-        <div class="form-label" data-i18n="form.remterm">Remaining Term</div>
-        <select class="form-select" id="refi-term" onchange="refiUpdate()">
-          <option value="10">10 years</option>
-          <option value="15">15 years</option>
-          <option value="20">20 years</option>
-          <option value="25">25 years</option>
-          <option value="30" selected>30 years</option>
-        </select>
-      </div>
-      <div class="form-group full">
-        <div class="form-label" data-i18n="form.currate">Current Rate</div>
-        <div class="slider-row">
-          <input type="range" id="refi-cur-slider" min="2" max="10" step="0.05" value="7.5" oninput="refiRateSync('cur')">
-          <div class="rate-display rate-input-wrap"><input type="number" class="rate-input-field" id="refi-cur-display" min="2" max="10" step="0.05" value="7.50" oninput="refiRateFromInput('cur')"><span>%</span></div>
+    <!-- Section 2: Loan Inputs -->
+    <div class="section-card">
+      <div class="section-card-title">Loan Details</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <div class="form-label" data-i18n="form.balance">Loan Balance</div>
+          <div class="input-row"><span class="input-prefix">$</span><input class="form-input" type="number" id="refi-balance" value="400000" oninput="refiUpdate()"></div>
+        </div>
+        <div class="form-group">
+          <div class="form-label" data-i18n="form.remterm">Remaining Term</div>
+          <select class="form-select" id="refi-term" onchange="refiUpdate()">
+            <option value="10">10 years</option>
+            <option value="15">15 years</option>
+            <option value="20">20 years</option>
+            <option value="25">25 years</option>
+            <option value="30" selected>30 years</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <div class="form-label" data-i18n="form.currate">Current Rate</div>
+          <div class="slider-row">
+            <input type="range" id="refi-cur-slider" min="2" max="10" step="0.05" value="7.5" oninput="refiRateSync('cur')">
+            <div class="rate-display rate-input-wrap"><input type="number" class="rate-input-field" id="refi-cur-display" min="2" max="10" step="0.05" value="7.50" oninput="refiRateFromInput('cur')"><span>%</span></div>
+          </div>
+        </div>
+        <div class="form-group full">
+          <div class="form-label" data-i18n="form.newrate">New Rate (Today's)</div>
+          <div class="slider-row">
+            <input type="range" id="refi-new-slider" min="2" max="10" step="0.05" value="6.5" oninput="refiRateSync('new')">
+            <div class="rate-display rate-input-wrap"><input type="number" class="rate-input-field" id="refi-new-display" min="2" max="10" step="0.05" value="6.50" oninput="refiRateFromInput('new')"><span>%</span></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label" data-i18n="form.closing">Closing Costs</div>
+          <div class="input-row"><span class="input-prefix">$</span><input class="form-input" type="number" id="refi-closing" value="5000" oninput="refiUpdate()"></div>
         </div>
       </div>
-      <div class="form-group full">
-        <div class="form-label" data-i18n="form.newrate">New Rate (Today's)</div>
-        <div class="slider-row">
-          <input type="range" id="refi-new-slider" min="2" max="10" step="0.05" value="6.5" oninput="refiRateSync('new')">
-          <div class="rate-display rate-input-wrap"><input type="number" class="rate-input-field" id="refi-new-display" min="2" max="10" step="0.05" value="6.50" oninput="refiRateFromInput('new')"><span>%</span></div>
+    </div>
+
+    <!-- Section 3: Rate Comparison & Savings Breakdown -->
+    <div class="section-card">
+      <div class="section-card-title">Rate Comparison</div>
+      <div class="comparison-boxes">
+        <div class="comp-box current">
+          <div class="comp-label" data-i18n="refi.cur">Current Loan</div>
+          <div class="comp-rate" style="color:var(--accent)" id="comp-cur-rate">—%</div>
+          <div class="comp-payment" id="comp-cur-pmt">$— /mo</div>
+        </div>
+        <div class="comp-box new">
+          <div class="comp-label" data-i18n="refi.after">After Refinance</div>
+          <div class="comp-rate" style="color:var(--green)" id="comp-new-rate">—%</div>
+          <div class="comp-payment" id="comp-new-pmt">$— /mo</div>
         </div>
       </div>
-      <div class="form-group">
-        <div class="form-label" data-i18n="form.closing">Closing Costs</div>
-        <div class="input-row"><span class="input-prefix">$</span><input class="form-input" type="number" id="refi-closing" value="5000" oninput="refiUpdate()"></div>
-      </div>
-    </div>
-
-    <div class="comparison-boxes">
-      <div class="comp-box current">
-        <div class="comp-label" data-i18n="refi.cur">Current Loan</div>
-        <div class="comp-rate" style="color:var(--accent)" id="comp-cur-rate">—%</div>
-        <div class="comp-payment" id="comp-cur-pmt">$— /mo</div>
-      </div>
-      <div class="comp-box new">
-        <div class="comp-label" data-i18n="refi.after">After Refinance</div>
-        <div class="comp-rate" style="color:var(--green)" id="comp-new-rate">—%</div>
-        <div class="comp-payment" id="comp-new-pmt">$— /mo</div>
-      </div>
-    </div>
-
-    <div class="summary-box">
-      <div class="summary-row">
-        <span class="summary-key" data-i18n="refi.monthly">Monthly Savings</span>
-        <span class="summary-val green" id="refi-monthly-save">—</span>
-      </div>
-      <div class="summary-row">
-        <span class="summary-key" data-i18n="refi.annual">Annual Savings</span>
-        <span class="summary-val green" id="refi-annual-save">—</span>
-      </div>
-      <div class="summary-row">
-        <span class="summary-key" data-i18n="refi.breakeven">Break-even Point</span>
-        <span class="summary-val gold" id="refi-breakeven">—</span>
+      <div class="summary-box" style="margin-top:12px">
+        <div class="summary-row">
+          <span class="summary-key" data-i18n="refi.monthly">Monthly Savings</span>
+          <span class="summary-val green" id="refi-monthly-save">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key" data-i18n="refi.annual">Annual Savings</span>
+          <span class="summary-val green" id="refi-annual-save">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key" data-i18n="refi.breakeven">Break-even Point</span>
+          <span class="summary-val gold" id="refi-breakeven">—</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1087,8 +1242,12 @@
       <div class="modal-title" data-i18n="modal.history.title">Daily Rate History</div>
       <button class="modal-close" onclick="closeModal('history')">✕</button>
     </div>
-    <div class="header-sub" style="margin-bottom:14px;font-size:.82rem;color:var(--text-muted)">30-Year Fixed · MND Index · Last 20 trading days</div>
-    <div id="history-table-wrap"><div class="loading">Loading…</div></div>
+
+    <!-- Section 1: Rate History Table -->
+    <div class="section-card">
+      <div class="section-card-title">Last 20 Trading Days</div>
+      <div id="history-table-wrap"><div class="loading">Loading…</div></div>
+    </div>
   </div>
 </div>
 
@@ -1122,29 +1281,38 @@
 <div class="modal-overlay" id="modal-news" onclick="closeModalOutside(event,'modal-news')">
   <div class="modal" style="max-width:640px">
     <div class="modal-header">
-      <div class="modal-title" data-i18n="modal.news.title">Market News &amp; Rate Impact</div>
+      <div class="modal-title" data-i18n="modal.news.title">Market News And Rate Impact</div>
       <button class="modal-close" onclick="closeModal('news')">✕</button>
     </div>
-    <div class="signal-section">
-      <div class="signal-label">Overall Rate Impact Signal — Based on Today's Headlines</div>
+
+    <!-- Section 1: Rate Impact Signal -->
+    <div class="section-card">
+      <div class="section-card-title">Rate Impact Signal — Based on Today's Headlines</div>
       <div class="signal-bars" id="signal-bars"><div class="loading">Loading signals…</div></div>
       <div class="signal-analysis" id="signal-analysis">Analyzing headlines…</div>
     </div>
-    <div class="filter-chips" id="news-filters">
-      <button class="filter-chip active" data-filter="all">All</button>
-      <button class="filter-chip" data-filter="Rates">Mortgage</button>
-      <button class="filter-chip" data-filter="Fed Policy">Fed Policy</button>
-      <button class="filter-chip" data-filter="Rate Up">▲ Rate Up</button>
-      <button class="filter-chip" data-filter="Rate Down">▼ Rate Down</button>
-      <button class="filter-chip" data-filter="Neutral">Neutral</button>
+
+    <!-- Section 2: News Feed -->
+    <div class="section-card">
+      <div class="section-card-title">Headlines</div>
+      <div class="filter-chips" id="news-filters">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="Rates">Mortgage</button>
+        <button class="filter-chip" data-filter="Fed Policy">Fed Policy</button>
+        <button class="filter-chip" data-filter="Rate Up">▲ Rate Up</button>
+        <button class="filter-chip" data-filter="Rate Down">▼ Rate Down</button>
+        <button class="filter-chip" data-filter="Neutral">Neutral</button>
+      </div>
+      <div class="news-list" id="news-list"><div class="loading">Fetching news…</div></div>
     </div>
-    <div class="news-list" id="news-list"><div class="loading">Fetching news…</div></div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- JAVASCRIPT                                                       -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
+
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                                        -->
+<!-- ════════════════════════════════════════════════════════════════ -->
 <script>
 // ── State ────────────────────────────────────────────────────────
 let _rateData = null;
@@ -1161,7 +1329,7 @@ const T = {
     'rate.30yr':'30-YR FIXED','rate.15yr':'15-YR FIXED','rate.tnx':'10-YR TREASURY',
     'rate.1wk':'1-Wk Change','rate.1yr':'1-Yr Change','rate.mavg':'Monthly Avg','rate.52avg':'52-Wk Avg','rate.range':'52-Week Range','rate.spread':'Spread to 30yr',
     'chart.title':'Daily Rate Chart','legend.30':'30yr Fixed','legend.15':'15yr Fixed','legend.tnx':'10yr Treasury',
-    'forecast.title':'Rate Forecast &amp; Analysis','proj.30d':'30-Day Projection','proj.60d':'60-Day Projection',
+    'forecast.title':'Rate Forecast And Analysis','proj.30d':'30-Day Projection','proj.60d':'60-Day Projection',
     'nav.calc':'Payment Calculator','nav.refi':'Refi Savings','nav.history':'Rate History',
     'nav.history.desc':'Last 20 trading days','nav.alert':'Rate Alert','nav.alert.desc':'Get notified when rates drop',
     'nav.news':'Market News','nav.news.desc':'Mortgage · Fed · Economy','nav.share':'Share Rate Card','nav.share.desc':'Print or save current view',
@@ -1171,7 +1339,7 @@ const T = {
     'footer.fred':'<strong>FRED (St. Louis Fed)</strong> — Historical weekly series MORTGAGE30US, MORTGAGE15US, MORTGAGE5US.',
     'footer.disclaimer':'Rates shown are national averages for informational purposes only. Individual rates vary based on credit score, LTV, and lender. Not financial advice.',
     'modal.calc.title':'Monthly Payment Calculator','modal.refi.title':'Refinance Savings Calculator',
-    'modal.history.title':'Daily Rate History','modal.news.title':'Market News &amp; Rate Impact',
+    'modal.history.title':'Daily Rate History','modal.news.title':'Market News And Rate Impact',
     'form.price':'House Price','form.down':'Down Payment','form.term':'Loan Term','form.rate':'Interest Rate',
     'form.balance':'Loan Balance','form.currate':'Current Rate','form.newrate':"New Rate (Today's)",'form.remterm':'Remaining Term','form.closing':'Closing Costs',
     'res.monthly':'Monthly Payment','res.interest':'Total Interest','res.total':'Total Cost',
@@ -1948,20 +2116,18 @@ function sidebarSetActive(el) {
 }
 
 function sidebarOpen(el, modalId) {
-  sidebarSetActive(el);
-  if (window.innerWidth >= 768) {
-    // Desktop: inline section — set data attribute, show modal content in place
-    document.body.dataset.section = modalId;
-    document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
-    document.getElementById('modal-' + modalId).classList.add('open');
-    document.body.style.overflow = '';     // no scroll lock for inline mode
-    if (modalId === 'history') loadHistory();
-    if (modalId === 'news')    loadNews();
-    if (modalId === 'calc')    calcUpdate();
-    if (modalId === 'refi')    refiUpdate();
-  } else {
-    openModal(modalId);
-  }
+  if (el) sidebarSetActive(el);
+  // WHY: inline mode works on all screen sizes — desktop uses sidebar margin,
+  // mobile uses the top tab bar with no margin (handled purely by CSS)
+  document.body.dataset.section = modalId;
+  document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  document.getElementById('modal-' + modalId).classList.add('open');
+  document.body.style.overflow = '';
+  if (modalId === 'history') loadHistory();
+  if (modalId === 'news')    loadNews();
+  if (modalId === 'calc')    calcUpdate();
+  if (modalId === 'refi')    refiUpdate();
+  window.scrollTo(0, 0);
 }
 
 // WHY: sidebarGoHome() clears inline section mode and returns to the dashboard
@@ -1970,6 +2136,21 @@ function sidebarGoHome() {
   document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
   document.body.style.overflow = '';
   sidebarSetActive(document.getElementById('sidebar-home'));
+  window.scrollTo(0, 0);
+}
+
+// WHY: mobile tab bar helper — manages .active on mobile tabs, delegates to sidebarOpen
+function mobileTabOpen(tabEl, modalId) {
+  document.querySelectorAll('.mobile-tab').forEach(function(t) { t.classList.remove('active'); });
+  tabEl.classList.add('active');
+  sidebarOpen(null, modalId);
+}
+
+function mobileGoHome() {
+  document.querySelectorAll('.mobile-tab').forEach(function(t) { t.classList.remove('active'); });
+  var h = document.getElementById('mtab-home');
+  if (h) h.classList.add('active');
+  sidebarGoHome();
 }
 
 function openModal(id) {
@@ -2009,5 +2190,8 @@ document.addEventListener("keydown", e => {
   }
 });
 </script>
+</body>
+</html>
+
 </body>
 </html>
