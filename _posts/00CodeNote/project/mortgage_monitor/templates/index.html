@@ -368,47 +368,71 @@
     .theme-btn:hover { border-color: var(--border); transform: scale(1.15); }
     .theme-btn.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
 
-    /* ── Theme: Midnight ─────────────────────────────────────────── */
-    /* WHY: redesigned to match institutional finance dark UI (screenshot):
-       deep navy bg, slightly-lighter-navy cards, gold-yellow accent,
-       near-white text, blue-gray muted text — no harsh contrast borders */
+    /* ── Theme: Midnight — Glassmorphism ────────────────────────── */
+    /* WHY: futuristic dark UI — deep purple-navy gradient, frosted glass cards
+       with backdrop-blur, neon purple accent, glow effects, rgba borders */
     html[data-theme="midnight"] {
-      --bg: #0d1b2e;
-      --surface: #162035;
-      --border: #1e2d45;
-      --accent: #f5c518;
-      --accent-light: #2a1f05;
-      --accent-dark: #fde047;
-      --blue: #60a5fa;
-      --blue-light: #0f1e35;
-      --purple: #c4b5fd;
-      --purple-light: #1a1030;
+      --bg: #07060f;
+      --surface: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.09);
+      --accent: #7c3aed;
+      --accent-light: rgba(124,58,237,0.18);
+      --accent-dark: #a78bfa;
+      --blue: #818cf8;
+      --blue-light: rgba(129,140,248,0.12);
+      --purple: #c084fc;
+      --purple-light: rgba(192,132,252,0.12);
       --teal: #34d399;
-      --teal-light: #0a2018;
+      --teal-light: rgba(52,211,153,0.12);
       --green: #4ade80;
-      --green-light: #0a1f10;
+      --green-light: rgba(74,222,128,0.12);
       --red: #f87171;
-      --red-light: #200a0a;
-      --gold: #f5c518;
-      --text: #f9fafb;
-      --text-muted: #8892a4;
-      --text-light: #4a5568;
-      --shadow: 0 2px 16px rgba(0,0,0,.5);
-      --shadow-md: 0 6px 32px rgba(0,0,0,.65);
-      --radius: 14px;
+      --red-light: rgba(248,113,113,0.12);
+      --gold: #fbbf24;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-light: #475569;
+      --shadow: 0 8px 32px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.07);
+      --shadow-md: 0 20px 60px rgba(0,0,0,.6), 0 0 40px rgba(124,58,237,.12);
+      --radius: 18px;
+      --radius-sm: 12px;
     }
-    /* Card rate numbers: white in midnight for maximum legibility */
-    html[data-theme="midnight"] .rate-card-big.blue,
-    html[data-theme="midnight"] .rate-card-big.purple,
-    html[data-theme="midnight"] .rate-card-big.teal { color: #f9fafb; }
-    /* Rate card labels: gold accent (mirrors screenshot's yellow subtext) */
-    html[data-theme="midnight"] .rate-card-label { color: #f5c518; letter-spacing: .12em; }
-    /* Tab active: gold pill */
-    html[data-theme="midnight"] .tab-btn.active { box-shadow: 0 2px 8px rgba(245,197,24,.25); }
-    /* Badge tweaks */
-    html[data-theme="midnight"] .badge { border-color: #1e2d45; background: #162035; }
-    html[data-theme="midnight"] .badge.green { background: #0a1f10; border-color: #14532d; }
-    html[data-theme="midnight"] .badge.orange { background: #2a1f05; border-color: #713f12; color: #f5c518; }
+    /* Deep purple-navy gradient background — the glassmorphism backdrop */
+    html[data-theme="midnight"] body {
+      background: linear-gradient(135deg, #07060f 0%, #130d2e 35%, #0d1a35 70%, #07060f 100%);
+      background-attachment: fixed;
+    }
+    /* Frosted glass cards */
+    html[data-theme="midnight"] .rate-card,
+    html[data-theme="midnight"] .chart-card,
+    html[data-theme="midnight"] .forecast-card,
+    html[data-theme="midnight"] .nav-card,
+    html[data-theme="midnight"] .modal {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: 0 8px 32px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    /* Neon left-border glow per card type */
+    html[data-theme="midnight"] .rate-card.teal   { border-left-color: #34d399; box-shadow: 0 8px 32px rgba(0,0,0,.4), -4px 0 20px rgba(52,211,153,.25), inset 0 1px 0 rgba(255,255,255,.08); }
+    html[data-theme="midnight"] .rate-card.blue   { border-left-color: #818cf8; box-shadow: 0 8px 32px rgba(0,0,0,.4), -4px 0 20px rgba(129,140,248,.25), inset 0 1px 0 rgba(255,255,255,.08); }
+    html[data-theme="midnight"] .rate-card.purple { border-left-color: #c084fc; box-shadow: 0 8px 32px rgba(0,0,0,.4), -4px 0 20px rgba(192,132,252,.25), inset 0 1px 0 rgba(255,255,255,.08); }
+    /* Rate number glow effect */
+    html[data-theme="midnight"] .rate-card-big.blue   { color: #818cf8; text-shadow: 0 0 24px rgba(129,140,248,.6); }
+    html[data-theme="midnight"] .rate-card-big.purple { color: #c084fc; text-shadow: 0 0 24px rgba(192,132,252,.6); }
+    html[data-theme="midnight"] .rate-card-big.teal   { color: #34d399; text-shadow: 0 0 24px rgba(52,211,153,.6); }
+    /* Nav card hover glow */
+    html[data-theme="midnight"] .nav-card:hover { border-color: rgba(124,58,237,.5); box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 0 24px rgba(124,58,237,.25), inset 0 1px 0 rgba(255,255,255,.1); }
+    /* Tab active: neon purple gradient pill */
+    html[data-theme="midnight"] .tab-btn.active { background: linear-gradient(135deg, #7c3aed, #6d28d9); border-color: transparent; box-shadow: 0 4px 20px rgba(124,58,237,.5); }
+    html[data-theme="midnight"] .tab-btn:hover:not(.active) { border-color: rgba(124,58,237,.4); color: #a78bfa; }
+    /* Badges */
+    html[data-theme="midnight"] .badge { border-color: rgba(255,255,255,.09); background: rgba(255,255,255,.05); }
+    html[data-theme="midnight"] .badge.green  { background: rgba(74,222,128,.1); border-color: rgba(74,222,128,.25); }
+    html[data-theme="midnight"] .badge.orange { background: rgba(124,58,237,.15); border-color: rgba(124,58,237,.3); color: #a78bfa; }
+    html[data-theme="midnight"] .lang-btn.active { box-shadow: 0 2px 12px rgba(124,58,237,.35); }
+
     /* ── Theme: Terminal ─────────────────────────────────────────── */
     html[data-theme="terminal"] {
       --bg: #0a0a0a; --surface: #111111; --border: #2a2a2a;
@@ -432,35 +456,37 @@
     /* ── Dark theme surface overrides (hardcoded bg colors) ──────── */
     html[data-theme="midnight"] .range-bar-track,
     html[data-theme="midnight"] .pct-track,
-    html[data-theme="midnight"] .signal-track { background: #1e2d45; }
+    html[data-theme="midnight"] .signal-track { background: rgba(255,255,255,.08); }
     html[data-theme="terminal"] .range-bar-track,
     html[data-theme="terminal"] .pct-track,
     html[data-theme="terminal"] .signal-track { background: #2a2a2a; }
 
     html[data-theme="midnight"] .amort-table th,
-    html[data-theme="midnight"] .history-table th { background: #1e2d45; color: #8892a4; }
+    html[data-theme="midnight"] .history-table th { background: rgba(255,255,255,.05); color: #94a3b8; border-bottom-color: rgba(255,255,255,.08); }
     html[data-theme="terminal"] .amort-table th,
     html[data-theme="terminal"] .history-table th { background: #1a1a1a; }
 
     html[data-theme="midnight"] .amort-table td,
-    html[data-theme="midnight"] .history-table td { border-bottom-color: #1e2d45; }
+    html[data-theme="midnight"] .history-table td { border-bottom-color: rgba(255,255,255,.06); }
     html[data-theme="terminal"] .amort-table td,
     html[data-theme="terminal"] .history-table td { border-bottom-color: #2a2a2a; }
 
     html[data-theme="midnight"] .form-input,
-    html[data-theme="midnight"] .form-select { background: #1e2d45; color: var(--text); border-color: #263548; }
+    html[data-theme="midnight"] .form-select { background: rgba(255,255,255,.07); color: var(--text); border-color: rgba(255,255,255,.12); }
+    html[data-theme="midnight"] .form-input:focus { border-color: rgba(124,58,237,.6); box-shadow: 0 0 0 3px rgba(124,58,237,.15); }
     html[data-theme="terminal"] .form-input,
     html[data-theme="terminal"] .form-select { background: #1a1a1a; color: var(--text); }
 
     html[data-theme="midnight"] .news-snippet,
-    html[data-theme="midnight"] .signal-analysis { background: #1e2d45; border-color: #263548; }
+    html[data-theme="midnight"] .signal-analysis { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); }
+    html[data-theme="midnight"] .news-card,
+    html[data-theme="midnight"] .proj-box { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); }
     html[data-theme="terminal"] .news-snippet,
     html[data-theme="terminal"] .signal-analysis { background: #1a1a1a; }
 
-    html[data-theme="midnight"] .history-table tr.today-row td { background: #1f2e10; }
+    html[data-theme="midnight"] .history-table tr.today-row td { background: rgba(124,58,237,.12); }
     html[data-theme="terminal"] .history-table tr.today-row td { background: #2d1f00; }
 
-    html[data-theme="midnight"] .lang-btn.active,
     html[data-theme="terminal"] .lang-btn.active { box-shadow: none; }
   </style>
 </head>
