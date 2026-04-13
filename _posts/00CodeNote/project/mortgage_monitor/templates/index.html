@@ -454,7 +454,9 @@
     .pi-bar-wrap { margin-bottom: 12px; }
     .pi-bar { height: 12px; border-radius: 999px; overflow: hidden; display: flex; margin: 7px 0; }
     .pi-principal { background: var(--blue); height: 100%; transition: width .3s; }
-    .pi-interest { background: var(--accent); height: 100%; transition: width .3s; }
+    /* WHY: interest uses --gold (amber) not --accent (blue) — contrasting warm color signals
+       "cost you should notice"; two blues would look identical (see CLAUDE.md requirements) */
+    .pi-interest { background: var(--gold); height: 100%; transition: width .3s; }
     .pi-legend { display: flex; gap: 14px; flex-wrap: wrap; }
     .pi-leg { display: flex; align-items: center; gap: 4px; font-size: .72rem; }
     .pi-dot { width: 8px; height: 8px; border-radius: 50%; }
@@ -1126,7 +1128,7 @@
         </div>
         <div class="pi-legend">
           <div class="pi-leg"><div class="pi-dot" style="background:var(--blue)"></div> Principal <span id="pi-principal-lbl" style="margin-left:3px;font-weight:700"></span></div>
-          <div class="pi-leg"><div class="pi-dot" style="background:var(--accent)"></div> Interest <span id="pi-interest-lbl" style="margin-left:3px;font-weight:700"></span></div>
+          <div class="pi-leg"><div class="pi-dot" style="background:var(--gold)"></div> Interest <span id="pi-interest-lbl" style="margin-left:3px;font-weight:700"></span></div>
         </div>
       </div>
     </div>
