@@ -36,6 +36,7 @@
 ## Design System
 
 ### Color Tokens (CSS variables)
+
 ```css
 --bg: #f1f5f9          /* page background */
 --surface: #ffffff     /* card / modal background */
@@ -55,6 +56,7 @@
 ```
 
 ### Themes (4 total)
+
 | ID | Display | Description |
 |----|---------|-------------|
 | `parchment` | 🌿 | Default — slate/blue palette |
@@ -65,6 +67,7 @@
 Theme is applied via `html[data-theme="..."]` attribute. Each theme has CSS overrides for sidebar, table headers, and key components.
 
 ### Typography
+
 - Page H1 (Dashboard title): `font-size: 1.55rem; font-weight: 800; letter-spacing: -0.03em`
 - Tab page title (inline mode): `font-size: 1.55rem; font-weight: 800; letter-spacing: -0.03em`
 - Card title: `font-size: .95rem; font-weight: 700`
@@ -75,6 +78,7 @@ Theme is applied via `html[data-theme="..."]` attribute. Each theme has CSS over
 ## Layout Architecture
 
 ### Desktop (≥ 768px)
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │  Sidebar (220px fixed)  │  .app-main (margin-left:220px)  │
@@ -90,6 +94,7 @@ Theme is applied via `html[data-theme="..."]` attribute. Each theme has CSS over
 - `.container`: `padding: 20px 24px 64px` (no `max-width` — fills available width)
 
 ### Mobile (< 768px)
+
 ```
 ┌──────────────────────────────────────────────┐
 │  .mobile-tab-bar (sticky top, horizontal)    │
@@ -110,6 +115,7 @@ Theme is applied via `html[data-theme="..."]` attribute. Each theme has CSS over
 ## Navigation
 
 ### Sidebar (Desktop)
+
 ```
 Dashboard          → sidebarGoHome()
 Payment Calculator → sidebarOpen(this, 'calc')
@@ -122,6 +128,7 @@ Rate Alert         → openModal('alert'); sidebarSetActive(this)
 ```
 
 ### Mobile Tab Bar
+
 ```
 Dashboard  → mobileGoHome()
 Calculator → mobileTabOpen(this, 'calc')
@@ -133,6 +140,7 @@ Share      → shareCard()
 ```
 
 ### Inline Section Mode
+
 When a sidebar/mobile-tab item is clicked (except Share/Alert), `body[data-section]="<id>"` is set and the corresponding `.modal-overlay#modal-<id>` gets `.open`. CSS media queries render it inline (not as a popup):
 
 - **Desktop**: `body[data-section] .modal-overlay.open { position: static; margin-left: 220px; padding: 20px 24px 60px; }`
@@ -144,6 +152,7 @@ When a sidebar/mobile-tab item is clicked (except Share/Alert), `body[data-secti
 ## Dashboard Sections (in order)
 
 ### 1. Header
+
 ```html
 <div class="header">
   <h1 data-i18n="app.title">Daily Mortgage Rate Tracker</h1>
@@ -153,7 +162,9 @@ When a sidebar/mobile-tab item is clicked (except Share/Alert), `body[data-secti
 ```
 
 ### 2. Rate Cards (`div.rate-cards` — 3-column grid)
+
 Three equal-width cards, each with:
+
 - Colored `border-top: 3px solid` accent (teal / blue / purple)
 - Big rate number (e.g., `6.37%`)
 - Meta row: 1-Wk Change, 1-Yr Change, Monthly Avg, 52-Wk Avg
@@ -166,11 +177,13 @@ Three equal-width cards, each with:
 | `rate-card.purple` | purple | 15-YR Fixed |
 
 Responsive breakpoints:
+
 - `> 900px`: 3 columns
 - `681–900px`: 2 columns
 - `≤ 680px`: 1 column
 
 ### 3. Daily Rate Chart (`div.chart-card`)
+
 - Full-width card (`.dash-row` is single-column `grid-template-columns: 1fr`)
 - Chart.js 4.4 line chart with 3 datasets: 30yr Fixed (blue), 15yr Fixed (purple), 10yr Treasury (teal)
 - Time-range tabs: 2W / 3M (default) / 1Y / 20Y
@@ -178,16 +191,19 @@ Responsive breakpoints:
 - Canvas: `max-width: 100%`
 
 ### 4. Rate Forecast & Analysis (`div.forecast-card`)
+
 - Full-width card (stacks below chart in the same `.dash-row`)
 - Contains: trend badge, analysis text, MA 7d/30d badges, 30-day + 60-day projection boxes, historical percentile bar
 - `word-break: break-word` on analysis text to prevent card overflow
 
 ### 5. Navigation Grid (Mobile only, `div.nav-grid`)
+
 - Hidden on desktop (`@media (min-width: 768px) { display: none }`)
 - 3-column grid of nav-cards, each `openModal()`
 - Replaced by the mobile tab bar as primary navigation — nav-grid is secondary/redundant but kept
 
 ### 6. Footer (`div.footer`)
+
 - Data sources: Mortgage News Daily, Bankrate/Freddie Mac, FRED
 - Disclaimer text
 
@@ -219,6 +235,7 @@ All tab pages use this HTML skeleton:
 **In inline mode** (desktop or mobile with `body[data-section]`): `.modal` becomes transparent, each `.section-card` is a full Dashboard-style card.
 
 ### Payment Calculator (`modal-calc`)
+
 | Section Card | Contents |
 |---|---|
 | Loan Details | Preset chips + form inputs (price, down, term, rate slider) |
@@ -226,6 +243,7 @@ All tab pages use this HTML skeleton:
 | Amortization Schedule | Scrollable table (`max-height: 360px`) with sticky header |
 
 ### Refi Savings (`modal-refi`)
+
 | Section Card | Contents |
 |---|---|
 | Potential Savings | Hero savings display (`hero-savings`) |
@@ -233,31 +251,65 @@ All tab pages use this HTML skeleton:
 | Rate Comparison | Comparison boxes (current vs new loan) + summary table |
 
 ### Rate History (`modal-history`)
+
 | Section Card | Contents |
 |---|---|
 | Last 20 Trading Days | Scrollable rate history table (`#history-table-wrap`, `max-height: 400px`) |
 
 Rate history table (`history-table`) requirements:
+
 - Sticky header row: `position: sticky; top: 0; z-index: 2`
 - Header background: `#dde3ec` with `box-shadow: 0 2px 4px rgba(0,0,0,0.08)` — must be visually distinct from data rows
 - `today-row` highlighted with light blue background
 
 ### Market News (`modal-news`)
+
 | Section Card | Contents |
 |---|---|
 | Rate Impact Signal | Signal bars + signal analysis text |
 | Headlines | Filter chips (All / Mortgage / Fed Policy / Rate Up / Rate Down / Neutral) + news list |
 
 ### Rate Alert (`modal-alert`)
+
 - Simple popup only (no inline section mode needed)
 - Email input + rate threshold slider + submit button
 - Prototype note: alerts are not actually sent
 
 ---
 
+## Proportional Bar (Stacked Bar) — Color Requirements
+
+Any part-to-whole bar that splits a value into a "good/neutral" segment vs. a "cost/warning" segment **must** use contrasting colors with clear semantic meaning. Same-family colors (e.g., two blues) are **not acceptable** — they fail to communicate the difference to the user.
+
+### Principal vs. Interest bar (`.pi-bar`)
+
+| Segment | Semantic meaning | Color rule | Default token |
+|---------|-----------------|------------|---------------|
+| **Principal** (`.pi-principal`) | Equity you own — calm, positive | Cool/soothing color | `var(--blue)` `#3b82f6` |
+| **Interest** (`.pi-interest`) | Cost paid to lender — more = worse | Warm/attention-grabbing | `var(--gold)` `#f59e0b` |
+
+**Rationale**: Blue is perceived as stable and trustworthy (your equity). Amber/gold is a universal "attention / cost / caution" signal — it scales naturally: a small gold segment feels fine, a large one communicates "this is expensive." The two colors must be visually distinct at a glance across all themes.
+
+### Per-theme color assignments
+
+| Theme | Principal | Interest |
+|-------|-----------|----------|
+| `parchment` (default) | `var(--blue)` #3b82f6 | `var(--gold)` #f59e0b |
+| `midnight` | `var(--blue)` #3b82f6 | `var(--gold)` #f59e0b |
+| `terminal` | `var(--teal)` #0891b2 | `var(--gold)` #f59e0b |
+| `frost` | `var(--blue)` #3b82f6 | `var(--gold)` #f59e0b |
+
+**Rule**: `--gold: #f59e0b` is already defined in `:root`. Always use this token for the "cost/warning" segment. Never use `var(--accent)` or any blue-family color for the interest segment — that creates the "bad example" of two near-identical colors.
+
+### Legend dots
+The legend dots next to "Principal" and "Interest" labels must match their respective bar segment colors exactly.
+
+---
+
 ## Tables — Requirements
 
 All data tables (`amort-table`, `history-table`) must follow:
+
 - Sticky first header row: `position: sticky; top: 0; z-index: 2`
 - Header background: `#dde3ec` (≠ data row bg `#f1f5f9`) — must have clear visual separation
 - Header bottom shadow: `box-shadow: 0 2px 4px rgba(0,0,0,0.08)`
