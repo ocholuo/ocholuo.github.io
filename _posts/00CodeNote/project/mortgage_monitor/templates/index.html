@@ -58,6 +58,9 @@
 
     /* ── Rate Cards ──────────────────────────────────────────────── */
     .rate-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    /* WHY: 10-YR Treasury is the benchmark — give it a full-width top row;
+       30-YR and 15-YR sit side by side in the row below, same total width */
+    .rate-cards .rate-card.teal { grid-column: 1 / -1; }
     @media(max-width: 600px) { .rate-cards { grid-template-columns: 1fr; } }
     .rate-card {
       background: var(--surface); border-radius: var(--radius);
