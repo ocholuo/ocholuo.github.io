@@ -1313,6 +1313,34 @@ function ordinal(n) {
   return n + (s[(v-20)%10] || s[v] || s[0]);
 }
 
+// ── Chart crosshair plugin ───────────────────────────────────────
+// WHY: draws a vertical tracking line that follows the mouse so users
+// can see exactly which date is highlighted, independent of tick density.
+const crosshairPlugin = {
+  id: 'crosshair',
+  afterDraw(chart) {
+    if (chart._crossX == null) return;
+    const {ctx, chartArea: {top, bottom}} = chart;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(chart._crossX, top);
+    ctx.lineTo(chart._crossX, bottom);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(120,113,108,0.4)';
+    ctx.setLineDash([4, 3]);
+    ctx.stroke();
+    ctx.restore();
+  },
+  beforeEvent(chart, {event}) {
+    if (event.type === 'mousemove') {
+      chart._crossX = event.x;
+    } else if (event.type === 'mouseout') {
+      chart._crossX = null;
+    }
+    chart.draw();
+  }
+};
+
 // ── Chart ────────────────────────────────────────────────────────
 async function loadChart(range) {
   try {
@@ -1341,6 +1369,7 @@ function renderChart(data, range) {
 
   _chart = new Chart(ctx, {
     type: "line",
+    plugins: [crosshairPlugin],
     data: {
       labels: labels,
       datasets: [

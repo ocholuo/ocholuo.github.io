@@ -416,7 +416,7 @@ def api_history():
     range_param = request.args.get("range", "3M").upper()
     df = _load_or_refresh_csv()
     if df.empty:
-        return jsonify({"labels": [], "data30": [], "data15": []})
+        return jsonify({"labels": [], "data30": [], "data15": [], "data_tnx": []})
 
     df = df.sort_values("date")
     latest_date = df["date"].max()
@@ -428,30 +428,47 @@ def api_history():
         "20Y": latest_date - pd.Timedelta(days=365 * 20),
     }
     cutoff = cutoffs.get(range_param, cutoffs["3M"])
-    sub = df[df["date"] >= cutoff].copy()
 
-    # Downsample for very long ranges to keep payload small
-    if range_param == "20Y" and len(sub) > 300:
-        step = max(1, len(sub) // 300)
-        sub = sub.iloc[::step]
-
-    labels = [str(d)[:10] for d in sub["date"]]
-    data30 = [round(float(v), 2) if not pd.isna(v) else None for v in sub["rate_30"]]
-    data15 = [round(float(v), 2) if not pd.isna(v) else None for v in sub["rate_15"]]
-
-    # WHY: merge TNX daily data onto the same date labels so the chart has 3 aligned lines.
-    # TNX is daily — align by nearest available date using merge_asof.
-    data_tnx = [None] * len(labels)
+    # WHY: use daily TNX (DGS10) dates as the primary spine so the tooltip fires
+    # on every individual day, not once per week (FRED mortgage data is weekly).
+    # Weekly mortgage rates are forward-filled onto the daily date grid via merge_asof.
     try:
         tnx_df = _load_tnx_data()
         if not tnx_df.empty:
-            sub_dates = pd.DataFrame({"date": pd.to_datetime([l for l in labels])})
-            merged = pd.merge_asof(sub_dates, tnx_df.sort_values("date"), on="date", direction="nearest", tolerance=pd.Timedelta(days=5))
-            data_tnx = [round(float(v), 2) if not pd.isna(v) else None for v in merged["rate_tnx"]]
-    except Exception as e:
-        log.warning("TNX merge failed: %s", e)
+            tnx_sub = tnx_df[
+                (tnx_df["date"] >= cutoff) & (tnx_df["date"] <= latest_date)
+            ].copy()
 
-    return jsonify({"labels": labels, "data30": data30, "data15": data15, "data_tnx": data_tnx})
+            if not tnx_sub.empty:
+                # Downsample 20Y to stay within ~300 points for payload size
+                if range_param == "20Y" and len(tnx_sub) > 300:
+                    step = max(1, len(tnx_sub) // 300)
+                    tnx_sub = tnx_sub.iloc[::step].copy()
+
+                # Forward-fill weekly mortgage rates onto each daily TNX date
+                merged = pd.merge_asof(
+                    tnx_sub.sort_values("date"),
+                    df[["date", "rate_30", "rate_15"]].sort_values("date"),
+                    on="date",
+                    direction="backward",
+                )
+                labels  = [str(d)[:10] for d in merged["date"]]
+                data30  = [round(float(v), 2) if not pd.isna(v) else None for v in merged["rate_30"]]
+                data15  = [round(float(v), 2) if not pd.isna(v) else None for v in merged["rate_15"]]
+                data_tnx = [round(float(v), 2) if not pd.isna(v) else None for v in merged["rate_tnx"]]
+                return jsonify({"labels": labels, "data30": data30, "data15": data15, "data_tnx": data_tnx})
+    except Exception as e:
+        log.warning("Daily-spine merge failed, falling back to weekly: %s", e)
+
+    # Fallback: original weekly mortgage spine (used if TNX data unavailable)
+    sub = df[df["date"] >= cutoff].copy()
+    if range_param == "20Y" and len(sub) > 300:
+        step = max(1, len(sub) // 300)
+        sub = sub.iloc[::step]
+    labels  = [str(d)[:10] for d in sub["date"]]
+    data30  = [round(float(v), 2) if not pd.isna(v) else None for v in sub["rate_30"]]
+    data15  = [round(float(v), 2) if not pd.isna(v) else None for v in sub["rate_15"]]
+    return jsonify({"labels": labels, "data30": data30, "data15": data15, "data_tnx": [None] * len(labels)})
 
 
 @app.route("/api/forecast")
