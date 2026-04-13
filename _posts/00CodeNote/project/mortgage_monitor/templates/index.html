@@ -253,6 +253,20 @@
       border: 1.5px solid var(--border); font-size: .88rem; font-weight: 700;
       text-align: center; background: var(--accent-light); color: var(--accent-dark);
     }
+    /* WHY: rate-input-wrap upgrades the read-only rate-display box into a typed
+       number entry. The inner input is transparent/borderless so the outer div
+       keeps its existing pill appearance; the % symbol is a sibling span. */
+    .rate-input-wrap { display: flex; align-items: center; gap: 1px; cursor: text; }
+    .rate-input-field {
+      width: 42px; border: none; outline: none; background: transparent;
+      color: inherit; font-weight: inherit; font-size: inherit; text-align: right;
+      -moz-appearance: textfield; padding: 0;
+    }
+    .rate-input-field::-webkit-outer-spin-button,
+    .rate-input-field::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .rate-input-wrap:focus-within {
+      border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-light);
+    }
 
     /* ── Calc results ────────────────────────────────────────────── */
     .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
@@ -493,35 +507,192 @@
     html[data-theme="terminal"] .history-table tr.today-row td { background: #2d1f00; }
 
     html[data-theme="terminal"] .lang-btn.active { box-shadow: none; }
+
+    /* ── App Layout — Desktop Left Sidebar ─────────────────────────── */
+    /* WHY: desktop gets a persistent fixed sidebar so users can navigate
+       sections without scrolling; mobile keeps the existing nav-grid */
+    .sidebar {
+      width: 220px; position: fixed; left: 0; top: 0; bottom: 0;
+      background: var(--surface); border-right: 1.5px solid var(--border);
+      display: flex; flex-direction: column; overflow-y: auto; z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 20px 18px 16px; border-bottom: 1px solid var(--border);
+    }
+    .sidebar-logo-title { font-size: .95rem; font-weight: 800; color: var(--text); line-height: 1.3; }
+    .sidebar-logo-sub { font-size: .7rem; color: var(--text-muted); margin-top: 3px; }
+    .sidebar-nav { list-style: none; padding: 8px 0; flex: 1; }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 18px; cursor: pointer;
+      font-size: .84rem; font-weight: 600; color: var(--text-muted);
+      transition: background 0.12s, color 0.12s; border-left: 3px solid transparent;
+    }
+    .sidebar-item:hover { background: var(--accent-light); color: var(--text); }
+    .sidebar-item.active {
+      background: var(--accent-light); color: var(--accent-dark);
+      border-left-color: var(--accent);
+    }
+    .sidebar-icon { font-size: .95rem; flex-shrink: 0; }
+    .sidebar-divider { height: 1px; background: var(--border); margin: 6px 12px; }
+    /* Shift main content right on desktop to clear fixed sidebar */
+    .app-main { margin-left: 220px; }
+    /* Mobile: hide sidebar, restore nav-grid, remove left margin */
+    @media (max-width: 767px) {
+      .sidebar { display: none; }
+      .app-main { margin-left: 0; }
+    }
+    /* Desktop: sidebar replaces the in-page nav-grid */
+    @media (min-width: 768px) {
+      .nav-grid { display: none; }
+    }
+    /* Midnight theme sidebar */
+    html[data-theme="midnight"] .sidebar {
+      background: rgba(7,6,15,0.88);
+      border-right-color: rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    }
+    html[data-theme="midnight"] .sidebar-logo { border-bottom-color: rgba(255,255,255,0.08); }
+    html[data-theme="midnight"] .sidebar-divider { background: rgba(255,255,255,0.08); }
+    html[data-theme="midnight"] .sidebar-item:hover {
+      background: rgba(124,58,237,0.12); color: #a78bfa; border-left-color: transparent;
+    }
+    html[data-theme="midnight"] .sidebar-item.active {
+      background: rgba(124,58,237,0.18); color: #a78bfa; border-left-color: #7c3aed;
+    }
+    /* Hide sidebar icons in midnight theme (same treatment as .nav-icon) */
+    html[data-theme="midnight"] .sidebar-icon { display: none; }
+    /* Terminal theme sidebar */
+    html[data-theme="terminal"] .sidebar { background: #0d0d0d; border-right-color: #2a2a2a; }
+    html[data-theme="terminal"] .sidebar-logo { border-bottom-color: #2a2a2a; }
+    html[data-theme="terminal"] .sidebar-divider { background: #2a2a2a; }
+    html[data-theme="terminal"] .sidebar-item:hover,
+    html[data-theme="terminal"] .sidebar-item.active {
+      background: #1a1a0a; color: #c8b400; border-left-color: #c8b400;
+    }
+
+    /* ── Sidebar — bottom controls (theme + lang) ───────────────────── */
+    /* WHY: on desktop the header controls are hidden; theme/lang switchers
+       live at the bottom of the sidebar for a cleaner header */
+    .sidebar-controls {
+      padding: 12px 18px 20px; border-top: 1px solid var(--border); margin-top: auto;
+    }
+    .sidebar-controls-label {
+      font-size: .68rem; color: var(--text-muted); text-transform: uppercase;
+      letter-spacing: .07em; font-weight: 700; margin-bottom: 7px;
+    }
+    .sidebar .theme-switcher { flex-wrap: wrap; gap: 3px; margin-bottom: 10px; }
+    .sidebar .lang-switcher  { flex-wrap: wrap; gap: 4px; }
+    /* On desktop, header controls are replaced by the sidebar */
+    @media (min-width: 768px) { .header-controls { display: none; } }
+    html[data-theme="midnight"] .sidebar-controls { border-top-color: rgba(255,255,255,0.08); }
+    html[data-theme="terminal"] .sidebar-controls { border-top-color: #2a2a2a; }
+
+    /* ── Desktop Inline Section Mode ────────────────────────────────── */
+    /* WHY: when a sidebar item is selected on desktop, its content renders
+       directly in the right-hand area (no popup overlay). body[data-section]
+       is set by JS to the active modal id (calc, refi, history, etc.) */
+    @media (min-width: 768px) {
+      /* Hide the dashboard content area when a section is active */
+      body[data-section] .app-main { display: none; }
+      /* Turn off all modals then selectively show the open one inline */
+      body[data-section] .modal-overlay { display: none !important; }
+      body[data-section] .modal-overlay.open {
+        display: block !important;
+        position: static;
+        background: none;
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+        padding: 24px 16px 80px;
+        margin-left: 220px;
+        min-height: 100vh;
+        overflow: visible;
+      }
+      /* Expand the modal card to fill the content width */
+      body[data-section] .modal-overlay.open .modal {
+        max-width: 960px; max-height: none;
+        overflow: visible; animation: none;
+        margin: 0 auto;
+      }
+      /* Hide the ✕ close button — navigation is via sidebar */
+      body[data-section] .modal-close { display: none; }
+      /* Disable backdrop-click close (overlay has no background) */
+      body[data-section] .modal-overlay.open { pointer-events: auto; }
+    }
+
+    /* ── Print styles (Share Rate Card) ─────────────────────────────── */
+    /* WHY: when printing, hide chrome so only the content area is captured */
+    @media print {
+      .sidebar { display: none !important; }
+      .app-main { margin-left: 0 !important; }
+      body[data-section] .modal-overlay.open { margin-left: 0 !important; }
+      .header-controls, .modal-close, .badges { display: none !important; }
+    }
   </style>
 </head>
 <body>
+
+<!-- ── Sidebar Navigation (desktop only; hidden on mobile) ── -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-title">Mortgage Monitor</div>
+    <div class="sidebar-logo-sub">Daily Rate Tracker</div>
+  </div>
+  <ul class="sidebar-nav">
+    <li class="sidebar-item active" id="sidebar-home" onclick="sidebarGoHome()">
+      <span>Dashboard</span>
+    </li>
+    <li class="sidebar-divider"></li>
+    <li class="sidebar-item" id="sidebar-calc" onclick="sidebarOpen(this,'calc')">
+      <span data-i18n="nav.calc">Payment Calculator</span>
+    </li>
+    <li class="sidebar-item" id="sidebar-refi" onclick="sidebarOpen(this,'refi')">
+      <span data-i18n="nav.refi">Refi Savings</span>
+    </li>
+    <li class="sidebar-item" id="sidebar-history" onclick="sidebarOpen(this,'history')">
+      <span data-i18n="nav.history">Rate History</span>
+    </li>
+    <li class="sidebar-item" id="sidebar-news" onclick="sidebarOpen(this,'news')">
+      <span data-i18n="nav.news">Market News</span>
+    </li>
+    <li class="sidebar-divider"></li>
+    <li class="sidebar-item" id="sidebar-share" onclick="shareCard(); sidebarSetActive(this)">
+      <span data-i18n="nav.share">Share Rate Card</span>
+    </li>
+    <li class="sidebar-item" id="sidebar-alert" onclick="openModal('alert'); sidebarSetActive(this)">
+      <span data-i18n="nav.alert">Rate Alert</span>
+    </li>
+  </ul>
+  <!-- Bottom: theme + language controls (replaces header controls on desktop) -->
+  <div class="sidebar-controls">
+    <div class="sidebar-controls-label">Theme</div>
+    <div class="theme-switcher">
+      <button class="theme-btn active" data-theme-id="parchment" onclick="setTheme('parchment')" title="Parchment">🌿</button>
+      <button class="theme-btn" data-theme-id="midnight" onclick="setTheme('midnight')" title="Midnight">🌙</button>
+      <button class="theme-btn" data-theme-id="terminal" onclick="setTheme('terminal')" title="Terminal">💻</button>
+      <button class="theme-btn" data-theme-id="frost" onclick="setTheme('frost')" title="Frost">❄️</button>
+    </div>
+    <div class="sidebar-controls-label">Language</div>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</nav>
+
+<div class="app-main">
 <div class="container">
 
   <!-- ── Header ── -->
   <div class="header">
     <div class="header-top">
-      <h1 data-i18n="app.title">🏠 Daily Mortgage Rate Tracker</h1>
-      <div class="header-controls">
-        <div class="theme-switcher">
-          <button class="theme-btn active" data-theme-id="parchment" onclick="setTheme('parchment')" title="Parchment">🌿</button>
-          <button class="theme-btn" data-theme-id="midnight" onclick="setTheme('midnight')" title="Midnight">🌙</button>
-          <button class="theme-btn" data-theme-id="terminal" onclick="setTheme('terminal')" title="Terminal">💻</button>
-          <button class="theme-btn" data-theme-id="frost" onclick="setTheme('frost')" title="Frost">❄️</button>
-        </div>
-        <div class="controls-divider"></div>
-        <div class="lang-switcher">
-          <button class="lang-btn active" onclick="setLang('en')">EN</button>
-          <button class="lang-btn" onclick="setLang('zh')">中文</button>
-          <button class="lang-btn" onclick="setLang('es')">ES</button>
-        </div>
-      </div>
+      <h1 data-i18n="app.title">Daily Mortgage Rate Tracker</h1>
     </div>
     <div class="header-sub"><span data-i18n="app.sub">Daily rates · Mortgage News Daily + Bankrate · </span><span id="today-date">—</span></div>
     <div class="badges">
       <span class="badge green"><span class="dot"></span> <span data-i18n="badge.updated">Updated</span> <span id="updated-date">—</span></span>
-      <span class="badge orange" data-i18n="badge.daily">📅 Daily (weekdays)</span>
-      <span class="badge" data-i18n="badge.mnd">⚡ MND Rate Index</span>
+      <span class="badge orange" data-i18n="badge.daily">Updated Daily · Weekdays</span>
+      <span class="badge" data-i18n="badge.mnd">MND Rate Index</span>
     </div>
   </div>
 
@@ -652,7 +823,7 @@
   <!-- ── Forecast Card ── -->
   <div class="forecast-card">
     <div class="forecast-header">
-      <div class="forecast-title" data-i18n="forecast.title">📊 Rate Forecast & Context</div>
+      <div class="forecast-title" data-i18n="forecast.title">Rate Forecast &amp; Analysis</div>
       <span class="trend-badge" id="trend-badge">—</span>
     </div>
     <div class="forecast-analysis" id="forecast-analysis">Loading analysis…</div>
@@ -689,38 +860,38 @@
   <div class="nav-grid">
     <div class="nav-card" onclick="openModal('calc')">
       <div class="nav-arrow">↗</div>
-      <div class="nav-icon">🧮</div>
+      <div class="nav-icon"></div>
       <div class="nav-title" data-i18n="nav.calc">Payment Calculator</div>
       <div class="nav-desc" id="nav-calc-desc">$500K home · calculating…</div>
     </div>
     <div class="nav-card" onclick="openModal('refi')">
       <div class="nav-arrow">↗</div>
-      <div class="nav-icon">🔄</div>
+      <div class="nav-icon"></div>
       <div class="nav-title" data-i18n="nav.refi">Refi Savings</div>
       <div class="nav-desc" id="nav-refi-desc">Calculating savings…</div>
     </div>
     <div class="nav-card" onclick="openModal('history')">
       <div class="nav-arrow">↗</div>
-      <div class="nav-icon">📋</div>
+      <div class="nav-icon"></div>
       <div class="nav-title" data-i18n="nav.history">Rate History</div>
       <div class="nav-desc" data-i18n="nav.history.desc">Last 20 trading days</div>
     </div>
     <div class="nav-card" onclick="openModal('alert')">
       <div class="nav-arrow">↗</div>
-      <div class="nav-icon">🔔</div>
+      <div class="nav-icon"></div>
       <div class="nav-title" data-i18n="nav.alert">Rate Alert</div>
       <div class="nav-desc" data-i18n="nav.alert.desc">Get notified when rates drop</div>
     </div>
     <div class="nav-card" onclick="openModal('news')">
       <div class="nav-arrow">↗</div>
-      <div class="nav-icon">🗞</div>
+      <div class="nav-icon"></div>
       <div class="nav-title" data-i18n="nav.news">Market News</div>
       <div class="nav-desc" data-i18n="nav.news.desc">Mortgage · Fed · Economy</div>
     </div>
     <div class="nav-card" onclick="shareCard()">
       <div class="nav-arrow">↗</div>
-      <div class="nav-icon">📤</div>
-      <div class="nav-title" data-i18n="nav.share">Share Card</div>
+      <div class="nav-icon"></div>
+      <div class="nav-title" data-i18n="nav.share">Rate Card</div>
       <div class="nav-desc" data-i18n="nav.share.desc">Generate rate image</div>
     </div>
   </div>
@@ -736,6 +907,7 @@
     <div class="footer-disclaimer" data-i18n="footer.disclaimer">Rates shown are national averages for informational purposes only. Individual rates vary based on credit score, LTV, and lender. Not financial advice.</div>
   </div>
 </div>
+</div><!-- end .app-main -->
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- MODALS                                                          -->
@@ -745,13 +917,14 @@
 <div class="modal-overlay" id="modal-calc" onclick="closeModalOutside(event,'modal-calc')">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title" data-i18n="modal.calc.title">🧮 Monthly Payment Calculator</div>
+      <div class="modal-title" data-i18n="modal.calc.title">Monthly Payment Calculator</div>
       <button class="modal-close" onclick="closeModal('calc')">✕</button>
     </div>
     <div class="live-badge"><span class="dot"></span> Live: <span id="calc-live-badge">loading…</span></div>
 
     <div class="preset-chips" id="calc-presets">
-      <button class="preset-chip selected" data-price="500000" data-down="100000" data-term="30">Starter home<br><small>$500K · 20% · 30yr</small></button>
+      <button class="preset-chip selected" data-price="940000" data-down="100000" data-term="30">Starter home<br><small>$940K · 20% · 30yr</small></button>
+      <button class="preset-chip" data-price="670000" data-down="" data-term="15">Re-fin<br><small>$670K · 0% · 15yr</small></button>
       <button class="preset-chip" data-price="800000" data-down="160000" data-term="30">Move-up<br><small>$800K · 20% · 30yr</small></button>
       <button class="preset-chip" data-price="1200000" data-down="240000" data-term="15">Jumbo 15yr<br><small>$1.2M · 20% · 15yr</small></button>
     </div>
@@ -782,7 +955,7 @@
         <div class="form-label" data-i18n="form.rate">Interest Rate</div>
         <div class="slider-row">
           <input type="range" id="calc-rate-slider" min="2" max="10" step="0.05" value="6.5" oninput="calcRateSync()">
-          <div class="rate-display" id="calc-rate-display">6.50%</div>
+          <div class="rate-display rate-input-wrap"><input type="number" class="rate-input-field" id="calc-rate-display" min="2" max="10" step="0.05" value="6.50" oninput="calcRateFromInput()"><span>%</span></div>
         </div>
       </div>
     </div>
@@ -817,11 +990,14 @@
     </div>
 
     <div class="divider"></div>
-    <div class="section-title" data-i18n="amort.title">Amortization — First 5 Years</div>
+    <div class="section-title" data-i18n="amort.title">Amortization — All Years</div>
+    <!-- WHY: wrap in scrollable div so 30yr table doesn't overflow the modal -->
+    <div style="max-height:360px;overflow-y:auto;border-radius:var(--radius-sm);">
     <table class="amort-table" id="amort-table">
       <thead><tr><th data-i18n="amort.year">Year</th><th data-i18n="amort.prin">Principal Paid</th><th data-i18n="amort.int">Interest Paid</th><th data-i18n="amort.bal">Balance</th></tr></thead>
       <tbody id="amort-body"></tbody>
     </table>
+    </div>
   </div>
 </div>
 
@@ -829,7 +1005,7 @@
 <div class="modal-overlay" id="modal-refi" onclick="closeModalOutside(event,'modal-refi')">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title" data-i18n="modal.refi.title">🔄 Refinance Savings Calculator</div>
+      <div class="modal-title" data-i18n="modal.refi.title">Refinance Savings Calculator</div>
       <button class="modal-close" onclick="closeModal('refi')">✕</button>
     </div>
     <div class="live-badge"><span class="dot"></span> <span data-i18n="refi.auto">New rate auto-filled from today's live data · Current rate set to last year's high</span></div>
@@ -858,14 +1034,14 @@
         <div class="form-label" data-i18n="form.currate">Current Rate</div>
         <div class="slider-row">
           <input type="range" id="refi-cur-slider" min="2" max="10" step="0.05" value="7.5" oninput="refiRateSync('cur')">
-          <div class="rate-display" id="refi-cur-display">7.50%</div>
+          <div class="rate-display rate-input-wrap"><input type="number" class="rate-input-field" id="refi-cur-display" min="2" max="10" step="0.05" value="7.50" oninput="refiRateFromInput('cur')"><span>%</span></div>
         </div>
       </div>
       <div class="form-group full">
         <div class="form-label" data-i18n="form.newrate">New Rate (Today's)</div>
         <div class="slider-row">
           <input type="range" id="refi-new-slider" min="2" max="10" step="0.05" value="6.5" oninput="refiRateSync('new')">
-          <div class="rate-display" id="refi-new-display">6.50%</div>
+          <div class="rate-display rate-input-wrap"><input type="number" class="rate-input-field" id="refi-new-display" min="2" max="10" step="0.05" value="6.50" oninput="refiRateFromInput('new')"><span>%</span></div>
         </div>
       </div>
       <div class="form-group">
@@ -908,7 +1084,7 @@
 <div class="modal-overlay" id="modal-history" onclick="closeModalOutside(event,'modal-history')">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title" data-i18n="modal.history.title">📋 Recent Daily Rate History</div>
+      <div class="modal-title" data-i18n="modal.history.title">Daily Rate History</div>
       <button class="modal-close" onclick="closeModal('history')">✕</button>
     </div>
     <div class="header-sub" style="margin-bottom:14px;font-size:.82rem;color:var(--text-muted)">30-Year Fixed · MND Index · Last 20 trading days</div>
@@ -920,7 +1096,7 @@
 <div class="modal-overlay" id="modal-alert" onclick="closeModalOutside(event,'modal-alert')">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">🔔 Rate Alert</div>
+      <div class="modal-title">Rate Alert</div>
       <button class="modal-close" onclick="closeModal('alert')">✕</button>
     </div>
     <p style="font-size:.87rem;color:var(--text-muted);margin-bottom:16px;">Get notified when 30-yr rates drop below your target.</p>
@@ -946,7 +1122,7 @@
 <div class="modal-overlay" id="modal-news" onclick="closeModalOutside(event,'modal-news')">
   <div class="modal" style="max-width:640px">
     <div class="modal-header">
-      <div class="modal-title" data-i18n="modal.news.title">🗞 Market News & Rate Impact</div>
+      <div class="modal-title" data-i18n="modal.news.title">Market News &amp; Rate Impact</div>
       <button class="modal-close" onclick="closeModal('news')">✕</button>
     </div>
     <div class="signal-section">
@@ -980,76 +1156,76 @@ let _currentRange = "3M";
 // ── i18n ─────────────────────────────────────────────────────────
 const T = {
   en: {
-    'app.title':'🏠 Daily Mortgage Rate Tracker','app.sub':'Daily rates · Mortgage News Daily + Bankrate · ',
-    'badge.updated':'Updated','badge.daily':'📅 Daily (weekdays)','badge.mnd':'⚡ MND Rate Index',
+    'app.title':'Daily Mortgage Rate Tracker','app.sub':'Daily rates · Mortgage News Daily + Bankrate · ',
+    'badge.updated':'Updated','badge.daily':'Updated Daily · Weekdays','badge.mnd':'MND Rate Index',
     'rate.30yr':'30-YR FIXED','rate.15yr':'15-YR FIXED','rate.tnx':'10-YR TREASURY',
     'rate.1wk':'1-Wk Change','rate.1yr':'1-Yr Change','rate.mavg':'Monthly Avg','rate.52avg':'52-Wk Avg','rate.range':'52-Week Range','rate.spread':'Spread to 30yr',
     'chart.title':'Daily Rate Chart','legend.30':'30yr Fixed','legend.15':'15yr Fixed','legend.tnx':'10yr Treasury',
-    'forecast.title':'📊 Rate Forecast & Context','proj.30d':'30-Day Projection','proj.60d':'60-Day Projection',
+    'forecast.title':'Rate Forecast &amp; Analysis','proj.30d':'30-Day Projection','proj.60d':'60-Day Projection',
     'nav.calc':'Payment Calculator','nav.refi':'Refi Savings','nav.history':'Rate History',
     'nav.history.desc':'Last 20 trading days','nav.alert':'Rate Alert','nav.alert.desc':'Get notified when rates drop',
-    'nav.news':'Market News','nav.news.desc':'Mortgage · Fed · Economy','nav.share':'Share Card','nav.share.desc':'Generate rate image',
+    'nav.news':'Market News','nav.news.desc':'Mortgage · Fed · Economy','nav.share':'Share Rate Card','nav.share.desc':'Print or save current view',
     'footer.title':'Data Sources',
     'footer.mnd':'<strong>Mortgage News Daily</strong> — Real lender rate sheets, updated ~4PM ET weekdays.',
     'footer.bankrate':'<strong>Bankrate / Freddie Mac PMMS</strong> — Freddie Mac updates weekly (Thu); Bankrate daily.',
     'footer.fred':'<strong>FRED (St. Louis Fed)</strong> — Historical weekly series MORTGAGE30US, MORTGAGE15US, MORTGAGE5US.',
     'footer.disclaimer':'Rates shown are national averages for informational purposes only. Individual rates vary based on credit score, LTV, and lender. Not financial advice.',
-    'modal.calc.title':'🧮 Monthly Payment Calculator','modal.refi.title':'🔄 Refinance Savings Calculator',
-    'modal.history.title':'📋 Recent Daily Rate History','modal.news.title':'🗞 Market News & Rate Impact',
+    'modal.calc.title':'Monthly Payment Calculator','modal.refi.title':'Refinance Savings Calculator',
+    'modal.history.title':'Daily Rate History','modal.news.title':'Market News &amp; Rate Impact',
     'form.price':'House Price','form.down':'Down Payment','form.term':'Loan Term','form.rate':'Interest Rate',
     'form.balance':'Loan Balance','form.currate':'Current Rate','form.newrate':"New Rate (Today's)",'form.remterm':'Remaining Term','form.closing':'Closing Costs',
     'res.monthly':'Monthly Payment','res.interest':'Total Interest','res.total':'Total Cost',
-    'amort.title':'Amortization — First 5 Years','amort.year':'Year','amort.prin':'Principal Paid','amort.int':'Interest Paid','amort.bal':'Balance',
+    'amort.title':'Amortization — All Years','amort.year':'Year','amort.prin':'Principal Paid','amort.int':'Interest Paid','amort.bal':'Balance',
     'refi.auto':"New rate auto-filled from today's live data · Current rate set to last year's high",
     'refi.cur':'Current Loan','refi.after':'After Refinance',
     'refi.monthly':'Monthly Savings','refi.annual':'Annual Savings','refi.breakeven':'Break-even Point',
   },
   zh: {
-    'app.title':'🏠 每日房贷利率追踪','app.sub':'每日利率 · MND + Bankrate · ',
-    'badge.updated':'更新于','badge.daily':'📅 每日更新（工作日）','badge.mnd':'⚡ MND 利率指数',
+    'app.title':'每日房贷利率追踪','app.sub':'每日利率 · MND + Bankrate · ',
+    'badge.updated':'更新于','badge.daily':'每日更新 · 工作日','badge.mnd':'MND 利率指数',
     'rate.30yr':'30年固定利率','rate.15yr':'15年固定利率','rate.tnx':'10年期国债',
     'rate.1wk':'周变动','rate.1yr':'年变动','rate.mavg':'月均值','rate.52avg':'52周均值','rate.range':'52周区间','rate.spread':'相对30年息差',
     'chart.title':'每日利率走势','legend.30':'30年固定','legend.15':'15年固定','legend.tnx':'10年期国债',
-    'forecast.title':'📊 利率预测与分析','proj.30d':'30日预测','proj.60d':'60日预测',
+    'forecast.title':'利率预测与分析','proj.30d':'30日预测','proj.60d':'60日预测',
     'nav.calc':'月供计算器','nav.refi':'再融资节省','nav.history':'利率历史',
     'nav.history.desc':'近20个交易日','nav.alert':'利率提醒','nav.alert.desc':'利率下降时通知我',
-    'nav.news':'市场新闻','nav.news.desc':'房贷 · 美联储 · 经济','nav.share':'分享卡片','nav.share.desc':'生成利率图片',
+    'nav.news':'市场新闻','nav.news.desc':'房贷 · 美联储 · 经济','nav.share':'分享当前界面','nav.share.desc':'打印或保存当前视图',
     'footer.title':'数据来源',
     'footer.mnd':'<strong>Mortgage News Daily</strong> — 实时贷款利率表，每个工作日下午4点更新。',
     'footer.bankrate':'<strong>Bankrate / Freddie Mac PMMS</strong> — 房地美每周四更新；Bankrate每日更新。',
     'footer.fred':'<strong>FRED（圣路易斯联储）</strong> — 历史周度数据 MORTGAGE30US、MORTGAGE15US、MORTGAGE5US。',
     'footer.disclaimer':'所示利率为全国平均值，仅供参考。个人利率因信用分、贷款价值比及贷款机构而异。本内容不构成财务建议。',
-    'modal.calc.title':'🧮 月供计算器','modal.refi.title':'🔄 再融资节省计算器',
-    'modal.history.title':'📋 近期每日利率历史','modal.news.title':'🗞 市场新闻与利率影响',
+    'modal.calc.title':'月供计算器','modal.refi.title':'再融资节省计算器',
+    'modal.history.title':'近期利率历史','modal.news.title':'市场新闻与利率分析',
     'form.price':'房屋价格','form.down':'首付金额','form.term':'贷款年限','form.rate':'利率',
     'form.balance':'贷款余额','form.currate':'当前利率','form.newrate':'新利率（今日）','form.remterm':'剩余年限','form.closing':'交割费用',
     'res.monthly':'月供','res.interest':'总利息','res.total':'总费用',
-    'amort.title':'还款计划 — 前5年','amort.year':'年份','amort.prin':'已还本金','amort.int':'已还利息','amort.bal':'剩余余额',
+    'amort.title':'还款计划 — 全部年份','amort.year':'年份','amort.prin':'已还本金','amort.int':'已还利息','amort.bal':'剩余余额',
     'refi.auto':'新利率已自动填入今日实时数据 · 当前利率设为去年高点',
     'refi.cur':'当前贷款','refi.after':'再融资后',
     'refi.monthly':'月节省额','refi.annual':'年节省额','refi.breakeven':'回本周期',
   },
   es: {
-    'app.title':'🏠 Rastreador Diario de Hipotecas','app.sub':'Tasas diarias · MND + Bankrate · ',
-    'badge.updated':'Actualizado','badge.daily':'📅 Diario (días hábiles)','badge.mnd':'⚡ Índice MND',
+    'app.title':'Rastreador Diario de Hipotecas','app.sub':'Tasas diarias · MND + Bankrate · ',
+    'badge.updated':'Actualizado','badge.daily':'Actualización diaria · Días hábiles','badge.mnd':'Índice MND',
     'rate.30yr':'FIJO 30 AÑOS','rate.15yr':'FIJO 15 AÑOS','rate.tnx':'BONO 10 AÑOS',
     'rate.1wk':'Cambio semanal','rate.1yr':'Cambio anual','rate.mavg':'Prom. mensual','rate.52avg':'Prom. 52 sem.','rate.range':'Rango 52 semanas','rate.spread':'Diferencial vs 30yr',
     'chart.title':'Gráfico Diario de Tasas','legend.30':'Fijo 30 años','legend.15':'Fijo 15 años',
-    'forecast.title':'📊 Pronóstico de Tasas','proj.30d':'Proyección 30 días','proj.60d':'Proyección 60 días',
+    'forecast.title':'Pronóstico de Tasas','proj.30d':'Proyección 30 días','proj.60d':'Proyección 60 días',
     'nav.calc':'Calculadora de pago','nav.refi':'Ahorro en Refi','nav.history':'Historial de tasas',
     'nav.history.desc':'Últimos 20 días hábiles','nav.alert':'Alerta de tasa','nav.alert.desc':'Notifícame cuando bajen',
-    'nav.news':'Noticias del mercado','nav.news.desc':'Hipoteca · Fed · Economía','nav.share':'Compartir tarjeta','nav.share.desc':'Generar imagen de tasas',
+    'nav.news':'Noticias del mercado','nav.news.desc':'Hipoteca · Fed · Economía','nav.share':'Compartir Vista','nav.share.desc':'Imprimir o guardar vista actual',
     'footer.title':'Fuentes de datos',
     'footer.mnd':'<strong>Mortgage News Daily</strong> — Hojas de tasas de prestamistas reales, actualizadas ~4PM ET días hábiles.',
     'footer.bankrate':'<strong>Bankrate / Freddie Mac PMMS</strong> — Freddie Mac actualiza semanalmente (jue); Bankrate diariamente.',
     'footer.fred':'<strong>FRED (Fed de St. Louis)</strong> — Series semanales históricas MORTGAGE30US, MORTGAGE15US, MORTGAGE5US.',
     'footer.disclaimer':'Las tasas son promedios nacionales con fines informativos. Las tasas individuales varían según puntaje crediticio, LTV y prestamista. No es asesoría financiera.',
-    'modal.calc.title':'🧮 Calculadora de Pago Mensual','modal.refi.title':'🔄 Calculadora de Refinanciamiento',
-    'modal.history.title':'📋 Historial Reciente de Tasas','modal.news.title':'🗞 Noticias de Mercado e Impacto',
+    'modal.calc.title':'Calculadora de Pago Mensual','modal.refi.title':'Calculadora de Refinanciamiento',
+    'modal.history.title':'Historial de Tasas','modal.news.title':'Noticias de Mercado e Impacto',
     'form.price':'Precio de casa','form.down':'Pago inicial','form.term':'Plazo del préstamo','form.rate':'Tasa de interés',
     'form.balance':'Saldo del préstamo','form.currate':'Tasa actual','form.newrate':'Nueva tasa (hoy)','form.remterm':'Plazo restante','form.closing':'Costos de cierre',
     'res.monthly':'Pago mensual','res.interest':'Interés total','res.total':'Costo total',
-    'amort.title':'Amortización — primeros 5 años','amort.year':'Año','amort.prin':'Capital pagado','amort.int':'Interés pagado','amort.bal':'Saldo',
+    'amort.title':'Amortización — Todos los años','amort.year':'Año','amort.prin':'Capital pagado','amort.int':'Interés pagado','amort.bal':'Saldo',
     'refi.auto':'Nueva tasa auto-rellenada con datos de hoy · Tasa actual = máximo del año pasado',
     'refi.cur':'Préstamo actual','refi.after':'Tras refinanciar',
     'refi.monthly':'Ahorro mensual','refi.annual':'Ahorro anual','refi.breakeven':'Punto de equilibrio',
@@ -1236,7 +1412,7 @@ function renderRates(data) {
   const slider = document.getElementById("calc-rate-slider");
   if (r30.current) {
     slider.value = r30.current;
-    document.getElementById("calc-rate-display").textContent = fmt(r30.current) + "%";
+    document.getElementById("calc-rate-display").value = fmt(r30.current);
   }
   calcUpdate();
 
@@ -1244,7 +1420,7 @@ function renderRates(data) {
   const refiSlider = document.getElementById("refi-new-slider");
   if (r30.current) {
     refiSlider.value = r30.current;
-    document.getElementById("refi-new-display").textContent = fmt(r30.current) + "%";
+    document.getElementById("refi-new-display").value = fmt(r30.current);
   }
   refiUpdate();
 
@@ -1483,7 +1659,16 @@ function calcSync(source) {
 
 function calcRateSync() {
   const val = parseFloat(document.getElementById("calc-rate-slider").value);
-  document.getElementById("calc-rate-display").textContent = val.toFixed(2) + "%";
+  document.getElementById("calc-rate-display").value = val.toFixed(2);
+  calcUpdate();
+}
+
+// WHY: when user types directly into the rate input, sync the value back to the
+// range slider and clamp to [2, 10] before recalculating
+function calcRateFromInput() {
+  const input = document.getElementById("calc-rate-display");
+  const v = Math.min(10, Math.max(2, parseFloat(input.value) || 6.5));
+  document.getElementById("calc-rate-slider").value = v;
   calcUpdate();
 }
 
@@ -1520,7 +1705,7 @@ function calcUpdate() {
   let balance = principal;
   const tbody = document.getElementById("amort-body");
   tbody.innerHTML = "";
-  for (let yr = 1; yr <= Math.min(5, term); yr++) {
+  for (let yr = 1; yr <= term; yr++) {
     let yearPrincipal = 0, yearInterest = 0;
     for (let mo = 0; mo < 12; mo++) {
       const intPmt = balance * r;
@@ -1552,7 +1737,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ? (parseFloat(document.getElementById("refi-new-slider").value) - 0.65)
         : parseFloat(document.getElementById("refi-new-slider").value);
       document.getElementById("calc-rate-slider").value = rate;
-      document.getElementById("calc-rate-display").textContent = rate.toFixed(2) + "%";
+      document.getElementById("calc-rate-display").value = rate.toFixed(2);
       calcUpdate();
     });
   });
@@ -1562,7 +1747,17 @@ document.addEventListener("DOMContentLoaded", () => {
 function refiRateSync(which) {
   const slider = document.getElementById(`refi-${which}-slider`);
   const display = document.getElementById(`refi-${which}-display`);
-  display.textContent = parseFloat(slider.value).toFixed(2) + "%";
+  display.value = parseFloat(slider.value).toFixed(2);
+  refiUpdate();
+}
+
+// WHY: bidirectional sync — when user types into the refi rate input,
+// clamp to [2, 10] and push the value back to the paired range slider
+function refiRateFromInput(which) {
+  const input = document.getElementById(`refi-${which}-display`);
+  const fallback = which === 'cur' ? 7.5 : 6.5;
+  const v = Math.min(10, Math.max(2, parseFloat(input.value) || fallback));
+  document.getElementById(`refi-${which}-slider`).value = v;
   refiUpdate();
 }
 
@@ -1744,6 +1939,39 @@ function shareCard() {
 }
 
 // ── Modal controls ───────────────────────────────────────────────
+// ── Sidebar Navigation ────────────────────────────────────────────
+// WHY: on desktop (≥768px) sidebar items render their content inline in the
+// main area (body[data-section] mode); on mobile they fall back to modals.
+function sidebarSetActive(el) {
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function sidebarOpen(el, modalId) {
+  sidebarSetActive(el);
+  if (window.innerWidth >= 768) {
+    // Desktop: inline section — set data attribute, show modal content in place
+    document.body.dataset.section = modalId;
+    document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+    document.getElementById('modal-' + modalId).classList.add('open');
+    document.body.style.overflow = '';     // no scroll lock for inline mode
+    if (modalId === 'history') loadHistory();
+    if (modalId === 'news')    loadNews();
+    if (modalId === 'calc')    calcUpdate();
+    if (modalId === 'refi')    refiUpdate();
+  } else {
+    openModal(modalId);
+  }
+}
+
+// WHY: sidebarGoHome() clears inline section mode and returns to the dashboard
+function sidebarGoHome() {
+  delete document.body.dataset.section;
+  document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  document.body.style.overflow = '';
+  sidebarSetActive(document.getElementById('sidebar-home'));
+}
+
 function openModal(id) {
   document.getElementById("modal-" + id).classList.add("open");
   document.body.style.overflow = "hidden";
@@ -1755,6 +1983,12 @@ function openModal(id) {
 }
 
 function closeModal(id) {
+  // WHY: on desktop inline mode, closing a section returns to the dashboard
+  // rather than just removing the .open class from an overlay
+  if (window.innerWidth >= 768 && document.body.dataset.section === id) {
+    sidebarGoHome();
+    return;
+  }
   document.getElementById("modal-" + id).classList.remove("open");
   document.body.style.overflow = "";
 }
