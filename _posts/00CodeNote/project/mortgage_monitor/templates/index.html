@@ -453,6 +453,138 @@
     .result-sub { font-size: .65rem; color: var(--text-muted); }
     .pi-bar-wrap { margin-bottom: 12px; }
     .pi-bar { height: 12px; border-radius: 999px; overflow: hidden; display: flex; margin: 7px 0; }
+
+    /* ── Advanced Payments accordion ─────────────────────────────── */
+    /* WHY: collapsible section keeps the base form clean; extra
+       payment inputs only appear when the user opens it */
+    .adv-toggle {
+      display: flex; align-items: center; gap: 6px; cursor: pointer;
+      font-size: .78rem; font-weight: 600; color: var(--accent);
+      margin-top: 14px; padding: 7px 0 2px;
+      border-top: 1px solid var(--border); user-select: none;
+    }
+    .adv-toggle:hover { color: var(--accent-dark); }
+    .adv-arrow { font-size: .7rem; display: inline-block; transition: transform .2s; }
+    .adv-arrow.open { transform: rotate(90deg); }
+    .adv-panel { display: none; padding-top: 10px; }
+    .adv-panel.open { display: block; }
+    .adv-panel-title {
+      font-size: .68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--text-muted); margin-bottom: 8px;
+    }
+    /* WHY: 4-column grid: amount | start-year | freq radios | remove btn */
+    .extra-row {
+      display: grid;
+      grid-template-columns: 1fr 90px auto 28px;
+      gap: 6px; align-items: center; margin-bottom: 7px;
+    }
+    @media (max-width: 560px) {
+      .extra-row { grid-template-columns: 1fr 80px 28px; }
+      .extra-row .extra-freq { grid-column: 1 / 3; }
+    }
+    .extra-amount-wrap { display: flex; align-items: center;
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      background: var(--surface); overflow: hidden; }
+    .extra-amount-wrap .input-prefix {
+      padding: 0 5px 0 8px; color: var(--text-muted); font-size: .82rem; }
+    .extra-amount-wrap .extra-amount {
+      border: none; background: transparent; padding: 5px 6px;
+      font-size: .82rem; width: 100%; outline: none;
+      color: var(--text); font-family: inherit; }
+    .extra-freq {
+      display: flex; gap: 7px; align-items: center; flex-wrap: wrap;
+      font-size: .74rem; color: var(--text-muted);
+    }
+    .extra-freq label { display: flex; align-items: center; gap: 3px; cursor: pointer; }
+    .extra-freq input[type=radio] { accent-color: var(--accent); cursor: pointer; }
+    .extra-remove {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-muted); font-size: .95rem; padding: 3px 5px;
+      border-radius: 4px; line-height: 1; transition: background .15s, color .15s;
+    }
+    .extra-remove:hover { color: #ef4444; background: rgba(239,68,68,.1); }
+    .adv-add-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: none; border: 1px dashed var(--border);
+      border-radius: var(--radius-sm); padding: 5px 12px;
+      font-size: .75rem; font-weight: 600; color: var(--accent);
+      cursor: pointer; margin-top: 2px; font-family: inherit;
+      transition: background .15s, border-color .15s;
+    }
+    .adv-add-btn:hover { background: var(--accent-light); border-color: var(--accent); }
+    /* WHY: green savings banner appears only when extra payments reduce interest */
+    .extra-savings {
+      display: none; margin-top: 10px;
+      background: rgba(34,197,94,.07); border: 1px solid rgba(34,197,94,.25);
+      border-radius: var(--radius-sm); padding: 9px 14px;
+      font-size: .78rem;
+    }
+    .extra-savings.visible { display: block; }
+    .extra-savings-row {
+      display: flex; justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .extra-savings-row:last-child { margin-bottom: 0; }
+    .extra-savings-key { color: var(--text-muted); }
+    .extra-savings-val { font-weight: 700; color: #16a34a; }
+
+    /* ── Cumulative Payoff Chart card ─────────────────────────── */
+    /* WHY: section-card-title needs space-between to hold pin btn right */
+    .chart-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .chart-card-header .section-card-title { margin-bottom: 0; padding-bottom: 0;
+      border-bottom: none; }
+    .chart-pin-btn, .chart-unpin-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: var(--radius-sm);
+      font-size: .72rem; font-weight: 600; cursor: pointer;
+      border: 1px solid; font-family: inherit; transition: background .15s;
+    }
+    .chart-pin-btn {
+      background: var(--accent-light); border-color: var(--accent);
+      color: var(--accent);
+    }
+    .chart-pin-btn:hover { background: var(--accent); color: #fff; }
+    .chart-unpin-btn {
+      background: rgba(239,68,68,.08); border-color: rgba(239,68,68,.4);
+      color: #ef4444;
+    }
+    .chart-unpin-btn:hover { background: rgba(239,68,68,.18); }
+    .chart-pin-row {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 8px; min-height: 22px;
+    }
+    .chart-pin-label {
+      font-size: .71rem; color: var(--text-muted); font-style: italic;
+    }
+    .calc-payoff-wrap { position: relative; height: 300px; }
+    /* WHY: chart legend is custom so we can show dash styles */
+    .calc-chart-legend {
+      display: flex; flex-wrap: wrap; gap: 10px 16px;
+      font-size: .73rem; margin: 8px 0 4px;
+    }
+    .ccl-item { display: flex; align-items: center; gap: 5px; }
+    .ccl-line {
+      width: 24px; height: 3px; border-radius: 2px; flex-shrink: 0;
+    }
+    .ccl-line.dashed {
+      background: repeating-linear-gradient(
+        90deg, currentColor 0, currentColor 5px, transparent 5px, transparent 9px);
+    }
+    .ccl-line.dotted {
+      background: repeating-linear-gradient(
+        90deg, currentColor 0, currentColor 2px, transparent 2px, transparent 6px);
+    }
+    /* WHY: stats strip gives key numbers without cluttering the chart canvas */
+    .calc-chart-stats {
+      display: flex; flex-wrap: wrap; gap: 4px 14px;
+      font-size: .72rem; margin-top: 8px;
+      padding-top: 8px; border-top: 1px solid var(--border);
+    }
+    .ccs-item { color: var(--text-muted); }
+    .ccs-item strong { color: var(--text); font-weight: 700; }
     .pi-principal { background: var(--blue); height: 100%; transition: width .3s; }
     /* WHY: interest uses --gold (amber) not --accent (blue) — contrasting warm color signals
        "cost you should notice"; two blues would look identical (see CLAUDE.md requirements) */
@@ -1099,6 +1231,18 @@
           </div>
         </div>
       </div>
+
+      <!-- WHY: Advanced accordion keeps base form uncluttered;
+           extra payment rows live here and feed calcUpdate() -->
+      <div class="adv-toggle" onclick="toggleAdvanced()">
+        <span class="adv-arrow" id="adv-arrow">&#9654;</span>
+        <span>Advanced: Extra Payments</span>
+      </div>
+      <div class="adv-panel" id="adv-panel">
+        <div class="adv-panel-title">Additional Principal Payments</div>
+        <div id="extra-payments-list"></div>
+        <button class="adv-add-btn" onclick="addExtraPayment()">&#43; Add Payment</button>
+      </div>
     </div>
 
     <!-- Section 2: Payment Results -->
@@ -1130,6 +1274,45 @@
           <div class="pi-leg"><div class="pi-dot" style="background:var(--blue)"></div> Principal <span id="pi-principal-lbl" style="margin-left:3px;font-weight:700"></span></div>
           <div class="pi-leg"><div class="pi-dot" style="background:var(--gold)"></div> Interest <span id="pi-interest-lbl" style="margin-left:3px;font-weight:700"></span></div>
         </div>
+      </div>
+      <!-- WHY: savings banner shown only when extra payments shorten the loan -->
+      <div class="extra-savings" id="extra-savings">
+        <div class="extra-savings-row"><span class="extra-savings-key">Interest Saved</span><span class="extra-savings-val" id="es-saved">—</span></div>
+        <div class="extra-savings-row"><span class="extra-savings-key">Time Saved</span><span class="extra-savings-val" id="es-time">—</span></div>
+        <div class="extra-savings-row"><span class="extra-savings-key">Payoff</span><span class="extra-savings-val" id="es-payoff">—</span></div>
+      </div>
+    </div>
+
+    <!-- Section 4: Cumulative Payoff Chart -->
+    <!-- WHY: line chart of cumulative principal vs interest over life of loan;
+         crossover marker + pin feature for scenario comparison -->
+    <div class="section-card">
+      <div class="chart-card-header">
+        <div class="section-card-title">Cumulative Payoff Chart</div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <button class="chart-pin-btn" id="calc-pin-btn" onclick="calcChartPin()" title="Pin this scenario for comparison">&#128204; Pin</button>
+          <button class="chart-unpin-btn" id="calc-unpin-btn" onclick="calcChartUnpin()" style="display:none">&#x2715; Unpin</button>
+        </div>
+      </div>
+      <div class="chart-pin-row" id="calc-pin-row" style="display:none">
+        <span class="chart-pin-label" id="calc-pin-label"></span>
+      </div>
+      <div class="calc-chart-legend" id="calc-chart-legend">
+        <div class="ccl-item"><div class="ccl-line" style="background:#3b82f6"></div><span>Principal Paid</span></div>
+        <div class="ccl-item"><div class="ccl-line" style="background:#f59e0b"></div><span>Interest Paid</span></div>
+        <div class="ccl-item" id="ccl-base" style="display:none"><div class="ccl-line dashed" style="color:rgba(59,130,246,.55)"></div><span style="color:var(--text-muted)">Principal (no extra)</span></div>
+        <div class="ccl-item" id="ccl-base-int" style="display:none"><div class="ccl-line dashed" style="color:rgba(245,158,11,.55)"></div><span style="color:var(--text-muted)">Interest (no extra)</span></div>
+        <div class="ccl-item" id="ccl-pinned" style="display:none"><div class="ccl-line dotted" style="color:#8b5cf6"></div><span style="color:var(--text-muted)">Pinned: Principal</span></div>
+        <div class="ccl-item" id="ccl-pinned-int" style="display:none"><div class="ccl-line dotted" style="color:#10b981"></div><span style="color:var(--text-muted)">Pinned: Interest</span></div>
+      </div>
+      <div class="calc-payoff-wrap">
+        <canvas id="calcPayoffChart"></canvas>
+      </div>
+      <div class="calc-chart-stats" id="calc-chart-stats">
+        <span class="ccs-item">Crossover: <strong id="ccs-crossover">—</strong></span>
+        <span class="ccs-item">Payoff: <strong id="ccs-payoff">—</strong></span>
+        <span class="ccs-item">Total Interest: <strong id="ccs-interest">—</strong></span>
+        <span class="ccs-item" id="ccs-base-item" style="display:none">Base Crossover: <strong id="ccs-base-crossover">—</strong></span>
       </div>
     </div>
 
@@ -1842,52 +2025,445 @@ function calcRateFromInput() {
   calcUpdate();
 }
 
+// WHY: reads each .extra-row from DOM into [{amount, startYear, freq}]
+function getExtraPayments() {
+  var result = [];
+  document.querySelectorAll(".extra-row").forEach(function(row) {
+    var amt = parseFloat(row.querySelector(".extra-amount").value) || 0;
+    var yr  = parseInt(row.querySelector(".extra-year").value) || 1;
+    var el  = row.querySelector(".extra-freq-radio:checked");
+    var freq = el ? el.value : "annually";
+    if (amt > 0) result.push({ amount: amt, startYear: yr, freq: freq });
+  });
+  return result;
+}
+
+// WHY: runs a month-by-month amortization simulation that correctly
+//      accounts for extra principal payments (monthly / annually / one-time).
+//      Falls back to simple math when no extras are present.
 function calcUpdate() {
-  const price = parseFloat(document.getElementById("calc-price").value) || 500000;
-  const down = parseFloat(document.getElementById("calc-down").value) || 100000;
-  const term = parseInt(document.getElementById("calc-term").value) || 30;
-  const rate = parseFloat(document.getElementById("calc-rate-slider").value) || 6.5;
-  const principal = price - down;
+  var price     = parseFloat(document.getElementById("calc-price").value) || 500000;
+  var down      = parseFloat(document.getElementById("calc-down").value)  || 100000;
+  var term      = parseInt(document.getElementById("calc-term").value)    || 30;
+  var rate      = parseFloat(document.getElementById("calc-rate-slider").value) || 6.5;
+  var principal = price - down;
 
-  const monthly = calcMonthly(principal, rate, term);
-  const totalPaid = monthly * term * 12;
-  const totalInterest = totalPaid - principal;
+  var monthly = calcMonthly(principal, rate, term);
+  var r       = rate / 100 / 12;
 
-  document.getElementById("res-monthly").textContent = fmtDollar(monthly);
-  document.getElementById("res-interest").textContent = fmtDollar(totalInterest);
-  document.getElementById("res-interest-pct").textContent =
-    `${(totalInterest / principal * 100).toFixed(0)}% of loan`;
-  document.getElementById("res-total").textContent = fmtDollar(totalPaid);
-  document.getElementById("res-total-sub").textContent = `Loan: ${fmtDollar(principal)}`;
+  // Baseline totals (no extra) for savings comparison
+  var baseInterest = monthly * term * 12 - principal;
 
-  // PI bar
-  const pctP = principal / totalPaid * 100;
-  const pctI = 100 - pctP;
-  document.getElementById("pi-principal-bar").style.width = pctP + "%";
-  document.getElementById("pi-interest-bar").style.width = pctI + "%";
-  document.getElementById("pi-principal-lbl").textContent =
-    `${fmtDollar(principal)} (${pctP.toFixed(0)}%)`;
-  document.getElementById("pi-interest-lbl").textContent =
-    `${fmtDollar(totalInterest)} (${pctI.toFixed(0)}%)`;
+  var extras = getExtraPayments();
 
-  // Amortization table (first 5 years)
-  const r = rate / 100 / 12;
-  let balance = principal;
-  const tbody = document.getElementById("amort-body");
-  tbody.innerHTML = "";
-  for (let yr = 1; yr <= term; yr++) {
-    let yearPrincipal = 0, yearInterest = 0;
-    for (let mo = 0; mo < 12; mo++) {
-      const intPmt = balance * r;
-      const prinPmt = monthly - intPmt;
-      yearPrincipal += prinPmt;
-      yearInterest += intPmt;
-      balance -= prinPmt;
+  // ── Base scenario (no extras) — for chart dashed lines + crossover ──
+  var bbBal = principal, bbCumP = 0, bbCumI = 0;
+  var chartCumPrinBase = [], chartCumIntBase = [];
+  var crossoverIdxBase = -1;
+  for (var yb = 1; yb <= term; yb++) {
+    var ybP = 0, ybI = 0;
+    for (var mb = 0; mb < 12 && bbBal > 0.005; mb++) {
+      var bbInt  = bbBal * r;
+      var bbPrin = Math.min(monthly - bbInt, bbBal);
+      ybI += bbInt; ybP += bbPrin; bbBal -= bbPrin;
     }
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${yr}</td><td>${fmtDollar(yearPrincipal)}</td><td>${fmtDollar(yearInterest)}</td><td>${fmtDollar(Math.max(0, balance))}</td>`;
-    tbody.appendChild(tr);
+    bbCumP += ybP; bbCumI += ybI;
+    chartCumPrinBase.push(Math.round(bbCumP));
+    chartCumIntBase.push(Math.round(bbCumI));
+    if (crossoverIdxBase < 0 && bbCumP >= bbCumI) crossoverIdxBase = yb - 1;
   }
+
+  // Month-by-month simulation (with extras)
+  var balance          = principal;
+  var totalInterestPaid = 0;
+  var actualMonths     = 0;
+  var paidOffYear      = term;
+
+  // Chart cumulative accumulators
+  var chartYearLabels = [], chartCumPrin = [], chartCumInt = [];
+  var cumP = 0, cumI = 0;
+  var crossoverIdx = -1;
+
+  var tbody = document.getElementById("amort-body");
+  tbody.innerHTML = "";
+
+  for (var yr = 1; yr <= term; yr++) {
+    var yearPrincipal = 0, yearInterest = 0, yearExtra = 0;
+    for (var mo = 0; mo < 12 && balance > 0.005; mo++) {
+      actualMonths++;
+      var intPmt  = balance * r;
+      // cap regular principal so we never overpay in final month
+      var regPrin = Math.min(monthly - intPmt, balance);
+
+      // Extra payments for this month
+      var extra = 0;
+      extras.forEach(function(ep) {
+        if (yr < ep.startYear) return;
+        if (ep.freq === "monthly")                        extra += ep.amount;
+        else if (ep.freq === "annually" && mo === 0)     extra += ep.amount;
+        else if (ep.freq === "once" && yr === ep.startYear && mo === 0) extra += ep.amount;
+      });
+      // Never pay more than remaining balance after regular principal
+      extra = Math.min(extra, Math.max(0, balance - regPrin));
+
+      yearInterest  += intPmt;
+      yearPrincipal += regPrin;
+      yearExtra     += extra;
+      balance       -= (regPrin + extra);
+      if (balance < 0.005) balance = 0;
+    }
+    totalInterestPaid += yearInterest;
+
+    // Accumulate chart data
+    cumP += yearPrincipal + yearExtra;
+    cumI += yearInterest;
+    chartYearLabels.push("Yr " + yr);
+    chartCumPrin.push(Math.round(cumP));
+    chartCumInt.push(Math.round(cumI));
+    if (crossoverIdx < 0 && cumP >= cumI) crossoverIdx = yr - 1; // 0-based index
+
+    var tr = document.createElement("tr");
+    var extraNote = yearExtra > 0
+      ? " <small style=\"color:var(--accent);font-size:.7em\">(+"
+        + fmtDollar(yearExtra) + " extra)</small>"
+      : "";
+    tr.innerHTML = "<td>" + yr + "</td>"
+      + "<td>" + fmtDollar(yearPrincipal + yearExtra) + extraNote + "</td>"
+      + "<td>" + fmtDollar(yearInterest) + "</td>"
+      + "<td>" + fmtDollar(Math.max(0, balance)) + "</td>";
+    if (balance <= 0.005) {
+      tr.style.background   = "rgba(34,197,94,.08)";
+      tr.style.fontWeight   = "600";
+    }
+    tbody.appendChild(tr);
+    if (balance <= 0.005) { paidOffYear = yr; break; }
+  }
+
+  // ── Payment Summary ──
+  var totalPaid = principal + totalInterestPaid;
+  document.getElementById("res-monthly").textContent    = fmtDollar(monthly);
+  document.getElementById("res-interest").textContent   = fmtDollar(totalInterestPaid);
+  document.getElementById("res-interest-pct").textContent =
+    (totalInterestPaid / principal * 100).toFixed(0) + "% of loan";
+  document.getElementById("res-total").textContent      = fmtDollar(totalPaid);
+  document.getElementById("res-total-sub").textContent  = "Loan: " + fmtDollar(principal);
+
+  // ── PI bar ──
+  var pctP = principal / totalPaid * 100;
+  var pctI = 100 - pctP;
+  document.getElementById("pi-principal-bar").style.width = pctP + "%";
+  document.getElementById("pi-interest-bar").style.width  = pctI + "%";
+  document.getElementById("pi-principal-lbl").textContent =
+    fmtDollar(principal) + " (" + pctP.toFixed(0) + "%)";
+  document.getElementById("pi-interest-lbl").textContent =
+    fmtDollar(totalInterestPaid) + " (" + pctI.toFixed(0) + "%)";
+
+  // ── Extra savings banner ──
+  var savedBox = document.getElementById("extra-savings");
+  if (extras.length > 0) {
+    var interestSaved = baseInterest - totalInterestPaid;
+    var monthsSaved   = term * 12 - actualMonths;
+    var yrsSaved      = Math.floor(monthsSaved / 12);
+    var moSaved       = monthsSaved % 12;
+    var timeStr       = (yrsSaved > 0 ? yrsSaved + "yr " : "") +
+                        (moSaved > 0 || yrsSaved === 0 ? moSaved + "mo" : "");
+    var payoffYrs     = Math.floor(actualMonths / 12);
+    var payoffMos     = actualMonths % 12;
+    var payoffStr     = payoffYrs + "yr" + (payoffMos > 0 ? " " + payoffMos + "mo" : "");
+    document.getElementById("es-saved").textContent  = fmtDollar(Math.max(0, interestSaved));
+    document.getElementById("es-time").textContent   = timeStr || "< 1mo";
+    document.getElementById("es-payoff").textContent = payoffStr + " (vs " + term + "yr)";
+    savedBox.classList.add("visible");
+  } else {
+    savedBox.classList.remove("visible");
+  }
+
+  // ── Update cumulative payoff chart ──
+  updateCalcChart({
+    yearLabels:       chartYearLabels,
+    cumPrin:          chartCumPrin,
+    cumInt:           chartCumInt,
+    cumPrinBase:      chartCumPrinBase,
+    cumIntBase:       chartCumIntBase,
+    hasExtras:        extras.length > 0,
+    crossoverIdx:     crossoverIdx,
+    crossoverIdxBase: crossoverIdxBase,
+    totalInterest:    totalInterestPaid,
+    payoffYear:       paidOffYear,
+    term:             term
+  });
+}
+
+// ─── Cumulative Payoff Chart ──────────────────────────────────────────
+var calcPayoffChart = null;   // Chart.js instance
+var calcChartPinned = null;   // pinned snapshot {labels, prin, int, label}
+
+// WHY: custom Chart.js plugin draws a vertical dashed line + label at
+//      the year where cumulative principal first exceeds cumulative interest
+var crossoverPlugin = {
+  id: "crossoverLine",
+  afterDraw: function(chart) {
+    var ci = chart._crossoverIdx;
+    if (ci == null || ci < 0) return;
+    var label = chart.data.labels[ci];
+    if (!label) return;
+    var xPos = chart.scales.x.getPixelForValue(label);
+    var top  = chart.chartArea.top;
+    var bot  = chart.chartArea.bottom;
+    var ctx2 = chart.ctx;
+    ctx2.save();
+    ctx2.strokeStyle = "rgba(100,116,139,.55)";
+    ctx2.setLineDash([4, 4]);
+    ctx2.lineWidth = 1.5;
+    ctx2.beginPath(); ctx2.moveTo(xPos, top + 18); ctx2.lineTo(xPos, bot); ctx2.stroke();
+    ctx2.setLineDash([]);
+    ctx2.fillStyle = "rgba(71,85,105,.9)";
+    ctx2.font = "bold 9px system-ui,sans-serif";
+    ctx2.textAlign = "center";
+    ctx2.fillText("Prin > Int", xPos, top + 12);
+    ctx2.restore();
+  }
+};
+
+// WHY: initialised once on DOMContentLoaded; 6 datasets cover all display modes
+function initCalcChart() {
+  var canvas = document.getElementById("calcPayoffChart");
+  if (!canvas || !window.Chart) return;
+  calcPayoffChart = new Chart(canvas, {
+    type: "line",
+    plugins: [crossoverPlugin],
+    data: {
+      labels: [],
+      datasets: [
+        // 0 — Principal with extras (solid blue)
+        { label: "Principal Paid", data: [], borderColor: "#3b82f6",
+          backgroundColor: "rgba(59,130,246,.08)",
+          borderWidth: 2.5, pointRadius: 0, pointHoverRadius: 4,
+          fill: false, tension: 0.3 },
+        // 1 — Interest with extras (solid gold)
+        { label: "Interest Paid", data: [], borderColor: "#f59e0b",
+          backgroundColor: "rgba(245,158,11,.08)",
+          borderWidth: 2.5, pointRadius: 0, pointHoverRadius: 4,
+          fill: false, tension: 0.3 },
+        // 2 — Principal baseline / no extras (dashed blue)
+        { label: "Principal (no extra)", data: [],
+          borderColor: "rgba(59,130,246,.45)",
+          borderWidth: 1.5, borderDash: [5, 4],
+          pointRadius: 0, fill: false, tension: 0.3, hidden: true },
+        // 3 — Interest baseline / no extras (dashed gold)
+        { label: "Interest (no extra)", data: [],
+          borderColor: "rgba(245,158,11,.45)",
+          borderWidth: 1.5, borderDash: [5, 4],
+          pointRadius: 0, fill: false, tension: 0.3, hidden: true },
+        // 4 — Pinned principal (dotted purple)
+        { label: "Pinned: Principal", data: [],
+          borderColor: "rgba(139,92,246,.85)",
+          borderWidth: 2, borderDash: [4, 4],
+          pointRadius: 0, fill: false, tension: 0.3, hidden: true },
+        // 5 — Pinned interest (dotted emerald)
+        { label: "Pinned: Interest", data: [],
+          borderColor: "rgba(16,185,129,.85)",
+          borderWidth: 2, borderDash: [4, 4],
+          pointRadius: 0, fill: false, tension: 0.3, hidden: true }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { display: false },  // we use custom HTML legend
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              if (ctx.parsed.y == null) return null;
+              return ctx.dataset.label + ": " + fmtDollar(ctx.parsed.y);
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            font: { size: 10 },
+            maxTicksLimit: 10,
+            // WHY: show every 5 years to reduce x-axis clutter
+            callback: function(val, idx) {
+              var lbl = this.getLabelForValue(val);
+              if (!lbl) return "";
+              var n = parseInt(lbl.replace("Yr ", ""));
+              return (n === 1 || n % 5 === 0) ? lbl : "";
+            }
+          },
+          grid: { color: "rgba(0,0,0,.04)" }
+        },
+        y: {
+          ticks: {
+            font: { size: 10 },
+            callback: function(v) {
+              return v >= 1e6 ? "$" + (v/1e6).toFixed(1) + "M"
+                   : v >= 1e3 ? "$" + (v/1e3).toFixed(0) + "K" : "$" + v;
+            }
+          },
+          grid: { color: "rgba(0,0,0,.04)" }
+        }
+      }
+    }
+  });
+}
+
+// WHY: updates all 6 chart datasets and crossover annotation in place
+//      (avoids destroying/recreating the Chart instance on every input change)
+function updateCalcChart(d) {
+  if (!calcPayoffChart) { initCalcChart(); if (!calcPayoffChart) return; }
+
+  var ds = calcPayoffChart.data.datasets;
+  calcPayoffChart.data.labels = d.yearLabels;
+
+  // Datasets 0 & 1: live scenario (with extras, or just base if no extras)
+  ds[0].data = d.cumPrin;
+  ds[1].data = d.cumInt;
+
+  // Datasets 2 & 3: baseline (no extras) — only visible when extras exist
+  if (d.hasExtras) {
+    ds[2].data = d.cumPrinBase.slice(0, d.yearLabels.length);
+    ds[3].data = d.cumIntBase.slice(0, d.yearLabels.length);
+    ds[2].hidden = false; ds[3].hidden = false;
+  } else {
+    ds[2].data = []; ds[3].data = [];
+    ds[2].hidden = true; ds[3].hidden = true;
+  }
+
+  // Datasets 4 & 5: pinned scenario
+  if (calcChartPinned) {
+    var pLen = d.yearLabels.length;
+    ds[4].data = calcChartPinned.prin.slice(0, pLen)
+      .concat(new Array(Math.max(0, pLen - calcChartPinned.prin.length)).fill(null));
+    ds[5].data = calcChartPinned.int.slice(0, pLen)
+      .concat(new Array(Math.max(0, pLen - calcChartPinned.int.length)).fill(null));
+    ds[4].hidden = false; ds[5].hidden = false;
+  } else {
+    ds[4].data = []; ds[5].data = [];
+    ds[4].hidden = true; ds[5].hidden = true;
+  }
+
+  // Crossover annotation index
+  calcPayoffChart._crossoverIdx = d.crossoverIdx;
+  calcPayoffChart.update("none"); // "none" skips animation for smooth live updates
+
+  // Show/hide legend items for dashed baseline
+  var show = d.hasExtras;
+  document.getElementById("ccl-base").style.display      = show ? "" : "none";
+  document.getElementById("ccl-base-int").style.display  = show ? "" : "none";
+  document.getElementById("ccl-pinned").style.display     = calcChartPinned ? "" : "none";
+  document.getElementById("ccl-pinned-int").style.display = calcChartPinned ? "" : "none";
+
+  // Update stats strip
+  var cYear = d.crossoverIdx >= 0 ? d.yearLabels[d.crossoverIdx] : "—";
+  document.getElementById("ccs-crossover").textContent = cYear;
+  document.getElementById("ccs-payoff").textContent    = "Yr " + d.payoffYear;
+  document.getElementById("ccs-interest").textContent  = fmtDollar(d.totalInterest);
+  var baseCYear = d.crossoverIdxBase >= 0 ? d.yearLabels[d.crossoverIdxBase] : "—";
+  if (d.hasExtras) {
+    document.getElementById("ccs-base-item").style.display = "";
+    document.getElementById("ccs-base-crossover").textContent = baseCYear;
+  } else {
+    document.getElementById("ccs-base-item").style.display = "none";
+  }
+}
+
+// WHY: saves the current chart state as a pinned snapshot;
+//      subsequent inputs show new lines while pinned lines remain for comparison
+function calcChartPin() {
+  if (!calcPayoffChart) return;
+  var ds = calcPayoffChart.data.datasets;
+  var price = parseFloat(document.getElementById("calc-price").value) || 0;
+  var rate  = parseFloat(document.getElementById("calc-rate-slider").value) || 0;
+  var term  = parseInt(document.getElementById("calc-term").value) || 30;
+  calcChartPinned = {
+    prin:  ds[0].data.slice(),
+    int:   ds[1].data.slice(),
+    label: "$" + Math.round(price/1000) + "K @ " + rate.toFixed(2) + "% / " + term + "yr"
+  };
+  document.getElementById("calc-unpin-btn").style.display  = "";
+  document.getElementById("calc-pin-row").style.display    = "";
+  document.getElementById("calc-pin-label").textContent    = "Pinned: " + calcChartPinned.label;
+  document.getElementById("ccl-pinned").style.display     = "";
+  document.getElementById("ccl-pinned-int").style.display = "";
+  // Reflect in chart immediately
+  var ds2 = calcPayoffChart.data.datasets;
+  ds2[4].data = calcChartPinned.prin.slice();
+  ds2[5].data = calcChartPinned.int.slice();
+  ds2[4].hidden = false; ds2[5].hidden = false;
+  calcPayoffChart.update("none");
+}
+
+// WHY: clears the pinned snapshot and hides the ghost datasets
+function calcChartUnpin() {
+  calcChartPinned = null;
+  document.getElementById("calc-unpin-btn").style.display  = "none";
+  document.getElementById("calc-pin-row").style.display    = "none";
+  document.getElementById("ccl-pinned").style.display     = "none";
+  document.getElementById("ccl-pinned-int").style.display = "none";
+  if (calcPayoffChart) {
+    var ds = calcPayoffChart.data.datasets;
+    ds[4].data = []; ds[5].data = [];
+    ds[4].hidden = true; ds[5].hidden = true;
+    calcPayoffChart.update("none");
+  }
+}
+
+// WHY: accordion toggle for the Advanced Extra Payments panel
+function toggleAdvanced() {
+  var panel = document.getElementById("adv-panel");
+  var arrow = document.getElementById("adv-arrow");
+  panel.classList.toggle("open");
+  arrow.classList.toggle("open");
+}
+
+// WHY: counter ensures each row gets a unique radio-group name
+var extraRowCounter = 0;
+
+// WHY: dynamically adds a new extra-payment row with amount, start-year,
+//      and frequency (monthly / annually / one-time) inputs
+function addExtraPayment() {
+  var id   = ++extraRowCounter;
+  var term = parseInt(document.getElementById("calc-term").value) || 30;
+  var opts = "";
+  for (var y = 1; y <= term; y++) {
+    var suf = y === 1 ? "st" : y === 2 ? "nd" : y === 3 ? "rd" : "th";
+    opts += "<option value=\"" + y + "\">Year " + y + "</option>";
+  }
+  var n   = "epfreq" + id;
+  var div = document.createElement("div");
+  div.className   = "extra-row";
+  div.dataset.rowId = id;
+  div.innerHTML = [
+    "<div class=\"extra-amount-wrap\">"
+      + "<span class=\"input-prefix\">$</span>"
+      + "<input type=\"number\" class=\"extra-amount\" placeholder=\"Amount\""
+      + " min=\"0\" step=\"100\" oninput=\"calcUpdate()\">"
+      + "</div>",
+    "<select class=\"form-select extra-year\" onchange=\"calcUpdate()\">"
+      + opts + "</select>",
+    "<div class=\"extra-freq\">"
+      + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\"" + n + "\""
+      + " value=\"monthly\" onchange=\"calcUpdate()\"> Monthly</label>"
+      + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\"" + n + "\""
+      + " value=\"annually\" checked onchange=\"calcUpdate()\"> Annually</label>"
+      + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\"" + n + "\""
+      + " value=\"once\" onchange=\"calcUpdate()\"> One-time</label>"
+      + "</div>",
+    "<button class=\"extra-remove\" onclick=\"removeExtraPayment(this)\""
+      + " title=\"Remove\">&#x2715;</button>"
+  ].join("");
+  document.getElementById("extra-payments-list").appendChild(div);
+  div.querySelector(".extra-amount").focus();
+}
+
+// WHY: removes a single extra-payment row and recalculates
+function removeExtraPayment(btn) {
+  btn.closest(".extra-row").remove();
+  calcUpdate();
 }
 
 // Preset chips
@@ -1911,6 +2487,8 @@ document.addEventListener("DOMContentLoaded", () => {
       calcUpdate();
     });
   });
+  // WHY: init chart after DOM is ready so canvas element exists
+  initCalcChart();
 });
 
 // ── Refi Calculator ──────────────────────────────────────────────
