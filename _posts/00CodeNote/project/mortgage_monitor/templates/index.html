@@ -1287,10 +1287,9 @@
            extra payment rows live here and feed calcUpdate() -->
       <div class="adv-toggle" onclick="toggleAdvanced()">
         <span class="adv-arrow" id="adv-arrow">&#9654;</span>
-        <span>Advanced: Extra Payments</span>
+        <span data-i18n="adv.title">Advanced: Extra Payments</span>
       </div>
       <div class="adv-panel" id="adv-panel">
-        <div class="adv-panel-title" data-i18n="adv.title">Additional Principal Payments</div>
         <div class="extra-col-header">
           <span data-i18n="adv.col.amount">Amount</span>
           <span data-i18n="adv.col.month">Start Month</span>
@@ -1498,8 +1497,10 @@
       <div class="calc-chart-legend" id="rsim-chart-legend">
         <div class="ccl-item"><div class="ccl-line" style="background:#3b82f6"></div><span data-i18n="rsim.ccl.prin">Principal Paid</span></div>
         <div class="ccl-item"><div class="ccl-line" style="background:#f59e0b"></div><span data-i18n="rsim.ccl.int">Interest Paid</span></div>
-        <div class="ccl-item" id="rsim-ccl-pinned" style="display:none"><div class="ccl-line dotted" style="color:#8b5cf6"></div><span style="color:var(--text-muted)">Pinned: Principal</span></div>
-        <div class="ccl-item" id="rsim-ccl-pinned-int" style="display:none"><div class="ccl-line dotted" style="color:#10b981"></div><span style="color:var(--text-muted)">Pinned: Interest</span></div>
+        <div class="ccl-item" id="rsim-ccl-ghost" style="display:none"><div class="ccl-line dotted" style="color:rgba(59,130,246,.5)"></div><span style="color:var(--text-muted)" data-i18n="rsim.ccl.ghost.prin">Seg 1 (no refi)</span></div>
+        <div class="ccl-item" id="rsim-ccl-ghost-int" style="display:none"><div class="ccl-line dotted" style="color:rgba(245,158,11,.5)"></div><span style="color:var(--text-muted)" data-i18n="rsim.ccl.ghost.int">Seg 1 Int (no refi)</span></div>
+        <div class="ccl-item" id="rsim-ccl-pinned" style="display:none"><div class="ccl-line dotted" style="color:#8b5cf6"></div><span style="color:var(--text-muted)" data-i18n="rsim.ccl.pinned.prin">Pinned: Principal</span></div>
+        <div class="ccl-item" id="rsim-ccl-pinned-int" style="display:none"><div class="ccl-line dotted" style="color:#10b981"></div><span style="color:var(--text-muted)" data-i18n="rsim.ccl.pinned.int">Pinned: Interest</span></div>
       </div>
       <div class="calc-payoff-wrap"><canvas id="rsimPayoffChart"></canvas></div>
       <div class="calc-chart-stats" id="rsim-chart-stats">
@@ -1631,10 +1632,11 @@ const T = {
     'rsim.chart.title':'Cumulative Payoff Chart',
     'rsim.pin':'Pin','rsim.unpin':'Unpin',
     'rsim.ccl.prin':'Principal Paid','rsim.ccl.int':'Interest Paid',
+    'rsim.ccl.ghost.prin':'Seg 1 (no refi)','rsim.ccl.ghost.int':'Seg 1 Int (no refi)',
     'rsim.ccl.pinned.prin':'Pinned: Principal','rsim.ccl.pinned.int':'Pinned: Interest',
     'rsim.stat.crossover':'Crossover:','rsim.stat.payoff':'Payoff:','rsim.stat.interest':'Total Interest:',
     'rsim.amort.seg':'Seg',
-    'adv.title':'Additional Principal Payments',
+    'adv.title':'Extra Payments',
     'adv.col.amount':'Amount','adv.col.month':'Start Month','adv.col.freq':'Frequency',
     'extra.mo':'Mo','extra.yr':'Yr','extra.once':'Once',
     'extra.monthly':'Monthly','extra.annually':'Annually','extra.onetime':'One-time',
@@ -1672,11 +1674,12 @@ const T = {
     'rsim.chart.title':'累计还款图表',
     'rsim.pin':'固定','rsim.unpin':'取消固定',
     'rsim.ccl.prin':'已还本金','rsim.ccl.int':'已还利息',
+    'rsim.ccl.ghost.prin':'方案一（无再融资）','rsim.ccl.ghost.int':'方案一利息（无再融资）',
     'rsim.ccl.pinned.prin':'固定：本金','rsim.ccl.pinned.int':'固定：利息',
     'rsim.stat.crossover':'本金超过利息:','rsim.stat.payoff':'还款时间:','rsim.stat.interest':'总利息:',
     'rsim.amort.seg':'方案',
     'adv.title':'额外还本',
-    'adv.col.amount':'金额','adv.col.month':'起始月份','adv.col.freq':'频率',
+    'adv.col.amount':'金额','adv.col.month':'付款月份','adv.col.freq':'频率',
     'extra.mo':'每月','extra.yr':'每年','extra.once':'一次',
     'extra.monthly':'每月','extra.annually':'每年','extra.onetime':'一次',
   },
@@ -1713,10 +1716,11 @@ const T = {
     'rsim.chart.title':'Gráfico de amortización acumulada',
     'rsim.pin':'Fijar','rsim.unpin':'Liberar',
     'rsim.ccl.prin':'Capital pagado','rsim.ccl.int':'Interés pagado',
+    'rsim.ccl.ghost.prin':'Seg 1 (sin refi)','rsim.ccl.ghost.int':'Seg 1 Int (sin refi)',
     'rsim.ccl.pinned.prin':'Fijado: Capital','rsim.ccl.pinned.int':'Fijado: Interés',
     'rsim.stat.crossover':'Cruce:','rsim.stat.payoff':'Liquidación:','rsim.stat.interest':'Interés total:',
     'rsim.amort.seg':'Seg',
-    'adv.title':'Pagos adicionales de capital',
+    'adv.title':'Pagos extra',
     'adv.col.amount':'Importe','adv.col.month':'Mes inicio','adv.col.freq':'Frecuencia',
     'extra.mo':'Mes','extra.yr':'Año','extra.once':'Una vez',
     'extra.monthly':'Mensual','extra.annually':'Anual','extra.onetime':'Una vez',
@@ -2867,8 +2871,51 @@ function refiSimUpdate() {
     if (balance < 0.01) break;
   }
 
+  // WHY: compute seg0 ghost = what seg0 would look like running to full term (no refi)
+  var ghostCumPrin = [], ghostCumInt = [];
+  if (segs.length > 1 && segBounds.length > 1) {
+    var gs0 = segs[0];
+    var gBal = gs0.balance, gCumP = 0, gCumI = 0;
+    var gMR  = gs0.rate / 100 / 12;
+    var gPmt = calcMonthly(gBal, gs0.rate, gs0.term);
+    var ghostFull = [];
+    var gYP = 0, gYI = 0;
+    for (var gmo = 0; gmo < gs0.term * 12; gmo++) {
+      if (gBal < 0.01) break;
+      var gIP = gBal * gMR;
+      var gRP = Math.max(0, Math.min(gPmt - gIP, gBal));
+      var gEx = 0;
+      gs0.extras.forEach(function(ep3) {
+        var sm3 = (ep3.startMonth || 1) - 1;
+        if      (ep3.freq === "monthly"  && gmo >= sm3) gEx += ep3.amount;
+        else if (ep3.freq === "annually" && gmo >= sm3 && (gmo-sm3)%12===0) gEx += ep3.amount;
+        else if (ep3.freq === "once"     && gmo === sm3) gEx += ep3.amount;
+      });
+      gEx = Math.min(gEx, Math.max(0, gBal - gRP));
+      gYP += gRP + gEx; gYI += gIP;
+      gBal -= (gRP + gEx);
+      if ((gmo+1)%12===0 || gBal < 0.01) {
+        gCumP += gYP; gCumI += gYI;
+        ghostFull.push({ cumP: Math.round(gCumP), cumI: Math.round(gCumI) });
+        gYP = 0; gYI = 0;
+        if (gBal < 0.01) break;
+      }
+    }
+    // Align ghost arrays to chartLabels length; null before refi boundary, values after
+    var refiStartIdx = segBounds[1];
+    for (var gi = 0; gi < chartLabels.length; gi++) {
+      if (gi < refiStartIdx || gi >= ghostFull.length) {
+        ghostCumPrin.push(null);
+        ghostCumInt.push(null);
+      } else {
+        ghostCumPrin.push(ghostFull[gi].cumP);
+        ghostCumInt.push(ghostFull[gi].cumI);
+      }
+    }
+  }
   updateRsimChart({ yearLabels: chartLabels, cumPrin: chartCumPrin,
-    cumInt: chartCumInt, segBoundaries: segBounds, segCount: segs.length });
+    cumInt: chartCumInt, segBoundaries: segBounds, segCount: segs.length,
+    ghostPrin: ghostCumPrin, ghostInt: ghostCumInt });
   renderRsimAmortTable(amortRows);
 
   var cx = -1;
@@ -3123,6 +3170,14 @@ function initRsimChart() {
           borderWidth: 2.5, pointRadius: 0, fill: false, tension: 0 },
         { label: "Interest Paid",  data: [], borderColor: "#f59e0b",
           borderWidth: 2.5, pointRadius: 0, fill: false, tension: 0 },
+        // WHY: ghost lines [2,3] = seg0 hypothetical trajectory after refi; dotted + faded
+        { label: "Seg 1 Principal", data: [],
+          borderColor: "rgba(59,130,246,.38)", borderWidth: 2,
+          borderDash: [5,5], pointRadius: 0, fill: false, tension: 0, hidden: true },
+        { label: "Seg 1 Interest", data: [],
+          borderColor: "rgba(245,158,11,.38)", borderWidth: 2,
+          borderDash: [5,5], pointRadius: 0, fill: false, tension: 0, hidden: true },
+        // WHY: pinned lines shifted to [4,5] to make room for ghost at [2,3]
         { label: "Pinned: Principal", data: [],
           borderColor: "rgba(139,92,246,.85)", borderWidth: 2,
           borderDash: [4,4], pointRadius: 0, fill: false, tension: 0.3, hidden: true },
@@ -3158,13 +3213,24 @@ function updateRsimChart(d) {
   chart.data.labels           = d.yearLabels;
   chart.data.datasets[0].data = d.cumPrin;
   chart.data.datasets[1].data = d.cumInt;
+  // WHY: ghost ds[2,3] = seg0 hypothetical; only shown when refi segments exist
+  var hasGhost = d.ghostPrin && d.ghostPrin.some(function(v){return v!==null;});
+  chart.data.datasets[2].data   = hasGhost ? d.ghostPrin : [];
+  chart.data.datasets[3].data   = hasGhost ? d.ghostInt  : [];
+  chart.data.datasets[2].hidden = !hasGhost;
+  chart.data.datasets[3].hidden = !hasGhost;
+  var ghostLegP = document.getElementById("rsim-ccl-ghost");
+  var ghostLegI = document.getElementById("rsim-ccl-ghost-int");
+  if (ghostLegP) ghostLegP.style.display = hasGhost ? "" : "none";
+  if (ghostLegI) ghostLegI.style.display = hasGhost ? "" : "none";
+  // WHY: pinned shifted to ds[4,5] to make room for ghost at [2,3]
   if (rsimChartPinned) {
-    chart.data.datasets[2].data = rsimChartPinned.prin.slice(0,pLen)
+    chart.data.datasets[4].data = rsimChartPinned.prin.slice(0,pLen)
       .concat(new Array(Math.max(0,pLen-rsimChartPinned.prin.length)).fill(null));
-    chart.data.datasets[3].data = rsimChartPinned.int.slice(0,pLen)
+    chart.data.datasets[5].data = rsimChartPinned.int.slice(0,pLen)
       .concat(new Array(Math.max(0,pLen-rsimChartPinned.int.length)).fill(null));
-    chart.data.datasets[2].hidden = false;
-    chart.data.datasets[3].hidden = false;
+    chart.data.datasets[4].hidden = false;
+    chart.data.datasets[5].hidden = false;
   }
   chart._rsimBounds        = d.segBoundaries;
   chart._rsimSegCount      = d.segCount;
@@ -3179,6 +3245,7 @@ function updateRsimChart(d) {
   var pi = document.getElementById("rsim-ccl-pinned-int");
   if (pe) pe.style.display = sp;
   if (pi) pi.style.display = sp;
+  // WHY: also hide ghost legend if pinned clears (ghost state managed above)
 }
 
 function rsimChartPin() {
@@ -3198,11 +3265,11 @@ function rsimChartPin() {
   document.getElementById("rsim-ccl-pinned").style.display     = "";
   document.getElementById("rsim-ccl-pinned-int").style.display = "";
   var pLen2 = rsimPayoffChart.data.labels.length;
-  ds[2].data = rsimChartPinned.prin.slice(0,pLen2)
+  ds[4].data = rsimChartPinned.prin.slice(0,pLen2)
     .concat(new Array(Math.max(0,pLen2-rsimChartPinned.prin.length)).fill(null));
-  ds[3].data = rsimChartPinned.int.slice(0,pLen2)
+  ds[5].data = rsimChartPinned.int.slice(0,pLen2)
     .concat(new Array(Math.max(0,pLen2-rsimChartPinned.int.length)).fill(null));
-  ds[2].hidden = false; ds[3].hidden = false;
+  ds[4].hidden = false; ds[5].hidden = false;
   rsimPayoffChart.update("none");
 }
 
@@ -3214,10 +3281,10 @@ function rsimChartUnpin() {
   document.getElementById("rsim-ccl-pinned").style.display     = "none";
   document.getElementById("rsim-ccl-pinned-int").style.display = "none";
   if (rsimPayoffChart) {
-    rsimPayoffChart.data.datasets[2].data = [];
-    rsimPayoffChart.data.datasets[3].data = [];
-    rsimPayoffChart.data.datasets[2].hidden = true;
-    rsimPayoffChart.data.datasets[3].hidden = true;
+    rsimPayoffChart.data.datasets[4].data = [];
+    rsimPayoffChart.data.datasets[5].data = [];
+    rsimPayoffChart.data.datasets[4].hidden = true;
+    rsimPayoffChart.data.datasets[5].hidden = true;
     rsimPayoffChart.update("none");
   }
 }
