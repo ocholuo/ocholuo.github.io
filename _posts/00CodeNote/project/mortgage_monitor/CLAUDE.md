@@ -371,3 +371,6 @@ Three languages supported: `en` (English), `zh` (Chinese), `es` (Spanish).
 | 2026-04-13 | All tabs restructured to section-card layout; responsive content width |
 | 2026-04-13 | Sticky table headers with distinct bg + shadow |
 | 2026-04-13 | DOCTYPE fix; chart overflow fix; mobile top tab bar + inline mode |
+| 2026-04-14 | Refi segment input changed from year to month (第几期); input stores months, simulation divides by 12 |
+| 2026-04-14 | Extra payment column headers added to refi segments (还款金额/还款期数/还款频率) |
+| 2026-04-14 | Per-segment stats grid (月供/总利息/总费用) + savings banner (IF YOU REFINANCE TODAY) added to segment cards |

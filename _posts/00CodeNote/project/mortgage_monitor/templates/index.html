@@ -490,8 +490,8 @@
       letter-spacing: .07em; color: var(--text-muted);
     }
     .extra-col-header span:last-child { display: none; }
-    /* WHY: center each header label within its fixed-width grid column */
-    .extra-col-header span { text-align: center; }
+    /* WHY: left-align keeps each header label above the left edge of its column input */
+    .extra-col-header span { text-align: left; }
     /* WHY: center the month number within the 62px input */
     .extra-month { text-align: center; }
     .extra-amount-wrap { display: flex; align-items: center;
@@ -631,6 +631,43 @@
     .rsim-pmt-label { color: var(--text-muted); }
     .rsim-pmt-val { color: var(--accent); font-size: .88rem; font-weight: 700; }
     .rsim-refi-year-hint { font-size: .67rem; color: var(--text-muted); margin-top: 2px; }
+    /* WHY: 3-column stats grid mirrors the card layout in Image #3 */
+    .rsim-stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 8px; margin-top: 10px; padding-top: 10px;
+      border-top: 1px solid var(--border); width: 100%;
+    }
+    .rsim-stat-item { text-align: center; padding: 6px 4px; }
+    .rsim-stat-label { font-size: .63rem; color: var(--text-muted); text-transform: uppercase;
+      letter-spacing: .07em; font-weight: 700; }
+    .rsim-stat-value { font-size: 1.25rem; font-weight: 900; color: var(--accent);
+      letter-spacing: -.02em; font-variant-numeric: tabular-nums; margin-top: 3px; }
+    .rsim-stat-sub { font-size: .72rem; color: var(--text-muted); margin-top: 2px; }
+    /* WHY: green savings banner for refi segments showing comparison vs prior segment */
+    .rsim-savings-banner {
+      display: none; margin-top: 12px;
+      background: rgba(34,197,94,.07); border: 1px solid rgba(34,197,94,.25);
+      border-radius: var(--radius-sm); padding: 12px 16px;
+    }
+    .rsim-savings-banner.visible { display: block; }
+    .rsim-savings-badge {
+      display: inline-block; font-size: .63rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .09em; color: #16a34a;
+      background: rgba(34,197,94,.12); border-radius: 3px;
+      padding: 2px 8px; margin-bottom: 6px;
+    }
+    .rsim-savings-hero { font-size: 1.6rem; font-weight: 900; color: #16a34a;
+      letter-spacing: -.03em; line-height: 1.1; }
+    /* WHY: subtitle sits directly below the hero amount as a soft secondary label */
+    .rsim-savings-sub { font-size: .75rem; color: #16a34a; margin-top: 2px;
+      margin-bottom: 8px; font-weight: 500; }
+    .rsim-savings-desc { font-size: .73rem; color: var(--text-muted); margin-top: 4px;
+      margin-bottom: 10px; }
+    .rsim-savings-rows { display: flex; flex-direction: column; gap: 5px; }
+    .rsim-savings-row { display: flex; justify-content: space-between;
+      font-size: .78rem; align-items: center; }
+    .rsim-savings-key { color: var(--text-muted); }
+    .rsim-savings-val { font-weight: 700; color: #16a34a; }
     /* -- Plan A / B tabs ---------------------------------------------- */
     /* WHY: lets users build two independent scenarios and compare them */
     .rsim-plan-tabs { display: flex; align-items: center; gap: 8px;
@@ -1470,12 +1507,36 @@
         <span data-i18n="rsim.adv.toggle">Advanced: Extra Payments</span>
       </div>
       <div class="adv-panel" id="rsim-adv-panel-s0">
+        <div class="extra-col-header">
+          <span data-i18n="adv.col.amount">Amount</span>
+          <span data-i18n="adv.col.month">Start Month</span>
+          <span data-i18n="adv.col.freq">Frequency</span>
+          <span></span>
+        </div>
         <div id="rsim-extra-list-s0"></div>
         <button class="adv-add-btn" onclick="addRsimExtraPayment('s0')" data-i18n="rsim.add.payment">+ Add Payment</button>
       </div>
       <div class="rsim-seg-summary">
         <span class="rsim-pmt-label" data-i18n="rsim.pmt.label">Monthly Payment:</span>
         <strong class="rsim-pmt-val" id="rsim-s0-pmt">&mdash;</strong>
+        <div class="rsim-stats-grid">
+          <div class="rsim-stat-item">
+            <div class="rsim-stat-label" data-i18n="rsim.stat.monthly">月供</div>
+            <div class="rsim-stat-value" id="rsim-s0-stat-pmt">&mdash;</div>
+            <div class="rsim-stat-sub" id="rsim-s0-stat-pmt-prin"></div>
+            <div class="rsim-stat-sub" id="rsim-s0-stat-pmt-int"></div>
+          </div>
+          <div class="rsim-stat-item">
+            <div class="rsim-stat-label" data-i18n="rsim.stat.tot.int">总利息</div>
+            <div class="rsim-stat-value" id="rsim-s0-stat-int">&mdash;</div>
+            <div class="rsim-stat-sub" id="rsim-s0-stat-int-pct"></div>
+          </div>
+          <div class="rsim-stat-item">
+            <div class="rsim-stat-label" data-i18n="rsim.stat.tot.cost">总费用</div>
+            <div class="rsim-stat-value" id="rsim-s0-stat-cost">&mdash;</div>
+            <div class="rsim-stat-sub" id="rsim-s0-stat-cost-ref"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1646,9 +1707,15 @@ const T = {
     'extra.monthly':'Monthly','extra.annually':'Annually','extra.onetime':'One-time',
     'rsim.seg.refi':'Refi','rsim.seg.title':'Refinance Segment',
     'rsim.seg.balance.lbl':'Starting Balance','rsim.seg.auto':'Auto-calculated',
-    'rsim.seg.refi.year':'Refi at Year','rsim.seg.refi.hint':'Year in timeline to refinance',
+    'rsim.seg.refi.year':'Refi at Month','rsim.seg.refi.hint':'Payment period (month) to refinance',
     'rsim.seg.term':'New Term','rsim.seg.closing.lbl':'Closing Costs',
     'rsim.seg.rate.new':'New Rate','rsim.seg.rate.lbl':'Rate:','rsim.seg.closing':'closing',
+    'rsim.stat.monthly':'Monthly Pmt','rsim.stat.tot.int':'Total Interest','rsim.stat.tot.cost':'Total Cost',
+    'rsim.stat.prin.lbl':'Principal:','rsim.stat.int.lbl':'Interest:',
+    'rsim.savings.badge':'IF YOU REFINANCE TODAY',
+    'rsim.savings.sub':'saved every month',
+    'rsim.savings.monthly':'Monthly savings','rsim.savings.annual':'Annual savings',
+    'rsim.savings.breakeven':'Break-even point',
     'calc.ccl.nox.prin':'Principal (no extra)','calc.ccl.nox.int':'Interest (no extra)',
     'calc.stat.basecross':'Base Crossover:',
     'chart.yr':'Yr',
@@ -1692,14 +1759,20 @@ const T = {
     'rsim.stat.crossover':'本金超过利息:','rsim.stat.payoff':'还款时间:','rsim.stat.interest':'总利息:',
     'rsim.amort.seg':'方案',
     'adv.title':'额外还本',
-    'adv.col.amount':'金额','adv.col.month':'付款月份','adv.col.freq':'频率',
+    'adv.col.amount':'还款金额','adv.col.month':'还款期数','adv.col.freq':'还款频率',
     'extra.mo':'每月','extra.yr':'每年','extra.once':'一次',
     'extra.monthly':'每月','extra.annually':'每年','extra.onetime':'一次',
     'rsim.seg.refi':'再融资','rsim.seg.title':'再融资方案',
     'rsim.seg.balance.lbl':'起始余额','rsim.seg.auto':'自动计算',
-    'rsim.seg.refi.year':'再融资年份','rsim.seg.refi.hint':'在整体时间线中的再融资年份',
+    'rsim.seg.refi.year':'还款月份','rsim.seg.refi.hint':'还款的第几个月份（期数）',
     'rsim.seg.term':'新年限','rsim.seg.closing.lbl':'结算费用',
     'rsim.seg.rate.new':'新利率','rsim.seg.rate.lbl':'利率:','rsim.seg.closing':'结算费用',
+    'rsim.stat.monthly':'月供','rsim.stat.tot.int':'总利息','rsim.stat.tot.cost':'总费用',
+    'rsim.stat.prin.lbl':'本金:','rsim.stat.int.lbl':'利息:',
+    'rsim.savings.badge':'立即再融资可节省',
+    'rsim.savings.sub':'每月节省',
+    'rsim.savings.monthly':'每月节省','rsim.savings.annual':'每年节省',
+    'rsim.savings.breakeven':'回本时间',
     'calc.ccl.nox.prin':'本金（无额外）','calc.ccl.nox.int':'利息（无额外）',
     'calc.stat.basecross':'基准交叉:',
     'chart.yr':'年',
@@ -1748,9 +1821,15 @@ const T = {
     'extra.monthly':'Mensual','extra.annually':'Anual','extra.onetime':'Una vez',
     'rsim.seg.refi':'Refi','rsim.seg.title':'Segmento Refi',
     'rsim.seg.balance.lbl':'Saldo inicial','rsim.seg.auto':'Calculado auto.',
-    'rsim.seg.refi.year':'Año de refi','rsim.seg.refi.hint':'Año en la línea de tiempo para refinanciar',
+    'rsim.seg.refi.year':'Mes de refi','rsim.seg.refi.hint':'Mes en la línea de tiempo para refinanciar',
     'rsim.seg.term':'Nuevo plazo','rsim.seg.closing.lbl':'Costos de cierre',
     'rsim.seg.rate.new':'Nueva tasa','rsim.seg.rate.lbl':'Tasa:','rsim.seg.closing':'cierre',
+    'rsim.stat.monthly':'Pago mensual','rsim.stat.tot.int':'Interés total','rsim.stat.tot.cost':'Costo total',
+    'rsim.stat.prin.lbl':'Capital:','rsim.stat.int.lbl':'Interés:',
+    'rsim.savings.badge':'SI REFINANCIA HOY',
+    'rsim.savings.sub':'ahorrado al mes',
+    'rsim.savings.monthly':'Ahorro mensual','rsim.savings.annual':'Ahorro anual',
+    'rsim.savings.breakeven':'Punto de equilibrio',
     'calc.ccl.nox.prin':'Capital (sin extra)','calc.ccl.nox.int':'Interés (sin extra)',
     'calc.stat.basecross':'Cruce base:',
     'chart.yr':'Año',
@@ -2750,7 +2829,7 @@ function addRsimSegment() {
   rsimSegCounter++;
   var idx = rsimSegCounter;
   var ci  = Math.min(idx, 4);
-  var defYear = 5 * idx;
+  var defMonth = 60 * idx;
   var container = document.getElementById("rsim-segments-container");
   var div = document.createElement("div");
   div.className = "section-card rsim-seg-card";
@@ -2768,10 +2847,10 @@ function addRsimSegment() {
   h += "<div class=\"form-grid\">";
   h +=   "<div class=\"form-group\"><div class=\"form-label\" data-i18n=\"rsim.seg.balance.lbl\">Starting Balance</div>";
   h +=     "<div class=\"rsim-balance-badge\" id=\"rsim-s"+idx+"-balance-display\">"+t("rsim.seg.auto")+"</div></div>";
-  h +=   "<div class=\"form-group\"><div class=\"form-label\" data-i18n=\"rsim.seg.refi.year\">Refi at Overall Year</div>";
+  h +=   "<div class=\"form-group\"><div class=\"form-label\" data-i18n=\"rsim.seg.refi.year\">Refi at Month</div>";
   h +=     "<div class=\"input-row\"><input class=\"form-input\" type=\"number\" id=\"rsim-s"+idx+"-refi-year\"";
-  h +=       " value=\""+defYear+"\" min=\"1\" oninput=\"refiSimUpdate()\"></div>";
-  h +=     "<div class=\"rsim-refi-year-hint\" data-i18n=\"rsim.seg.refi.hint\">Year within full timeline to refinance</div></div>";
+  h +=       " value=\""+defMonth+"\" min=\"1\" oninput=\"refiSimUpdate()\"></div>";
+  h +=     "<div class=\"rsim-refi-year-hint\" data-i18n=\"rsim.seg.refi.hint\">Payment period (month) to refinance</div></div>";
   h +=   "<div class=\"form-group\"><div class=\"form-label\" data-i18n=\"rsim.seg.term\">New Term</div>";
   h +=     "<select class=\"form-select\" id=\"rsim-s"+idx+"-term\" onchange=\"refiSimUpdate()\">";
   h +=       "<option value=\"10\" data-i18n=\"term.10y\">10 years</option><option value=\"15\" data-i18n=\"term.15y\">15 years</option>";
@@ -2794,14 +2873,57 @@ function addRsimSegment() {
   h +=   "<span class=\"adv-arrow\" id=\"rsim-adv-arrow-s"+idx+"\">&#9654;</span>";
   h +=   "<span data-i18n=\"rsim.adv.toggle\">Advanced: Extra Payments</span></div>";
   h += "<div class=\"adv-panel\" id=\"rsim-adv-panel-s"+idx+"\">";
+  h +=   "<div class=\"extra-col-header\">";
+  h +=     "<span data-i18n=\"adv.col.amount\">Amount</span>";
+  h +=     "<span data-i18n=\"adv.col.month\">Start Month</span>";
+  h +=     "<span data-i18n=\"adv.col.freq\">Frequency</span>";
+  h +=     "<span></span></div>";
   h +=   "<div id=\"rsim-extra-list-s"+idx+"\"></div>";
   h +=   "<button class=\"adv-add-btn\" data-i18n=\"rsim.add.payment\" onclick=\"addRsimExtraPayment('s"+idx+"')\">&#43; Add Payment</button></div>";
-  // Per-segment summary
+  // Per-segment summary with stats grid and savings comparison
   h += "<div class=\"rsim-seg-summary\">";
   h +=   "<span class=\"rsim-pmt-label\" data-i18n=\"rsim.pmt.label\">Monthly Payment:</span>";
   h +=   "<strong class=\"rsim-pmt-val\" id=\"rsim-s"+idx+"-pmt\">&mdash;</strong>";
   h +=   "<span style=\"margin-left:10px;color:var(--text-muted);font-size:.7rem\" data-i18n=\"rsim.seg.rate.lbl\">Rate:</span>";
   h +=   "<strong style=\"font-size:.78rem;color:var(--text)\" id=\"rsim-s"+idx+"-rate-badge\">&mdash;</strong>";
+  h +=   "<div class=\"rsim-stats-grid\">";
+  h +=     "<div class=\"rsim-stat-item\">";
+  h +=       "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.monthly\">Monthly Pmt</div>";
+  h +=       "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-pmt\">&mdash;</div>";
+  h +=       "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-pmt-prin\"></div>";
+  h +=       "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-pmt-int\"></div>";
+  h +=     "</div>";
+  h +=     "<div class=\"rsim-stat-item\">";
+  h +=       "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.tot.int\">Total Interest</div>";
+  h +=       "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-int\">&mdash;</div>";
+  h +=       "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-int-pct\"></div>";
+  h +=     "</div>";
+  h +=     "<div class=\"rsim-stat-item\">";
+  h +=       "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.tot.cost\">Total Cost</div>";
+  h +=       "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-cost\">&mdash;</div>";
+  h +=       "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-cost-ref\"></div>";
+  h +=     "</div>";
+  h +=   "</div>";
+  h +=   "<div class=\"rsim-savings-banner\" id=\"rsim-s"+idx+"-savings\">";
+  h +=     "<div class=\"rsim-savings-badge\" data-i18n=\"rsim.savings.badge\">IF YOU REFINANCE TODAY</div>";
+  h +=     "<div class=\"rsim-savings-hero\" id=\"rsim-s"+idx+"-save-hero\">&mdash;</div>";
+  h +=     "<div class=\"rsim-savings-sub\" data-i18n=\"rsim.savings.sub\">saved every month</div>";
+  h +=     "<div class=\"rsim-savings-desc\" id=\"rsim-s"+idx+"-save-desc\"></div>";
+  h +=     "<div class=\"rsim-savings-rows\">";
+  h +=       "<div class=\"rsim-savings-row\">";
+  h +=         "<span class=\"rsim-savings-key\" data-i18n=\"rsim.savings.monthly\">Monthly savings</span>";
+  h +=         "<span class=\"rsim-savings-val\" id=\"rsim-s"+idx+"-save-mo\">&mdash;</span>";
+  h +=       "</div>";
+  h +=       "<div class=\"rsim-savings-row\">";
+  h +=         "<span class=\"rsim-savings-key\" data-i18n=\"rsim.savings.annual\">Annual savings</span>";
+  h +=         "<span class=\"rsim-savings-val\" id=\"rsim-s"+idx+"-save-yr\">&mdash;</span>";
+  h +=       "</div>";
+  h +=       "<div class=\"rsim-savings-row\">";
+  h +=         "<span class=\"rsim-savings-key\" data-i18n=\"rsim.savings.breakeven\">Break-even point</span>";
+  h +=         "<span class=\"rsim-savings-val\" id=\"rsim-s"+idx+"-save-be\">&mdash;</span>";
+  h +=       "</div>";
+  h +=     "</div>";
+  h +=   "</div>";
   h += "</div>";
   div.innerHTML = h;
   container.appendChild(div);
@@ -2835,7 +2957,8 @@ function refiSimUpdate() {
     } else {
       segs.push({
         idx:      si,
-        refiYear: parseInt(document.getElementById("rsim-s"+si+"-refi-year").value) || (si*5),
+        // WHY: store as integer months so Math.max clamp is in months, not years
+        refiMonth: parseInt(document.getElementById("rsim-s"+si+"-refi-year").value) || (si*60),
         term:     parseInt(document.getElementById("rsim-s"+si+"-term").value) || 30,
         rate:     parseFloat(document.getElementById("rsim-s"+si+"-rate-slider").value) || 6.5,
         closing:  parseFloat(document.getElementById("rsim-s"+si+"-closing").value) || 0,
@@ -2849,6 +2972,7 @@ function refiSimUpdate() {
   var segBounds = [], amortRows = [];
   var cumP = 0, cumI = 0, globalYear = 0;
   var balance = segs[0].balance;
+  var prevSegPmt = 0; // WHY: tracks prior segment's monthly payment for savings comparison
 
   for (var si = 0; si < segs.length; si++) {
     var seg = segs[si];
@@ -2856,8 +2980,13 @@ function refiSimUpdate() {
     var mRate  = seg.rate / 100 / 12;
     var regPmt = calcMonthly(segBal, seg.rate, seg.term);
     // How many years until next refi (capped to term)
-    var nextRY   = (si + 1 < segs.length) ? segs[si+1].refiYear : Infinity;
-    var segYrMax = Math.min(Math.max(1, nextRY < Infinity ? nextRY - globalYear : seg.term), seg.term);
+    // WHY: work in integer months so min clamp is 1 month, not 1 year; fixes sub-12-month refi timing
+    var globalMoStart = Math.round(globalYear * 12);
+    var nextRM = (si + 1 < segs.length) ? segs[si+1].refiMonth : Infinity;
+    var segMonthMax = nextRM < Infinity
+      ? Math.max(1, Math.round(nextRM) - globalMoStart)
+      : seg.term * 12;
+    segMonthMax = Math.min(segMonthMax, seg.term * 12);
     // Update per-seg UI
     if (si === 0) {
       var e0 = document.getElementById("rsim-s0-pmt");
@@ -2873,9 +3002,9 @@ function refiSimUpdate() {
     segBounds.push(chartLabels.length);
     balance = segBal;
     var yPrin = 0, yInt = 0;
-    for (var mo = 0; mo < segYrMax * 12; mo++) {
+    var segTotalInt = 0, segTotalPrin = 0;
+    for (var mo = 0; mo < segMonthMax; mo++) {
       if (balance < 0.01) break;
-      var yr1    = Math.floor(mo / 12) + 1;
       var intPmt = balance * mRate;
       var rPrin  = Math.max(0, Math.min(regPmt - intPmt, balance));
       var extra  = 0;
@@ -2889,10 +3018,14 @@ function refiSimUpdate() {
       extra   = Math.min(extra, Math.max(0, balance - rPrin));
       yPrin  += rPrin + extra;
       yInt   += intPmt;
+      segTotalInt  += intPmt;
+      segTotalPrin += rPrin + extra;
       balance -= (rPrin + extra);
-      if ((mo+1)%12===0 || balance < 0.01) {
+      if ((mo+1)%12===0 || mo === segMonthMax-1 || balance < 0.01) {
         cumP += yPrin; cumI += yInt;
-        var absYr = globalYear + yr1;
+        // WHY: use absolute month count so label is always an integer year, even for sub-year segments
+        var absMo = globalMoStart + mo + 1;
+        var absYr = Math.ceil(absMo / 12);
         chartLabels.push(t("chart.yr")+" "+absYr);
         chartCumPrin.push(Math.round(cumP));
         chartCumInt.push(Math.round(cumI));
@@ -2902,7 +3035,52 @@ function refiSimUpdate() {
         if (balance < 0.01) break;
       }
     }
-    globalYear += segYrMax;
+    // Update per-segment stats grid
+    var statPmt     = document.getElementById("rsim-s"+si+"-stat-pmt");
+    var statPmtPrin = document.getElementById("rsim-s"+si+"-stat-pmt-prin");
+    var statPmtInt  = document.getElementById("rsim-s"+si+"-stat-pmt-int");
+    var statInt  = document.getElementById("rsim-s"+si+"-stat-int");
+    var statIntP = document.getElementById("rsim-s"+si+"-stat-int-pct");
+    var statCost = document.getElementById("rsim-s"+si+"-stat-cost");
+    var statCostR= document.getElementById("rsim-s"+si+"-stat-cost-ref");
+    var firstMoInt  = segBal * mRate;
+    var firstMoPrin = regPmt - firstMoInt;
+    if (statPmt)     statPmt.textContent     = fmtDollar(regPmt);
+    if (statPmtPrin) statPmtPrin.innerHTML =
+      "<span style=\"color:var(--green)\">"  + fmtDollar(Math.round(firstMoPrin)) + "</span>"
+      + " + <span style=\"color:var(--gold)\">" + fmtDollar(Math.round(firstMoInt)) + "</span>"
+      + " = <span style=\"color:var(--accent)\">" + fmtDollar(Math.round(regPmt)) + "</span>";
+    if (statPmtInt)  statPmtInt.textContent = "";
+    if (statInt)  statInt.textContent  = fmtDollar(Math.round(segTotalInt));
+    if (statIntP) statIntP.textContent = Math.round(segTotalInt / segBal * 100) + "% of loan";
+    if (statCost) statCost.textContent = fmtDollar(Math.round(segTotalInt + segBal));
+    if (statCostR)statCostR.textContent= "Loan: " + fmtDollar(Math.round(segBal));
+    // Update savings banner for refi segments
+    if (si > 0) {
+      var monthlySave = prevSegPmt - regPmt;
+      var banner   = document.getElementById("rsim-s"+si+"-savings");
+      var saveHero = document.getElementById("rsim-s"+si+"-save-hero");
+      var saveDesc = document.getElementById("rsim-s"+si+"-save-desc");
+      var saveMo   = document.getElementById("rsim-s"+si+"-save-mo");
+      var saveYr   = document.getElementById("rsim-s"+si+"-save-yr");
+      var saveBe   = document.getElementById("rsim-s"+si+"-save-be");
+      if (banner && monthlySave > 0) {
+        banner.classList.add("visible");
+        var heroStr = "+" + fmtDollar(Math.round(monthlySave)) + "/mo";
+        if (saveHero) saveHero.textContent = heroStr;
+        if (saveDesc) saveDesc.textContent =
+          "Refinancing from " + segs[si-1].rate.toFixed(2) + "% \u2192 " +
+          seg.rate.toFixed(2) + "% on a " + fmtDollar(Math.round(segBal)) + " loan";
+        if (saveMo)   saveMo.textContent   = "+" + fmtDollar(Math.round(monthlySave)) + "/mo";
+        if (saveYr)   saveYr.textContent   = "+" + fmtDollar(Math.round(monthlySave * 12)) + "/yr";
+        var breakevenMo = seg.closing > 0 ? Math.ceil(seg.closing / monthlySave) : 0;
+        if (saveBe)   saveBe.textContent   = breakevenMo > 0 ? breakevenMo + " months" : "\u2014";
+      } else if (banner) {
+        banner.classList.remove("visible");
+      }
+    }
+    prevSegPmt = regPmt;
+    globalYear += segMonthMax / 12;
     if (balance < 0.01) break;
   }
 
@@ -3005,7 +3183,8 @@ function rsimGetPlanState() {
     var si = parseInt(card.dataset.segIdx);
     if (si === 0) return;
     s.extraSegs.push({
-      refiYear: parseInt(document.getElementById("rsim-s"+si+"-refi-year").value) || (si*5),
+      // WHY: input stores months; divide by 12 when saving state as years for compat
+      refiYear: (parseInt(document.getElementById("rsim-s"+si+"-refi-year").value) || (si*60)) / 12,
       term:     parseInt(document.getElementById("rsim-s"+si+"-term").value) || 30,
       rate:     parseFloat(document.getElementById("rsim-s"+si+"-rate-slider").value) || 6.5,
       closing:  parseFloat(document.getElementById("rsim-s"+si+"-closing").value) || 0,
@@ -3069,7 +3248,8 @@ function addRsimSegmentFromData(sd) {
   var rsl = document.getElementById("rsim-s"+idx+"-rate-slider");
   var rdi = document.getElementById("rsim-s"+idx+"-rate-display");
   var cl  = document.getElementById("rsim-s"+idx+"-closing");
-  if (ry)  ry.value  = sd.refiYear;
+  // WHY: state stores refiYear in years; input now shows months, so multiply by 12
+  if (ry)  ry.value  = Math.round(sd.refiYear * 12);
   if (ts)  ts.value  = sd.term;
   if (rsl) rsl.value = sd.rate;
   if (rdi) rdi.value = sd.rate.toFixed(2);
@@ -3112,7 +3292,7 @@ function rsimLoadDefaultExample() {
   ].forEach(function(ep) { addRsimExtraAndSet("s0", ep); });
   // Refi after year 1: 20yr @ 5.875%, closing costs from loan docs not specified
   // WHY: Segment 2 (refi at Yr 1) also gets 4 one-time extra payments
-  addRsimSegmentFromData({ refiYear: 1, term: 20, rate: 5.875, closing: 0, extras: [
+  addRsimSegmentFromData({ refiYear: 1, term: 20, rate: 5.75, closing: 0, extras: [
     { amount: 1000,  startMonth: 1,  freq: "once" },
     { amount: 3000,  startMonth: 3,  freq: "once" },
     { amount: 2000,  startMonth: 9,  freq: "once" },
