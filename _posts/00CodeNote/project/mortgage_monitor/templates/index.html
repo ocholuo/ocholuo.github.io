@@ -585,6 +585,52 @@
     }
     .ccs-item { color: var(--text-muted); }
     .ccs-item strong { color: var(--text); font-weight: 700; }
+
+    /* ── Loan Journey Simulator ─────────────────────────────────── */
+    /* WHY: multi-segment refi simulator replaces simple refi calculator */
+    .rsim-seg-card { position: relative; }
+    .rsim-seg-header { display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 12px; }
+    .rsim-seg-title { display: flex; align-items: center; gap: 10px; }
+    .rsim-seg-badge { display: inline-flex; align-items: center;
+      padding: 2px 10px; border-radius: 12px; font-size: .65rem;
+      font-weight: 700; color: #fff; letter-spacing: .04em; flex-shrink: 0; }
+    .rsim-color-0 { background: #3b82f6; }
+    .rsim-color-1 { background: #8b5cf6; }
+    .rsim-color-2 { background: #0891b2; }
+    .rsim-color-3 { background: #f59e0b; }
+    .rsim-color-4 { background: #f43f5e; }
+    .rsim-remove-btn { background: none; border: none; cursor: pointer;
+      color: var(--text-muted); font-size: .82rem; padding: 2px 6px;
+      border-radius: var(--radius-sm); }
+    .rsim-remove-btn:hover { color: var(--red); background: var(--red-light); }
+    .rsim-add-wrap { text-align: center; padding: 4px 0 12px; }
+    .rsim-add-btn { display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 22px; border: 2px dashed var(--border);
+      border-radius: var(--radius); background: none;
+      font-size: .8rem; font-weight: 600; color: var(--accent); cursor: pointer; }
+    .rsim-add-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+    .rsim-balance-badge { background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 7px 12px;
+      font-size: .83rem; font-weight: 700; color: var(--text); display: block; margin-top: 4px; }
+    .rsim-seg-summary { display: flex; align-items: center; flex-wrap: wrap;
+      gap: 6px 12px; margin-top: 12px; padding-top: 12px;
+      border-top: 1px solid var(--border); font-size: .78rem; }
+    .rsim-pmt-label { color: var(--text-muted); }
+    .rsim-pmt-val { color: var(--accent); font-size: .88rem; font-weight: 700; }
+    .rsim-refi-year-hint { font-size: .67rem; color: var(--text-muted); margin-top: 2px; }
+    /* -- Plan A / B tabs ---------------------------------------------- */
+    /* WHY: lets users build two independent scenarios and compare them */
+    .rsim-plan-tabs { display: flex; align-items: center; gap: 8px;
+      margin-bottom: 16px; flex-wrap: wrap; }
+    .rsim-plan-tab { padding: 6px 22px; border-radius: 20px;
+      border: 1.5px solid var(--border); background: none;
+      font-size: .8rem; font-weight: 600; cursor: pointer;
+      color: var(--text-muted); transition: all .15s; }
+    .rsim-plan-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .rsim-plan-tab:not(.active):hover { border-color: var(--accent); color: var(--accent); }
+    .rsim-plan-hint { font-size: .68rem; color: var(--text-muted); margin-left: 4px; }
+    .extra-month { width: 58px; text-align: center; padding: 4px 6px; }
     .pi-principal { background: var(--blue); height: 100%; transition: width .3s; }
     /* WHY: interest uses --gold (amber) not --accent (blue) — contrasting warm color signals
        "cost you should notice"; two blues would look identical (see CLAUDE.md requirements) */
@@ -1330,35 +1376,61 @@
   </div>
 </div>
 
-<!-- ── Modal: Refi Savings ── -->
+<!-- ── Modal: Refi Savings (Loan Journey Simulator) ── -->
+<!-- WHY: rebuilt as multi-segment simulator — user models their initial loan
+     then adds any number of refinance segments; shared chart shows continuous
+     cumulative payoff with per-segment colored fill bands -->
 <div class="modal-overlay" id="modal-refi" onclick="closeModalOutside(event,'modal-refi')">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title" data-i18n="modal.refi.title">Refinance Savings Calculator</div>
-      <button class="modal-close" onclick="closeModal('refi')">✕</button>
+      <div class="modal-title" data-i18n="modal.refi.title">Loan Journey Simulator</div>
+      <button class="modal-close" onclick="closeModal('refi')">&#x2715;</button>
     </div>
-    <div class="live-badge"><span class="dot"></span> <span data-i18n="refi.auto">New rate auto-filled from today's live data · Current rate set to last year's high</span></div>
+    <div class="live-badge"><span class="dot"></span>
+      <span>Rates auto-filled from live data &middot; Model your full loan journey with optional refinance segments</span>
+    </div>
 
-    <!-- Section 1: Savings Summary -->
-    <div class="section-card">
-      <div class="section-card-title">Potential Savings</div>
-      <div class="hero-savings" id="refi-hero">
-        <div class="hero-savings-value" id="refi-savings-hero">—</div>
-        <div class="hero-savings-sub" id="refi-savings-sub">Calculating savings…</div>
+    <!-- WHY: backward-compat hidden elements — existing refiUpdate(), live rate
+         seeding (~line 1775), and preset chip JS all reference these IDs -->
+    <div style="display:none" aria-hidden="true">
+      <input id="refi-balance" type="number" value="400000">
+      <select id="refi-term"><option value="30" selected>30</option></select>
+      <input id="refi-cur-slider" type="range" min="2" max="10" step="0.05" value="7.5">
+      <input id="refi-cur-display" type="number" value="7.50">
+      <input id="refi-new-slider" type="range" min="2" max="10" step="0.05" value="6.5">
+      <input id="refi-new-display" type="number" value="6.50">
+      <input id="refi-closing" type="number" value="5000">
+      <div id="refi-hero"><div id="refi-savings-hero"></div><div id="refi-savings-sub"></div></div>
+      <span id="comp-cur-rate"></span><span id="comp-cur-pmt"></span>
+      <span id="comp-new-rate"></span><span id="comp-new-pmt"></span>
+      <span id="refi-monthly-save"></span><span id="refi-annual-save"></span>
+      <span id="refi-breakeven"></span>
+    </div>
+
+    <!-- ── Segment 0: Initial Loan ── -->
+    <div class="rsim-plan-tabs">
+      <button class="rsim-plan-tab active" id="rsim-tab-A" onclick="rsimSwitchPlan('A')">Plan A</button>
+      <button class="rsim-plan-tab"         id="rsim-tab-B" onclick="rsimSwitchPlan('B')">Plan B</button>
+      <span class="rsim-plan-hint">Your work is auto-saved when you switch tabs</span>
+    </div>
+
+    <div class="section-card rsim-seg-card" id="rsim-seg-0" data-seg-idx="0">
+      <div class="rsim-seg-header">
+        <div class="rsim-seg-title">
+          <div class="rsim-seg-badge rsim-color-0">Segment 1</div>
+          <span class="section-card-title">Initial Loan</span>
+        </div>
       </div>
-    </div>
-
-    <!-- Section 2: Loan Inputs -->
-    <div class="section-card">
-      <div class="section-card-title">Loan Details</div>
       <div class="form-grid">
         <div class="form-group">
-          <div class="form-label" data-i18n="form.balance">Loan Balance</div>
-          <div class="input-row"><span class="input-prefix">$</span><input class="form-input" type="number" id="refi-balance" value="400000" oninput="refiUpdate()"></div>
+          <div class="form-label">Loan Balance</div>
+          <div class="input-row"><span class="input-prefix">$</span>
+            <input class="form-input" type="number" id="rsim-s0-balance" value="400000" oninput="refiSimUpdate()">
+          </div>
         </div>
         <div class="form-group">
-          <div class="form-label" data-i18n="form.remterm">Remaining Term</div>
-          <select class="form-select" id="refi-term" onchange="refiUpdate()">
+          <div class="form-label">Term</div>
+          <select class="form-select" id="rsim-s0-term" onchange="refiSimUpdate()">
             <option value="10">10 years</option>
             <option value="15">15 years</option>
             <option value="20">20 years</option>
@@ -1367,56 +1439,79 @@
           </select>
         </div>
         <div class="form-group full">
-          <div class="form-label" data-i18n="form.currate">Current Rate</div>
+          <div class="form-label">Interest Rate</div>
           <div class="slider-row">
-            <input type="range" id="refi-cur-slider" min="2" max="10" step="0.05" value="7.5" oninput="refiRateSync('cur')">
-            <div class="rate-display rate-input-wrap"><input type="number" class="rate-input-field" id="refi-cur-display" min="2" max="10" step="0.05" value="7.50" oninput="refiRateFromInput('cur')"><span>%</span></div>
+            <input type="range" id="rsim-s0-rate-slider" min="2" max="10" step="0.05" value="7.0"
+              oninput="rsimRateSync(this,'s0')">
+            <div class="rate-display rate-input-wrap">
+              <input type="number" class="rate-input-field" id="rsim-s0-rate-display"
+                min="2" max="10" step="0.05" value="7.00" oninput="rsimRateFromInput(this,'s0')">
+              <span>%</span>
+            </div>
           </div>
         </div>
-        <div class="form-group full">
-          <div class="form-label" data-i18n="form.newrate">New Rate (Today's)</div>
-          <div class="slider-row">
-            <input type="range" id="refi-new-slider" min="2" max="10" step="0.05" value="6.5" oninput="refiRateSync('new')">
-            <div class="rate-display rate-input-wrap"><input type="number" class="rate-input-field" id="refi-new-display" min="2" max="10" step="0.05" value="6.50" oninput="refiRateFromInput('new')"><span>%</span></div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="form-label" data-i18n="form.closing">Closing Costs</div>
-          <div class="input-row"><span class="input-prefix">$</span><input class="form-input" type="number" id="refi-closing" value="5000" oninput="refiUpdate()"></div>
-        </div>
+      </div>
+      <div class="adv-toggle" onclick="toggleRsimAdv('s0')">
+        <span class="adv-arrow" id="rsim-adv-arrow-s0">&#9654;</span>
+        <span>Advanced: Extra Payments</span>
+      </div>
+      <div class="adv-panel" id="rsim-adv-panel-s0">
+        <div id="rsim-extra-list-s0"></div>
+        <button class="adv-add-btn" onclick="addRsimExtraPayment('s0')">&#43; Add Payment</button>
+      </div>
+      <div class="rsim-seg-summary">
+        <span class="rsim-pmt-label">Monthly Payment:</span>
+        <strong class="rsim-pmt-val" id="rsim-s0-pmt">&mdash;</strong>
       </div>
     </div>
 
-    <!-- Section 3: Rate Comparison & Savings Breakdown -->
+    <!-- Dynamic refi segment cards injected here -->
+    <div id="rsim-segments-container"></div>
+
+    <div class="rsim-add-wrap">
+      <button class="rsim-add-btn" onclick="addRsimSegment()">&#43; Add Refinance Segment</button>
+    </div>
+
+    <!-- ── Cumulative Payoff Chart ── -->
     <div class="section-card">
-      <div class="section-card-title">Rate Comparison</div>
-      <div class="comparison-boxes">
-        <div class="comp-box current">
-          <div class="comp-label" data-i18n="refi.cur">Current Loan</div>
-          <div class="comp-rate" style="color:var(--accent)" id="comp-cur-rate">—%</div>
-          <div class="comp-payment" id="comp-cur-pmt">$— /mo</div>
-        </div>
-        <div class="comp-box new">
-          <div class="comp-label" data-i18n="refi.after">After Refinance</div>
-          <div class="comp-rate" style="color:var(--green)" id="comp-new-rate">—%</div>
-          <div class="comp-payment" id="comp-new-pmt">$— /mo</div>
+      <div class="chart-card-header">
+        <div class="section-card-title">Cumulative Payoff Chart</div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <button class="chart-pin-btn" id="rsim-pin-btn" onclick="rsimChartPin()" title="Pin scenario">&#128204; Pin</button>
+          <button class="chart-unpin-btn" id="rsim-unpin-btn" onclick="rsimChartUnpin()" style="display:none">&#x2715; Unpin</button>
         </div>
       </div>
-      <div class="summary-box" style="margin-top:12px">
-        <div class="summary-row">
-          <span class="summary-key" data-i18n="refi.monthly">Monthly Savings</span>
-          <span class="summary-val green" id="refi-monthly-save">—</span>
-        </div>
-        <div class="summary-row">
-          <span class="summary-key" data-i18n="refi.annual">Annual Savings</span>
-          <span class="summary-val green" id="refi-annual-save">—</span>
-        </div>
-        <div class="summary-row">
-          <span class="summary-key" data-i18n="refi.breakeven">Break-even Point</span>
-          <span class="summary-val gold" id="refi-breakeven">—</span>
-        </div>
+      <div class="chart-pin-row" id="rsim-pin-row" style="display:none">
+        <span class="chart-pin-label" id="rsim-pin-label"></span>
+      </div>
+      <div class="calc-chart-legend" id="rsim-chart-legend">
+        <div class="ccl-item"><div class="ccl-line" style="background:#3b82f6"></div><span>Principal Paid</span></div>
+        <div class="ccl-item"><div class="ccl-line" style="background:#f59e0b"></div><span>Interest Paid</span></div>
+        <div class="ccl-item" id="rsim-ccl-pinned" style="display:none"><div class="ccl-line dotted" style="color:#8b5cf6"></div><span style="color:var(--text-muted)">Pinned: Principal</span></div>
+        <div class="ccl-item" id="rsim-ccl-pinned-int" style="display:none"><div class="ccl-line dotted" style="color:#10b981"></div><span style="color:var(--text-muted)">Pinned: Interest</span></div>
+      </div>
+      <div class="calc-payoff-wrap"><canvas id="rsimPayoffChart"></canvas></div>
+      <div class="calc-chart-stats" id="rsim-chart-stats">
+        <span class="ccs-item">Crossover: <strong id="rsim-ccs-crossover">&mdash;</strong></span>
+        <span class="ccs-item">Payoff: <strong id="rsim-ccs-payoff">&mdash;</strong></span>
+        <span class="ccs-item">Total Interest: <strong id="rsim-ccs-interest">&mdash;</strong></span>
       </div>
     </div>
+
+    <!-- ── Amortization ── All Years ── -->
+    <div class="section-card">
+      <div class="section-card-title">Amortization &mdash; All Years</div>
+      <div style="max-height:360px;overflow-y:auto;border-radius:var(--radius-sm);">
+        <table class="amort-table" id="rsim-amort-table">
+          <thead><tr>
+            <th>Year</th><th>Seg</th>
+            <th>Principal Paid</th><th>Interest Paid</th><th>Balance</th>
+          </tr></thead>
+          <tbody id="rsim-amort-body"></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -2028,7 +2123,7 @@ function calcRateFromInput() {
 // WHY: reads each .extra-row from DOM into [{amount, startYear, freq}]
 function getExtraPayments() {
   var result = [];
-  document.querySelectorAll(".extra-row").forEach(function(row) {
+  document.querySelectorAll(".extra-row[data-ctx=\"calc\"]").forEach(function(row) {
     var amt = parseFloat(row.querySelector(".extra-amount").value) || 0;
     var yr  = parseInt(row.querySelector(".extra-year").value) || 1;
     var el  = row.querySelector(".extra-freq-radio:checked");
@@ -2437,6 +2532,7 @@ function addExtraPayment() {
   var div = document.createElement("div");
   div.className   = "extra-row";
   div.dataset.rowId = id;
+  div.setAttribute("data-ctx", "calc");  // WHY: scope so refi sim rows are excluded
   div.innerHTML = [
     "<div class=\"extra-amount-wrap\">"
       + "<span class=\"input-prefix\">$</span>"
@@ -2489,7 +2585,590 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // WHY: init chart after DOM is ready so canvas element exists
   initCalcChart();
+  // WHY: init refi sim chart so canvas is primed when user opens Refi tab
+  initRsimChart();
+  // WHY: load real-world default into Plan A on first open
+  setTimeout(function() {
+    rsimLoadDefaultExample();
+    rsimPlans["A"] = rsimGetPlanState();
+    refiSimUpdate();
+  }, 0);
 });
+
+// ── Loan Journey Simulator ────────────────────────────────────
+// WHY: multi-segment refi simulator; new UI for modal-refi.
+//      Legacy refiUpdate() still runs (hidden elements stay in DOM).
+
+var rsimSegCounter   = 0;
+var rsimPayoffChart  = null;
+var rsimChartPinned  = null;
+var rsimExtraCounter = 0;
+var RSIM_COLORS = ["#3b82f6","#8b5cf6","#0891b2","#f59e0b","#f43f5e"];
+
+function rsimRateSync(slider, ctx) {
+  var d = document.getElementById("rsim-"+ctx+"-rate-display");
+  if (d) d.value = parseFloat(slider.value).toFixed(2);
+  refiSimUpdate();
+}
+
+function rsimRateFromInput(input, ctx) {
+  var v = Math.min(10, Math.max(2, parseFloat(input.value) || 6.5));
+  var s = document.getElementById("rsim-"+ctx+"-rate-slider");
+  if (s) s.value = v;
+  refiSimUpdate();
+}
+
+function toggleRsimAdv(ctx) {
+  var arrow = document.getElementById("rsim-adv-arrow-"+ctx);
+  var panel = document.getElementById("rsim-adv-panel-"+ctx);
+  if (!arrow || !panel) return;
+  var open = panel.classList.toggle("open");
+  if (open) arrow.classList.add("open"); else arrow.classList.remove("open");
+}
+
+function addRsimExtraPayment(ctx) {
+  var list = document.getElementById("rsim-extra-list-"+ctx);
+  if (!list) return;
+  rsimExtraCounter++;
+  var n = "rsim-epfreq"+rsimExtraCounter;
+  var div = document.createElement("div");
+  div.className = "extra-row";
+  div.setAttribute("data-rsim-ctx", ctx);
+  div.innerHTML =
+    "<div class=\"extra-amount-wrap\"><span class=\"input-prefix\">$</span>"
+    + "<input type=\"number\" class=\"extra-amount\" placeholder=\"Amount\""
+    + " min=\"0\" step=\"100\" oninput=\"refiSimUpdate()\"></div>"
+    + "<input type=\"number\" class=\"extra-month\" placeholder=\"Mo\""
+    + " min=\"1\" max=\"360\" value=\"1\" style=\"width:58px\" oninput=\"refiSimUpdate()\">"
+    + "<div class=\"extra-freq\">"
+    + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\""+n+"\""
+    + " value=\"monthly\" onchange=\"refiSimUpdate()\"> Mo</label>"
+    + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\""+n+"\""
+    + " value=\"annually\" checked onchange=\"refiSimUpdate()\"> Yr</label>"
+    + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\""+n+"\""
+    + " value=\"once\" onchange=\"refiSimUpdate()\"> Once</label></div>"
+    + "<button class=\"extra-remove\" onclick=\"this.closest(\'.extra-row\').remove();refiSimUpdate()\">&#x2715;</button>";
+  list.appendChild(div);
+}
+
+// WHY: data-rsim-ctx attr prevents cross-contamination with calc extra rows
+function getRsimExtras(ctx) {
+  var result = [];
+  document.querySelectorAll(".extra-row[data-rsim-ctx=\""+ctx+"\"]").forEach(function(row) {
+    var amt  = parseFloat(row.querySelector(".extra-amount").value) || 0;
+    var mo0  = parseInt(row.querySelector(".extra-month").value) || 1;
+    var el   = row.querySelector(".extra-freq-radio:checked");
+    var freq = el ? el.value : "monthly";
+    if (amt > 0) result.push({ amount: amt, startMonth: mo0, freq: freq });
+  });
+  return result;
+}
+
+function addRsimSegment() {
+  rsimSegCounter++;
+  var idx = rsimSegCounter;
+  var ci  = Math.min(idx, 4);
+  var defYear = 5 * idx;
+  var container = document.getElementById("rsim-segments-container");
+  var div = document.createElement("div");
+  div.className = "section-card rsim-seg-card";
+  div.id = "rsim-seg-" + idx;
+  div.setAttribute("data-seg-idx", idx);
+  // Build innerHTML using concatenation (avoids template-literal browser compat issues)
+  var h = "";
+  h += "<div class=\"rsim-seg-header\">";
+  h +=   "<div class=\"rsim-seg-title\">";
+  h +=     "<div class=\"rsim-seg-badge rsim-color-"+ci+"\">Refi "+idx+"</div>";
+  h +=     "<span class=\"section-card-title\">Refinance Segment "+idx+"</span>";
+  h +=   "</div>";
+  h +=   "<button class=\"rsim-remove-btn\" onclick=\"removeRsimSegment("+idx+")\" title=\"Remove segment\">&#x2715;</button>";
+  h += "</div>";
+  h += "<div class=\"form-grid\">";
+  h +=   "<div class=\"form-group\"><div class=\"form-label\">Starting Balance</div>";
+  h +=     "<div class=\"rsim-balance-badge\" id=\"rsim-s"+idx+"-balance-display\">Auto-calculated</div></div>";
+  h +=   "<div class=\"form-group\"><div class=\"form-label\">Refi at Overall Year</div>";
+  h +=     "<div class=\"input-row\"><input class=\"form-input\" type=\"number\" id=\"rsim-s"+idx+"-refi-year\"";
+  h +=       " value=\""+defYear+"\" min=\"1\" oninput=\"refiSimUpdate()\"></div>";
+  h +=     "<div class=\"rsim-refi-year-hint\">Year within full timeline to refinance</div></div>";
+  h +=   "<div class=\"form-group\"><div class=\"form-label\">New Term</div>";
+  h +=     "<select class=\"form-select\" id=\"rsim-s"+idx+"-term\" onchange=\"refiSimUpdate()\">";
+  h +=       "<option value=\"10\">10 years</option><option value=\"15\">15 years</option>";
+  h +=       "<option value=\"20\">20 years</option><option value=\"25\">25 years</option>";
+  h +=       "<option value=\"30\" selected>30 years</option></select></div>";
+  h +=   "<div class=\"form-group\"><div class=\"form-label\">Closing Costs</div>";
+  h +=     "<div class=\"input-row\"><span class=\"input-prefix\">$</span>";
+  h +=       "<input class=\"form-input\" type=\"number\" id=\"rsim-s"+idx+"-closing\" value=\"5000\" oninput=\"refiSimUpdate()\"></div></div>";
+  h +=   "<div class=\"form-group full\"><div class=\"form-label\">New Rate</div>";
+  h +=     "<div class=\"slider-row\">";
+  h +=       "<input type=\"range\" id=\"rsim-s"+idx+"-rate-slider\" min=\"2\" max=\"10\" step=\"0.05\" value=\"6.5\"";
+  h +=         " oninput=\"rsimRateSync(this,'s"+idx+"')\">";
+  h +=       "<div class=\"rate-display rate-input-wrap\">";
+  h +=         "<input type=\"number\" class=\"rate-input-field\" id=\"rsim-s"+idx+"-rate-display\"";
+  h +=           " min=\"2\" max=\"10\" step=\"0.05\" value=\"6.50\" oninput=\"rsimRateFromInput(this,'s"+idx+"')\">";
+  h +=         "<span>%</span></div></div></div>";
+  h += "</div>";
+  // Extra payments accordion
+  h += "<div class=\"adv-toggle\" onclick=\"toggleRsimAdv('s"+idx+"')\">";
+  h +=   "<span class=\"adv-arrow\" id=\"rsim-adv-arrow-s"+idx+"\">&#9654;</span>";
+  h +=   "<span>Advanced: Extra Payments</span></div>";
+  h += "<div class=\"adv-panel\" id=\"rsim-adv-panel-s"+idx+"\">";
+  h +=   "<div id=\"rsim-extra-list-s"+idx+"\"></div>";
+  h +=   "<button class=\"adv-add-btn\" onclick=\"addRsimExtraPayment('s"+idx+"')\">&#43; Add Payment</button></div>";
+  // Per-segment summary
+  h += "<div class=\"rsim-seg-summary\">";
+  h +=   "<span class=\"rsim-pmt-label\">Monthly Payment:</span>";
+  h +=   "<strong class=\"rsim-pmt-val\" id=\"rsim-s"+idx+"-pmt\">&mdash;</strong>";
+  h +=   "<span style=\"margin-left:10px;color:var(--text-muted);font-size:.7rem\">Rate:</span>";
+  h +=   "<strong style=\"font-size:.78rem;color:var(--text)\" id=\"rsim-s"+idx+"-rate-badge\">&mdash;</strong>";
+  h += "</div>";
+  div.innerHTML = h;
+  container.appendChild(div);
+  refiSimUpdate();
+}
+
+function removeRsimSegment(idx) {
+  var el = document.getElementById("rsim-seg-"+idx);
+  if (el) el.remove();
+  refiSimUpdate();
+}
+
+// WHY: main simulation engine — runs all segments sequentially,
+//      carrying balance forward; drives chart + amort table
+function refiSimUpdate() {
+  var segCards = Array.from(document.querySelectorAll(".rsim-seg-card[data-seg-idx]"));
+  if (!segCards.length) return;
+  var segs = [];
+  segCards.forEach(function(card) {
+    var si = parseInt(card.dataset.segIdx);
+    if (si === 0) {
+      segs.push({
+        idx: 0,
+        balance: parseFloat(document.getElementById("rsim-s0-balance").value) || 400000,
+        term:    parseInt(document.getElementById("rsim-s0-term").value) || 30,
+        rate:    parseFloat(document.getElementById("rsim-s0-rate-slider").value) || 7.0,
+        extras:  getRsimExtras("s0"),
+        closing: 0, refiYear: 0
+      });
+    } else {
+      segs.push({
+        idx:      si,
+        refiYear: parseInt(document.getElementById("rsim-s"+si+"-refi-year").value) || (si*5),
+        term:     parseInt(document.getElementById("rsim-s"+si+"-term").value) || 30,
+        rate:     parseFloat(document.getElementById("rsim-s"+si+"-rate-slider").value) || 6.5,
+        closing:  parseFloat(document.getElementById("rsim-s"+si+"-closing").value) || 0,
+        extras:   getRsimExtras("s"+si),
+        balance:  0
+      });
+    }
+  });
+
+  var chartLabels = [], chartCumPrin = [], chartCumInt = [];
+  var segBounds = [], amortRows = [];
+  var cumP = 0, cumI = 0, globalYear = 0;
+  var balance = segs[0].balance;
+
+  for (var si = 0; si < segs.length; si++) {
+    var seg = segs[si];
+    var segBal = (si === 0) ? seg.balance : Math.max(0, balance + seg.closing);
+    var mRate  = seg.rate / 100 / 12;
+    var regPmt = calcMonthly(segBal, seg.rate, seg.term);
+    // How many years until next refi (capped to term)
+    var nextRY   = (si + 1 < segs.length) ? segs[si+1].refiYear : Infinity;
+    var segYrMax = Math.min(Math.max(1, nextRY < Infinity ? nextRY - globalYear : seg.term), seg.term);
+    // Update per-seg UI
+    if (si === 0) {
+      var e0 = document.getElementById("rsim-s0-pmt");
+      if (e0) e0.textContent = fmtDollar(regPmt);
+    } else {
+      var bd = document.getElementById("rsim-s"+seg.idx+"-balance-display");
+      var ep = document.getElementById("rsim-s"+seg.idx+"-pmt");
+      var rb = document.getElementById("rsim-s"+seg.idx+"-rate-badge");
+      if (bd) bd.textContent = fmtDollar(Math.max(0,balance)) + (seg.closing>0?" + $"+seg.closing.toLocaleString()+" closing":"");
+      if (ep) ep.textContent = fmtDollar(regPmt);
+      if (rb) rb.textContent = seg.rate.toFixed(2)+"%";
+    }
+    segBounds.push(chartLabels.length);
+    balance = segBal;
+    var yPrin = 0, yInt = 0;
+    for (var mo = 0; mo < segYrMax * 12; mo++) {
+      if (balance < 0.01) break;
+      var yr1    = Math.floor(mo / 12) + 1;
+      var intPmt = balance * mRate;
+      var rPrin  = Math.max(0, Math.min(regPmt - intPmt, balance));
+      var extra  = 0;
+      // WHY: startMonth is 1-indexed; mo is 0-indexed within segment
+      seg.extras.forEach(function(ep2) {
+        var sm = (ep2.startMonth || 1) - 1;
+        if      (ep2.freq === "monthly"  && mo >= sm) extra += ep2.amount;
+        else if (ep2.freq === "annually" && mo >= sm && (mo-sm)%12===0) extra += ep2.amount;
+        else if (ep2.freq === "once"     && mo === sm) extra += ep2.amount;
+      });
+      extra   = Math.min(extra, Math.max(0, balance - rPrin));
+      yPrin  += rPrin + extra;
+      yInt   += intPmt;
+      balance -= (rPrin + extra);
+      if ((mo+1)%12===0 || balance < 0.01) {
+        cumP += yPrin; cumI += yInt;
+        var absYr = globalYear + yr1;
+        chartLabels.push("Yr "+absYr);
+        chartCumPrin.push(Math.round(cumP));
+        chartCumInt.push(Math.round(cumI));
+        amortRows.push({ year: absYr, segIdx: si,
+          prin: Math.round(yPrin), int: Math.round(yInt), bal: Math.round(Math.max(0,balance)) });
+        yPrin = 0; yInt = 0;
+        if (balance < 0.01) break;
+      }
+    }
+    globalYear += segYrMax;
+    if (balance < 0.01) break;
+  }
+
+  updateRsimChart({ yearLabels: chartLabels, cumPrin: chartCumPrin,
+    cumInt: chartCumInt, segBoundaries: segBounds, segCount: segs.length });
+  renderRsimAmortTable(amortRows);
+
+  var cx = -1;
+  for (var ci2 = 0; ci2 < chartCumPrin.length; ci2++) {
+    if (chartCumPrin[ci2] >= chartCumInt[ci2]) { cx = ci2; break; }
+  }
+  var co  = document.getElementById("rsim-ccs-crossover");
+  var cp2 = document.getElementById("rsim-ccs-payoff");
+  var ci3 = document.getElementById("rsim-ccs-interest");
+  if (co)  co.textContent  = cx >= 0 ? chartLabels[cx] : "—";
+  if (cp2) cp2.textContent = chartLabels.length ? chartLabels[chartLabels.length-1] : "—";
+  if (ci3) ci3.textContent = chartCumInt.length  ? fmtDollar(chartCumInt[chartCumInt.length-1]) : "—";
+}
+
+function renderRsimAmortTable(rows) {
+  var tbody = document.getElementById("rsim-amort-body");
+  if (!tbody) return;
+  var BG = ["rgba(59,130,246,.07)","rgba(139,92,246,.07)","rgba(8,145,178,.07)",
+            "rgba(245,158,11,.07)","rgba(244,63,94,.07)"];
+  var html = "";
+  rows.forEach(function(r) {
+    var ci4 = Math.min(r.segIdx, 4);
+    html += "<tr style=\"background:"+BG[ci4]+"\">"
+      + "<td>"+r.year+"</td>"
+      + "<td><span class=\"rsim-seg-badge rsim-color-"+ci4+"\" style=\"font-size:.6rem;padding:1px 6px\">"+(r.segIdx===0?"S1":"R"+r.segIdx)+"</span></td>"
+      + "<td>"+fmtDollar(r.prin)+"</td>"
+      + "<td>"+fmtDollar(r.int)+"</td>"
+      + "<td>"+fmtDollar(r.bal)+"</td>"
+      + "</tr>";
+  });
+  tbody.innerHTML = html;
+}
+
+
+// -- Plan A / B state management -------------------------------------------
+// WHY: saves each plan as a data object; switching tabs preserves all inputs
+
+var rsimPlans      = { A: null, B: null };
+var rsimActivePlan = 'A';
+
+function rsimGetPlanState() {
+  var s = {
+    s0: {
+      balance: parseFloat(document.getElementById("rsim-s0-balance").value) || 400000,
+      term:    parseInt(document.getElementById("rsim-s0-term").value) || 30,
+      rate:    parseFloat(document.getElementById("rsim-s0-rate-slider").value) || 7.0,
+      extras:  getRsimExtras("s0")
+    },
+    extraSegs: [], pinned: rsimChartPinned
+  };
+  document.querySelectorAll(".rsim-seg-card[data-seg-idx]").forEach(function(card) {
+    var si = parseInt(card.dataset.segIdx);
+    if (si === 0) return;
+    s.extraSegs.push({
+      refiYear: parseInt(document.getElementById("rsim-s"+si+"-refi-year").value) || (si*5),
+      term:     parseInt(document.getElementById("rsim-s"+si+"-term").value) || 30,
+      rate:     parseFloat(document.getElementById("rsim-s"+si+"-rate-slider").value) || 6.5,
+      closing:  parseFloat(document.getElementById("rsim-s"+si+"-closing").value) || 0,
+      extras:   getRsimExtras("s"+si)
+    });
+  });
+  return s;
+}
+
+function rsimLoadPlanState(state) {
+  rsimSegCounter = 0;
+  document.getElementById("rsim-segments-container").innerHTML = "";
+  document.getElementById("rsim-extra-list-s0").innerHTML = "";
+  var ap0 = document.getElementById("rsim-adv-panel-s0");
+  var aa0 = document.getElementById("rsim-adv-arrow-s0");
+  if (ap0) ap0.classList.remove("open");
+  if (aa0) aa0.classList.remove("open");
+  if (!state) {
+    document.getElementById("rsim-s0-balance").value         = 400000;
+    document.getElementById("rsim-s0-term").value            = 30;
+    document.getElementById("rsim-s0-rate-slider").value     = 7.0;
+    document.getElementById("rsim-s0-rate-display").value    = "7.00";
+    rsimChartPinned = null; rsimChartUnpin(); refiSimUpdate(); return;
+  }
+  document.getElementById("rsim-s0-balance").value         = state.s0.balance;
+  document.getElementById("rsim-s0-term").value            = state.s0.term;
+  document.getElementById("rsim-s0-rate-slider").value     = state.s0.rate;
+  document.getElementById("rsim-s0-rate-display").value    = state.s0.rate.toFixed(2);
+  if (state.s0.extras && state.s0.extras.length) {
+    if (ap0) ap0.classList.add("open");
+    if (aa0) aa0.classList.add("open");
+    state.s0.extras.forEach(function(ep) { addRsimExtraAndSet("s0", ep); });
+  }
+  state.extraSegs.forEach(function(sd) { addRsimSegmentFromData(sd); });
+  rsimChartPinned = state.pinned || null;
+  if (!rsimChartPinned) rsimChartUnpin();
+  refiSimUpdate();
+}
+
+// WHY: adds an extra-payment row then fills in the saved values immediately
+function addRsimExtraAndSet(ctx, ep) {
+  addRsimExtraPayment(ctx);
+  var list = document.getElementById("rsim-extra-list-"+ctx);
+  var rows = list.querySelectorAll(".extra-row[data-rsim-ctx=\""+ctx+"\"]");
+  var row  = rows[rows.length - 1];
+  if (!row) return;
+  row.querySelector(".extra-amount").value = ep.amount;
+  var mi = row.querySelector(".extra-month");
+  if (mi) mi.value = ep.startMonth || 1;
+  row.querySelectorAll(".extra-freq-radio").forEach(function(r) {
+    r.checked = (r.value === ep.freq);
+  });
+}
+
+// WHY: adds a refi segment card then immediately pre-fills all form values
+function addRsimSegmentFromData(sd) {
+  addRsimSegment();
+  var idx = rsimSegCounter;
+  var ry  = document.getElementById("rsim-s"+idx+"-refi-year");
+  var ts  = document.getElementById("rsim-s"+idx+"-term");
+  var rsl = document.getElementById("rsim-s"+idx+"-rate-slider");
+  var rdi = document.getElementById("rsim-s"+idx+"-rate-display");
+  var cl  = document.getElementById("rsim-s"+idx+"-closing");
+  if (ry)  ry.value  = sd.refiYear;
+  if (ts)  ts.value  = sd.term;
+  if (rsl) rsl.value = sd.rate;
+  if (rdi) rdi.value = sd.rate.toFixed(2);
+  if (cl)  cl.value  = sd.closing;
+  if (sd.extras && sd.extras.length) {
+    var ap2 = document.getElementById("rsim-adv-panel-s"+idx);
+    var aa2 = document.getElementById("rsim-adv-arrow-s"+idx);
+    if (ap2) ap2.classList.add("open");
+    if (aa2) aa2.classList.add("open");
+    sd.extras.forEach(function(ep) { addRsimExtraAndSet("s"+idx, ep); });
+  }
+}
+
+function rsimSwitchPlan(plan) {
+  if (plan === rsimActivePlan) return;
+  rsimPlans[rsimActivePlan] = rsimGetPlanState();
+  rsimActivePlan = plan;
+  document.getElementById("rsim-tab-A").classList.toggle("active", plan === "A");
+  document.getElementById("rsim-tab-B").classList.toggle("active", plan === "B");
+  rsimLoadPlanState(rsimPlans[plan]);
+}
+
+// -- Default example (Plan A) -----------------------------------------------
+// WHY: pre-loads a real-world scenario: $744K @ 6.75%/30yr,
+//      4 one-time extra payments in Year 1, then refi at yr1 -> 5.875%/20yr
+function rsimLoadDefaultExample() {
+  document.getElementById("rsim-s0-balance").value        = 744000;
+  document.getElementById("rsim-s0-term").value           = 30;
+  document.getElementById("rsim-s0-rate-slider").value    = 6.75;
+  document.getElementById("rsim-s0-rate-display").value   = "6.75";
+  document.getElementById("rsim-extra-list-s0").innerHTML = "";
+  var ap = document.getElementById("rsim-adv-panel-s0");
+  var aa = document.getElementById("rsim-adv-arrow-s0");
+  if (ap) ap.classList.add("open");
+  if (aa) aa.classList.add("open");
+  [ { amount: 1000, startMonth: 1, freq: "once" },
+    { amount: 9000, startMonth: 4, freq: "once" },
+    { amount: 500,  startMonth: 5, freq: "once" },
+    { amount: 1000, startMonth: 8, freq: "once" }
+  ].forEach(function(ep) { addRsimExtraAndSet("s0", ep); });
+  // Refi after year 1: 20yr @ 5.875%, closing costs from loan docs not specified
+  addRsimSegmentFromData({ refiYear: 1, term: 20, rate: 5.875, closing: 0, extras: [] });
+}
+
+// ── Refi Sim Chart ─────────────────────────────────────────────
+var rsimSegPlugin = {
+  id: "rsimSegBands",
+  // WHY: draws light per-segment fill bands before chart lines
+  beforeDraw: function(chart) {
+    var bds = chart._rsimBounds;
+    if (!bds || !bds.length || !chart.scales || !chart.scales.x) return;
+    var ctx2 = chart.ctx, yA = chart.chartArea;
+    var FILLS = ["rgba(59,130,246,.07)","rgba(139,92,246,.07)","rgba(8,145,178,.07)",
+                 "rgba(245,158,11,.07)","rgba(244,63,94,.07)"];
+    ctx2.save();
+    for (var bi = 0; bi < bds.length; bi++) {
+      var s = chart.data.labels[bds[bi]];
+      var e = bi+1 < bds.length
+        ? chart.data.labels[bds[bi+1]-1]
+        : chart.data.labels[chart.data.labels.length-1];
+      if (!s || !e) continue;
+      var x1 = chart.scales.x.getPixelForValue(s);
+      var x2 = chart.scales.x.getPixelForValue(e)
+        + chart.scales.x.width / Math.max(chart.data.labels.length,1) / 2;
+      ctx2.fillStyle = FILLS[Math.min(bi,4)];
+      ctx2.fillRect(x1, yA.top, x2-x1, yA.bottom-yA.top);
+    }
+    ctx2.restore();
+  },
+  // WHY: draws vertical dashed boundary lines + "Refi N" label at each transition
+  afterDraw: function(chart) {
+    var bds = chart._rsimBounds;
+    if (!bds || bds.length < 2 || !chart.scales || !chart.scales.x) return;
+    var ctx2 = chart.ctx, yA = chart.chartArea;
+    ctx2.save();
+    for (var bi2 = 1; bi2 < bds.length; bi2++) {
+      var lbl = chart.data.labels[bds[bi2]];
+      if (!lbl) continue;
+      var xp = chart.scales.x.getPixelForValue(lbl);
+      ctx2.setLineDash([4,4]);
+      ctx2.strokeStyle = "rgba(100,116,139,.55)";
+      ctx2.lineWidth = 1.5;
+      ctx2.beginPath(); ctx2.moveTo(xp, yA.top); ctx2.lineTo(xp, yA.bottom); ctx2.stroke();
+      ctx2.setLineDash([]);
+      ctx2.font = "600 10px system-ui,sans-serif";
+      ctx2.fillStyle = "rgba(100,116,139,.85)";
+      ctx2.fillText("Refi "+bi2, xp+4, yA.top+14);
+    }
+    ctx2.restore();
+  }
+};
+
+var rsimCrossoverPlugin = {
+  id: "rsimCrossover",
+  afterDraw: function(chart) {
+    var ci5 = chart._rsimCrossoverIdx;
+    if (ci5 == null || ci5 < 0 || !chart.scales || !chart.scales.x) return;
+    var lbl = chart.data.labels[ci5];
+    if (!lbl) return;
+    var ctx2 = chart.ctx, yA = chart.chartArea;
+    var xp = chart.scales.x.getPixelForValue(lbl);
+    ctx2.save();
+    ctx2.setLineDash([4,3]);
+    ctx2.strokeStyle = "rgba(16,185,129,.7)";
+    ctx2.lineWidth = 1.5;
+    ctx2.beginPath(); ctx2.moveTo(xp, yA.top); ctx2.lineTo(xp, yA.bottom); ctx2.stroke();
+    ctx2.setLineDash([]);
+    ctx2.font = "600 9px system-ui,sans-serif";
+    ctx2.fillStyle = "#10b981";
+    ctx2.fillText("Prin > Int", xp+3, yA.top+26);
+    ctx2.restore();
+  }
+};
+
+function initRsimChart() {
+  var canvas = document.getElementById("rsimPayoffChart");
+  if (!canvas || !window.Chart) return;
+  rsimPayoffChart = new Chart(canvas, {
+    type: "line",
+    plugins: [rsimSegPlugin, rsimCrossoverPlugin],
+    data: {
+      labels: [],
+      datasets: [
+        { label: "Principal Paid", data: [], borderColor: "#3b82f6",
+          borderWidth: 2.5, pointRadius: 0, fill: false, tension: 0.3 },
+        { label: "Interest Paid",  data: [], borderColor: "#f59e0b",
+          borderWidth: 2.5, pointRadius: 0, fill: false, tension: 0.3 },
+        { label: "Pinned: Principal", data: [],
+          borderColor: "rgba(139,92,246,.85)", borderWidth: 2,
+          borderDash: [4,4], pointRadius: 0, fill: false, tension: 0.3, hidden: true },
+        { label: "Pinned: Interest", data: [],
+          borderColor: "rgba(16,185,129,.85)", borderWidth: 2,
+          borderDash: [4,4], pointRadius: 0, fill: false, tension: 0.3, hidden: true }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: {
+          label: function(ctx6) {
+            return ctx6.dataset.label + ": $" + (ctx6.raw||0).toLocaleString();
+          }
+        }}
+      },
+      scales: {
+        x: { ticks: { maxTicksLimit: 12, font: { size: 10 } }, grid: { display: false } },
+        y: { ticks: { font: { size: 10 },
+          callback: function(v) { return v >= 1000 ? "$"+(v/1000).toFixed(0)+"K" : "$"+v; }
+        }}
+      }
+    }
+  });
+}
+
+function updateRsimChart(d) {
+  if (!rsimPayoffChart) { initRsimChart(); if (!rsimPayoffChart) return; }
+  var chart = rsimPayoffChart;
+  var pLen  = d.yearLabels.length;
+  chart.data.labels           = d.yearLabels;
+  chart.data.datasets[0].data = d.cumPrin;
+  chart.data.datasets[1].data = d.cumInt;
+  if (rsimChartPinned) {
+    chart.data.datasets[2].data = rsimChartPinned.prin.slice(0,pLen)
+      .concat(new Array(Math.max(0,pLen-rsimChartPinned.prin.length)).fill(null));
+    chart.data.datasets[3].data = rsimChartPinned.int.slice(0,pLen)
+      .concat(new Array(Math.max(0,pLen-rsimChartPinned.int.length)).fill(null));
+    chart.data.datasets[2].hidden = false;
+    chart.data.datasets[3].hidden = false;
+  }
+  chart._rsimBounds        = d.segBoundaries;
+  chart._rsimSegCount      = d.segCount;
+  var cx = -1;
+  for (var ci6 = 0; ci6 < d.cumPrin.length; ci6++) {
+    if (d.cumPrin[ci6] >= d.cumInt[ci6]) { cx = ci6; break; }
+  }
+  chart._rsimCrossoverIdx = cx;
+  chart.update("none");
+  var sp = rsimChartPinned ? "" : "none";
+  var pe = document.getElementById("rsim-ccl-pinned");
+  var pi = document.getElementById("rsim-ccl-pinned-int");
+  if (pe) pe.style.display = sp;
+  if (pi) pi.style.display = sp;
+}
+
+function rsimChartPin() {
+  if (!rsimPayoffChart) return;
+  var ds  = rsimPayoffChart.data.datasets;
+  var s0r = parseFloat(document.getElementById("rsim-s0-rate-slider").value) || 7;
+  var s0b = parseFloat(document.getElementById("rsim-s0-balance").value) || 400000;
+  var nSg = document.querySelectorAll(".rsim-seg-card[data-seg-idx]").length;
+  rsimChartPinned = {
+    prin: ds[0].data.slice(), int: ds[1].data.slice(),
+    label: "$"+Math.round(s0b/1000)+"K @ "+s0r.toFixed(2)+"% — "+nSg+" seg"
+  };
+  document.getElementById("rsim-pin-btn").style.display   = "none";
+  document.getElementById("rsim-unpin-btn").style.display = "";
+  document.getElementById("rsim-pin-row").style.display   = "";
+  document.getElementById("rsim-pin-label").textContent   = "Pinned: " + rsimChartPinned.label;
+  document.getElementById("rsim-ccl-pinned").style.display     = "";
+  document.getElementById("rsim-ccl-pinned-int").style.display = "";
+  var pLen2 = rsimPayoffChart.data.labels.length;
+  ds[2].data = rsimChartPinned.prin.slice(0,pLen2)
+    .concat(new Array(Math.max(0,pLen2-rsimChartPinned.prin.length)).fill(null));
+  ds[3].data = rsimChartPinned.int.slice(0,pLen2)
+    .concat(new Array(Math.max(0,pLen2-rsimChartPinned.int.length)).fill(null));
+  ds[2].hidden = false; ds[3].hidden = false;
+  rsimPayoffChart.update("none");
+}
+
+function rsimChartUnpin() {
+  rsimChartPinned = null;
+  document.getElementById("rsim-pin-btn").style.display   = "";
+  document.getElementById("rsim-unpin-btn").style.display = "none";
+  document.getElementById("rsim-pin-row").style.display   = "none";
+  document.getElementById("rsim-ccl-pinned").style.display     = "none";
+  document.getElementById("rsim-ccl-pinned-int").style.display = "none";
+  if (rsimPayoffChart) {
+    rsimPayoffChart.data.datasets[2].data = [];
+    rsimPayoffChart.data.datasets[3].data = [];
+    rsimPayoffChart.data.datasets[2].hidden = true;
+    rsimPayoffChart.data.datasets[3].hidden = true;
+    rsimPayoffChart.update("none");
+  }
+}
 
 // ── Refi Calculator ──────────────────────────────────────────────
 function refiRateSync(which) {
@@ -2706,7 +3385,7 @@ function sidebarOpen(el, modalId) {
   if (modalId === 'history') loadHistory();
   if (modalId === 'news')    loadNews();
   if (modalId === 'calc')    calcUpdate();
-  if (modalId === 'refi')    refiUpdate();
+  if (modalId === 'refi')    { refiUpdate(); refiSimUpdate(); }
   window.scrollTo(0, 0);
 }
 
@@ -2740,7 +3419,7 @@ function openModal(id) {
   if (id === "history") loadHistory();
   if (id === "news") loadNews();
   if (id === "calc") calcUpdate();
-  if (id === "refi") refiUpdate();
+  if (id === "refi") { refiUpdate(); refiSimUpdate(); }
 }
 
 function closeModal(id) {
