@@ -952,9 +952,6 @@
     <li class="sidebar-item" id="sidebar-refi" onclick="sidebarOpen(this,'refi')">
       <span data-i18n="nav.refi">Refi Savings</span>
     </li>
-    <li class="sidebar-item" id="sidebar-history" onclick="sidebarOpen(this,'history')">
-      <span data-i18n="nav.history">Rate History</span>
-    </li>
     <li class="sidebar-item" id="sidebar-news" onclick="sidebarOpen(this,'news')">
       <span data-i18n="nav.news">Market News</span>
     </li>
@@ -1005,7 +1002,6 @@
     <button class="mobile-tab active" id="mtab-home" onclick="mobileGoHome()">Dashboard</button>
     <button class="mobile-tab" id="mtab-calc" onclick="mobileTabOpen(this,'calc')">Calculator</button>
     <button class="mobile-tab" id="mtab-refi" onclick="mobileTabOpen(this,'refi')">Refi</button>
-    <button class="mobile-tab" id="mtab-history" onclick="mobileTabOpen(this,'history')">History</button>
     <button class="mobile-tab" id="mtab-news" onclick="mobileTabOpen(this,'news')">News</button>
     <button class="mobile-tab" id="mtab-alert" onclick="mobileTabOpen(this,'alert')">Alert</button>
     <button class="mobile-tab" id="mtab-share" onclick="shareCard()">Share</button>
@@ -1175,6 +1171,13 @@
     </div>
   </div><!-- end .dash-row -->
 
+  <!-- ── Rate History (inline on dashboard) ── -->
+  <!-- WHY: moved from modal/sidebar to dashboard so history is always visible without navigation -->
+  <div class="chart-card" style="margin-bottom:16px">
+    <div class="section-card-title" data-i18n="modal.history.title">Daily Rate History</div>
+    <div id="history-table-wrap"><div class="loading">Loading…</div></div>
+  </div>
+
   <!-- ── Navigation Grid (mobile only, hidden on desktop) ── -->
   <div class="nav-grid">
     <div class="nav-card" onclick="openModal('calc')">
@@ -1188,12 +1191,6 @@
       <div class="nav-icon"></div>
       <div class="nav-title" data-i18n="nav.refi">Refi Savings</div>
       <div class="nav-desc" id="nav-refi-desc">Calculating savings…</div>
-    </div>
-    <div class="nav-card" onclick="openModal('history')">
-      <div class="nav-arrow">↗</div>
-      <div class="nav-icon"></div>
-      <div class="nav-title" data-i18n="nav.history">Rate History</div>
-      <div class="nav-desc" data-i18n="nav.history.desc">Last 20 trading days</div>
     </div>
     <div class="nav-card" onclick="openModal('alert')">
       <div class="nav-arrow">↗</div>
@@ -1515,22 +1512,6 @@
   </div>
 </div>
 
-<!-- ── Modal: Rate History ── -->
-<div class="modal-overlay" id="modal-history" onclick="closeModalOutside(event,'modal-history')">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title" data-i18n="modal.history.title">Daily Rate History</div>
-      <button class="modal-close" onclick="closeModal('history')">✕</button>
-    </div>
-
-    <!-- Section 1: Rate History Table -->
-    <div class="section-card">
-      <div class="section-card-title">Last 20 Trading Days</div>
-      <div id="history-table-wrap"><div class="loading">Loading…</div></div>
-    </div>
-  </div>
-</div>
-
 <!-- ── Modal: Rate Alert ── -->
 <div class="modal-overlay" id="modal-alert" onclick="closeModalOutside(event,'modal-alert')">
   <div class="modal">
@@ -1757,6 +1738,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchRates();
   fetchForecast();
+  loadHistory();   // WHY: history table is now on the dashboard, load it with the page
   loadChart("3M");
 
   // Chart tab buttons
