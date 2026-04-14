@@ -490,6 +490,10 @@
       letter-spacing: .07em; color: var(--text-muted);
     }
     .extra-col-header span:last-child { display: none; }
+    /* WHY: center each header label within its fixed-width grid column */
+    .extra-col-header span { text-align: center; }
+    /* WHY: center the month number within the 62px input */
+    .extra-month { text-align: center; }
     .extra-amount-wrap { display: flex; align-items: center;
       border: 1px solid var(--border); border-radius: var(--radius-sm);
       background: var(--surface); overflow: hidden; }
@@ -1346,18 +1350,18 @@
       <div class="chart-card-header">
         <div class="section-card-title" data-i18n="rsim.chart.title">Cumulative Payoff Chart</div>
         <div style="display:flex;gap:6px;align-items:center">
-          <button class="chart-pin-btn" id="calc-pin-btn" onclick="calcChartPin()" title="Pin this scenario for comparison">&#128204; Pin</button>
-          <button class="chart-unpin-btn" id="calc-unpin-btn" onclick="calcChartUnpin()" style="display:none">&#x2715; Unpin</button>
+          <button class="chart-pin-btn" id="calc-pin-btn" onclick="calcChartPin()" title="Pin this scenario for comparison" data-i18n="rsim.pin">Pin</button>
+          <button class="chart-unpin-btn" id="calc-unpin-btn" onclick="calcChartUnpin()" style="display:none" data-i18n="rsim.unpin">Unpin</button>
         </div>
       </div>
       <div class="chart-pin-row" id="calc-pin-row" style="display:none">
         <span class="chart-pin-label" id="calc-pin-label"></span>
       </div>
       <div class="calc-chart-legend" id="calc-chart-legend">
-        <div class="ccl-item"><div class="ccl-line" style="background:#3b82f6"></div><span>Principal Paid</span></div>
-        <div class="ccl-item"><div class="ccl-line" style="background:#f59e0b"></div><span>Interest Paid</span></div>
-        <div class="ccl-item" id="ccl-base" style="display:none"><div class="ccl-line dashed" style="color:rgba(59,130,246,.55)"></div><span style="color:var(--text-muted)">Principal (no extra)</span></div>
-        <div class="ccl-item" id="ccl-base-int" style="display:none"><div class="ccl-line dashed" style="color:rgba(245,158,11,.55)"></div><span style="color:var(--text-muted)">Interest (no extra)</span></div>
+        <div class="ccl-item"><div class="ccl-line" style="background:#3b82f6"></div><span data-i18n="rsim.ccl.prin">Principal Paid</span></div>
+        <div class="ccl-item"><div class="ccl-line" style="background:#f59e0b"></div><span data-i18n="rsim.ccl.int">Interest Paid</span></div>
+        <div class="ccl-item" id="ccl-base" style="display:none"><div class="ccl-line dashed" style="color:rgba(59,130,246,.55)"></div><span style="color:var(--text-muted)" data-i18n="calc.ccl.nox.prin">Principal (no extra)</span></div>
+        <div class="ccl-item" id="ccl-base-int" style="display:none"><div class="ccl-line dashed" style="color:rgba(245,158,11,.55)"></div><span style="color:var(--text-muted)" data-i18n="calc.ccl.nox.int">Interest (no extra)</span></div>
         <div class="ccl-item" id="ccl-pinned" style="display:none"><div class="ccl-line dotted" style="color:#8b5cf6"></div><span style="color:var(--text-muted)" data-i18n="rsim.ccl.pinned.prin">Pinned: Principal</span></div>
         <div class="ccl-item" id="ccl-pinned-int" style="display:none"><div class="ccl-line dotted" style="color:#10b981"></div><span style="color:var(--text-muted)" data-i18n="rsim.ccl.pinned.int">Pinned: Interest</span></div>
       </div>
@@ -1365,10 +1369,10 @@
         <canvas id="calcPayoffChart"></canvas>
       </div>
       <div class="calc-chart-stats" id="calc-chart-stats">
-        <span class="ccs-item">Crossover: <strong id="ccs-crossover">—</strong></span>
-        <span class="ccs-item">Payoff: <strong id="ccs-payoff">—</strong></span>
-        <span class="ccs-item">Total Interest: <strong id="ccs-interest">—</strong></span>
-        <span class="ccs-item" id="ccs-base-item" style="display:none">Base Crossover: <strong id="ccs-base-crossover">—</strong></span>
+        <span class="ccs-item"><span data-i18n="rsim.stat.crossover">Crossover:</span> <strong id="ccs-crossover">—</strong></span>
+        <span class="ccs-item"><span data-i18n="rsim.stat.payoff">Payoff:</span> <strong id="ccs-payoff">—</strong></span>
+        <span class="ccs-item"><span data-i18n="rsim.stat.interest">Total Interest:</span> <strong id="ccs-interest">—</strong></span>
+        <span class="ccs-item" id="ccs-base-item" style="display:none"><span data-i18n="calc.stat.basecross">Base Crossover:</span> <strong id="ccs-base-crossover">—</strong></span>
       </div>
     </div>
 
@@ -1441,11 +1445,11 @@
         <div class="form-group">
           <div class="form-label" data-i18n="rsim.form.term">Term</div>
           <select class="form-select" id="rsim-s0-term" onchange="refiSimUpdate()">
-            <option value="10">10 years</option>
-            <option value="15">15 years</option>
-            <option value="20">20 years</option>
-            <option value="25">25 years</option>
-            <option value="30" selected>30 years</option>
+            <option value="10" data-i18n="term.10y">10 years</option>
+            <option value="15" data-i18n="term.15y">15 years</option>
+            <option value="20" data-i18n="term.20y">20 years</option>
+            <option value="25" data-i18n="term.25y">25 years</option>
+            <option value="30" selected data-i18n="term.30y">30 years</option>
           </select>
         </div>
         <div class="form-group full">
@@ -1485,7 +1489,7 @@
     <!-- ── Cumulative Payoff Chart ── -->
     <div class="section-card">
       <div class="chart-card-header">
-        <div class="section-card-title">Cumulative Payoff Chart</div>
+        <div class="section-card-title" data-i18n="rsim.chart.title">Cumulative Payoff Chart</div>
         <div style="display:flex;gap:6px;align-items:center">
           <button class="chart-pin-btn" id="rsim-pin-btn" onclick="rsimChartPin()" title="Pin scenario" data-i18n="rsim.pin">Pin</button>
           <button class="chart-unpin-btn" id="rsim-unpin-btn" onclick="rsimChartUnpin()" style="display:none" data-i18n="rsim.unpin">Unpin</button>
@@ -1640,6 +1644,15 @@ const T = {
     'adv.col.amount':'Amount','adv.col.month':'Start Month','adv.col.freq':'Frequency',
     'extra.mo':'Mo','extra.yr':'Yr','extra.once':'Once',
     'extra.monthly':'Monthly','extra.annually':'Annually','extra.onetime':'One-time',
+    'rsim.seg.refi':'Refi','rsim.seg.title':'Refinance Segment',
+    'rsim.seg.balance.lbl':'Starting Balance','rsim.seg.auto':'Auto-calculated',
+    'rsim.seg.refi.year':'Refi at Year','rsim.seg.refi.hint':'Year in timeline to refinance',
+    'rsim.seg.term':'New Term','rsim.seg.closing.lbl':'Closing Costs',
+    'rsim.seg.rate.new':'New Rate','rsim.seg.rate.lbl':'Rate:','rsim.seg.closing':'closing',
+    'calc.ccl.nox.prin':'Principal (no extra)','calc.ccl.nox.int':'Interest (no extra)',
+    'calc.stat.basecross':'Base Crossover:',
+    'chart.yr':'Yr',
+    'term.10y':'10 yrs','term.15y':'15 yrs','term.20y':'20 yrs','term.25y':'25 yrs','term.30y':'30 yrs',
   },
   zh: {
     'app.title':'每日房贷利率追踪','app.sub':'每日利率 · MND + Bankrate · ',
@@ -1672,7 +1685,7 @@ const T = {
     'rsim.add.payment':'+ 添加付款','rsim.pmt.label':'月供：',
     'rsim.add.seg':'+ 添加再融资方案',
     'rsim.chart.title':'累计还款图表',
-    'rsim.pin':'固定','rsim.unpin':'取消固定',
+    'rsim.pin':'保存','rsim.unpin':'取消固定',
     'rsim.ccl.prin':'已还本金','rsim.ccl.int':'已还利息',
     'rsim.ccl.ghost.prin':'方案一（无再融资）','rsim.ccl.ghost.int':'方案一利息（无再融资）',
     'rsim.ccl.pinned.prin':'固定：本金','rsim.ccl.pinned.int':'固定：利息',
@@ -1682,6 +1695,15 @@ const T = {
     'adv.col.amount':'金额','adv.col.month':'付款月份','adv.col.freq':'频率',
     'extra.mo':'每月','extra.yr':'每年','extra.once':'一次',
     'extra.monthly':'每月','extra.annually':'每年','extra.onetime':'一次',
+    'rsim.seg.refi':'再融资','rsim.seg.title':'再融资方案',
+    'rsim.seg.balance.lbl':'起始余额','rsim.seg.auto':'自动计算',
+    'rsim.seg.refi.year':'再融资年份','rsim.seg.refi.hint':'在整体时间线中的再融资年份',
+    'rsim.seg.term':'新年限','rsim.seg.closing.lbl':'结算费用',
+    'rsim.seg.rate.new':'新利率','rsim.seg.rate.lbl':'利率:','rsim.seg.closing':'结算费用',
+    'calc.ccl.nox.prin':'本金（无额外）','calc.ccl.nox.int':'利息（无额外）',
+    'calc.stat.basecross':'基准交叉:',
+    'chart.yr':'年',
+    'term.10y':'10年','term.15y':'15年','term.20y':'20年','term.25y':'25年','term.30y':'30年',
   },
   es: {
     'app.title':'Rastreador Diario de Hipotecas','app.sub':'Tasas diarias · MND + Bankrate · ',
@@ -1724,6 +1746,15 @@ const T = {
     'adv.col.amount':'Importe','adv.col.month':'Mes inicio','adv.col.freq':'Frecuencia',
     'extra.mo':'Mes','extra.yr':'Año','extra.once':'Una vez',
     'extra.monthly':'Mensual','extra.annually':'Anual','extra.onetime':'Una vez',
+    'rsim.seg.refi':'Refi','rsim.seg.title':'Segmento Refi',
+    'rsim.seg.balance.lbl':'Saldo inicial','rsim.seg.auto':'Calculado auto.',
+    'rsim.seg.refi.year':'Año de refi','rsim.seg.refi.hint':'Año en la línea de tiempo para refinanciar',
+    'rsim.seg.term':'Nuevo plazo','rsim.seg.closing.lbl':'Costos de cierre',
+    'rsim.seg.rate.new':'Nueva tasa','rsim.seg.rate.lbl':'Tasa:','rsim.seg.closing':'cierre',
+    'calc.ccl.nox.prin':'Capital (sin extra)','calc.ccl.nox.int':'Interés (sin extra)',
+    'calc.stat.basecross':'Cruce base:',
+    'chart.yr':'Año',
+    'term.10y':'10 años','term.15y':'15 años','term.20y':'20 años','term.25y':'25 años','term.30y':'30 años',
   }
 };
 
@@ -1760,6 +1791,9 @@ function setLang(lang) {
     btn.classList.toggle('active', btn.textContent.trim() === {en:'EN',zh:'中文',es:'ES'}[lang]);
   });
   applyLang();
+  // WHY: rebuild chart x-axis labels so "Yr" prefix uses the new language
+  calcUpdate();
+  refiSimUpdate();
 }
 
 function t(key) {
@@ -2263,7 +2297,7 @@ function calcUpdate() {
     // Accumulate chart data
     cumP += yearPrincipal + yearExtra;
     cumI += yearInterest;
-    chartYearLabels.push("Yr " + yr);
+    chartYearLabels.push(t("chart.yr") + " " + yr);
     chartCumPrin.push(Math.round(cumP));
     chartCumInt.push(Math.round(cumI));
     if (crossoverIdx < 0 && cumP >= cumI) crossoverIdx = yr - 1; // 0-based index
@@ -2506,7 +2540,7 @@ function updateCalcChart(d) {
   // Update stats strip
   var cYear = d.crossoverIdx >= 0 ? d.yearLabels[d.crossoverIdx] : "—";
   document.getElementById("ccs-crossover").textContent = cYear;
-  document.getElementById("ccs-payoff").textContent    = "Yr " + d.payoffYear;
+  document.getElementById("ccs-payoff").textContent    = t("chart.yr") + " " + d.payoffYear;
   document.getElementById("ccs-interest").textContent  = fmtDollar(d.totalInterest);
   var baseCYear = d.crossoverIdxBase >= 0 ? d.yearLabels[d.crossoverIdxBase] : "—";
   if (d.hasExtras) {
@@ -2726,27 +2760,27 @@ function addRsimSegment() {
   var h = "";
   h += "<div class=\"rsim-seg-header\">";
   h +=   "<div class=\"rsim-seg-title\">";
-  h +=     "<div class=\"rsim-seg-badge rsim-color-"+ci+"\">Refi "+idx+"</div>";
-  h +=     "<span class=\"section-card-title\">Refinance Segment "+idx+"</span>";
+  h +=     "<div class=\"rsim-seg-badge rsim-color-"+ci+"\"><span data-i18n=\"rsim.seg.refi\">Refi</span> "+idx+"</div>";
+  h +=     "<span class=\"section-card-title\"><span data-i18n=\"rsim.seg.title\">Refinance Segment</span> "+idx+"</span>";
   h +=   "</div>";
   h +=   "<button class=\"rsim-remove-btn\" onclick=\"removeRsimSegment("+idx+")\" title=\"Remove segment\">&#x2715;</button>";
   h += "</div>";
   h += "<div class=\"form-grid\">";
-  h +=   "<div class=\"form-group\"><div class=\"form-label\">Starting Balance</div>";
-  h +=     "<div class=\"rsim-balance-badge\" id=\"rsim-s"+idx+"-balance-display\">Auto-calculated</div></div>";
-  h +=   "<div class=\"form-group\"><div class=\"form-label\">Refi at Overall Year</div>";
+  h +=   "<div class=\"form-group\"><div class=\"form-label\" data-i18n=\"rsim.seg.balance.lbl\">Starting Balance</div>";
+  h +=     "<div class=\"rsim-balance-badge\" id=\"rsim-s"+idx+"-balance-display\">"+t("rsim.seg.auto")+"</div></div>";
+  h +=   "<div class=\"form-group\"><div class=\"form-label\" data-i18n=\"rsim.seg.refi.year\">Refi at Overall Year</div>";
   h +=     "<div class=\"input-row\"><input class=\"form-input\" type=\"number\" id=\"rsim-s"+idx+"-refi-year\"";
   h +=       " value=\""+defYear+"\" min=\"1\" oninput=\"refiSimUpdate()\"></div>";
-  h +=     "<div class=\"rsim-refi-year-hint\">Year within full timeline to refinance</div></div>";
-  h +=   "<div class=\"form-group\"><div class=\"form-label\">New Term</div>";
+  h +=     "<div class=\"rsim-refi-year-hint\" data-i18n=\"rsim.seg.refi.hint\">Year within full timeline to refinance</div></div>";
+  h +=   "<div class=\"form-group\"><div class=\"form-label\" data-i18n=\"rsim.seg.term\">New Term</div>";
   h +=     "<select class=\"form-select\" id=\"rsim-s"+idx+"-term\" onchange=\"refiSimUpdate()\">";
-  h +=       "<option value=\"10\">10 years</option><option value=\"15\">15 years</option>";
-  h +=       "<option value=\"20\">20 years</option><option value=\"25\">25 years</option>";
-  h +=       "<option value=\"30\" selected>30 years</option></select></div>";
-  h +=   "<div class=\"form-group\"><div class=\"form-label\">Closing Costs</div>";
+  h +=       "<option value=\"10\" data-i18n=\"term.10y\">10 years</option><option value=\"15\" data-i18n=\"term.15y\">15 years</option>";
+  h +=       "<option value=\"20\" data-i18n=\"term.20y\">20 years</option><option value=\"25\" data-i18n=\"term.25y\">25 years</option>";
+  h +=       "<option value=\"30\" selected data-i18n=\"term.30y\">30 years</option></select></div>";
+  h +=   "<div class=\"form-group\"><div class=\"form-label\" data-i18n=\"rsim.seg.closing.lbl\">Closing Costs</div>";
   h +=     "<div class=\"input-row\"><span class=\"input-prefix\">$</span>";
   h +=       "<input class=\"form-input\" type=\"number\" id=\"rsim-s"+idx+"-closing\" value=\"5000\" oninput=\"refiSimUpdate()\"></div></div>";
-  h +=   "<div class=\"form-group full\"><div class=\"form-label\">New Rate</div>";
+  h +=   "<div class=\"form-group full\"><div class=\"form-label\" data-i18n=\"rsim.seg.rate.new\">New Rate</div>";
   h +=     "<div class=\"slider-row\">";
   h +=       "<input type=\"range\" id=\"rsim-s"+idx+"-rate-slider\" min=\"2\" max=\"10\" step=\"0.05\" value=\"6.5\"";
   h +=         " oninput=\"rsimRateSync(this,'s"+idx+"')\">";
@@ -2758,19 +2792,20 @@ function addRsimSegment() {
   // Extra payments accordion
   h += "<div class=\"adv-toggle\" onclick=\"toggleRsimAdv('s"+idx+"')\">";
   h +=   "<span class=\"adv-arrow\" id=\"rsim-adv-arrow-s"+idx+"\">&#9654;</span>";
-  h +=   "<span>Advanced: Extra Payments</span></div>";
+  h +=   "<span data-i18n=\"rsim.adv.toggle\">Advanced: Extra Payments</span></div>";
   h += "<div class=\"adv-panel\" id=\"rsim-adv-panel-s"+idx+"\">";
   h +=   "<div id=\"rsim-extra-list-s"+idx+"\"></div>";
-  h +=   "<button class=\"adv-add-btn\" onclick=\"addRsimExtraPayment('s"+idx+"')\">&#43; Add Payment</button></div>";
+  h +=   "<button class=\"adv-add-btn\" data-i18n=\"rsim.add.payment\" onclick=\"addRsimExtraPayment('s"+idx+"')\">&#43; Add Payment</button></div>";
   // Per-segment summary
   h += "<div class=\"rsim-seg-summary\">";
-  h +=   "<span class=\"rsim-pmt-label\">Monthly Payment:</span>";
+  h +=   "<span class=\"rsim-pmt-label\" data-i18n=\"rsim.pmt.label\">Monthly Payment:</span>";
   h +=   "<strong class=\"rsim-pmt-val\" id=\"rsim-s"+idx+"-pmt\">&mdash;</strong>";
-  h +=   "<span style=\"margin-left:10px;color:var(--text-muted);font-size:.7rem\">Rate:</span>";
+  h +=   "<span style=\"margin-left:10px;color:var(--text-muted);font-size:.7rem\" data-i18n=\"rsim.seg.rate.lbl\">Rate:</span>";
   h +=   "<strong style=\"font-size:.78rem;color:var(--text)\" id=\"rsim-s"+idx+"-rate-badge\">&mdash;</strong>";
   h += "</div>";
   div.innerHTML = h;
   container.appendChild(div);
+  applyLang();  // WHY: translate newly created segment elements
   refiSimUpdate();
 }
 
@@ -2831,7 +2866,7 @@ function refiSimUpdate() {
       var bd = document.getElementById("rsim-s"+seg.idx+"-balance-display");
       var ep = document.getElementById("rsim-s"+seg.idx+"-pmt");
       var rb = document.getElementById("rsim-s"+seg.idx+"-rate-badge");
-      if (bd) bd.textContent = fmtDollar(Math.max(0,balance)) + (seg.closing>0?" + $"+seg.closing.toLocaleString()+" closing":"");
+      if (bd) bd.textContent = fmtDollar(Math.max(0,balance)) + (seg.closing>0?" + $"+seg.closing.toLocaleString()+" "+t("rsim.seg.closing"):"");
       if (ep) ep.textContent = fmtDollar(regPmt);
       if (rb) rb.textContent = seg.rate.toFixed(2)+"%";
     }
@@ -2858,7 +2893,7 @@ function refiSimUpdate() {
       if ((mo+1)%12===0 || balance < 0.01) {
         cumP += yPrin; cumI += yInt;
         var absYr = globalYear + yr1;
-        chartLabels.push("Yr "+absYr);
+        chartLabels.push(t("chart.yr")+" "+absYr);
         chartCumPrin.push(Math.round(cumP));
         chartCumInt.push(Math.round(cumI));
         amortRows.push({ year: absYr, segIdx: si,
