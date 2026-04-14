@@ -472,16 +472,24 @@
       font-size: .68rem; font-weight: 700; text-transform: uppercase;
       letter-spacing: .08em; color: var(--text-muted); margin-bottom: 8px;
     }
-    /* WHY: 4-column grid: amount | start-year | freq radios | remove btn */
+    /* WHY: 4-column grid: amount | start-month | freq radios | remove btn */
     .extra-row {
       display: grid;
-      grid-template-columns: 1fr 90px auto 28px;
+      grid-template-columns: 1fr 62px auto 28px;
       gap: 6px; align-items: center; margin-bottom: 7px;
     }
     @media (max-width: 560px) {
-      .extra-row { grid-template-columns: 1fr 80px 28px; }
+      .extra-row { grid-template-columns: 1fr 62px 28px; }
       .extra-row .extra-freq { grid-column: 1 / 3; }
     }
+    /* WHY: column headers label the grid columns above extra-payment rows */
+    .extra-col-header {
+      display: grid; grid-template-columns: 1fr 62px auto 28px;
+      gap: 6px; margin-bottom: 4px;
+      font-size: .63rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--text-muted);
+    }
+    .extra-col-header span:last-child { display: none; }
     .extra-amount-wrap { display: flex; align-items: center;
       border: 1px solid var(--border); border-radius: var(--radius-sm);
       background: var(--surface); overflow: hidden; }
@@ -1282,7 +1290,13 @@
         <span>Advanced: Extra Payments</span>
       </div>
       <div class="adv-panel" id="adv-panel">
-        <div class="adv-panel-title">Additional Principal Payments</div>
+        <div class="adv-panel-title" data-i18n="adv.title">Additional Principal Payments</div>
+        <div class="extra-col-header">
+          <span data-i18n="adv.col.amount">Amount</span>
+          <span data-i18n="adv.col.month">Start Month</span>
+          <span data-i18n="adv.col.freq">Frequency</span>
+          <span></span>
+        </div>
         <div id="extra-payments-list"></div>
         <button class="adv-add-btn" onclick="addExtraPayment()">&#43; Add Payment</button>
       </div>
@@ -1331,7 +1345,7 @@
          crossover marker + pin feature for scenario comparison -->
     <div class="section-card">
       <div class="chart-card-header">
-        <div class="section-card-title">Cumulative Payoff Chart</div>
+        <div class="section-card-title" data-i18n="rsim.chart.title">Cumulative Payoff Chart</div>
         <div style="display:flex;gap:6px;align-items:center">
           <button class="chart-pin-btn" id="calc-pin-btn" onclick="calcChartPin()" title="Pin this scenario for comparison">&#128204; Pin</button>
           <button class="chart-unpin-btn" id="calc-unpin-btn" onclick="calcChartUnpin()" style="display:none">&#x2715; Unpin</button>
@@ -1345,8 +1359,8 @@
         <div class="ccl-item"><div class="ccl-line" style="background:#f59e0b"></div><span>Interest Paid</span></div>
         <div class="ccl-item" id="ccl-base" style="display:none"><div class="ccl-line dashed" style="color:rgba(59,130,246,.55)"></div><span style="color:var(--text-muted)">Principal (no extra)</span></div>
         <div class="ccl-item" id="ccl-base-int" style="display:none"><div class="ccl-line dashed" style="color:rgba(245,158,11,.55)"></div><span style="color:var(--text-muted)">Interest (no extra)</span></div>
-        <div class="ccl-item" id="ccl-pinned" style="display:none"><div class="ccl-line dotted" style="color:#8b5cf6"></div><span style="color:var(--text-muted)">Pinned: Principal</span></div>
-        <div class="ccl-item" id="ccl-pinned-int" style="display:none"><div class="ccl-line dotted" style="color:#10b981"></div><span style="color:var(--text-muted)">Pinned: Interest</span></div>
+        <div class="ccl-item" id="ccl-pinned" style="display:none"><div class="ccl-line dotted" style="color:#8b5cf6"></div><span style="color:var(--text-muted)" data-i18n="rsim.ccl.pinned.prin">Pinned: Principal</span></div>
+        <div class="ccl-item" id="ccl-pinned-int" style="display:none"><div class="ccl-line dotted" style="color:#10b981"></div><span style="color:var(--text-muted)" data-i18n="rsim.ccl.pinned.int">Pinned: Interest</span></div>
       </div>
       <div class="calc-payoff-wrap">
         <canvas id="calcPayoffChart"></canvas>
@@ -1408,25 +1422,25 @@
     <div class="rsim-plan-tabs">
       <button class="rsim-plan-tab active" id="rsim-tab-A" onclick="rsimSwitchPlan('A')">Plan A</button>
       <button class="rsim-plan-tab"         id="rsim-tab-B" onclick="rsimSwitchPlan('B')">Plan B</button>
-      <span class="rsim-plan-hint">Your work is auto-saved when you switch tabs</span>
+      <span class="rsim-plan-hint" data-i18n="rsim.plan.hint">Your work is auto-saved when you switch tabs</span>
     </div>
 
     <div class="section-card rsim-seg-card" id="rsim-seg-0" data-seg-idx="0">
       <div class="rsim-seg-header">
         <div class="rsim-seg-title">
-          <div class="rsim-seg-badge rsim-color-0">Segment 1</div>
-          <span class="section-card-title">Initial Loan</span>
+          <div class="rsim-seg-badge rsim-color-0" data-i18n="rsim.seg0.badge">Segment 1</div>
+          <span class="section-card-title" data-i18n="rsim.seg0.title">Initial Loan</span>
         </div>
       </div>
       <div class="form-grid">
         <div class="form-group">
-          <div class="form-label">Loan Balance</div>
+          <div class="form-label" data-i18n="rsim.form.balance">Loan Balance</div>
           <div class="input-row"><span class="input-prefix">$</span>
             <input class="form-input" type="number" id="rsim-s0-balance" value="400000" oninput="refiSimUpdate()">
           </div>
         </div>
         <div class="form-group">
-          <div class="form-label">Term</div>
+          <div class="form-label" data-i18n="rsim.form.term">Term</div>
           <select class="form-select" id="rsim-s0-term" onchange="refiSimUpdate()">
             <option value="10">10 years</option>
             <option value="15">15 years</option>
@@ -1436,7 +1450,7 @@
           </select>
         </div>
         <div class="form-group full">
-          <div class="form-label">Interest Rate</div>
+          <div class="form-label" data-i18n="rsim.form.rate">Interest Rate</div>
           <div class="slider-row">
             <input type="range" id="rsim-s0-rate-slider" min="2" max="10" step="0.05" value="7.0"
               oninput="rsimRateSync(this,'s0')">
@@ -1450,14 +1464,14 @@
       </div>
       <div class="adv-toggle" onclick="toggleRsimAdv('s0')">
         <span class="adv-arrow" id="rsim-adv-arrow-s0">&#9654;</span>
-        <span>Advanced: Extra Payments</span>
+        <span data-i18n="rsim.adv.toggle">Advanced: Extra Payments</span>
       </div>
       <div class="adv-panel" id="rsim-adv-panel-s0">
         <div id="rsim-extra-list-s0"></div>
-        <button class="adv-add-btn" onclick="addRsimExtraPayment('s0')">&#43; Add Payment</button>
+        <button class="adv-add-btn" onclick="addRsimExtraPayment('s0')" data-i18n="rsim.add.payment">+ Add Payment</button>
       </div>
       <div class="rsim-seg-summary">
-        <span class="rsim-pmt-label">Monthly Payment:</span>
+        <span class="rsim-pmt-label" data-i18n="rsim.pmt.label">Monthly Payment:</span>
         <strong class="rsim-pmt-val" id="rsim-s0-pmt">&mdash;</strong>
       </div>
     </div>
@@ -1466,7 +1480,7 @@
     <div id="rsim-segments-container"></div>
 
     <div class="rsim-add-wrap">
-      <button class="rsim-add-btn" onclick="addRsimSegment()">&#43; Add Refinance Segment</button>
+      <button class="rsim-add-btn" onclick="addRsimSegment()" data-i18n="rsim.add.seg">+ Add Refinance Segment</button>
     </div>
 
     <!-- ── Cumulative Payoff Chart ── -->
@@ -1474,35 +1488,35 @@
       <div class="chart-card-header">
         <div class="section-card-title">Cumulative Payoff Chart</div>
         <div style="display:flex;gap:6px;align-items:center">
-          <button class="chart-pin-btn" id="rsim-pin-btn" onclick="rsimChartPin()" title="Pin scenario">&#128204; Pin</button>
-          <button class="chart-unpin-btn" id="rsim-unpin-btn" onclick="rsimChartUnpin()" style="display:none">&#x2715; Unpin</button>
+          <button class="chart-pin-btn" id="rsim-pin-btn" onclick="rsimChartPin()" title="Pin scenario" data-i18n="rsim.pin">Pin</button>
+          <button class="chart-unpin-btn" id="rsim-unpin-btn" onclick="rsimChartUnpin()" style="display:none" data-i18n="rsim.unpin">Unpin</button>
         </div>
       </div>
       <div class="chart-pin-row" id="rsim-pin-row" style="display:none">
         <span class="chart-pin-label" id="rsim-pin-label"></span>
       </div>
       <div class="calc-chart-legend" id="rsim-chart-legend">
-        <div class="ccl-item"><div class="ccl-line" style="background:#3b82f6"></div><span>Principal Paid</span></div>
-        <div class="ccl-item"><div class="ccl-line" style="background:#f59e0b"></div><span>Interest Paid</span></div>
+        <div class="ccl-item"><div class="ccl-line" style="background:#3b82f6"></div><span data-i18n="rsim.ccl.prin">Principal Paid</span></div>
+        <div class="ccl-item"><div class="ccl-line" style="background:#f59e0b"></div><span data-i18n="rsim.ccl.int">Interest Paid</span></div>
         <div class="ccl-item" id="rsim-ccl-pinned" style="display:none"><div class="ccl-line dotted" style="color:#8b5cf6"></div><span style="color:var(--text-muted)">Pinned: Principal</span></div>
         <div class="ccl-item" id="rsim-ccl-pinned-int" style="display:none"><div class="ccl-line dotted" style="color:#10b981"></div><span style="color:var(--text-muted)">Pinned: Interest</span></div>
       </div>
       <div class="calc-payoff-wrap"><canvas id="rsimPayoffChart"></canvas></div>
       <div class="calc-chart-stats" id="rsim-chart-stats">
-        <span class="ccs-item">Crossover: <strong id="rsim-ccs-crossover">&mdash;</strong></span>
-        <span class="ccs-item">Payoff: <strong id="rsim-ccs-payoff">&mdash;</strong></span>
-        <span class="ccs-item">Total Interest: <strong id="rsim-ccs-interest">&mdash;</strong></span>
+        <span class="ccs-item"><span data-i18n="rsim.stat.crossover">Crossover:</span> <strong id="rsim-ccs-crossover">&mdash;</strong></span>
+        <span class="ccs-item"><span data-i18n="rsim.stat.payoff">Payoff:</span> <strong id="rsim-ccs-payoff">&mdash;</strong></span>
+        <span class="ccs-item"><span data-i18n="rsim.stat.interest">Total Interest:</span> <strong id="rsim-ccs-interest">&mdash;</strong></span>
       </div>
     </div>
 
     <!-- ── Amortization ── All Years ── -->
     <div class="section-card">
-      <div class="section-card-title">Amortization &mdash; All Years</div>
+      <div class="section-card-title" data-i18n="amort.title">Amortization — All Years</div>
       <div style="max-height:360px;overflow-y:auto;border-radius:var(--radius-sm);">
         <table class="amort-table" id="rsim-amort-table">
           <thead><tr>
-            <th>Year</th><th>Seg</th>
-            <th>Principal Paid</th><th>Interest Paid</th><th>Balance</th>
+            <th data-i18n="amort.year">Year</th><th data-i18n="rsim.amort.seg">Seg</th>
+            <th data-i18n="amort.prin">Principal Paid</th><th data-i18n="amort.int">Interest Paid</th><th data-i18n="amort.bal">Balance</th>
           </tr></thead>
           <tbody id="rsim-amort-body"></tbody>
         </table>
@@ -1608,6 +1622,22 @@ const T = {
     'refi.auto':"New rate auto-filled from today's live data · Current rate set to last year's high",
     'refi.cur':'Current Loan','refi.after':'After Refinance',
     'refi.monthly':'Monthly Savings','refi.annual':'Annual Savings','refi.breakeven':'Break-even Point',
+    'rsim.plan.hint':'Your work is auto-saved when you switch tabs',
+    'rsim.seg0.badge':'Segment 1','rsim.seg0.title':'Initial Loan',
+    'rsim.form.balance':'Loan Balance','rsim.form.term':'Term','rsim.form.rate':'Interest Rate',
+    'rsim.adv.toggle':'Advanced: Extra Payments',
+    'rsim.add.payment':'+ Add Payment','rsim.pmt.label':'Monthly Payment:',
+    'rsim.add.seg':'+ Add Refinance Segment',
+    'rsim.chart.title':'Cumulative Payoff Chart',
+    'rsim.pin':'Pin','rsim.unpin':'Unpin',
+    'rsim.ccl.prin':'Principal Paid','rsim.ccl.int':'Interest Paid',
+    'rsim.ccl.pinned.prin':'Pinned: Principal','rsim.ccl.pinned.int':'Pinned: Interest',
+    'rsim.stat.crossover':'Crossover:','rsim.stat.payoff':'Payoff:','rsim.stat.interest':'Total Interest:',
+    'rsim.amort.seg':'Seg',
+    'adv.title':'Additional Principal Payments',
+    'adv.col.amount':'Amount','adv.col.month':'Start Month','adv.col.freq':'Frequency',
+    'extra.mo':'Mo','extra.yr':'Yr','extra.once':'Once',
+    'extra.monthly':'Monthly','extra.annually':'Annually','extra.onetime':'One-time',
   },
   zh: {
     'app.title':'每日房贷利率追踪','app.sub':'每日利率 · MND + Bankrate · ',
@@ -1633,6 +1663,22 @@ const T = {
     'refi.auto':'新利率已自动填入今日实时数据 · 当前利率设为去年高点',
     'refi.cur':'当前贷款','refi.after':'再融资后',
     'refi.monthly':'月节省额','refi.annual':'年节省额','refi.breakeven':'回本周期',
+    'rsim.plan.hint':'切换时自动保存您的方案',
+    'rsim.seg0.badge':'方案一','rsim.seg0.title':'初始贷款',
+    'rsim.form.balance':'贷款余额','rsim.form.term':'贷款年限','rsim.form.rate':'利率',
+    'rsim.adv.toggle':'高级：额外还款',
+    'rsim.add.payment':'+ 添加付款','rsim.pmt.label':'月供：',
+    'rsim.add.seg':'+ 添加再融资方案',
+    'rsim.chart.title':'累计还款图表',
+    'rsim.pin':'固定','rsim.unpin':'取消固定',
+    'rsim.ccl.prin':'已还本金','rsim.ccl.int':'已还利息',
+    'rsim.ccl.pinned.prin':'固定：本金','rsim.ccl.pinned.int':'固定：利息',
+    'rsim.stat.crossover':'本金超过利息:','rsim.stat.payoff':'还款时间:','rsim.stat.interest':'总利息:',
+    'rsim.amort.seg':'方案',
+    'adv.title':'额外还本',
+    'adv.col.amount':'金额','adv.col.month':'起始月份','adv.col.freq':'频率',
+    'extra.mo':'每月','extra.yr':'每年','extra.once':'一次',
+    'extra.monthly':'每月','extra.annually':'每年','extra.onetime':'一次',
   },
   es: {
     'app.title':'Rastreador Diario de Hipotecas','app.sub':'Tasas diarias · MND + Bankrate · ',
@@ -1658,6 +1704,22 @@ const T = {
     'refi.auto':'Nueva tasa auto-rellenada con datos de hoy · Tasa actual = máximo del año pasado',
     'refi.cur':'Préstamo actual','refi.after':'Tras refinanciar',
     'refi.monthly':'Ahorro mensual','refi.annual':'Ahorro anual','refi.breakeven':'Punto de equilibrio',
+    'rsim.plan.hint':'Su trabajo se guarda al cambiar de pestaña',
+    'rsim.seg0.badge':'Segmento 1','rsim.seg0.title':'Préstamo inicial',
+    'rsim.form.balance':'Saldo del préstamo','rsim.form.term':'Plazo','rsim.form.rate':'Tasa de interés',
+    'rsim.adv.toggle':'Avanzado: Pagos extra',
+    'rsim.add.payment':'+ Agregar pago','rsim.pmt.label':'Pago mensual:',
+    'rsim.add.seg':'+ Agregar refinanciamiento',
+    'rsim.chart.title':'Gráfico de amortización acumulada',
+    'rsim.pin':'Fijar','rsim.unpin':'Liberar',
+    'rsim.ccl.prin':'Capital pagado','rsim.ccl.int':'Interés pagado',
+    'rsim.ccl.pinned.prin':'Fijado: Capital','rsim.ccl.pinned.int':'Fijado: Interés',
+    'rsim.stat.crossover':'Cruce:','rsim.stat.payoff':'Liquidación:','rsim.stat.interest':'Interés total:',
+    'rsim.amort.seg':'Seg',
+    'adv.title':'Pagos adicionales de capital',
+    'adv.col.amount':'Importe','adv.col.month':'Mes inicio','adv.col.freq':'Frecuencia',
+    'extra.mo':'Mes','extra.yr':'Año','extra.once':'Una vez',
+    'extra.monthly':'Mensual','extra.annually':'Anual','extra.onetime':'Una vez',
   }
 };
 
@@ -2102,15 +2164,16 @@ function calcRateFromInput() {
   calcUpdate();
 }
 
-// WHY: reads each .extra-row from DOM into [{amount, startYear, freq}]
+// WHY: reads each .extra-row from DOM into [{amount, startMonth, freq}]
 function getExtraPayments() {
   var result = [];
   document.querySelectorAll(".extra-row[data-ctx=\"calc\"]").forEach(function(row) {
     var amt = parseFloat(row.querySelector(".extra-amount").value) || 0;
-    var yr  = parseInt(row.querySelector(".extra-year").value) || 1;
+    var mo0 = parseInt(row.querySelector(".extra-month").value) || 1;
     var el  = row.querySelector(".extra-freq-radio:checked");
     var freq = el ? el.value : "annually";
-    if (amt > 0) result.push({ amount: amt, startYear: yr, freq: freq });
+    // WHY: startMonth is 1-indexed; simulation uses absolute 0-indexed month
+    if (amt > 0) result.push({ amount: amt, startMonth: mo0, freq: freq });
   });
   return result;
 }
@@ -2173,12 +2236,14 @@ function calcUpdate() {
       var regPrin = Math.min(monthly - intPmt, balance);
 
       // Extra payments for this month
+      // WHY: startMonth is 1-indexed; absMo is 0-indexed from loan start
       var extra = 0;
+      var absMo = (yr - 1) * 12 + mo;
       extras.forEach(function(ep) {
-        if (yr < ep.startYear) return;
-        if (ep.freq === "monthly")                        extra += ep.amount;
-        else if (ep.freq === "annually" && mo === 0)     extra += ep.amount;
-        else if (ep.freq === "once" && yr === ep.startYear && mo === 0) extra += ep.amount;
+        var sm = (ep.startMonth || 1) - 1;
+        if      (ep.freq === "monthly"  && absMo >= sm) extra += ep.amount;
+        else if (ep.freq === "annually" && absMo >= sm && (absMo - sm) % 12 === 0) extra += ep.amount;
+        else if (ep.freq === "once"     && absMo === sm) extra += ep.amount;
       });
       // Never pay more than remaining balance after regular principal
       extra = Math.min(extra, Math.max(0, balance - regPrin));
@@ -2502,15 +2567,10 @@ var extraRowCounter = 0;
 
 // WHY: dynamically adds a new extra-payment row with amount, start-year,
 //      and frequency (monthly / annually / one-time) inputs
+// WHY: month input (1-360) replaces year dropdown for precise payment timing
 function addExtraPayment() {
-  var id   = ++extraRowCounter;
-  var term = parseInt(document.getElementById("calc-term").value) || 30;
-  var opts = "";
-  for (var y = 1; y <= term; y++) {
-    var suf = y === 1 ? "st" : y === 2 ? "nd" : y === 3 ? "rd" : "th";
-    opts += "<option value=\"" + y + "\">Year " + y + "</option>";
-  }
-  var n   = "epfreq" + id;
+  var id = ++extraRowCounter;
+  var n  = "epfreq" + id;
   var div = document.createElement("div");
   div.className   = "extra-row";
   div.dataset.rowId = id;
@@ -2521,21 +2581,22 @@ function addExtraPayment() {
       + "<input type=\"number\" class=\"extra-amount\" placeholder=\"Amount\""
       + " min=\"0\" step=\"100\" oninput=\"calcUpdate()\">"
       + "</div>",
-    "<select class=\"form-select extra-year\" onchange=\"calcUpdate()\">"
-      + opts + "</select>",
+    "<input type=\"number\" class=\"extra-month\" placeholder=\"Mo\""
+      + " min=\"1\" max=\"360\" value=\"1\" oninput=\"calcUpdate()\">",
     "<div class=\"extra-freq\">"
       + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\"" + n + "\""
-      + " value=\"monthly\" onchange=\"calcUpdate()\"> Monthly</label>"
+      + " value=\"monthly\" onchange=\"calcUpdate()\"><span data-i18n=\"extra.monthly\">Monthly</span></label>"
       + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\"" + n + "\""
-      + " value=\"annually\" checked onchange=\"calcUpdate()\"> Annually</label>"
+      + " value=\"annually\" checked onchange=\"calcUpdate()\"><span data-i18n=\"extra.annually\">Annually</span></label>"
       + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\"" + n + "\""
-      + " value=\"once\" onchange=\"calcUpdate()\"> One-time</label>"
+      + " value=\"once\" onchange=\"calcUpdate()\"><span data-i18n=\"extra.onetime\">One-time</span></label>"
       + "</div>",
     "<button class=\"extra-remove\" onclick=\"removeExtraPayment(this)\""
       + " title=\"Remove\">&#x2715;</button>"
   ].join("");
   document.getElementById("extra-payments-list").appendChild(div);
   div.querySelector(".extra-amount").focus();
+  applyLang();  // WHY: update data-i18n spans in the new row
 }
 
 // WHY: removes a single extra-payment row and recalculates
@@ -2624,13 +2685,14 @@ function addRsimExtraPayment(ctx) {
     + " min=\"1\" max=\"360\" value=\"1\" style=\"width:58px\" oninput=\"refiSimUpdate()\">"
     + "<div class=\"extra-freq\">"
     + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\""+n+"\""
-    + " value=\"monthly\" onchange=\"refiSimUpdate()\"> Mo</label>"
+    + " value=\"monthly\" onchange=\"refiSimUpdate()\"><span data-i18n=\"extra.mo\">Mo</span></label>"
     + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\""+n+"\""
-    + " value=\"annually\" checked onchange=\"refiSimUpdate()\"> Yr</label>"
+    + " value=\"annually\" checked onchange=\"refiSimUpdate()\"><span data-i18n=\"extra.yr\">Yr</span></label>"
     + "<label><input type=\"radio\" class=\"extra-freq-radio\" name=\""+n+"\""
-    + " value=\"once\" onchange=\"refiSimUpdate()\"> Once</label></div>"
+    + " value=\"once\" onchange=\"refiSimUpdate()\"><span data-i18n=\"extra.once\">Once</span></label></div>"
     + "<button class=\"extra-remove\" onclick=\"this.closest(\'.extra-row\').remove();refiSimUpdate()\">&#x2715;</button>";
   list.appendChild(div);
+  applyLang();  // WHY: update data-i18n spans in the new row
 }
 
 // WHY: data-rsim-ctx attr prevents cross-contamination with calc extra rows
@@ -2967,7 +3029,13 @@ function rsimLoadDefaultExample() {
     { amount: 1000, startMonth: 8, freq: "once" }
   ].forEach(function(ep) { addRsimExtraAndSet("s0", ep); });
   // Refi after year 1: 20yr @ 5.875%, closing costs from loan docs not specified
-  addRsimSegmentFromData({ refiYear: 1, term: 20, rate: 5.875, closing: 0, extras: [] });
+  // WHY: Segment 2 (refi at Yr 1) also gets 4 one-time extra payments
+  addRsimSegmentFromData({ refiYear: 1, term: 20, rate: 5.875, closing: 0, extras: [
+    { amount: 1000,  startMonth: 1,  freq: "once" },
+    { amount: 3000,  startMonth: 3,  freq: "once" },
+    { amount: 2000,  startMonth: 9,  freq: "once" },
+    { amount: 20000, startMonth: 16, freq: "once" }
+  ] });
 }
 
 // ── Refi Sim Chart ─────────────────────────────────────────────
@@ -3049,10 +3117,12 @@ function initRsimChart() {
     data: {
       labels: [],
       datasets: [
+        // WHY: tension:0 = straight lines; prevents bezier overshoot at
+        //      segment transition boundaries (would look like dotted extension)
         { label: "Principal Paid", data: [], borderColor: "#3b82f6",
-          borderWidth: 2.5, pointRadius: 0, fill: false, tension: 0.3 },
+          borderWidth: 2.5, pointRadius: 0, fill: false, tension: 0 },
         { label: "Interest Paid",  data: [], borderColor: "#f59e0b",
-          borderWidth: 2.5, pointRadius: 0, fill: false, tension: 0.3 },
+          borderWidth: 2.5, pointRadius: 0, fill: false, tension: 0 },
         { label: "Pinned: Principal", data: [],
           borderColor: "rgba(139,92,246,.85)", borderWidth: 2,
           borderDash: [4,4], pointRadius: 0, fill: false, tension: 0.3, hidden: true },
