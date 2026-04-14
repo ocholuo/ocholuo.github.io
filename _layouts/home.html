@@ -1,121 +1,118 @@
 ---
-layout: page
-# The Home page layout
-# © 2017-2019 Cotes Chung
-# MIT Licensed
+layout: default
+refactor: true
 ---
 
-{% include date-format.html %}
+{% include lang.html %}
 
-<div id="post-list">
-  {% for post in paginator.posts %}
-  <div class="post-preview">
-    <h1>
-      <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-    </h1>
-    <div class="post-content">
-      <p>
-      {{ post.content | strip_html | truncate: 200 | replace: '&', '&amp;' }}
-      </p>
-    </div>
+{% assign pinned = site.posts | where: 'pin', 'true' %}
+{% assign default = site.posts | where_exp: 'item', 'item.pin != true and item.hidden != true' %}
 
-    <div class="post-meta text-muted pt-1">
-      <!-- posted date -->
-      <i class="far fa-clock fa-fw"></i>
-      <span class="timeago" data-toggle="tooltip" title="{{ post.date | date: TOOLTIP_DATE }}">
-      {{ post.date | date: POST_DATE }}
-      <i class="unloaded">{{ post.date | date_to_xmlschema }}</i>
-      </span>
-      <!-- page views -->
-      {% if site.google_analytics.pv %}
-      <i class="far fa-eye fa-fw"></i>
-      <span id="pv_{{-post.title-}}" class="pageviews">
-        <i class="fas fa-spinner fa-spin fa-fw"></i>
-      </span>
-      {% endif %}
-    </div>
-  </div> <!-- .post-review -->
+{% assign posts = '' | split: '' %}
+
+<!-- Get pinned posts -->
+
+{% assign offset = paginator.page | minus: 1 | times: paginator.per_page %}
+{% assign pinned_num = pinned.size | minus: offset %}
+
+{% if pinned_num > 0 %}
+  {% for i in (offset..pinned.size) limit: pinned_num %}
+    {% assign posts = posts | push: pinned[i] %}
   {% endfor %}
-</div> <!-- #post-list -->
+{% else %}
+  {% assign pinned_num = 0 %}
+{% endif %}
 
-{% if paginator.total_pages > 0 %}
-<ul class="pagination mt-4 mb-0 pl-lg-2">
-  <!-- left arrow -->
-  {% if paginator.previous_page %}
-  <li class="page-item">
-    <a class="page-link btn-box-shadow" href="{{ site.baseurl }}{{ paginator.previous_page_path }}">
-      <i class="fas fa-angle-left"></i>
-    </a>
-  </li>
-  {% else %}
-  <li class="page-item disabled">
-    <a class="page-link btn-box-shadow" href="#"><i class="fas fa-angle-left"></i></a>
-  </li>
-  {% endif %}
-  <!-- endof left arrow -->
+<!-- Get default posts -->
 
-  <!-- page numbers -->
-  {% assign left_ellipsis = false %}
-  {% assign right_ellipsis = false %}
+{% assign default_beg = offset | minus: pinned.size %}
 
-  {% for i in (1..paginator.total_pages) %}
+{% if default_beg < 0 %}
+  {% assign default_beg = 0 %}
+{% endif %}
 
-    {% assign pre = paginator.page | minus: 1 %}
-    {% assign next = paginator.page | plus: 1 %}
-    {% assign pre_less = pre | minus: 1 %}
-    {% assign next_more = next | plus: 1 %}
-    {% assign show = false %}
+{% assign default_num = paginator.posts | size | minus: pinned_num %}
+{% assign default_end = default_beg | plus: default_num | minus: 1 %}
 
-    {% if paginator.page == 1 %}
-      {% if i <= 3 or i == paginator.total_pages %}
-        {% assign show = true %}
-      {% endif %}
-    {% elsif paginator.page == paginator.total_pages %}
-      {% if i == 1 or i >= pre_less %}
-        {% assign show = true %}
-      {% endif %}
-    {% else %}
-      {% if i == 1 or i == paginator.total_pages%}
-        {% assign show = true %}
-      {% elsif i >= pre and i <= next %}
-        {% assign show = true %}
-      {% endif %}
-    {% endif %}
+{% if default_num > 0 %}
+  {% for i in (default_beg..default_end) %}
+    {% assign posts = posts | push: default[i] %}
+  {% endfor %}
+{% endif %}
 
-    {% if show %}
-        <!-- show number -->
-        <li class="page-item {% if i == paginator.page %} active{% endif %}">
-          <a class="page-link btn-box-shadow" href="{{ site.baseurl }}/{% if i > 1%}page{{ i }}/{% endif %}">{{ i }}</a>
-        </li>
-      {% else %}
-        <!-- hide number -->
-        {% if i < pre and left_ellipsis == false %}
-          <li class="page-item disabled">
-            <span class="page-link btn-box-shadow">...</span>
-          </li>
-          {% assign left_ellipsis = true %}
-        {% elsif i > next and right_ellipsis == false %}
-          <li class="page-item disabled">
-            <span class="page-link btn-box-shadow">...</span>
-          </li>
-          {% assign right_ellipsis = true %}
+<div id="post-list" class="flex-grow-1 px-xl-1">
+  {% for post in posts %}
+    <article class="card-wrapper card">
+      <a href="{{ post.url | relative_url }}" class="post-preview row g-0 flex-md-row-reverse">
+        {% assign card_body_col = '12' %}
+
+        {% if post.image %}
+          {% assign src = post.image.path | default: post.image %}
+          {% unless src contains '//' %}
+            {% assign src = post.img_path | append: '/' | append: src | replace: '//', '/' %}
+          {% endunless %}
+
+          {% assign alt = post.image.alt | xml_escape | default: 'Preview Image' %}
+
+          {% assign lqip = null %}
+
+          {% if post.image.lqip %}
+            {% capture lqip %}lqip="{{ post.image.lqip }}"{% endcapture %}
+          {% endif %}
+
+          <div class="col-md-5">
+            <img src="{{ src }}" alt="{{ alt }}" {{ lqip }}>
+          </div>
+
+          {% assign card_body_col = '7' %}
         {% endif %}
-      {% endif %}
 
+        <div class="col-md-{{ card_body_col }}">
+          <div class="card-body d-flex flex-column">
+            <h1 class="card-title my-2 mt-md-0">{{ post.title }}</h1>
+
+            <div class="card-text content mt-0 mb-3">
+              <p>
+                {% include no-linenos.html content=post.content %}
+                {{ content | markdownify | strip_html | truncate: 200 | escape }}
+              </p>
+            </div>
+
+            <div class="post-meta flex-grow-1 d-flex align-items-end">
+              <div class="me-auto">
+                <!-- posted date -->
+                <i class="far fa-calendar fa-fw me-1"></i>
+                {% include datetime.html date=post.date lang=lang %}
+
+                <!-- categories -->
+                {% if post.categories.size > 0 %}
+                  <i class="far fa-folder-open fa-fw me-1"></i>
+                  <span class="categories">
+                    {% for category in post.categories %}
+                      {{ category }}
+                      {%- unless forloop.last -%},{%- endunless -%}
+                    {% endfor %}
+                  </span>
+                {% endif %}
+              </div>
+
+              {% if post.pin %}
+                <div class="pin ms-1">
+                  <i class="fas fa-thumbtack fa-fw"></i>
+                  <span>{{ site.data.locales[lang].post.pin_prompt }}</span>
+                </div>
+              {% endif %}
+            </div>
+            <!-- .post-meta -->
+          </div>
+          <!-- .card-body -->
+        </div>
+      </a>
+    </article>
   {% endfor %}
+</div>
+<!-- #post-list -->
 
-  <!-- right arrow -->
-  {% if paginator.next_page %}
-  <li class="page-item">
-    <a class="page-link btn-box-shadow" href="{{ site.baseurl }}{{ paginator.next_page_path }}">
-      <i class="fas fa-angle-right"></i>
-    </a>
-  </li>
-  {% else %}
-  <li class="page-item disabled">
-    <a class="page-link btn-box-shadow" href="#"><i class="fas fa-angle-right"></i></a>
-  </li>
-  {% endif %}
-
-</ul> <!-- .pagination -->
+{% if paginator.total_pages > 1 %}
+  {% include post-paginator.html %}
 {% endif %}

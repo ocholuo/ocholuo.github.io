@@ -1,0 +1,77 @@
+exclude: ".txt|.csv"
+
+repos:
+  # - repo: local
+  #   hooks:
+  #     # - id: pylint
+  #     #   name: pylint
+  #     #   entry: pylint
+  #     #   language: system
+  #     #   types: [python]
+  #     - id: black
+  #       name: black
+  #       entry: black
+  #       language: system
+  #       types: [python]
+
+  # must be initialized via pre-commit install
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      # - id: check-added-large-files     # Prevent giant files from being committed
+      - id: check-docstring-first # Checks a common error of defining a docstring after code.
+      - id: check-json
+        # .vscode files use JSONC (comments); search.json is a Jekyll Liquid template
+        exclude: "(^\\.vscode/.*\\.json$|^assets/js/data/search\\.json$)"
+      - id: check-merge-conflict
+      - id: check-xml
+        # feed.xml and browserconfig.xml are Liquid templates, not standalone XML
+        exclude: "(^assets/feed\\.xml$|^assets/img/.*\\.xml$)"
+      - id: check-yaml
+        # --unsafe: allow AWS CloudFormation tags (!Ref, !Sub, !GetAtt, etc.)
+        # --allow-multiple-documents: allow YAML files with multiple --- separated docs
+        args: [--allow-multiple-documents, --unsafe]
+      - id: detect-private-key # Detects the presence of private keys
+        # Lab/CTF writeups contain example keys for educational purposes
+        exclude: "^_posts/Lab/|^_posts/00CodeNote/Linux/LFCEbyPluralsight/2020-07-16-LFCE\\.3\\.NetworkandHostSecurity\\.md$"
+      - id: end-of-file-fixer # Fix the empty EOF
+      - id: pretty-format-json
+        args:
+          - --autofix
+          - --indent=4
+          - --no-sort-keys
+        exclude: "(^\\.vscode/.*\\.json$|^assets/js/data/search\\.json$)"
+      - id: trailing-whitespace # Fix the redundant whitespace
+
+  # Check for typos
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.2
+    hooks:
+      - id: codespell
+        args:
+          - --ignore-words=allow.txt
+          - --exclude-file=allow.txt
+        # draft.md is an unpublished working draft with word-break hyphenation artifacts
+        exclude: "(\.ipynb$|^_posts/draft\.md$)"
+
+  # ======= check python =======
+  # - repo: https://github.com/ambv/black
+  #   rev: 22.12.0
+  #   hooks:
+  #   - id: black
+  #     language_version: python3
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.15.0
+    hooks:
+      - id: pyupgrade
+        args: [--py38-plus]
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.0.0
+    hooks:
+      - id: autoflake
+    # removes unused imports and unused variables
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+    # sort the import package

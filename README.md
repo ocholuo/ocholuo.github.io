@@ -1,159 +1,111 @@
-# Jekyll Theme Chirpy
+# A CYBER SECURITY PRACTICIAN
 
-[![Build Status](https://travis-ci.com/cotes2020/jekyll-theme-chirpy.svg?branch=master)](https://travis-ci.com/cotes2020/jekyll-theme-chirpy)
-[![GitHub license](https://img.shields.io/github/license/cotes2020/jekyll-theme-chirpy.svg)](https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/LICENSE)
-[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
+- [A CYBER SECURITY PRACTICIAN](#a-cyber-security-practician)
+- [About Me](#about-me)
+  - [WRITE-UPS](#write-ups)
+- [Blog Main PROJECTS](#blog-main-projects)
+  - [LAB EXERCISES](#lab-exercises)
+  - [Installation](#installation)
+    - [Basic setup](#basic-setup)
 
-![devices-mockup](https://raw.githubusercontent.com/cotes2020/jekyll-theme-chirpy/master/assets/img/sample/devices-mockup.png)
+---
 
-A minimal, portfolio, sidebar, Bootstrap Jekyll theme with responsive web design and focuses on text presentation. Hope you like it! [Live Demo »](https://chirpy.cotes.info)
+<img alt="pic" src="https://i.imgur.com/hOFYY7s.png" width="100" align="left">
+<img alt="pic" src="https://i.imgur.com/UYv2Cpd.png" width="100" align="left">
+<img alt="pic" src="https://i.imgur.com/tIMuMgk.jpg" width="100" height="95" align="left">
+<img alt="pic" src="https://i.imgur.com/vMmUZBI.png" width="100" align="left">
+<img alt="pic" src="https://i.imgur.com/0SQ0jOP.png" width="100" align="left">
+<img alt="pic" src="https://i.imgur.com/K3wKueK.png" width="100" align="left">
 
-## Features
+<br>
+<br>
+<br>
+<br>
+<br>
 
-* Last modified date
-* Table of Contents
-* Disqus Comments
-* Syntax highlighting
-* Two Level Categories
-* Search
-* HTML compress
-* Atom feeds
-* Google Analytics
-* Pageviews (Advanced)
+> On my way to CISSP, OSCP ...
 
-## Getting Started
+---
 
-### Preparation
+# About Me
 
-Follow the [Jekyll Docs](https://jekyllrb.com/docs/installation/) to complete the installtion of basic environment (Ruby, RubyGem, Bundler and Jekyll). In addition, to use the funny script tools, we also need to install [Python](https://www.python.org/downloads/)(version 3.5 or abover) and [ruamel.yaml](https://pypi.org/project/ruamel.yaml/).
+Bright, eager, passionate practician, and an enthusiast of InfoSec with an MS (Hons.) in Cyber Security and Information Assurance.
 
-Next, [fork](https://github.com/cotes2020/jekyll-theme-chirpy/fork) **Chirpy** and then clone your replicated repository locally.
+Highly curious, goal-oriented;
 
+Always passionate, always up for a challenge and unforeseen possibilities;
 
-### Install Jekyll Plugins
+Chess, piano and dance are three constructive hobbies I pursue.
 
-Go to root directory of the repository and run the following:
+I love chocolate! 🍫
 
-```terminal
-$ bundle install
-```
+---
 
-`bundle` will install all the dependent Jekyll Plugins listed in file `Gemfile` automatically.
+## WRITE-UPS
 
+I have been fortunate enough to meet great folks, come across ample valuable resources, have the opportunity to learn my favorite security field, and been able to have my step in Cyber Security.
 
-### File Structure
+I have documented the exercises and learning path throughout my journey, and hope it can also be helpful for you in your study.
 
-The main files and related brief introductions are listed below.
+This blog is all about:
 
+- Knowledge from work
+- Classroom learning
+- Online learning
+- Security certifications learning
+- Hands-on training (CTFs, labs, hackathons, etc)
+
+---
+
+# Blog Main PROJECTS
+
+I have worked on a number of projects during my studies, some of which include:
+
+- [Course - Learning Path](https://ocholuo.github.io/posts/CourseREADME/)
+- [InfoSec - Tools](https://ocholuo.github.io/posts/InfoSecREADME/)
+- [Programming - Code & Learning Path](https://ocholuo.github.io/posts/CodeREADME/)
+- [Web - demo & Learning Path](https://ocholuo.github.io/posts/WebREADME/)
+
+<!-- To know more about the projects vist the Projects page using the button below. The page has "Learn More" links to navigate to their respective GitHub repository home pages. -->
+
+## LAB EXERCISES
+
+Lab exercises designed by Syracuse university:
+
+- [Syracuse university - SEED Lab - XSS Attack Lab](https://ocholuo.github.io/posts/SEED-Labs-CrossSiteScripting-Attack-Lab/) - Self Replicating Worm attack on vulnerable web app
+<!-- Set UID Attack Lab - Exploiting setuid and LD_PRELOAD env variable. -->
+<!-- MD5 Attack Lab - Attack Merkle Damgard construction of MD5 using collisions. -->
+- [Netdevgroup - PAN8 Cybersecurity Essentials](https://ocholuo.github.io/posts/PAN8-Cybersecurity-Essentials/)
+- [Netdevgroup - PAN8 Cybersecurity Gateway](https://ocholuo.github.io//posts/PAN8-Cybersecurity-Gateway/)
+
+Wargames:
+
+- [Overthewire - bandit](https://ocholuo.github.io/posts/Overthewire-bandit/) - SSH related
+- [Overthewire - natas](https://ocholuo.github.io/posts/Overthewire-natas/) - WebSec related
+- [Hack The Box](https://ocholuo.github.io/tags/hackthebox/)
+- [Flaws Cloud CTF](https://ocholuo.github.io/tags/Flaws/)
+
+<!-- Leviathan - Based on SetUID.
+Narnia - Based on binary exploitation.
+Protostar - Based on binary exploitation. -->
+
+---
+
+## Installation
+
+### Basic setup
+
+<details>
+
+Getting Pyenv
 ```sh
-jekyll-theme-chirpy/
-├── _data
-├── _includes      
-├── _layouts
-├── _posts          # posts stay here
-├── _scripts
-│   └── travis      # CI stuff, remove it
-├── .travis.yml     # remove it, too
-├── assets      
-├── tabs
-│   └── about.md    # the ABOUT page
-├── .gitignore
-├── 404.html
-├── Gemfile
-├── LICENSE
-├── README.md
-├── _config.yml     # configuration file
-├── build.sh        # script tool
-├── run.sh          # script tool
-├── init.sh         # script tool
-├── pv.sh           
-├── feed.xml
-├── index.html
-├── robots.txt
-├── search.json
-└── sitemap.xml
+# Setup Development Environment
+pyenv install 3.11.4
+pyenv virtualenv 3.11.4 ocho
+pyenv activate ocho
+
+# setup code format requirement
+brew install pre-commit
+pre-commit install -t pre-push
 ```
-
-
-### Configuration
-
-Customize the variables in file `_config.yml` as needed.
-
-
-### Atom Feed
-
-The Atom feed url of your site will be:
-
-```
-<SITE_URL>/feed.xml
-```
-
-The `SITE_URL` was defined by variable `url` in file `_config.yml`.
-
-
-###  Run Locally
-
-You may want to preview the site before publishing, so just run the script tool:
-
-```terminal
-$ bash run.sh
-```
-
->**Note**: The *Recent Update* list requires the latest git-log date of posts, thus make sure the changes in `_posts` have been committed before running this command.
-
-Open a brower and visit <http://localhost:4000>.
-
-Few days later, you may find that the file changes does not refresh in real time by using `run.sh`. Don't worry, the advanced option `-r` (or `--realtime`) will solve this problem, but it requires [**fswatch**](http://emcrisostomo.github.io/fswatch/) to be installed on your machine.
-
-
-###  Deploying to GitHub Pages
-
-Before the deployment begins, ensure the `url` in `_config.yml` has been set to `https://<username>.github.io`.
-
-#### Option 1: Built by GitHub Pages
-
-By deploying your site in this way, you can push the source code to GitHub repository directly.
-
-> **Note**: If you want to add any third-party Jekyll plugins or custom scripts to your project, please refer to [*Option 2: Build locally*](#option-2-build-locally).
-
-**1**. Rename your repository as `<username>.github.io`.
-
-**2**. Commit the changes of your repository, then run the initialization script:
-
-```console
-$ bash init.sh
-```
-
-It will automatically generates the *Latest Modified Date* and *Categories / Tags* page for the posts.
-
-**3**. Push the changes to `origin/master` then go to GitHub website and enable GitHub Pages service for the repository `<username>.github.io`.
-
-**4**. Visit `https://<username>.github.io` and enjoy.
-
-
-#### Option 2: Build Locally
-
-For security reasons, GitHub Pages runs on `safe` mode, which means the third-party Jekyll plugins or custom scripts will not work. If you want to use any another third-party Jekyll plugins, **your have to build locally rather than on GitHub Pages**.
-
-**1**. On GitHub website, create a brand new repository with name `<username>.github.io` and then clone it locally.
-
-**2**. Build your site by:
-
-```console
-$ bash build.sh -d /path/to/<username>.github.io/
-```
-
-The build results will be stored in the root directory of `<username>.github.io` and don't forget to push the changes of `<username>.github.io` to branch `master` on GitHub.
-
-**3**. Go to GitHub website and enable GitHub Pages service for the new repository `<username>.github.io`.
-
-**4**. Visit `https://<username>.github.io` and enjoy.
-
-## Documentation
-
-For more information, please see the [tutorial](https://chirpy.cotes.info/categories/tutorial/). In the meanwhile, a copy of the tutorial is also available on the [Wiki](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
-
-
-## License
-
-This work is published under [MIT](https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/LICENSE) License.
+</details>
