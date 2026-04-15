@@ -3263,7 +3263,16 @@ function refiSimUpdate() {
         if (gBal < 0.01) break;
       }
     }
-    // Align ghost arrays to chartLabels length; null before refi boundary, values after
+    // WHY: extend X-axis to seg0's full original term so the no-refi baseline
+    //      dotted lines display their complete arc even when a refi segment
+    //      pays off the loan earlier; solid lines get null for paid-off years
+    var origTerm = segs[0].term;
+    while (chartLabels.length < origTerm) {
+      chartLabels.push(t("chart.yr") + " " + (chartLabels.length + 1));
+      chartCumPrin.push(null);
+      chartCumInt.push(null);
+    }
+    // Align ghost arrays to (extended) chartLabels; null before refi boundary, values after
     var refiStartIdx = segBounds[1];
     for (var gi = 0; gi < chartLabels.length; gi++) {
       if (gi < refiStartIdx || gi >= ghostFull.length) {
