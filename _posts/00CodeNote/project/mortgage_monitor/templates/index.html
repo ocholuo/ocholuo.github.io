@@ -397,6 +397,7 @@
       border: 1.5px solid var(--border); background: none;
       cursor: pointer; transition: all .15s;
       text-align: center; font-family: inherit; white-space: nowrap;
+      position: relative; /* WHY: needed to anchor the .tab-edit-icon pencil inside the chip */
     }
     .calc-preset-tab.active { background: var(--accent); border-color: var(--accent); }
     .calc-preset-tab:not(.active):hover { border-color: var(--accent); }
@@ -414,6 +415,21 @@
       color: var(--text-muted); margin-top: 2px;
     }
     .calc-preset-tab.active .calc-preset-tab-detail { color: rgba(255,255,255,.85); }
+    /* WHY: pencil icon gives users a persistent affordance that the chip name is editable on dblclick */
+    .tab-edit-icon {
+      position: absolute; top: 5px; right: 8px;
+      font-size: .6rem; line-height: 1; pointer-events: none;
+      opacity: 0; transition: opacity .15s;
+      color: var(--text-muted);
+    }
+    .calc-preset-tab.active .tab-edit-icon { color: rgba(255,255,255,.65); opacity: .45; }
+    .calc-preset-tab:hover .tab-edit-icon { opacity: 1; }
+    .calc-preset-tab.active:hover .tab-edit-icon { opacity: 1; color: #fff; }
+    /* WHY: dashed underline on hover of readonly name signals it is editable */
+    .calc-preset-tab:hover .calc-preset-tab-name[readonly] {
+      text-decoration: underline dashed; text-underline-offset: 3px;
+    }
+    .calc-preset-tab.active:hover .calc-preset-tab-name[readonly] { text-decoration-color: rgba(255,255,255,.6); }
     /* WHY: dashed "+" add button sits at end of tab row, visually distinct from preset tabs */
     .calc-preset-add {
       padding: 6px 14px; border-radius: 20px;
@@ -1324,7 +1340,8 @@
     <!-- WHY: preset tabs sit outside the card, above section-cards, matching Plan A/B position in Refi -->
     <div class="calc-preset-tabs" id="calc-presets">
       <button class="calc-preset-tab active" data-price="940000" data-down="100000" data-term="30">
-        <input class="calc-preset-tab-name" type="text" value="My home" readonly tabindex="-1" title="Double-click to rename">
+        <input class="calc-preset-tab-name" type="text" value="My home" readonly tabindex="-1">
+        <span class="tab-edit-icon" title="Double-click to rename">&#9998;</span>
         <span class="calc-preset-tab-detail">$940K · 11% · 30yr</span>
       </button>
       <button class="calc-preset-add" id="calc-preset-add" onclick="calcAddPreset()" title="Add scenario">+</button>
@@ -2821,7 +2838,7 @@ function calcAddPreset() {
   btn.dataset.price = price;
   btn.dataset.down = down;
   btn.dataset.term = term;
-  btn.innerHTML = '<input class="calc-preset-tab-name" type="text" value="Scenario ' + count + '" readonly tabindex="-1" title="Double-click to rename"><span class="calc-preset-tab-detail">' + detail + '</span>';
+  btn.innerHTML = '<input class="calc-preset-tab-name" type="text" value="Scenario ' + count + '" readonly tabindex="-1"><span class="tab-edit-icon" title="Double-click to rename">&#9998;</span><span class="calc-preset-tab-detail">' + detail + '</span>';
   const addBtn = document.getElementById("calc-preset-add");
   addBtn.parentNode.insertBefore(btn, addBtn);
   calcAttachTabHandlers(btn);
