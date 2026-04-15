@@ -1752,8 +1752,8 @@ const T = {
     'rsim.seg.rate.new':'New Rate','rsim.seg.rate.lbl':'Rate:','rsim.seg.closing':'closing',
     'rsim.stat.monthly':'Monthly Pmt','rsim.stat.tot.int':'Total Interest','rsim.stat.tot.cost':'Total Cost',
     'rsim.stat.prin.lbl':'Principal:','rsim.stat.int.lbl':'Interest:',
-    'rsim.savings.badge':'IF YOU REFINANCE TODAY',
-    'rsim.savings.sub':'saved every month',
+    'rsim.savings.badge.save':'IF YOU REFINANCE TODAY','rsim.savings.badge.cost':'REFINANCING WILL INCREASE COST',
+    'rsim.save.sub.save':'saved/mo','rsim.save.sub.cost':'more/mo',
     'rsim.save.int.saved.mo':'Monthly interest saved','rsim.save.int.cost.mo':'Monthly interest added',
     'rsim.save.int.saved.yr':'Annual interest saved', 'rsim.save.int.cost.yr':'Annual interest added',
     'calc.ccl.nox.prin':'Principal (no extra)','calc.ccl.nox.int':'Interest (no extra)',
@@ -1809,8 +1809,8 @@ const T = {
     'rsim.seg.rate.new':'新利率','rsim.seg.rate.lbl':'利率:','rsim.seg.closing':'结算费用',
     'rsim.stat.monthly':'月供','rsim.stat.tot.int':'总利息','rsim.stat.tot.cost':'总费用',
     'rsim.stat.prin.lbl':'本金:','rsim.stat.int.lbl':'利息:',
-    'rsim.savings.badge':'立即再融资可节省',
-    'rsim.savings.sub':'每月节省',
+    'rsim.savings.badge.save':'立即再融资可节省','rsim.savings.badge.cost':'立即再融资会增加',
+    'rsim.save.sub.save':'每月节省','rsim.save.sub.cost':'每月多交',
     'rsim.save.int.saved.mo':'每月节省利息','rsim.save.int.cost.mo':'每月增加利息',
     'rsim.save.int.saved.yr':'每年节省利息', 'rsim.save.int.cost.yr':'每年增加利息',
     'calc.ccl.nox.prin':'本金（无额外）','calc.ccl.nox.int':'利息（无额外）',
@@ -1866,8 +1866,8 @@ const T = {
     'rsim.seg.rate.new':'Nueva tasa','rsim.seg.rate.lbl':'Tasa:','rsim.seg.closing':'cierre',
     'rsim.stat.monthly':'Pago mensual','rsim.stat.tot.int':'Interés total','rsim.stat.tot.cost':'Costo total',
     'rsim.stat.prin.lbl':'Capital:','rsim.stat.int.lbl':'Interés:',
-    'rsim.savings.badge':'SI REFINANCIA HOY',
-    'rsim.savings.sub':'ahorrado al mes',
+    'rsim.savings.badge.save':'SI REFINANCIA HOY','rsim.savings.badge.cost':'REFINANCIAR AUMENTARÁ EL COSTO',
+    'rsim.save.sub.save':'ahorrado/mes','rsim.save.sub.cost':'más/mes',
     'rsim.save.int.saved.mo':'Interés mensual ahorrado','rsim.save.int.cost.mo':'Interés mensual adicional',
     'rsim.save.int.saved.yr':'Interés anual ahorrado',  'rsim.save.int.cost.yr':'Interés anual adicional',
     'calc.ccl.nox.prin':'Capital (sin extra)','calc.ccl.nox.int':'Interés (sin extra)',
@@ -2995,12 +2995,11 @@ function addRsimSegment() {
   h +=     "</div>";
   h +=   "</div>";
   h +=   "<div class=\"rsim-savings-banner\" id=\"rsim-s"+idx+"-savings\">";
-  h +=     "<div class=\"rsim-savings-badge\" data-i18n=\"rsim.savings.badge\">IF YOU REFINANCE TODAY</div>";
+  h +=     "<div class=\"rsim-savings-badge\" id=\"rsim-s"+idx+"-save-badge\">IF YOU REFINANCE TODAY</div>";
   h +=     "<div class=\"rsim-savings-hero-row\">";
   h +=       "<span class=\"rsim-savings-hero\" id=\"rsim-s"+idx+"-save-hero\">&mdash;</span>";
-  h +=       "<span class=\"rsim-savings-sub\" data-i18n=\"rsim.savings.sub\">saved every month</span>";
+  h +=       "<span class=\"rsim-savings-sub\" id=\"rsim-s"+idx+"-save-sub\"></span>";
   h +=     "</div>";
-  h +=     "<div class=\"rsim-savings-desc\" id=\"rsim-s"+idx+"-save-desc\"></div>";
   h +=     "<div class=\"rsim-savings-rows\">";
   h +=       "<div class=\"rsim-savings-row\">";
   h +=         "<span class=\"rsim-savings-key\" id=\"rsim-s"+idx+"-save-mo-lbl\">Monthly interest</span>";
@@ -3148,28 +3147,28 @@ function refiSimUpdate() {
     if (si > 0) {
       var monthlySave = prevSegPmt - regPmt;
       var banner   = document.getElementById("rsim-s"+si+"-savings");
-      var saveHero = document.getElementById("rsim-s"+si+"-save-hero");
-      var saveDesc = document.getElementById("rsim-s"+si+"-save-desc");
-      var saveMo   = document.getElementById("rsim-s"+si+"-save-mo");
-      var saveYr   = document.getElementById("rsim-s"+si+"-save-yr");
+      var saveHero  = document.getElementById("rsim-s"+si+"-save-hero");
+      var saveBadge = document.getElementById("rsim-s"+si+"-save-badge");
+      var saveSub   = document.getElementById("rsim-s"+si+"-save-sub");
+      var saveMo    = document.getElementById("rsim-s"+si+"-save-mo");
+      var saveYr    = document.getElementById("rsim-s"+si+"-save-yr");
       var saveMoLbl = document.getElementById("rsim-s"+si+"-save-mo-lbl");
       var saveYrLbl = document.getElementById("rsim-s"+si+"-save-yr-lbl");
       if (banner) {
         var isSaving = monthlySave > 0;
         var absSave  = Math.abs(monthlySave);
         banner.classList.add("visible");
-        // WHY: hero = payment change direction; red if payment went up, green if down
+        // WHY: hero = payment direction; badge text = saving vs increasing
         banner.classList.toggle("cost", !isSaving);
         var sign = isSaving ? "-" : "+";
-        if (saveHero) saveHero.textContent = sign + fmtDollar(Math.round(absSave)) + "/mo";
-        if (saveDesc) saveDesc.textContent =
-          "Refinancing from " + segs[si-1].rate.toFixed(2) + "% \u2192 " +
-          seg.rate.toFixed(2) + "% on a " + fmtDollar(Math.round(segBal)) + " loan";
-        // WHY: rows show interest change (not payment change); interest may drop even when payment rises (shorter term)
-        var intDiff    = prevSegFirstInt - firstMoInt; // positive = interest decreased (savings)
+        if (saveHero)  saveHero.textContent  = sign + fmtDollar(Math.round(absSave)) + "/mo";
+        if (saveBadge) saveBadge.textContent = t(isSaving ? "rsim.savings.badge.save" : "rsim.savings.badge.cost");
+        // WHY: sub-label = interest direction (independent of payment direction)
+        var intDiff    = prevSegFirstInt - firstMoInt; // positive = interest decreased
         var isIntSaved = intDiff > 0;
         var absInt     = Math.abs(intDiff);
         var intColor   = isIntSaved ? "#16a34a" : "var(--red)";
+        if (saveSub) { saveSub.textContent = t(isSaving ? "rsim.save.sub.save" : "rsim.save.sub.cost"); saveSub.style.color = isSaving ? "#16a34a" : "var(--red)"; }
         if (saveMoLbl) saveMoLbl.textContent = t(isIntSaved ? "rsim.save.int.saved.mo" : "rsim.save.int.cost.mo");
         if (saveYrLbl) saveYrLbl.textContent = t(isIntSaved ? "rsim.save.int.saved.yr" : "rsim.save.int.cost.yr");
         if (saveMo) { saveMo.textContent = "+" + fmtDollar(Math.round(absInt)) + "/mo"; saveMo.style.color = intColor; }
