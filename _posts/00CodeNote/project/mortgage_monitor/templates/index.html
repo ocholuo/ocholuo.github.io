@@ -402,34 +402,39 @@
     .calc-preset-tab.active { background: var(--accent); border-color: var(--accent); }
     .calc-preset-tab:not(.active):hover { border-color: var(--accent); }
     .calc-preset-tab:not(.active):hover .calc-preset-tab-name { color: var(--accent); }
+    /* WHY: name-row is a flex line so the pencil icon and × sit inline after the name text */
+    .tab-name-row { display: flex; align-items: center; justify-content: center; gap: 3px; }
     .calc-preset-tab-name {
-      display: block; width: 100%;
       font-size: .82rem; font-weight: 700; color: var(--text);
       background: transparent; border: none; outline: none;
       text-align: center; cursor: pointer; font-family: inherit; padding: 0;
+      min-width: 0; max-width: 120px;
     }
     .calc-preset-tab.active .calc-preset-tab-name { color: #fff; }
     .calc-preset-tab-name:not([readonly]) { background: rgba(255,255,255,.2); border-radius: 3px; padding: 1px 4px; cursor: text; }
     .calc-preset-tab-detail {
       display: block; font-size: .72rem; font-weight: 500;
-      color: var(--text-muted); margin-top: 2px;
+      color: var(--text-muted); margin-top: 2px; text-align: center;
     }
     .calc-preset-tab.active .calc-preset-tab-detail { color: rgba(255,255,255,.85); }
-    /* WHY: pencil icon gives users a persistent affordance that the chip name is editable on dblclick */
+    /* WHY: pencil sits inline after name text; always faintly visible so users know name is editable */
     .tab-edit-icon {
-      position: absolute; top: 5px; right: 8px;
       font-size: .6rem; line-height: 1; pointer-events: none;
+      opacity: .35; transition: opacity .15s; flex-shrink: 0;
+      color: var(--text-muted);
+    }
+    .calc-preset-tab.active .tab-edit-icon { color: rgba(255,255,255,.7); opacity: .5; }
+    .calc-preset-tab:hover .tab-edit-icon { opacity: 1; }
+    /* WHY: delete × inline after pencil, hidden until hover so chip stays uncluttered at rest */
+    .tab-delete-btn {
+      font-size: .6rem; line-height: 1; flex-shrink: 0;
+      background: none; border: none; padding: 0; cursor: pointer;
       opacity: 0; transition: opacity .15s;
       color: var(--text-muted);
     }
-    .calc-preset-tab.active .tab-edit-icon { color: rgba(255,255,255,.65); opacity: .45; }
-    .calc-preset-tab:hover .tab-edit-icon { opacity: 1; }
-    .calc-preset-tab.active:hover .tab-edit-icon { opacity: 1; color: #fff; }
-    /* WHY: dashed underline on hover of readonly name signals it is editable */
-    .calc-preset-tab:hover .calc-preset-tab-name[readonly] {
-      text-decoration: underline dashed; text-underline-offset: 3px;
-    }
-    .calc-preset-tab.active:hover .calc-preset-tab-name[readonly] { text-decoration-color: rgba(255,255,255,.6); }
+    .calc-preset-tab.active .tab-delete-btn { color: rgba(255,255,255,.75); }
+    .calc-preset-tab:hover .tab-delete-btn { opacity: 1; }
+    .tab-delete-btn:hover { color: var(--red) !important; opacity: 1; }
     /* WHY: dashed "+" add button sits at end of tab row, visually distinct from preset tabs */
     .calc-preset-add {
       padding: 6px 14px; border-radius: 20px;
@@ -1340,8 +1345,11 @@
     <!-- WHY: preset tabs sit outside the card, above section-cards, matching Plan A/B position in Refi -->
     <div class="calc-preset-tabs" id="calc-presets">
       <button class="calc-preset-tab active" data-price="940000" data-down="100000" data-term="30">
-        <input class="calc-preset-tab-name" type="text" value="My home" readonly tabindex="-1">
-        <span class="tab-edit-icon" title="Double-click to rename">&#9998;</span>
+        <div class="tab-name-row">
+          <input class="calc-preset-tab-name" type="text" value="My home" readonly tabindex="-1">
+          <span class="tab-edit-icon" title="Double-click to rename">&#9998;</span>
+          <button class="tab-delete-btn" title="Remove this scenario" onclick="calcDeletePreset(event,this)">&#10005;</button>
+        </div>
         <span class="calc-preset-tab-detail">$940K · 11% · 30yr</span>
       </button>
       <button class="calc-preset-add" id="calc-preset-add" onclick="calcAddPreset()" title="Add scenario">+</button>
@@ -1728,7 +1736,7 @@ const T = {
     'rate.1wk':'1-Wk Change','rate.1yr':'1-Yr Change','rate.mavg':'Monthly Avg','rate.52avg':'52-Wk Avg','rate.range':'52-Week Range','rate.spread':'Spread to 30yr',
     'chart.title':'Daily Rate Chart','legend.30':'30yr Fixed','legend.15':'15yr Fixed','legend.tnx':'10yr Treasury',
     'forecast.title':'Rate Forecast And Analysis','proj.30d':'30-Day Projection','proj.60d':'60-Day Projection',
-    'nav.calc':'Payment Calculator','nav.refi':'Refi Savings','nav.history':'Rate History',
+    'nav.home':'Mortgage Monitor','nav.calc':'Payment Calculator','nav.refi':'Refi Savings','nav.history':'Rate History',
     'nav.history.desc':'Last 20 trading days','nav.alert':'Rate Alert','nav.alert.desc':'Get notified when rates drop',
     'nav.news':'Market News','nav.news.desc':'Mortgage · Fed · Economy','nav.share':'Share Rate Card','nav.share.desc':'Print or save current view',
     'footer.title':'Data Sources',
@@ -2793,6 +2801,7 @@ function calcFormatDetail(price, down, term) {
 function calcAttachTabHandlers(btn) {
   btn.addEventListener("click", (e) => {
     if (e.target.classList.contains("calc-preset-tab-name") && !e.target.readOnly) return;
+    if (e.target.classList.contains("tab-delete-btn")) return;
     document.querySelectorAll(".calc-preset-tab").forEach(c => c.classList.remove("active"));
     btn.classList.add("active");
     document.getElementById("calc-price").value = btn.dataset.price;
@@ -2827,7 +2836,30 @@ function calcAttachTabHandlers(btn) {
   }
 }
 
+function calcUpdateAddBtn() {
+  var addBtn = document.getElementById("calc-preset-add");
+  if (addBtn) addBtn.style.display = document.querySelectorAll(".calc-preset-tab").length >= 3 ? "none" : "";
+}
+
+function calcDeletePreset(e, deleteBtn) {
+  e.stopPropagation();
+  var tabs = document.querySelectorAll(".calc-preset-tab");
+  if (tabs.length <= 1) return; // never delete the last tab
+  var tab = deleteBtn.closest(".calc-preset-tab");
+  var wasActive = tab.classList.contains("active");
+  tab.remove();
+  calcUpdateAddBtn();
+  if (wasActive) {
+    var remaining = document.querySelectorAll(".calc-preset-tab");
+    if (remaining.length) {
+      remaining[0].classList.add("active");
+      calcUpdate();
+    }
+  }
+}
+
 function calcAddPreset() {
+  if (document.querySelectorAll(".calc-preset-tab").length >= 3) return;
   const price = parseFloat(document.getElementById("calc-price").value) || 500000;
   const down = parseFloat(document.getElementById("calc-down").value) || 0;
   const term = document.getElementById("calc-term").value || "30";
@@ -2838,12 +2870,13 @@ function calcAddPreset() {
   btn.dataset.price = price;
   btn.dataset.down = down;
   btn.dataset.term = term;
-  btn.innerHTML = '<input class="calc-preset-tab-name" type="text" value="Scenario ' + count + '" readonly tabindex="-1"><span class="tab-edit-icon" title="Double-click to rename">&#9998;</span><span class="calc-preset-tab-detail">' + detail + '</span>';
+  btn.innerHTML = '<div class="tab-name-row"><input class="calc-preset-tab-name" type="text" value="Scenario ' + count + '" readonly tabindex="-1"><span class="tab-edit-icon" title="Double-click to rename">&#9998;</span><button class="tab-delete-btn" title="Remove this scenario" onclick="calcDeletePreset(event,this)">&#10005;</button></div><span class="calc-preset-tab-detail">' + detail + '</span>';
   const addBtn = document.getElementById("calc-preset-add");
   addBtn.parentNode.insertBefore(btn, addBtn);
   calcAttachTabHandlers(btn);
   document.querySelectorAll(".calc-preset-tab").forEach(c => c.classList.remove("active"));
   btn.classList.add("active");
+  calcUpdateAddBtn();
   calcUpdate();
 }
 
