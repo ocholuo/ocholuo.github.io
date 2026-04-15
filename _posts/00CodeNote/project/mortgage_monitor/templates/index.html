@@ -1050,7 +1050,7 @@
   </div>
   <ul class="sidebar-nav">
     <li class="sidebar-item active" id="sidebar-home" onclick="sidebarGoHome()">
-      <span>Dashboard</span>
+      <span data-i18n="nav.home">Mortgage Monitor</span>
     </li>
     <li class="sidebar-divider"></li>
     <li class="sidebar-item" id="sidebar-calc" onclick="sidebarOpen(this,'calc')">
@@ -1106,7 +1106,7 @@
 
   <!-- ── Mobile Tab Bar (sticky top nav, mobile only) ── -->
   <div class="mobile-tab-bar" id="mobile-tab-bar">
-    <button class="mobile-tab active" id="mtab-home" onclick="mobileGoHome()">Dashboard</button>
+    <button class="mobile-tab active" id="mtab-home" onclick="mobileGoHome()" data-i18n="nav.home">Mortgage Monitor</button>
     <button class="mobile-tab" id="mtab-calc" onclick="mobileTabOpen(this,'calc')">Calculator</button>
     <button class="mobile-tab" id="mtab-refi" onclick="mobileTabOpen(this,'refi')">Refi</button>
     <button class="mobile-tab" id="mtab-news" onclick="mobileTabOpen(this,'news')">News</button>
@@ -1793,7 +1793,7 @@ const T = {
     'rate.1wk':'周变动','rate.1yr':'年变动','rate.mavg':'月均值','rate.52avg':'52周均值','rate.range':'52周区间','rate.spread':'相对30年息差',
     'chart.title':'每日利率走势','legend.30':'30年固定','legend.15':'15年固定','legend.tnx':'10年期国债',
     'forecast.title':'利率预测与分析','proj.30d':'30日预测','proj.60d':'60日预测',
-    'nav.calc':'月供计算器','nav.refi':'再融资节省','nav.history':'利率历史',
+    'nav.home':'每日房贷利率追踪','nav.calc':'月供计算器','nav.refi':'再融资节省','nav.history':'利率历史',
     'nav.history.desc':'近20个交易日','nav.alert':'利率提醒','nav.alert.desc':'利率下降时通知我',
     'nav.news':'市场新闻','nav.news.desc':'房贷 · 美联储 · 经济','nav.share':'分享当前界面','nav.share.desc':'打印或保存当前视图',
     'footer.title':'数据来源',
@@ -1850,7 +1850,7 @@ const T = {
     'rate.1wk':'Cambio semanal','rate.1yr':'Cambio anual','rate.mavg':'Prom. mensual','rate.52avg':'Prom. 52 sem.','rate.range':'Rango 52 semanas','rate.spread':'Diferencial vs 30yr',
     'chart.title':'Gráfico Diario de Tasas','legend.30':'Fijo 30 años','legend.15':'Fijo 15 años',
     'forecast.title':'Pronóstico de Tasas','proj.30d':'Proyección 30 días','proj.60d':'Proyección 60 días',
-    'nav.calc':'Calculadora de pago','nav.refi':'Ahorro en Refi','nav.history':'Historial de tasas',
+    'nav.home':'Monitor Hipotecario','nav.calc':'Calculadora de pago','nav.refi':'Ahorro en Refi','nav.history':'Historial de tasas',
     'nav.history.desc':'Últimos 20 días hábiles','nav.alert':'Alerta de tasa','nav.alert.desc':'Notifícame cuando bajen',
     'nav.news':'Noticias del mercado','nav.news.desc':'Hipoteca · Fed · Economía','nav.share':'Compartir Vista','nav.share.desc':'Imprimir o guardar vista actual',
     'footer.title':'Fuentes de datos',
