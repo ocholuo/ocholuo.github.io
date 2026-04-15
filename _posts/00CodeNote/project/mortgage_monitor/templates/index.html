@@ -1754,8 +1754,8 @@ const T = {
     'rsim.stat.prin.lbl':'Principal:','rsim.stat.int.lbl':'Interest:',
     'rsim.savings.badge':'IF YOU REFINANCE TODAY',
     'rsim.savings.sub':'saved every month',
-    'rsim.savings.monthly':'Monthly savings','rsim.savings.annual':'Annual savings',
-    'rsim.savings.breakeven':'Break-even point',
+    'rsim.save.int.saved.mo':'Monthly interest saved','rsim.save.int.cost.mo':'Monthly interest added',
+    'rsim.save.int.saved.yr':'Annual interest saved', 'rsim.save.int.cost.yr':'Annual interest added',
     'calc.ccl.nox.prin':'Principal (no extra)','calc.ccl.nox.int':'Interest (no extra)',
     'calc.stat.basecross':'Base Crossover:',
     'chart.yr':'Yr',
@@ -1811,8 +1811,8 @@ const T = {
     'rsim.stat.prin.lbl':'本金:','rsim.stat.int.lbl':'利息:',
     'rsim.savings.badge':'立即再融资可节省',
     'rsim.savings.sub':'每月节省',
-    'rsim.savings.monthly':'每月节省','rsim.savings.annual':'每年节省',
-    'rsim.savings.breakeven':'回本时间',
+    'rsim.save.int.saved.mo':'每月节省利息','rsim.save.int.cost.mo':'每月增加利息',
+    'rsim.save.int.saved.yr':'每年节省利息', 'rsim.save.int.cost.yr':'每年增加利息',
     'calc.ccl.nox.prin':'本金（无额外）','calc.ccl.nox.int':'利息（无额外）',
     'calc.stat.basecross':'基准交叉:',
     'chart.yr':'年',
@@ -1868,8 +1868,8 @@ const T = {
     'rsim.stat.prin.lbl':'Capital:','rsim.stat.int.lbl':'Interés:',
     'rsim.savings.badge':'SI REFINANCIA HOY',
     'rsim.savings.sub':'ahorrado al mes',
-    'rsim.savings.monthly':'Ahorro mensual','rsim.savings.annual':'Ahorro anual',
-    'rsim.savings.breakeven':'Punto de equilibrio',
+    'rsim.save.int.saved.mo':'Interés mensual ahorrado','rsim.save.int.cost.mo':'Interés mensual adicional',
+    'rsim.save.int.saved.yr':'Interés anual ahorrado',  'rsim.save.int.cost.yr':'Interés anual adicional',
     'calc.ccl.nox.prin':'Capital (sin extra)','calc.ccl.nox.int':'Interés (sin extra)',
     'calc.stat.basecross':'Cruce base:',
     'chart.yr':'Año',
@@ -3003,16 +3003,12 @@ function addRsimSegment() {
   h +=     "<div class=\"rsim-savings-desc\" id=\"rsim-s"+idx+"-save-desc\"></div>";
   h +=     "<div class=\"rsim-savings-rows\">";
   h +=       "<div class=\"rsim-savings-row\">";
-  h +=         "<span class=\"rsim-savings-key\" data-i18n=\"rsim.savings.monthly\">Monthly savings</span>";
+  h +=         "<span class=\"rsim-savings-key\" id=\"rsim-s"+idx+"-save-mo-lbl\">Monthly interest</span>";
   h +=         "<span class=\"rsim-savings-val\" id=\"rsim-s"+idx+"-save-mo\">&mdash;</span>";
   h +=       "</div>";
   h +=       "<div class=\"rsim-savings-row\">";
-  h +=         "<span class=\"rsim-savings-key\" data-i18n=\"rsim.savings.annual\">Annual savings</span>";
+  h +=         "<span class=\"rsim-savings-key\" id=\"rsim-s"+idx+"-save-yr-lbl\">Annual interest</span>";
   h +=         "<span class=\"rsim-savings-val\" id=\"rsim-s"+idx+"-save-yr\">&mdash;</span>";
-  h +=       "</div>";
-  h +=       "<div class=\"rsim-savings-row\">";
-  h +=         "<span class=\"rsim-savings-key\" data-i18n=\"rsim.savings.breakeven\">Break-even point</span>";
-  h +=         "<span class=\"rsim-savings-val\" id=\"rsim-s"+idx+"-save-be\">&mdash;</span>";
   h +=       "</div>";
   h +=     "</div>";
   h +=   "</div>";
@@ -3064,7 +3060,8 @@ function refiSimUpdate() {
   var segBounds = [], amortRows = [];
   var cumP = 0, cumI = 0, globalYear = 0;
   var balance = segs[0].balance;
-  var prevSegPmt = 0; // WHY: tracks prior segment's monthly payment for savings comparison
+  var prevSegPmt = 0;      // WHY: tracks prior segment's monthly payment for savings comparison
+  var prevSegFirstInt = 0; // WHY: tracks prior segment's first-month interest for interest-change rows
 
   for (var si = 0; si < segs.length; si++) {
     var seg = segs[si];
@@ -3155,28 +3152,34 @@ function refiSimUpdate() {
       var saveDesc = document.getElementById("rsim-s"+si+"-save-desc");
       var saveMo   = document.getElementById("rsim-s"+si+"-save-mo");
       var saveYr   = document.getElementById("rsim-s"+si+"-save-yr");
-      var saveBe   = document.getElementById("rsim-s"+si+"-save-be");
+      var saveMoLbl = document.getElementById("rsim-s"+si+"-save-mo-lbl");
+      var saveYrLbl = document.getElementById("rsim-s"+si+"-save-yr-lbl");
       if (banner) {
         var isSaving = monthlySave > 0;
         var absSave  = Math.abs(monthlySave);
         banner.classList.add("visible");
-        // WHY: saving → green with "-" (payment decreases); costing more → red with "+" (payment increases)
+        // WHY: hero = payment change direction; red if payment went up, green if down
         banner.classList.toggle("cost", !isSaving);
         var sign = isSaving ? "-" : "+";
-        var heroStr = sign + fmtDollar(Math.round(absSave)) + "/mo";
-        if (saveHero) saveHero.textContent = heroStr;
+        if (saveHero) saveHero.textContent = sign + fmtDollar(Math.round(absSave)) + "/mo";
         if (saveDesc) saveDesc.textContent =
           "Refinancing from " + segs[si-1].rate.toFixed(2) + "% \u2192 " +
           seg.rate.toFixed(2) + "% on a " + fmtDollar(Math.round(segBal)) + " loan";
-        if (saveMo)   saveMo.textContent   = sign + fmtDollar(Math.round(absSave)) + "/mo";
-        if (saveYr)   saveYr.textContent   = sign + fmtDollar(Math.round(absSave * 12)) + "/yr";
-        var breakevenMo = (isSaving && seg.closing > 0) ? Math.ceil(seg.closing / monthlySave) : 0;
-        if (saveBe)   saveBe.textContent   = breakevenMo > 0 ? breakevenMo + " months" : "\u2014";
+        // WHY: rows show interest change (not payment change); interest may drop even when payment rises (shorter term)
+        var intDiff    = prevSegFirstInt - firstMoInt; // positive = interest decreased (savings)
+        var isIntSaved = intDiff > 0;
+        var absInt     = Math.abs(intDiff);
+        var intColor   = isIntSaved ? "#16a34a" : "var(--red)";
+        if (saveMoLbl) saveMoLbl.textContent = t(isIntSaved ? "rsim.save.int.saved.mo" : "rsim.save.int.cost.mo");
+        if (saveYrLbl) saveYrLbl.textContent = t(isIntSaved ? "rsim.save.int.saved.yr" : "rsim.save.int.cost.yr");
+        if (saveMo) { saveMo.textContent = "+" + fmtDollar(Math.round(absInt)) + "/mo"; saveMo.style.color = intColor; }
+        if (saveYr) { saveYr.textContent = "+" + fmtDollar(Math.round(absInt * 12)) + "/yr"; saveYr.style.color = intColor; }
       } else if (banner) {
         banner.classList.remove("visible");
       }
     }
-    prevSegPmt = regPmt;
+    prevSegPmt      = regPmt;
+    prevSegFirstInt = firstMoInt;
     globalYear += segMonthMax / 12;
     if (balance < 0.01) break;
   }
