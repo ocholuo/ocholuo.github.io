@@ -393,12 +393,12 @@
     .calc-preset-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
     .calc-preset-tab {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 8px 18px; border-radius: 20px;
+      padding: 6px 20px; border-radius: 20px;
       border: 1.5px solid var(--border); background: none;
       cursor: pointer; transition: all .15s;
-      min-width: 110px; text-align: center; font-family: inherit;
+      text-align: center; font-family: inherit; white-space: nowrap;
     }
-    .calc-preset-tab.active { background: var(--accent-light); border-color: var(--accent); }
+    .calc-preset-tab.active { background: var(--accent); border-color: var(--accent); }
     .calc-preset-tab:not(.active):hover { border-color: var(--accent); }
     .calc-preset-tab:not(.active):hover .calc-preset-tab-name { color: var(--accent); }
     .calc-preset-tab-name {
@@ -407,13 +407,13 @@
       background: transparent; border: none; outline: none;
       text-align: center; cursor: pointer; font-family: inherit; padding: 0;
     }
-    .calc-preset-tab.active .calc-preset-tab-name { color: var(--accent-dark); }
-    .calc-preset-tab-name:not([readonly]) { background: rgba(37,99,235,.08); border-radius: 3px; padding: 1px 4px; cursor: text; }
+    .calc-preset-tab.active .calc-preset-tab-name { color: #fff; }
+    .calc-preset-tab-name:not([readonly]) { background: rgba(255,255,255,.2); border-radius: 3px; padding: 1px 4px; cursor: text; }
     .calc-preset-tab-detail {
       display: block; font-size: .72rem; font-weight: 500;
-      color: var(--text-muted); margin-top: 3px;
+      color: var(--text-muted); margin-top: 2px;
     }
-    .calc-preset-tab.active .calc-preset-tab-detail { color: var(--accent); }
+    .calc-preset-tab.active .calc-preset-tab-detail { color: rgba(255,255,255,.85); }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
     @media (max-width: 480px) { .form-grid { grid-template-columns: 1fr; } }
     .form-group { display: flex; flex-direction: column; gap: 4px; }
@@ -1304,27 +1304,29 @@
     </div>
     <div class="live-badge"><span class="dot"></span> Live: <span id="calc-live-badge">loading…</span></div>
 
+    <!-- WHY: preset tabs sit outside the card, above section-cards, matching Plan A/B position in Refi -->
+    <div class="calc-preset-tabs" id="calc-presets">
+      <button class="calc-preset-tab active" data-price="940000" data-down="100000" data-term="30">
+        <input class="calc-preset-tab-name" type="text" value="Starter home" readonly tabindex="-1" title="Double-click to rename">
+        <span class="calc-preset-tab-detail">$940K · 20% · 30yr</span>
+      </button>
+      <button class="calc-preset-tab" data-price="670000" data-down="" data-term="15">
+        <input class="calc-preset-tab-name" type="text" value="Re-fin" readonly tabindex="-1" title="Double-click to rename">
+        <span class="calc-preset-tab-detail">$670K · 0% · 15yr</span>
+      </button>
+      <button class="calc-preset-tab" data-price="800000" data-down="160000" data-term="30">
+        <input class="calc-preset-tab-name" type="text" value="Move-up" readonly tabindex="-1" title="Double-click to rename">
+        <span class="calc-preset-tab-detail">$800K · 20% · 30yr</span>
+      </button>
+      <button class="calc-preset-tab" data-price="1200000" data-down="240000" data-term="15">
+        <input class="calc-preset-tab-name" type="text" value="Jumbo 15yr" readonly tabindex="-1" title="Double-click to rename">
+        <span class="calc-preset-tab-detail">$1.2M · 20% · 15yr</span>
+      </button>
+    </div>
+
     <!-- Section 1: Loan Inputs -->
     <div class="section-card">
       <div class="section-card-title">Loan Details</div>
-      <div class="calc-preset-tabs" id="calc-presets">
-        <button class="calc-preset-tab active" data-price="940000" data-down="100000" data-term="30">
-          <input class="calc-preset-tab-name" type="text" value="Starter home" readonly tabindex="-1" title="Double-click to rename">
-          <span class="calc-preset-tab-detail">$940K · 20% · 30yr</span>
-        </button>
-        <button class="calc-preset-tab" data-price="670000" data-down="" data-term="15">
-          <input class="calc-preset-tab-name" type="text" value="Re-fin" readonly tabindex="-1" title="Double-click to rename">
-          <span class="calc-preset-tab-detail">$670K · 0% · 15yr</span>
-        </button>
-        <button class="calc-preset-tab" data-price="800000" data-down="160000" data-term="30">
-          <input class="calc-preset-tab-name" type="text" value="Move-up" readonly tabindex="-1" title="Double-click to rename">
-          <span class="calc-preset-tab-detail">$800K · 20% · 30yr</span>
-        </button>
-        <button class="calc-preset-tab" data-price="1200000" data-down="240000" data-term="15">
-          <input class="calc-preset-tab-name" type="text" value="Jumbo 15yr" readonly tabindex="-1" title="Double-click to rename">
-          <span class="calc-preset-tab-detail">$1.2M · 20% · 15yr</span>
-        </button>
-      </div>
       <div class="form-grid">
         <div class="form-group">
           <div class="form-label" data-i18n="form.price">House Price</div>
