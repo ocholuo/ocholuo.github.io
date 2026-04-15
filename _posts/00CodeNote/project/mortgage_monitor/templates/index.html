@@ -1348,7 +1348,7 @@
         <div class="tab-name-row">
           <input class="calc-preset-tab-name" type="text" value="My home" readonly tabindex="-1">
           <span class="tab-edit-icon" title="Double-click to rename">&#9998;</span>
-          <button class="tab-delete-btn" title="Remove this scenario" onclick="calcDeletePreset(event,this)">&#10005;</button>
+          <span class="tab-delete-btn" title="Remove this scenario" onclick="calcDeletePreset(event,this)">&#10005;</span>
         </div>
         <span class="calc-preset-tab-detail">$940K · 11% · 30yr</span>
       </button>
@@ -2870,7 +2870,7 @@ function calcAddPreset() {
   btn.dataset.price = price;
   btn.dataset.down = down;
   btn.dataset.term = term;
-  btn.innerHTML = '<div class="tab-name-row"><input class="calc-preset-tab-name" type="text" value="Scenario ' + count + '" readonly tabindex="-1"><span class="tab-edit-icon" title="Double-click to rename">&#9998;</span><button class="tab-delete-btn" title="Remove this scenario" onclick="calcDeletePreset(event,this)">&#10005;</button></div><span class="calc-preset-tab-detail">' + detail + '</span>';
+  btn.innerHTML = '<div class="tab-name-row"><input class="calc-preset-tab-name" type="text" value="Scenario ' + count + '" readonly tabindex="-1"><span class="tab-edit-icon" title="Double-click to rename">&#9998;</span><span class="tab-delete-btn" title="Remove this scenario" onclick="calcDeletePreset(event,this)">&#10005;</span></div><span class="calc-preset-tab-detail">' + detail + '</span>';
   const addBtn = document.getElementById("calc-preset-add");
   addBtn.parentNode.insertBefore(btn, addBtn);
   calcAttachTabHandlers(btn);
