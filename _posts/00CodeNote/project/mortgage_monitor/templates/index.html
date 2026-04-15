@@ -3141,13 +3141,13 @@ function refiSimUpdate() {
       }
     }
     // Update per-segment stats grid
-    var statPmt     = document.getElementById("rsim-s"+si+"-stat-pmt");
-    var statPmtPrin = document.getElementById("rsim-s"+si+"-stat-pmt-prin");
-    var statPmtInt  = document.getElementById("rsim-s"+si+"-stat-pmt-int");
-    var statInt  = document.getElementById("rsim-s"+si+"-stat-int");
-    var statIntP = document.getElementById("rsim-s"+si+"-stat-int-pct");
-    var statCost = document.getElementById("rsim-s"+si+"-stat-cost");
-    var statCostR= document.getElementById("rsim-s"+si+"-stat-cost-ref");
+    var statPmt     = document.getElementById("rsim-s"+seg.idx+"-stat-pmt");
+    var statPmtPrin = document.getElementById("rsim-s"+seg.idx+"-stat-pmt-prin");
+    var statPmtInt  = document.getElementById("rsim-s"+seg.idx+"-stat-pmt-int");
+    var statInt  = document.getElementById("rsim-s"+seg.idx+"-stat-int");
+    var statIntP = document.getElementById("rsim-s"+seg.idx+"-stat-int-pct");
+    var statCost = document.getElementById("rsim-s"+seg.idx+"-stat-cost");
+    var statCostR= document.getElementById("rsim-s"+seg.idx+"-stat-cost-ref");
     var firstMoInt  = segBal * mRate;
     var firstMoPrin = regPmt - firstMoInt;
     if (statPmt)     statPmt.textContent     = fmtDollar(regPmt);
@@ -3163,14 +3163,14 @@ function refiSimUpdate() {
     // Update savings banner for refi segments
     if (si > 0) {
       var monthlySave = prevSegPmt - regPmt;
-      var banner   = document.getElementById("rsim-s"+si+"-savings");
-      var saveHero  = document.getElementById("rsim-s"+si+"-save-hero");
-      var saveBadge = document.getElementById("rsim-s"+si+"-save-badge");
-      var saveSub   = document.getElementById("rsim-s"+si+"-save-sub");
-      var saveMo    = document.getElementById("rsim-s"+si+"-save-mo");
-      var saveYr    = document.getElementById("rsim-s"+si+"-save-yr");
-      var saveMoLbl = document.getElementById("rsim-s"+si+"-save-mo-lbl");
-      var saveYrLbl = document.getElementById("rsim-s"+si+"-save-yr-lbl");
+      var banner   = document.getElementById("rsim-s"+seg.idx+"-savings");
+      var saveHero  = document.getElementById("rsim-s"+seg.idx+"-save-hero");
+      var saveBadge = document.getElementById("rsim-s"+seg.idx+"-save-badge");
+      var saveSub   = document.getElementById("rsim-s"+seg.idx+"-save-sub");
+      var saveMo    = document.getElementById("rsim-s"+seg.idx+"-save-mo");
+      var saveYr    = document.getElementById("rsim-s"+seg.idx+"-save-yr");
+      var saveMoLbl = document.getElementById("rsim-s"+seg.idx+"-save-mo-lbl");
+      var saveYrLbl = document.getElementById("rsim-s"+seg.idx+"-save-yr-lbl");
       if (banner) {
         var isSaving = monthlySave > 0;
         var absSave  = Math.abs(monthlySave);
