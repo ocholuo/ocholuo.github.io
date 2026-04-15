@@ -833,6 +833,35 @@
     .sentiment-badge.neutral { background: #f1f5f9; color: #475569; }
     .news-snippet { font-size: .72rem; color: var(--text-muted); background: #f8fafc; border-radius: var(--radius-sm); padding: 6px 8px; margin-top: 5px; line-height: 1.45; }
 
+    /* ── Broker cards ────────────────────────────────────────────── */
+    .broker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 480px) { .broker-grid { grid-template-columns: 1fr; } }
+    .broker-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 14px; display: flex; flex-direction: column; gap: 6px;
+      background: var(--surface);
+    }
+    .broker-name { font-size: .88rem; font-weight: 700; color: var(--text); }
+    .broker-role { font-size: .7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
+    .broker-phone {
+      display: none; margin-top: 4px;
+      font-size: .85rem; font-weight: 700; color: var(--accent);
+      background: var(--accent-light); border-radius: var(--radius-sm);
+      padding: 5px 9px; letter-spacing: .04em;
+    }
+    .broker-phone.visible { display: block; }
+    .broker-btn {
+      margin-top: auto; padding: 6px 0; border-radius: var(--radius-sm);
+      border: 1px solid var(--accent); background: transparent;
+      color: var(--accent); font-size: .74rem; font-weight: 700;
+      cursor: pointer; transition: background .15s, color .15s;
+      /* WHY: accent-only border keeps it lightweight inside the news panel */
+    }
+    .broker-btn:hover { background: var(--accent); color: #fff; }
+    .broker-btn.revealed { background: var(--accent); color: #fff; }
+    html[data-theme="midnight"] .broker-card { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); }
+    html[data-theme="terminal"] .broker-card { background: #1a1a1a; border-color: #333; }
+
     /* ── Utilities ───────────────────────────────────────────────── */
     .divider { height: 1px; background: var(--border); margin: 14px 0; }
     .loading { color: var(--text-muted); font-size: .82rem; padding: 18px; text-align: center; }
@@ -1707,7 +1736,30 @@
       <div class="signal-analysis" id="signal-analysis">Analyzing headlines…</div>
     </div>
 
-    <!-- Section 2: News Feed -->
+    <!-- Section 2: Broker Contacts -->
+    <div class="section-card">
+      <div class="section-card-title" data-i18n="news.brokers.title">Contact a Refi Broker</div>
+      <p style="font-size:.74rem;color:var(--text-muted);margin:0 0 12px" data-i18n="news.brokers.desc">Get personalized refinance rate quotes from our partner brokers.</p>
+      <div class="broker-grid">
+
+        <div class="broker-card">
+          <div class="broker-name">Muffin</div>
+          <div class="broker-role" data-i18n="news.brokers.role">Refi Advisor</div>
+          <div class="broker-phone" id="broker-phone-0">114114</div>
+          <button class="broker-btn" id="broker-btn-0" onclick="toggleBroker(0)" data-i18n="news.brokers.cta">View Contact</button>
+        </div>
+
+        <div class="broker-card">
+          <div class="broker-name">Kona</div>
+          <div class="broker-role" data-i18n="news.brokers.role">Refi Advisor</div>
+          <div class="broker-phone" id="broker-phone-1">20027</div>
+          <button class="broker-btn" id="broker-btn-1" onclick="toggleBroker(1)" data-i18n="news.brokers.cta">View Contact</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 3: News Feed -->
     <div class="section-card">
       <div class="section-card-title">Headlines</div>
       <div class="filter-chips" id="news-filters">
@@ -1755,6 +1807,7 @@ const T = {
     'footer.disclaimer':'Rates shown are national averages for informational purposes only. Individual rates vary based on credit score, LTV, and lender. Not financial advice.',
     'modal.calc.title':'Monthly Payment Calculator','modal.refi.title':'Refinance Savings Calculator',
     'modal.history.title':'Daily Rate History','modal.news.title':'Market News And Rate Impact',
+    'news.brokers.title':'Contact a Refi Broker','news.brokers.desc':'Get personalized refinance rate quotes from our partner brokers.','news.brokers.role':'Refi Advisor','news.brokers.cta':'View Contact','news.brokers.hide':'Hide',
     'form.price':'House Price','form.down':'Down Payment','form.term':'Loan Term','form.rate':'Interest Rate',
     'form.balance':'Loan Balance','form.currate':'Current Rate','form.newrate':"New Rate (Today's)",'form.remterm':'Remaining Term','form.closing':'Closing Costs',
     'res.monthly':'Monthly Payment','res.interest':'Total Interest','res.total':'Total Cost',
@@ -1814,6 +1867,7 @@ const T = {
     'footer.disclaimer':'所示利率为全国平均值，仅供参考。个人利率因信用分、贷款价值比及贷款机构而异。本内容不构成财务建议。',
     'modal.calc.title':'月供计算器','modal.refi.title':'再融资节省计算器',
     'modal.history.title':'近期利率历史','modal.news.title':'市场新闻与利率分析',
+    'news.brokers.title':'联系再融资中介','news.brokers.desc':'向我们的合作中介获取个性化再融资利率报价。','news.brokers.role':'再融资顾问','news.brokers.cta':'查看联系方式','news.brokers.hide':'收起',
     'form.price':'房屋价格','form.down':'首付金额','form.term':'贷款年限','form.rate':'利率',
     'form.balance':'贷款余额','form.currate':'当前利率','form.newrate':'新利率（今日）','form.remterm':'剩余年限','form.closing':'交割费用',
     'res.monthly':'月供','res.interest':'总利息','res.total':'总费用',
@@ -1873,6 +1927,7 @@ const T = {
     'footer.disclaimer':'Las tasas son promedios nacionales con fines informativos. Las tasas individuales varían según puntaje crediticio, LTV y prestamista. No es asesoría financiera.',
     'modal.calc.title':'Calculadora de Pago Mensual','modal.refi.title':'Calculadora de Refinanciamiento',
     'modal.history.title':'Historial de Tasas','modal.news.title':'Noticias de Mercado e Impacto',
+    'news.brokers.title':'Contactar un Asesor de Refinanciamiento','news.brokers.desc':'Obtén cotizaciones personalizadas de nuestros asesores asociados.','news.brokers.role':'Asesor Refi','news.brokers.cta':'Ver Contacto','news.brokers.hide':'Ocultar',
     'form.price':'Precio de casa','form.down':'Pago inicial','form.term':'Plazo del préstamo','form.rate':'Tasa de interés',
     'form.balance':'Saldo del préstamo','form.currate':'Tasa actual','form.newrate':'Nueva tasa (hoy)','form.remterm':'Plazo restante','form.closing':'Costos de cierre',
     'res.monthly':'Pago mensual','res.interest':'Interés total','res.total':'Costo total',
@@ -3877,6 +3932,18 @@ function renderNewsUI(data) {
 
 function renderNews(data, filter) {
   if (!data) return;
+
+// ── Broker contact toggle ─────────────────────────────────────────
+// WHY: phone revealed on demand to keep the card compact by default
+function toggleBroker(idx) {
+  var phone = document.getElementById("broker-phone-" + idx);
+  var btn   = document.getElementById("broker-btn-" + idx);
+  if (!phone || !btn) return;
+  var showing = phone.classList.contains("visible");
+  phone.classList.toggle("visible", !showing);
+  btn.classList.toggle("revealed", !showing);
+  btn.textContent = !showing ? t("news.brokers.hide") : t("news.brokers.cta");
+}
   const articles = (data.articles || []).filter(a => {
     if (filter === "all") return true;
     if (filter === "Rate Up" || filter === "Rate Down" || filter === "Neutral") return a.sentiment === filter;
