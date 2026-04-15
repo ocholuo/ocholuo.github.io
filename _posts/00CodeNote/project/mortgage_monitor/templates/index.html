@@ -726,6 +726,13 @@
     .rsim-savings-key { color: var(--text-muted); }
     .rsim-savings-val { font-weight: 700; color: #16a34a; }
     .rsim-savings-banner.cost .rsim-savings-val { color: var(--red); }
+    /* WHY: compact comparison box inside 总利息/总费用 columns, mirrors savings banner structure */
+    .rsim-mini-banner { display: none; margin-top: 8px; padding: 6px 10px 8px; border-radius: 6px; border: 1px solid rgba(22,163,74,.2); background: rgba(22,163,74,.06); }
+    .rsim-mini-banner.visible { display: block; }
+    .rsim-mini-banner.cost { border-color: rgba(239,68,68,.2); background: rgba(239,68,68,.06); }
+    .rsim-mini-hero { display: block; font-size: 1.15rem; font-weight: 900; color: #16a34a; line-height: 1.2; }
+    .rsim-mini-banner.cost .rsim-mini-hero { color: var(--red); }
+    .rsim-mini-label { display: block; font-size: .67rem; color: var(--text-muted); margin-top: 2px; }
     /* -- Plan A / B tabs ---------------------------------------------- */
     /* WHY: lets users build two independent scenarios and compare them */
     .rsim-plan-tabs { display: flex; align-items: center; gap: 8px;
@@ -1781,6 +1788,8 @@ const T = {
     'rsim.save.sub.save':'saved/mo','rsim.save.sub.cost':'more/mo',
     'rsim.save.int.saved.mo':'Monthly interest saved','rsim.save.int.cost.mo':'Monthly interest added',
     'rsim.save.int.saved.yr':'Annual interest saved', 'rsim.save.int.cost.yr':'Annual interest added',
+    'rsim.int.cmp.save':'full-term interest saved','rsim.int.cmp.cost':'full-term interest added',
+    'rsim.cost.cmp.save':'full-term cost saved','rsim.cost.cmp.cost':'full-term cost added',
     'calc.ccl.nox.prin':'Principal (no extra)','calc.ccl.nox.int':'Interest (no extra)',
     'calc.stat.basecross':'Base Crossover:',
     'chart.yr':'Yr',
@@ -1838,6 +1847,8 @@ const T = {
     'rsim.save.sub.save':'每月节省','rsim.save.sub.cost':'每月多交',
     'rsim.save.int.saved.mo':'每月节省利息','rsim.save.int.cost.mo':'每月增加利息',
     'rsim.save.int.saved.yr':'每年节省利息', 'rsim.save.int.cost.yr':'每年增加利息',
+    'rsim.int.cmp.save':'全程节省利息','rsim.int.cmp.cost':'全程增加利息',
+    'rsim.cost.cmp.save':'全程节省费用','rsim.cost.cmp.cost':'全程增加费用',
     'calc.ccl.nox.prin':'本金（无额外）','calc.ccl.nox.int':'利息（无额外）',
     'calc.stat.basecross':'基准交叉:',
     'chart.yr':'年',
@@ -1895,6 +1906,8 @@ const T = {
     'rsim.save.sub.save':'ahorrado/mes','rsim.save.sub.cost':'más/mes',
     'rsim.save.int.saved.mo':'Interés mensual ahorrado','rsim.save.int.cost.mo':'Interés mensual adicional',
     'rsim.save.int.saved.yr':'Interés anual ahorrado',  'rsim.save.int.cost.yr':'Interés anual adicional',
+    'rsim.int.cmp.save':'interés total ahorrado','rsim.int.cmp.cost':'interés total adicional',
+    'rsim.cost.cmp.save':'costo total ahorrado','rsim.cost.cmp.cost':'costo total adicional',
     'calc.ccl.nox.prin':'Capital (sin extra)','calc.ccl.nox.int':'Interés (sin extra)',
     'calc.stat.basecross':'Cruce base:',
     'chart.yr':'Año',
@@ -3037,11 +3050,19 @@ function addRsimSegment() {
   h +=       "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.tot.int\">Total Interest</div>";
   h +=       "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-int\">&mdash;</div>";
   h +=       "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-int-pct\"></div>";
+  h +=       "<div class=\"rsim-mini-banner\" id=\"rsim-s"+idx+"-int-cmp\">";
+  h +=         "<span class=\"rsim-mini-hero\" id=\"rsim-s"+idx+"-int-hero\">&mdash;</span>";
+  h +=         "<span class=\"rsim-mini-label\" id=\"rsim-s"+idx+"-int-lbl\"></span>";
+  h +=       "</div>";
   h +=     "</div>";
   h +=     "<div class=\"rsim-stat-item\">";
   h +=       "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.tot.cost\">Total Cost</div>";
   h +=       "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-cost\">&mdash;</div>";
   h +=       "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-cost-ref\"></div>";
+  h +=       "<div class=\"rsim-mini-banner\" id=\"rsim-s"+idx+"-cost-cmp\">";
+  h +=         "<span class=\"rsim-mini-hero\" id=\"rsim-s"+idx+"-cost-hero\">&mdash;</span>";
+  h +=         "<span class=\"rsim-mini-label\" id=\"rsim-s"+idx+"-cost-lbl\"></span>";
+  h +=       "</div>";
   h +=     "</div>";
   h +=   "</div>";
   h +=   "<div class=\"rsim-savings-banner\" id=\"rsim-s"+idx+"-savings\">";
@@ -3111,6 +3132,8 @@ function refiSimUpdate() {
   var balance = segs[0].balance;
   var prevSegPmt = 0;      // WHY: tracks prior segment's monthly payment for savings comparison
   var prevSegFirstInt = 0; // WHY: tracks prior segment's first-month interest for interest-change rows
+  var prevSegTerm = 0;     // WHY: tracks prior segment's term for full-term interest/cost comparison
+  var prevSegBal  = 0;     // WHY: tracks prior segment's starting balance for full-term cost comparison
 
   for (var si = 0; si < segs.length; si++) {
     var seg = segs[si];
@@ -3223,12 +3246,44 @@ function refiSimUpdate() {
         if (saveYrLbl) saveYrLbl.textContent = t(isIntSaved ? "rsim.save.int.saved.yr" : "rsim.save.int.cost.yr");
         if (saveMo) { saveMo.textContent = "+" + fmtDollar(Math.round(absInt)) + "/mo"; saveMo.style.color = intColor; }
         if (saveYr) { saveYr.textContent = "+" + fmtDollar(Math.round(absInt * 12)) + "/yr"; saveYr.style.color = intColor; }
+        // WHY: full-term interest comparison — how much the new loan costs vs the old loan over their respective full terms
+        var prevFullTermInt  = prevSegPmt * prevSegTerm * 12 - prevSegBal;
+        var thisFullTermInt  = regPmt * seg.term * 12 - segBal;
+        var intTotDiff       = prevFullTermInt - thisFullTermInt; // positive = new loan saves interest
+        var isIntTotSaved    = intTotDiff > 0;
+        var absIntTotDiff    = Math.abs(intTotDiff);
+        var intCmp    = document.getElementById("rsim-s"+seg.idx+"-int-cmp");
+        var intHero   = document.getElementById("rsim-s"+seg.idx+"-int-hero");
+        var intLbl    = document.getElementById("rsim-s"+seg.idx+"-int-lbl");
+        if (intCmp) {
+          intCmp.classList.add("visible");
+          intCmp.classList.toggle("cost", !isIntTotSaved);
+          if (intHero) { intHero.textContent = (isIntTotSaved ? "-" : "+") + fmtDollar(Math.round(absIntTotDiff)); intHero.style.color = isIntTotSaved ? "#16a34a" : "var(--red)"; }
+          if (intLbl)  { intLbl.textContent  = t(isIntTotSaved ? "rsim.int.cmp.save" : "rsim.int.cmp.cost"); intLbl.style.color = "var(--text-muted)"; }
+        }
+        // WHY: full-term cost comparison — total payments (principal+interest) over respective full terms
+        var prevFullTermCost = prevSegPmt * prevSegTerm * 12;
+        var thisFullTermCost = regPmt * seg.term * 12;
+        var costTotDiff      = prevFullTermCost - thisFullTermCost; // positive = new loan costs less
+        var isCostTotSaved   = costTotDiff > 0;
+        var absCostTotDiff   = Math.abs(costTotDiff);
+        var costCmp   = document.getElementById("rsim-s"+seg.idx+"-cost-cmp");
+        var costHero  = document.getElementById("rsim-s"+seg.idx+"-cost-hero");
+        var costLbl   = document.getElementById("rsim-s"+seg.idx+"-cost-lbl");
+        if (costCmp) {
+          costCmp.classList.add("visible");
+          costCmp.classList.toggle("cost", !isCostTotSaved);
+          if (costHero) { costHero.textContent = (isCostTotSaved ? "-" : "+") + fmtDollar(Math.round(absCostTotDiff)); costHero.style.color = isCostTotSaved ? "#16a34a" : "var(--red)"; }
+          if (costLbl)  { costLbl.textContent  = t(isCostTotSaved ? "rsim.cost.cmp.save" : "rsim.cost.cmp.cost"); costLbl.style.color = "var(--text-muted)"; }
+        }
       } else if (banner) {
         banner.classList.remove("visible");
       }
     }
     prevSegPmt      = regPmt;
     prevSegFirstInt = firstMoInt;
+    prevSegTerm     = seg.term;
+    prevSegBal      = segBal;
     globalYear += segMonthMax / 12;
     if (balance < 0.01) break;
   }
