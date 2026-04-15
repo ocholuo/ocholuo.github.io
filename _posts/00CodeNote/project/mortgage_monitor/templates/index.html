@@ -685,8 +685,10 @@
     .rsim-stats-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 8px; margin-top: 10px; padding-top: 10px;
-      border-top: 1px solid var(--border); width: 100%;
+      border-top: 1px solid var(--border); width: 100%; align-items: start;
     }
+    /* WHY: each col wraps its stat item + banner so they move together at any width */
+    .rsim-stat-col { display: flex; flex-direction: column; }
     .rsim-stat-item { text-align: center; padding: 6px 4px; }
     .rsim-stat-label { font-size: .63rem; color: var(--text-muted); text-transform: uppercase;
       letter-spacing: .07em; font-weight: 700; }
@@ -694,8 +696,6 @@
       letter-spacing: -.02em; font-variant-numeric: tabular-nums; margin-top: 3px; }
     .rsim-stat-sub { font-size: .72rem; color: var(--text-muted); margin-top: 2px; }
     /* WHY: green savings banner for refi segments showing comparison vs prior segment */
-    /* WHY: banners-row aligns all three comparison boxes at the same top baseline */
-    .rsim-banners-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; align-items: start; }
     .rsim-savings-banner {
       display: none;
       background: rgba(34,197,94,.07); border: 1px solid rgba(34,197,94,.25);
@@ -3041,50 +3041,55 @@ function addRsimSegment() {
   h +=   "<strong class=\"rsim-pmt-val\" id=\"rsim-s"+idx+"-pmt\">&mdash;</strong>";
   h +=   "<span style=\"margin-left:10px;color:var(--text-muted);font-size:.7rem\" data-i18n=\"rsim.seg.rate.lbl\">Rate:</span>";
   h +=   "<strong style=\"font-size:.78rem;color:var(--text)\" id=\"rsim-s"+idx+"-rate-badge\">&mdash;</strong>";
+  // WHY: single grid wraps each stat + its banner in the same column cell,
+  //      so banners stay directly below their stat at any window width
   h +=   "<div class=\"rsim-stats-grid\">";
-  h +=     "<div class=\"rsim-stat-item\">";
-  h +=       "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.monthly\">Monthly Pmt</div>";
-  h +=       "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-pmt\">&mdash;</div>";
-  h +=       "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-pmt-prin\"></div>";
-  h +=       "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-pmt-int\"></div>";
-  h +=     "</div>";
-  h +=     "<div class=\"rsim-stat-item\">";
-  h +=       "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.tot.int\">Total Interest</div>";
-  h +=       "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-int\">&mdash;</div>";
-  h +=       "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-int-pct\"></div>";
-  h +=     "</div>";
-  h +=     "<div class=\"rsim-stat-item\">";
-  h +=       "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.tot.cost\">Total Cost</div>";
-  h +=       "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-cost\">&mdash;</div>";
-  h +=       "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-cost-ref\"></div>";
-  h +=     "</div>";
-  h +=   "</div>";
-  // WHY: banners row puts all three comparison boxes at the same top-aligned horizontal level
-  h +=   "<div class=\"rsim-banners-row\">";
-  h +=     "<div class=\"rsim-savings-banner\" id=\"rsim-s"+idx+"-savings\">";
-  h +=       "<div class=\"rsim-savings-badge\" id=\"rsim-s"+idx+"-save-badge\">IF YOU REFINANCE TODAY</div>";
-  h +=       "<div class=\"rsim-savings-hero-row\">";
-  h +=         "<span class=\"rsim-savings-hero\" id=\"rsim-s"+idx+"-save-hero\">&mdash;</span>";
-  h +=         "<span class=\"rsim-savings-sub\" id=\"rsim-s"+idx+"-save-sub\"></span>";
+  h +=     "<div class=\"rsim-stat-col\">";
+  h +=       "<div class=\"rsim-stat-item\">";
+  h +=         "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.monthly\">Monthly Pmt</div>";
+  h +=         "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-pmt\">&mdash;</div>";
+  h +=         "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-pmt-prin\"></div>";
+  h +=         "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-pmt-int\"></div>";
   h +=       "</div>";
-  h +=       "<div class=\"rsim-savings-rows\">";
-  h +=         "<div class=\"rsim-savings-row\">";
-  h +=           "<span class=\"rsim-savings-key\" id=\"rsim-s"+idx+"-save-mo-lbl\">Monthly interest</span>";
-  h +=           "<span class=\"rsim-savings-val\" id=\"rsim-s"+idx+"-save-mo\">&mdash;</span>";
+  h +=       "<div class=\"rsim-savings-banner\" id=\"rsim-s"+idx+"-savings\">";
+  h +=         "<div class=\"rsim-savings-badge\" id=\"rsim-s"+idx+"-save-badge\">IF YOU REFINANCE TODAY</div>";
+  h +=         "<div class=\"rsim-savings-hero-row\">";
+  h +=           "<span class=\"rsim-savings-hero\" id=\"rsim-s"+idx+"-save-hero\">&mdash;</span>";
+  h +=           "<span class=\"rsim-savings-sub\" id=\"rsim-s"+idx+"-save-sub\"></span>";
   h +=         "</div>";
-  h +=         "<div class=\"rsim-savings-row\">";
-  h +=           "<span class=\"rsim-savings-key\" id=\"rsim-s"+idx+"-save-yr-lbl\">Annual interest</span>";
-  h +=           "<span class=\"rsim-savings-val\" id=\"rsim-s"+idx+"-save-yr\">&mdash;</span>";
+  h +=         "<div class=\"rsim-savings-rows\">";
+  h +=           "<div class=\"rsim-savings-row\">";
+  h +=             "<span class=\"rsim-savings-key\" id=\"rsim-s"+idx+"-save-mo-lbl\">Monthly interest</span>";
+  h +=             "<span class=\"rsim-savings-val\" id=\"rsim-s"+idx+"-save-mo\">&mdash;</span>";
+  h +=           "</div>";
+  h +=           "<div class=\"rsim-savings-row\">";
+  h +=             "<span class=\"rsim-savings-key\" id=\"rsim-s"+idx+"-save-yr-lbl\">Annual interest</span>";
+  h +=             "<span class=\"rsim-savings-val\" id=\"rsim-s"+idx+"-save-yr\">&mdash;</span>";
+  h +=           "</div>";
   h +=         "</div>";
   h +=       "</div>";
   h +=     "</div>";
-  h +=     "<div class=\"rsim-mini-banner\" id=\"rsim-s"+idx+"-int-cmp\">";
-  h +=       "<span class=\"rsim-mini-hero\" id=\"rsim-s"+idx+"-int-hero\">&mdash;</span>";
-  h +=       "<span class=\"rsim-mini-label\" id=\"rsim-s"+idx+"-int-lbl\"></span>";
+  h +=     "<div class=\"rsim-stat-col\">";
+  h +=       "<div class=\"rsim-stat-item\">";
+  h +=         "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.tot.int\">Total Interest</div>";
+  h +=         "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-int\">&mdash;</div>";
+  h +=         "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-int-pct\"></div>";
+  h +=       "</div>";
+  h +=       "<div class=\"rsim-mini-banner\" id=\"rsim-s"+idx+"-int-cmp\">";
+  h +=         "<span class=\"rsim-mini-hero\" id=\"rsim-s"+idx+"-int-hero\">&mdash;</span>";
+  h +=         "<span class=\"rsim-mini-label\" id=\"rsim-s"+idx+"-int-lbl\"></span>";
+  h +=       "</div>";
   h +=     "</div>";
-  h +=     "<div class=\"rsim-mini-banner\" id=\"rsim-s"+idx+"-cost-cmp\">";
-  h +=       "<span class=\"rsim-mini-hero\" id=\"rsim-s"+idx+"-cost-hero\">&mdash;</span>";
-  h +=       "<span class=\"rsim-mini-label\" id=\"rsim-s"+idx+"-cost-lbl\"></span>";
+  h +=     "<div class=\"rsim-stat-col\">";
+  h +=       "<div class=\"rsim-stat-item\">";
+  h +=         "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.tot.cost\">Total Cost</div>";
+  h +=         "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-cost\">&mdash;</div>";
+  h +=         "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-cost-ref\"></div>";
+  h +=       "</div>";
+  h +=       "<div class=\"rsim-mini-banner\" id=\"rsim-s"+idx+"-cost-cmp\">";
+  h +=         "<span class=\"rsim-mini-hero\" id=\"rsim-s"+idx+"-cost-hero\">&mdash;</span>";
+  h +=         "<span class=\"rsim-mini-label\" id=\"rsim-s"+idx+"-cost-lbl\"></span>";
+  h +=       "</div>";
   h +=     "</div>";
   h +=   "</div>";
   h += "</div>";
