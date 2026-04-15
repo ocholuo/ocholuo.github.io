@@ -414,6 +414,15 @@
       color: var(--text-muted); margin-top: 2px;
     }
     .calc-preset-tab.active .calc-preset-tab-detail { color: rgba(255,255,255,.85); }
+    /* WHY: dashed "+" add button sits at end of tab row, visually distinct from preset tabs */
+    .calc-preset-add {
+      padding: 6px 14px; border-radius: 20px;
+      border: 1.5px dashed var(--border); background: none;
+      cursor: pointer; transition: all .15s;
+      font-size: 1rem; font-weight: 700; color: var(--text-muted);
+      font-family: inherit; align-self: center; line-height: 1;
+    }
+    .calc-preset-add:hover { border-color: var(--accent); color: var(--accent); }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
     @media (max-width: 480px) { .form-grid { grid-template-columns: 1fr; } }
     .form-group { display: flex; flex-direction: column; gap: 4px; }
@@ -1315,21 +1324,10 @@
     <!-- WHY: preset tabs sit outside the card, above section-cards, matching Plan A/B position in Refi -->
     <div class="calc-preset-tabs" id="calc-presets">
       <button class="calc-preset-tab active" data-price="940000" data-down="100000" data-term="30">
-        <input class="calc-preset-tab-name" type="text" value="Starter home" readonly tabindex="-1" title="Double-click to rename">
-        <span class="calc-preset-tab-detail">$940K · 20% · 30yr</span>
+        <input class="calc-preset-tab-name" type="text" value="My home" readonly tabindex="-1" title="Double-click to rename">
+        <span class="calc-preset-tab-detail">$940K · 11% · 30yr</span>
       </button>
-      <button class="calc-preset-tab" data-price="670000" data-down="" data-term="15">
-        <input class="calc-preset-tab-name" type="text" value="Re-fin" readonly tabindex="-1" title="Double-click to rename">
-        <span class="calc-preset-tab-detail">$670K · 0% · 15yr</span>
-      </button>
-      <button class="calc-preset-tab" data-price="800000" data-down="160000" data-term="30">
-        <input class="calc-preset-tab-name" type="text" value="Move-up" readonly tabindex="-1" title="Double-click to rename">
-        <span class="calc-preset-tab-detail">$800K · 20% · 30yr</span>
-      </button>
-      <button class="calc-preset-tab" data-price="1200000" data-down="240000" data-term="15">
-        <input class="calc-preset-tab-name" type="text" value="Jumbo 15yr" readonly tabindex="-1" title="Double-click to rename">
-        <span class="calc-preset-tab-detail">$1.2M · 20% · 15yr</span>
-      </button>
+      <button class="calc-preset-add" id="calc-preset-add" onclick="calcAddPreset()" title="Add scenario">+</button>
     </div>
 
     <!-- Section 1: Loan Inputs -->
@@ -2764,47 +2762,77 @@ function removeExtraPayment(btn) {
   calcUpdate();
 }
 
+// Loan preset tabs — helpers
+function calcFormatDetail(price, down, term) {
+  const p = parseFloat(price) || 0;
+  const d = parseFloat(down) || 0;
+  const priceFmt = p >= 1000000
+    ? '$' + (p / 1000000).toFixed(1).replace(/\.0$/, '') + 'M'
+    : '$' + Math.round(p / 1000) + 'K';
+  const pct = p > 0 ? Math.round(d / p * 100) : 0;
+  return priceFmt + ' \u00b7 ' + pct + '% \u00b7 ' + term + 'yr';
+}
+
+function calcAttachTabHandlers(btn) {
+  btn.addEventListener("click", (e) => {
+    if (e.target.classList.contains("calc-preset-tab-name") && !e.target.readOnly) return;
+    document.querySelectorAll(".calc-preset-tab").forEach(c => c.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("calc-price").value = btn.dataset.price;
+    document.getElementById("calc-down").value = btn.dataset.down;
+    document.getElementById("calc-term").value = btn.dataset.term;
+    const price = parseFloat(btn.dataset.price);
+    const down = parseFloat(btn.dataset.down);
+    document.getElementById("calc-down-pct").value = (down / price * 100).toFixed(1);
+    const rate = btn.dataset.term === "15"
+      ? (parseFloat(document.getElementById("refi-new-slider").value) - 0.65)
+      : parseFloat(document.getElementById("refi-new-slider").value);
+    document.getElementById("calc-rate-slider").value = rate;
+    document.getElementById("calc-rate-display").value = rate.toFixed(2);
+    calcUpdate();
+  });
+  const nameInput = btn.querySelector(".calc-preset-tab-name");
+  if (nameInput) {
+    nameInput.addEventListener("dblclick", (e) => {
+      e.stopPropagation();
+      nameInput.removeAttribute("readonly");
+      nameInput.focus();
+      nameInput.select();
+    });
+    nameInput.addEventListener("blur", () => {
+      nameInput.setAttribute("readonly", true);
+      if (!nameInput.value.trim()) nameInput.value = "Preset";
+    });
+    nameInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); nameInput.blur(); }
+      if (e.key === "Escape") { nameInput.blur(); }
+    });
+  }
+}
+
+function calcAddPreset() {
+  const price = parseFloat(document.getElementById("calc-price").value) || 500000;
+  const down = parseFloat(document.getElementById("calc-down").value) || 0;
+  const term = document.getElementById("calc-term").value || "30";
+  const count = document.querySelectorAll(".calc-preset-tab").length + 1;
+  const detail = calcFormatDetail(price, down, term);
+  const btn = document.createElement("button");
+  btn.className = "calc-preset-tab";
+  btn.dataset.price = price;
+  btn.dataset.down = down;
+  btn.dataset.term = term;
+  btn.innerHTML = '<input class="calc-preset-tab-name" type="text" value="Scenario ' + count + '" readonly tabindex="-1" title="Double-click to rename"><span class="calc-preset-tab-detail">' + detail + '</span>';
+  const addBtn = document.getElementById("calc-preset-add");
+  addBtn.parentNode.insertBefore(btn, addBtn);
+  calcAttachTabHandlers(btn);
+  document.querySelectorAll(".calc-preset-tab").forEach(c => c.classList.remove("active"));
+  btn.classList.add("active");
+  calcUpdate();
+}
+
 // Loan preset tabs
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".calc-preset-tab[data-price]").forEach(btn => {
-    // Click: select tab and load preset (skip if clicking into editable name)
-    btn.addEventListener("click", (e) => {
-      if (e.target.classList.contains("calc-preset-tab-name") && !e.target.readOnly) return;
-      document.querySelectorAll(".calc-preset-tab").forEach(c => c.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById("calc-price").value = btn.dataset.price;
-      document.getElementById("calc-down").value = btn.dataset.down;
-      document.getElementById("calc-term").value = btn.dataset.term;
-      const price = parseFloat(btn.dataset.price);
-      const down = parseFloat(btn.dataset.down);
-      document.getElementById("calc-down-pct").value = (down / price * 100).toFixed(1);
-      // Set rate based on term
-      const rate = btn.dataset.term === "15"
-        ? (parseFloat(document.getElementById("refi-new-slider").value) - 0.65)
-        : parseFloat(document.getElementById("refi-new-slider").value);
-      document.getElementById("calc-rate-slider").value = rate;
-      document.getElementById("calc-rate-display").value = rate.toFixed(2);
-      calcUpdate();
-    });
-    // Double-click on name input: enter rename mode
-    const nameInput = btn.querySelector(".calc-preset-tab-name");
-    if (nameInput) {
-      nameInput.addEventListener("dblclick", (e) => {
-        e.stopPropagation();
-        nameInput.removeAttribute("readonly");
-        nameInput.focus();
-        nameInput.select();
-      });
-      nameInput.addEventListener("blur", () => {
-        nameInput.setAttribute("readonly", true);
-        if (!nameInput.value.trim()) nameInput.value = "Preset";
-      });
-      nameInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") { e.preventDefault(); nameInput.blur(); }
-        if (e.key === "Escape") { nameInput.blur(); }
-      });
-    }
-  });
+  document.querySelectorAll(".calc-preset-tab[data-price]").forEach(btn => calcAttachTabHandlers(btn));
   // WHY: init chart after DOM is ready so canvas element exists
   initCalcChart();
   // WHY: init refi sim chart so canvas is primed when user opens Refi tab
