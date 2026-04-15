@@ -387,13 +387,31 @@
     }
 
     /* ── Calculator inputs ───────────────────────────────────────── */
-    .preset-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-    .preset-chip {
-      padding: 5px 12px; border-radius: 4px; font-size: .76rem; font-weight: 600;
-      border: 1px solid var(--border); background: transparent; cursor: pointer; transition: all .15s;
+    /* WHY: pill-style tabs match Plan A/B pattern in Refi section; tab name is editable on dblclick */
+    .calc-preset-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .calc-preset-tab {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 8px 18px; border-radius: 20px;
+      border: 1.5px solid var(--border); background: none;
+      cursor: pointer; transition: all .15s;
+      min-width: 110px; text-align: center; font-family: inherit;
     }
-    .preset-chip.selected { border-color: var(--accent); background: var(--accent-light); color: var(--accent-dark); }
-    .preset-chip:hover:not(.selected) { border-color: var(--accent); }
+    .calc-preset-tab.active { background: var(--accent-light); border-color: var(--accent); }
+    .calc-preset-tab:not(.active):hover { border-color: var(--accent); }
+    .calc-preset-tab:not(.active):hover .calc-preset-tab-name { color: var(--accent); }
+    .calc-preset-tab-name {
+      display: block; width: 100%;
+      font-size: .82rem; font-weight: 700; color: var(--text);
+      background: transparent; border: none; outline: none;
+      text-align: center; cursor: pointer; font-family: inherit; padding: 0;
+    }
+    .calc-preset-tab.active .calc-preset-tab-name { color: var(--accent-dark); }
+    .calc-preset-tab-name:not([readonly]) { background: rgba(37,99,235,.08); border-radius: 3px; padding: 1px 4px; cursor: text; }
+    .calc-preset-tab-detail {
+      display: block; font-size: .72rem; font-weight: 500;
+      color: var(--text-muted); margin-top: 3px;
+    }
+    .calc-preset-tab.active .calc-preset-tab-detail { color: var(--accent); }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
     @media (max-width: 480px) { .form-grid { grid-template-columns: 1fr; } }
     .form-group { display: flex; flex-direction: column; gap: 4px; }
@@ -1287,11 +1305,23 @@
     <!-- Section 1: Loan Inputs -->
     <div class="section-card">
       <div class="section-card-title">Loan Details</div>
-      <div class="preset-chips" id="calc-presets">
-        <button class="preset-chip selected" data-price="940000" data-down="100000" data-term="30">Starter home<br><small>$940K · 20% · 30yr</small></button>
-        <button class="preset-chip" data-price="670000" data-down="" data-term="15">Re-fin<br><small>$670K · 0% · 15yr</small></button>
-        <button class="preset-chip" data-price="800000" data-down="160000" data-term="30">Move-up<br><small>$800K · 20% · 30yr</small></button>
-        <button class="preset-chip" data-price="1200000" data-down="240000" data-term="15">Jumbo 15yr<br><small>$1.2M · 20% · 15yr</small></button>
+      <div class="calc-preset-tabs" id="calc-presets">
+        <button class="calc-preset-tab active" data-price="940000" data-down="100000" data-term="30">
+          <input class="calc-preset-tab-name" type="text" value="Starter home" readonly tabindex="-1" title="Double-click to rename">
+          <span class="calc-preset-tab-detail">$940K · 20% · 30yr</span>
+        </button>
+        <button class="calc-preset-tab" data-price="670000" data-down="" data-term="15">
+          <input class="calc-preset-tab-name" type="text" value="Re-fin" readonly tabindex="-1" title="Double-click to rename">
+          <span class="calc-preset-tab-detail">$670K · 0% · 15yr</span>
+        </button>
+        <button class="calc-preset-tab" data-price="800000" data-down="160000" data-term="30">
+          <input class="calc-preset-tab-name" type="text" value="Move-up" readonly tabindex="-1" title="Double-click to rename">
+          <span class="calc-preset-tab-detail">$800K · 20% · 30yr</span>
+        </button>
+        <button class="calc-preset-tab" data-price="1200000" data-down="240000" data-term="15">
+          <input class="calc-preset-tab-name" type="text" value="Jumbo 15yr" readonly tabindex="-1" title="Double-click to rename">
+          <span class="calc-preset-tab-detail">$1.2M · 20% · 15yr</span>
+        </button>
       </div>
       <div class="form-grid">
         <div class="form-group">
@@ -2262,7 +2292,7 @@ function calcSync(source) {
     document.getElementById("calc-down").value = Math.round(newDown);
   }
   // Deselect all presets
-  document.querySelectorAll(".preset-chip").forEach(c => c.classList.remove("selected"));
+  document.querySelectorAll(".calc-preset-tab").forEach(c => c.classList.remove("active"));
   calcUpdate();
 }
 
@@ -2722,12 +2752,14 @@ function removeExtraPayment(btn) {
   calcUpdate();
 }
 
-// Preset chips
+// Loan preset tabs
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".preset-chip[data-price]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".preset-chip").forEach(c => c.classList.remove("selected"));
-      btn.classList.add("selected");
+  document.querySelectorAll(".calc-preset-tab[data-price]").forEach(btn => {
+    // Click: select tab and load preset (skip if clicking into editable name)
+    btn.addEventListener("click", (e) => {
+      if (e.target.classList.contains("calc-preset-tab-name") && !e.target.readOnly) return;
+      document.querySelectorAll(".calc-preset-tab").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
       document.getElementById("calc-price").value = btn.dataset.price;
       document.getElementById("calc-down").value = btn.dataset.down;
       document.getElementById("calc-term").value = btn.dataset.term;
@@ -2742,6 +2774,24 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("calc-rate-display").value = rate.toFixed(2);
       calcUpdate();
     });
+    // Double-click on name input: enter rename mode
+    const nameInput = btn.querySelector(".calc-preset-tab-name");
+    if (nameInput) {
+      nameInput.addEventListener("dblclick", (e) => {
+        e.stopPropagation();
+        nameInput.removeAttribute("readonly");
+        nameInput.focus();
+        nameInput.select();
+      });
+      nameInput.addEventListener("blur", () => {
+        nameInput.setAttribute("readonly", true);
+        if (!nameInput.value.trim()) nameInput.value = "Preset";
+      });
+      nameInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") { e.preventDefault(); nameInput.blur(); }
+        if (e.key === "Escape") { nameInput.blur(); }
+      });
+    }
   });
   // WHY: init chart after DOM is ready so canvas element exists
   initCalcChart();
