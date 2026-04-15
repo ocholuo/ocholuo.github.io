@@ -3090,7 +3090,7 @@ function refiSimUpdate() {
     }
     segBounds.push(chartLabels.length);
     balance = segBal;
-    var yPrin = 0, yInt = 0;
+    var yPrin = 0, yInt = 0, yExtra = 0;
     var segTotalInt = 0, segTotalPrin = 0;
     for (var mo = 0; mo < segMonthMax; mo++) {
       if (balance < 0.01) break;
@@ -3105,7 +3105,7 @@ function refiSimUpdate() {
         else if (ep2.freq === "once"     && mo === sm) extra += ep2.amount;
       });
       extra   = Math.min(extra, Math.max(0, balance - rPrin));
-      yPrin  += rPrin + extra;
+      yPrin  += rPrin + extra; yExtra += extra;
       yInt   += intPmt;
       segTotalInt  += intPmt;
       segTotalPrin += rPrin + extra;
@@ -3119,8 +3119,8 @@ function refiSimUpdate() {
         chartCumPrin.push(Math.round(cumP));
         chartCumInt.push(Math.round(cumI));
         amortRows.push({ year: absYr, segIdx: si,
-          prin: Math.round(yPrin), int: Math.round(yInt), bal: Math.round(Math.max(0,balance)) });
-        yPrin = 0; yInt = 0;
+          prin: Math.round(yPrin), extra: Math.round(yExtra), int: Math.round(yInt), bal: Math.round(Math.max(0,balance)) });
+        yPrin = 0; yInt = 0; yExtra = 0;
         if (balance < 0.01) break;
       }
     }
@@ -3254,7 +3254,7 @@ function renderRsimAmortTable(rows) {
     html += "<tr style=\"background:"+BG[ci4]+"\">"
       + "<td>"+r.year+"</td>"
       + "<td><span class=\"rsim-seg-badge rsim-color-"+ci4+"\" style=\"font-size:.6rem;padding:1px 6px\">"+(r.segIdx===0?"S1":"R"+r.segIdx)+"</span></td>"
-      + "<td>"+fmtDollar(r.prin)+"</td>"
+      + "<td>"+fmtDollar(r.prin)+(r.extra > 0 ? " <small style=\"color:var(--accent);font-size:.7em\">(+"+fmtDollar(r.extra)+" extra)</small>" : "")+"</td>"
       + "<td>"+fmtDollar(r.int)+"</td>"
       + "<td>"+fmtDollar(r.bal)+"</td>"
       + "</tr>";
