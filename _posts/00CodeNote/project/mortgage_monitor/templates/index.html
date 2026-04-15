@@ -670,17 +670,24 @@
       border-radius: var(--radius-sm); padding: 12px 16px;
     }
     .rsim-savings-banner.visible { display: block; }
+    /* WHY: .cost flips all themed colors from green to red when new payment > old payment */
+    .rsim-savings-banner.cost {
+      background: rgba(239,68,68,.07); border-color: rgba(239,68,68,.25);
+    }
     .rsim-savings-badge {
       display: inline-block; font-size: .63rem; font-weight: 800;
       text-transform: uppercase; letter-spacing: .09em; color: #16a34a;
       background: rgba(34,197,94,.12); border-radius: 3px;
       padding: 2px 8px; margin-bottom: 6px;
     }
+    .rsim-savings-banner.cost .rsim-savings-badge { color: var(--red); background: rgba(239,68,68,.12); }
+    /* WHY: flex baseline so hero number (large) and sub-label (small) sit on one line */
+    .rsim-savings-hero-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
     .rsim-savings-hero { font-size: 1.6rem; font-weight: 900; color: #16a34a;
       letter-spacing: -.03em; line-height: 1.1; }
-    /* WHY: subtitle sits directly below the hero amount as a soft secondary label */
-    .rsim-savings-sub { font-size: .75rem; color: #16a34a; margin-top: 2px;
-      margin-bottom: 8px; font-weight: 500; }
+    .rsim-savings-banner.cost .rsim-savings-hero { color: var(--red); }
+    .rsim-savings-sub { font-size: .75rem; color: #16a34a; font-weight: 500; }
+    .rsim-savings-banner.cost .rsim-savings-sub { color: var(--red); }
     .rsim-savings-desc { font-size: .73rem; color: var(--text-muted); margin-top: 4px;
       margin-bottom: 10px; }
     .rsim-savings-rows { display: flex; flex-direction: column; gap: 5px; }
@@ -688,6 +695,7 @@
       font-size: .78rem; align-items: center; }
     .rsim-savings-key { color: var(--text-muted); }
     .rsim-savings-val { font-weight: 700; color: #16a34a; }
+    .rsim-savings-banner.cost .rsim-savings-val { color: var(--red); }
     /* -- Plan A / B tabs ---------------------------------------------- */
     /* WHY: lets users build two independent scenarios and compare them */
     .rsim-plan-tabs { display: flex; align-items: center; gap: 8px;
@@ -2960,8 +2968,10 @@ function addRsimSegment() {
   h +=   "</div>";
   h +=   "<div class=\"rsim-savings-banner\" id=\"rsim-s"+idx+"-savings\">";
   h +=     "<div class=\"rsim-savings-badge\" data-i18n=\"rsim.savings.badge\">IF YOU REFINANCE TODAY</div>";
-  h +=     "<div class=\"rsim-savings-hero\" id=\"rsim-s"+idx+"-save-hero\">&mdash;</div>";
-  h +=     "<div class=\"rsim-savings-sub\" data-i18n=\"rsim.savings.sub\">saved every month</div>";
+  h +=     "<div class=\"rsim-savings-hero-row\">";
+  h +=       "<span class=\"rsim-savings-hero\" id=\"rsim-s"+idx+"-save-hero\">&mdash;</span>";
+  h +=       "<span class=\"rsim-savings-sub\" data-i18n=\"rsim.savings.sub\">saved every month</span>";
+  h +=     "</div>";
   h +=     "<div class=\"rsim-savings-desc\" id=\"rsim-s"+idx+"-save-desc\"></div>";
   h +=     "<div class=\"rsim-savings-rows\">";
   h +=       "<div class=\"rsim-savings-row\">";
@@ -3118,16 +3128,21 @@ function refiSimUpdate() {
       var saveMo   = document.getElementById("rsim-s"+si+"-save-mo");
       var saveYr   = document.getElementById("rsim-s"+si+"-save-yr");
       var saveBe   = document.getElementById("rsim-s"+si+"-save-be");
-      if (banner && monthlySave > 0) {
+      if (banner) {
+        var isSaving = monthlySave > 0;
+        var absSave  = Math.abs(monthlySave);
         banner.classList.add("visible");
-        var heroStr = "+" + fmtDollar(Math.round(monthlySave)) + "/mo";
+        // WHY: saving → green with "-" (payment decreases); costing more → red with "+" (payment increases)
+        banner.classList.toggle("cost", !isSaving);
+        var sign = isSaving ? "-" : "+";
+        var heroStr = sign + fmtDollar(Math.round(absSave)) + "/mo";
         if (saveHero) saveHero.textContent = heroStr;
         if (saveDesc) saveDesc.textContent =
           "Refinancing from " + segs[si-1].rate.toFixed(2) + "% \u2192 " +
           seg.rate.toFixed(2) + "% on a " + fmtDollar(Math.round(segBal)) + " loan";
-        if (saveMo)   saveMo.textContent   = "+" + fmtDollar(Math.round(monthlySave)) + "/mo";
-        if (saveYr)   saveYr.textContent   = "+" + fmtDollar(Math.round(monthlySave * 12)) + "/yr";
-        var breakevenMo = seg.closing > 0 ? Math.ceil(seg.closing / monthlySave) : 0;
+        if (saveMo)   saveMo.textContent   = sign + fmtDollar(Math.round(absSave)) + "/mo";
+        if (saveYr)   saveYr.textContent   = sign + fmtDollar(Math.round(absSave * 12)) + "/yr";
+        var breakevenMo = (isSaving && seg.closing > 0) ? Math.ceil(seg.closing / monthlySave) : 0;
         if (saveBe)   saveBe.textContent   = breakevenMo > 0 ? breakevenMo + " months" : "\u2014";
       } else if (banner) {
         banner.classList.remove("visible");
