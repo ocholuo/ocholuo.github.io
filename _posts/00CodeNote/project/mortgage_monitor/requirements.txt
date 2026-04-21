@@ -4,3 +4,7 @@ pandas
 numpy
 feedparser
 gunicorn
+
+# dev / test
+pytest
+pytest-mock
