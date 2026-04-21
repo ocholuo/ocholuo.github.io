@@ -633,6 +633,192 @@ def api_rate_history_table():
 # Startup: seed CSV if not present
 # ---------------------------------------------------------------------------
 
+_SCOUT_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "Accept": "application/json, text/javascript, */*",
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
+_STATE_ABBR = {
+    "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
+    "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
+    "Florida": "FL", "Georgia": "GA", "Hawaii": "HI", "Idaho": "ID",
+    "Illinois": "IL", "Indiana": "IN", "Iowa": "IA", "Kansas": "KS",
+    "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD",
+    "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS",
+    "Missouri": "MO", "Montana": "MT", "Nebraska": "NE", "Nevada": "NV",
+    "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
+    "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH", "Oklahoma": "OK",
+    "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
+    "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT",
+    "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
+    "Wisconsin": "WI", "Wyoming": "WY",
+}
+
+
+@app.route("/api/scout")
+def api_scout():
+    address = request.args.get("address", "").strip()
+    lat = request.args.get("lat", type=float)
+    lon = request.args.get("lon", type=float)
+
+    if not address:
+        return jsonify({"error": "address required"}), 400
+
+    parts = [p.strip() for p in address.split(",")]
+    street = parts[0] if parts else address
+    city   = parts[1].strip() if len(parts) > 1 else ""
+    state  = next((p.strip() for p in parts if p.strip() in _STATE_ABBR), "")
+    state_abbr = _STATE_ABBR.get(state, "WA")
+    zipcode = next((p.strip() for p in parts if p.strip().isdigit() and len(p.strip()) == 5), "")
+
+    street_slug = street.replace(" ", "-")
+    city_slug   = city.replace(" ", "-")
+
+    result = {"zillow": {}, "redfin": {}, "realtor": {}}
+
+    # Zillow — construct URL from address parts
+    z_addr = f"{street_slug}-{city_slug}-{state_abbr}-{zipcode}".strip("-")
+    result["zillow"] = {
+        "url": f"https://www.zillow.com/homes/{z_addr}_rb/",
+        "name": street,
+    }
+
+    # Realtor.com — city-state search
+    r_city = city_slug or street_slug
+    result["realtor"] = {
+        "url": f"https://www.realtor.com/realestateandhomes-search/{r_city}_{state_abbr}/",
+        "name": street,
+    }
+
+    # Redfin — use their location-autocomplete API to get a direct listing path
+    try:
+        resp = requests.get(
+            "https://www.redfin.com/stingray/do/location-autocomplete",
+            params={"location": address, "v": "2", "al": "1"},
+            headers={**_SCOUT_HEADERS, "Referer": "https://www.redfin.com/"},
+            timeout=8,
+        )
+        if resp.ok:
+            # Redfin prepends {}&&  as a security prefix — strip it
+            text = resp.text
+            if text.startswith("{}&&"):
+                text = text[4:]
+            data = json.loads(text)
+            for section in data.get("payload", {}).get("sections", []):
+                for row in section.get("rows", []):
+                    url_path = row.get("url", "")
+                    if url_path and "/home/" in url_path:
+                        result["redfin"] = {
+                            "url": f"https://www.redfin.com{url_path}",
+                            "name": row.get("name", street),
+                        }
+                        break
+                if result["redfin"]:
+                    break
+    except Exception as exc:
+        log.info(f"Redfin autocomplete failed: {exc}")
+
+    # Fallback Redfin URL if autocomplete returned nothing
+    if not result["redfin"]:
+        rf_addr = f"{street_slug}-{zipcode}".strip("-")
+        result["redfin"] = {
+            "url": f"https://www.redfin.com/homes/{rf_addr}/",
+            "name": street,
+        }
+
+    return jsonify(result)
+
+
+@app.route("/api/parcel")
+def api_parcel():
+    lat = request.args.get("lat", type=float)
+    lon = request.args.get("lon", type=float)
+    if lat is None or lon is None:
+        return jsonify({"error": "lat and lon required"}), 400
+
+    arcgis_url = (
+        "https://gismaps.kingcounty.gov/arcgis/rest/services"
+        "/Property/KingCo_Parcels/MapServer/0/query"
+    )
+    params = {
+        "geometry": f"{lon},{lat}",
+        "geometryType": "esriGeometryPoint",
+        "spatialRel": "esriSpatialRelIntersects",
+        "outFields": "PIN,ADDR_FULL,JURIS,CURRENT_ZONING,SQ_FT_LOT,APPR_LAND,APPR_IMPR,APPR_TOTAL",
+        "returnGeometry": "true",
+        "outSR": "4326",
+        "f": "json",
+    }
+    try:
+        resp = requests.get(arcgis_url, params=params, timeout=12, headers=_SCOUT_HEADERS)
+        resp.raise_for_status()
+        data = resp.json()
+    except Exception as exc:
+        log.warning("ArcGIS parcel query failed: %s", exc)
+        return jsonify({"error": "parcel lookup failed"}), 502
+
+    features = data.get("features", [])
+    if not features:
+        return jsonify({"in_king_county": False})
+
+    feat = features[0]
+    attrs = feat.get("attributes", {})
+    geo = feat.get("geometry", {})
+    pin = str(attrs.get("PIN", "") or "").strip()
+
+    # Convert ArcGIS rings to GeoJSON Polygon geometry
+    geojson_geom = None
+    if geo and geo.get("rings"):
+        geojson_geom = {"type": "Polygon", "coordinates": geo["rings"]}
+
+    result = {
+        "in_king_county": True,
+        "pin": pin,
+        "address": attrs.get("ADDR_FULL") or "",
+        "jurisdiction": attrs.get("JURIS") or "",
+        "zoning": attrs.get("CURRENT_ZONING") or "",
+        "lot_sqft": attrs.get("SQ_FT_LOT"),
+        "appr_land": attrs.get("APPR_LAND"),
+        "appr_improvement": attrs.get("APPR_IMPR"),
+        "appr_total": attrs.get("APPR_TOTAL"),
+        "erp_url": (
+            f"https://blue.kingcounty.com/Assessor/eRealProperty/Dashboard.aspx?ParcelNbr={pin}"
+            if pin else None
+        ),
+        "geometry": geojson_geom,
+    }
+
+    # Socrata building/residential detail — major = first 6 digits of PIN, minor = last 4
+    if pin and len(pin) >= 6:
+        major = pin[:6]
+        minor = pin[6:].zfill(4) if len(pin) > 6 else "0000"
+        try:
+            sresp = requests.get(
+                "https://data.kingcounty.gov/resource/yr8g-yw5b.json",
+                params={"major": major, "minor": minor},
+                timeout=10,
+                headers=_SCOUT_HEADERS,
+            )
+            if sresp.ok:
+                rows = sresp.json()
+                if rows:
+                    row = rows[0]
+                    result["year_built"]  = row.get("yrbuilt")
+                    result["bedrooms"]    = row.get("nbrbedrooms")
+                    result["bathrooms"]   = row.get("nbrbaths")
+                    result["living_sqft"] = row.get("sqfttotliving")
+                    result["stories"]     = row.get("stories")
+        except Exception as exc:
+            log.info(f"Socrata building data failed: {exc}")
+
+    return jsonify(result)
+
+
 def _seed_on_startup():
     if not os.path.exists(CSV_PATH):
         log.info("No rate_history.csv found — seeding from FRED on startup …")

@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daily Mortgage Rate Tracker</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson@3/dist/topojson.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     /* ── Reset & Base ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1075,6 +1079,100 @@
       body[data-section] .modal-overlay.open { margin-left: 0 !important; }
       .modal-close, .badges { display: none !important; }
     }
+
+    /* ── Home Scout ──────────────────────────────────────────────── */
+    /* WHY: ID selectors required — elements use id="scout-national/scout-wa", not classes */
+    #scout-national.hidden, #scout-wa.hidden { display: none; }
+
+    #scout-us-svg { width: 100%; height: 340px; display: block; }
+    #scout-us-svg path {
+      fill: var(--bg); stroke: var(--border); stroke-width: 0.6; cursor: default;
+    }
+    #scout-us-svg path.wa-state {
+      fill: var(--green); stroke: #15803d; stroke-width: 1; cursor: pointer;
+      transition: fill .15s;
+    }
+    #scout-us-svg path.wa-state:hover { fill: #16a34a; }
+    #scout-us-svg path:not(.wa-state):hover { fill: #e2e8f0; }
+    .scout-hint {
+      font-size: .74rem; color: var(--text-muted); text-align: center; margin-top: 10px;
+    }
+    .scout-back-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: .78rem; font-weight: 600; color: var(--accent);
+      cursor: pointer; margin-bottom: 14px;
+      background: none; border: none; padding: 0;
+    }
+    .scout-back-btn:hover { color: var(--accent-dark); }
+    .scout-search-wrap {
+      position: relative; display: flex; align-items: center;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 0 12px;
+      margin-bottom: 14px; gap: 8px; box-shadow: var(--shadow);
+      transition: border-color .15s;
+      z-index: 1000; /* WHY: must exceed Leaflet's overlay pane (z-index 400) so dropdown renders above the map */
+    }
+    .scout-search-wrap:focus-within { border-color: var(--accent); }
+    .scout-search-icon { color: var(--text-muted); flex-shrink: 0; }
+    #scout-input {
+      flex: 1; border: none; outline: none; background: transparent;
+      font-size: .88rem; color: var(--text); padding: 12px 0;
+    }
+    #scout-input::placeholder { color: var(--text-light); }
+    #scout-ac-list {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-md);
+      list-style: none; z-index: 9999; max-height: 240px; overflow-y: auto; display: none;
+    }
+    #scout-ac-list.open { display: block; }
+    #scout-ac-list li {
+      padding: 10px 14px; font-size: .82rem; cursor: pointer;
+      border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4;
+    }
+    #scout-ac-list li:last-child { border-bottom: none; }
+    #scout-ac-list li:hover { background: var(--accent-light); color: var(--accent-dark); }
+    .scout-split { display: grid; grid-template-columns: 1fr 290px; gap: 14px; align-items: start; }
+    @media (max-width: 767px) { .scout-split { grid-template-columns: 1fr; } }
+    #scout-leaflet-map {
+      height: 540px; border-radius: var(--radius); border: 1px solid var(--border);
+    }
+    .scout-listing-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 0; margin-bottom: 10px;
+      box-shadow: var(--shadow); overflow: hidden;
+    }
+    .scout-listing-card:last-child { margin-bottom: 0; }
+    .scout-listing-img {
+      width: 100%; height: 120px; object-fit: cover; display: block;
+      background: var(--bg);
+    }
+    .scout-listing-img-placeholder {
+      width: 100%; height: 120px; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; color: var(--text-light);
+    }
+    .scout-listing-body { padding: 10px 14px 12px; }
+    .scout-listing-name { font-size: .8rem; font-weight: 800; letter-spacing: .01em; margin-bottom: 4px; }
+    .scout-listing-addr { font-size: .72rem; color: var(--text-muted); margin-bottom: 10px; word-break: break-word; }
+    .scout-listing-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: .75rem; font-weight: 600;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 5px 10px;
+      cursor: pointer; color: var(--text); text-decoration: none;
+      transition: background .12s, border-color .12s;
+    }
+    .scout-listing-btn:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent-dark); }
+    .scout-parcel-grid {
+      display: grid; grid-template-columns: auto 1fr; gap: 5px 16px; font-size: .82rem; margin: 10px 0 14px;
+    }
+    .scout-parcel-grid .pk { color: var(--text-muted); font-weight: 500; white-space: nowrap; }
+    .scout-parcel-grid .pv { color: var(--text); font-weight: 600; word-break: break-word; }
+    .scout-erp-link {
+      display: inline-block; font-size: .78rem; color: var(--accent); text-decoration: none; margin-top: 2px;
+    }
+    .scout-erp-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -1099,6 +1197,9 @@
     </li>
     <li class="sidebar-item" id="sidebar-news" onclick="sidebarOpen(this,'news')">
       <span data-i18n="nav.news">Market News</span>
+    </li>
+    <li class="sidebar-item" id="sidebar-scout" onclick="sidebarOpen(this,'scout')">
+      <span data-i18n="nav.scout">Home Scout</span>
     </li>
     <li class="sidebar-divider"></li>
     <li class="sidebar-item" id="sidebar-share" onclick="shareCard(); sidebarSetActive(this)">
@@ -1148,6 +1249,7 @@
     <button class="mobile-tab" id="mtab-calc" onclick="mobileTabOpen(this,'calc')">Calculator</button>
     <button class="mobile-tab" id="mtab-refi" onclick="mobileTabOpen(this,'refi')">Refi</button>
     <button class="mobile-tab" id="mtab-news" onclick="mobileTabOpen(this,'news')">News</button>
+    <button class="mobile-tab" id="mtab-scout" onclick="mobileTabOpen(this,'scout')">Scout</button>
     <button class="mobile-tab" id="mtab-alert" onclick="mobileTabOpen(this,'alert')">Alert</button>
     <button class="mobile-tab" id="mtab-share" onclick="shareCard()">Share</button>
   </div>
@@ -1776,6 +1878,82 @@
 </div>
 
 
+<div class="modal-overlay" id="modal-scout" onclick="closeModalOutside(event,'modal-scout')">
+  <div class="modal" style="max-width:900px">
+    <div class="modal-header">
+      <div class="modal-title" data-i18n="modal.scout.title">Home Scout</div>
+      <button class="modal-close" onclick="closeModal('scout')">&#10005;</button>
+    </div>
+
+    <!-- National US map view -->
+    <div id="scout-national">
+      <div class="section-card">
+        <div class="section-card-title" data-i18n="scout.map.title">Property Explorer</div>
+        <svg id="scout-us-svg" viewBox="0 0 960 600"></svg>
+        <p class="scout-hint" data-i18n="scout.map.hint">Click on Washington state to explore properties</p>
+      </div>
+    </div>
+
+    <!-- Washington state detail view (hidden until WA is clicked) -->
+    <div id="scout-wa" class="hidden">
+      <div class="section-card">
+        <button class="scout-back-btn" onclick="scoutBackToUS()">&#8592; <span data-i18n="scout.back">All States</span></button>
+        <div class="scout-search-wrap">
+          <svg class="scout-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="scout-input" type="text" autocomplete="off" data-i18n-placeholder="scout.placeholder" placeholder="Search address in Washington state..."/>
+          <ul id="scout-ac-list"></ul>
+        </div>
+        <div class="scout-split">
+          <div class="scout-map-col">
+            <div id="scout-leaflet-map"></div>
+          </div>
+          <div class="scout-cards-col">
+            <div class="scout-listing-card">
+              <div class="scout-listing-img-placeholder" id="scout-img-zillow-wrap">Aerial view loads after search</div>
+              <img class="scout-listing-img" id="scout-img-zillow" src="" alt="Aerial view" style="display:none" onerror="this.style.display='none';document.getElementById('scout-img-zillow-wrap').style.display='flex'"/>
+              <div class="scout-listing-body">
+                <div class="scout-listing-name" style="color:#006aff">Zillow</div>
+                <div class="scout-listing-addr" id="scout-addr-zillow">Enter an address to search</div>
+                <a class="scout-listing-btn" id="scout-link-zillow" href="https://www.zillow.com/homes/" target="_blank" rel="noopener">View on Zillow &#8594;</a>
+              </div>
+            </div>
+            <div class="scout-listing-card">
+              <div class="scout-listing-img-placeholder" id="scout-img-redfin-wrap">Aerial view loads after search</div>
+              <img class="scout-listing-img" id="scout-img-redfin" src="" alt="Aerial view" style="display:none" onerror="this.style.display='none';document.getElementById('scout-img-redfin-wrap').style.display='flex'"/>
+              <div class="scout-listing-body">
+                <div class="scout-listing-name" style="color:#d22630">Redfin</div>
+                <div class="scout-listing-addr" id="scout-addr-redfin">Enter an address to search</div>
+                <a class="scout-listing-btn" id="scout-link-redfin" href="https://www.redfin.com/" target="_blank" rel="noopener">View on Redfin &#8594;</a>
+              </div>
+            </div>
+            <div class="scout-listing-card">
+              <div class="scout-listing-img-placeholder" id="scout-img-realtor-wrap">Aerial view loads after search</div>
+              <img class="scout-listing-img" id="scout-img-realtor" src="" alt="Aerial view" style="display:none" onerror="this.style.display='none';document.getElementById('scout-img-realtor-wrap').style.display='flex'"/>
+              <div class="scout-listing-body">
+                <div class="scout-listing-name" style="color:#0066cc">Realtor.com</div>
+                <div class="scout-listing-addr" id="scout-addr-realtor">Enter an address to search</div>
+                <a class="scout-listing-btn" id="scout-link-realtor" href="https://www.realtor.com/" target="_blank" rel="noopener">View on Realtor.com &#8594;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parcel & Assessor Data — King County ArcGIS + Socrata -->
+    <div class="section-card" id="scout-parcel-wrap" style="display:none">
+      <div class="section-card-title" data-i18n="scout.parcel.title">Parcel &amp; Assessor Data</div>
+      <div id="scout-parcel-loading" style="display:none; color:var(--text-muted); font-size:.85rem; padding:8px 0">Loading parcel data...</div>
+      <div id="scout-parcel-error" style="display:none; color:var(--text-muted); font-size:.85rem; padding:8px 0"></div>
+      <div id="scout-parcel-body" style="display:none">
+        <div class="scout-parcel-grid" id="scout-parcel-grid"></div>
+        <a id="scout-erp-link" class="scout-erp-link" href="#" target="_blank" rel="noopener" style="display:none" data-i18n="scout.parcel.erp">Full Detail on King County eRealProperty &#8594;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <!-- ════════════════════════════════════════════════════════════════ -->
 <!-- JAVASCRIPT                                                        -->
@@ -1849,6 +2027,11 @@ const T = {
     'calc.stat.basecross':'Base Crossover:',
     'chart.yr':'Yr',
     'term.10y':'10 yrs','term.15y':'15 yrs','term.20y':'20 yrs','term.25y':'25 yrs','term.30y':'30 yrs',
+    'nav.scout':'Home Scout','modal.scout.title':'Home Scout',
+    'scout.map.title':'Property Explorer','scout.map.hint':'Click on Washington state to explore properties',
+    'scout.back':'All States','scout.placeholder':'Search address in Washington state...',
+    'scout.parcel.title':'Parcel & Assessor Data',
+    'scout.parcel.erp':'Full Detail on King County eRealProperty \u2192',
   },
   zh: {
     'app.title':'每日房贷利率追踪','app.sub':'每日利率 · MND + Bankrate · ',
@@ -1909,6 +2092,11 @@ const T = {
     'calc.stat.basecross':'基准交叉:',
     'chart.yr':'年',
     'term.10y':'10年','term.15y':'15年','term.20y':'20年','term.25y':'25年','term.30y':'30年',
+    'nav.scout':'房源探索','modal.scout.title':'房源探索',
+    'scout.map.title':'房产地图','scout.map.hint':'点击华盛顿州探索房产',
+    'scout.back':'返回地图','scout.placeholder':'搜索华盛顿州地址...',
+    'scout.parcel.title':'地块与评估数据',
+    'scout.parcel.erp':'在金县官网查看完整详情 \u2192',
   },
   es: {
     'app.title':'Rastreador Diario de Hipotecas','app.sub':'Tasas diarias · MND + Bankrate · ',
@@ -1969,6 +2157,11 @@ const T = {
     'calc.stat.basecross':'Cruce base:',
     'chart.yr':'Año',
     'term.10y':'10 años','term.15y':'15 años','term.20y':'20 años','term.25y':'25 años','term.30y':'30 años',
+    'nav.scout':'Buscar Casa','modal.scout.title':'Buscar Casa',
+    'scout.map.title':'Explorador de Propiedades','scout.map.hint':'Haz clic en Washington para explorar propiedades',
+    'scout.back':'Todos los estados','scout.placeholder':'Buscar direccion en Washington...',
+    'scout.parcel.title':'Datos del Predio y Tasacion',
+    'scout.parcel.erp':'Ver Detalle Completo en King County eRealProperty \u2192',
   }
 };
 
@@ -4014,6 +4207,7 @@ function sidebarOpen(el, modalId) {
   if (modalId === 'news')    loadNews();
   if (modalId === 'calc')    calcUpdate();
   if (modalId === 'refi')    { refiUpdate(); refiSimUpdate(); }
+  if (modalId === 'scout')   scoutInit();
   window.scrollTo(0, 0);
 }
 
@@ -4076,9 +4270,256 @@ document.addEventListener("keydown", e => {
     });
   }
 });
-</script>
-</body>
-</html>
 
+// ── Home Scout ────────────────────────────────────────────────────
+let _scoutMapDrawn = false;
+let _scoutLeaflet  = null;
+let _scoutMarker   = null;
+let _scoutACTimer  = null;
+let _scoutParcelLayer = null;
+
+function scoutInit() {
+  if (_scoutMapDrawn) return;
+  _scoutMapDrawn = true;
+  d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(function(us) {
+    const svgEl = document.getElementById('scout-us-svg');
+    const W = svgEl.clientWidth  || 800;
+    const H = svgEl.clientHeight || 340;
+    const svg  = d3.select('#scout-us-svg');
+    const proj = d3.geoAlbersUsa().fitSize([W, H], topojson.feature(us, us.objects.states));
+    const path = d3.geoPath().projection(proj);
+    svg.selectAll('path')
+      .data(topojson.feature(us, us.objects.states).features)
+      .enter().append('path')
+      .attr('d', path)
+      .attr('id', function(d) { return 'scout-state-' + d.id; })
+      .classed('wa-state', function(d) { return d.id == 53; })
+      .on('click', function(event, d) {
+        if (d.id == 53) scoutZoomWA();
+      });
+  });
+}
+
+function scoutZoomWA() {
+  document.getElementById('scout-national').classList.add('hidden');
+  document.getElementById('scout-wa').classList.remove('hidden');
+  if (!_scoutLeaflet) {
+    _scoutLeaflet = L.map('scout-leaflet-map', { zoomControl: true }).setView([47.5, -120.5], 7);
+    /* WHY: two base layers so user can toggle; Positron is default (clean/minimal),
+       OSM is the fallback (detailed/standard) */
+    var _tileClean = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd', maxZoom: 20
+    });
+    var _tileOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19
+    });
+    _tileClean.addTo(_scoutLeaflet);
+    L.control.layers({ 'Clean': _tileClean, 'Standard': _tileOSM }, null, {
+      position: 'topright', collapsed: false
+    }).addTo(_scoutLeaflet);
+  }
+  /* WHY: container was hidden (display:none) during init so Leaflet has no dimensions;
+     invalidateSize() forces a recalculation after the container is visible */
+  setTimeout(function() { _scoutLeaflet.invalidateSize(); }, 120);
+}
+
+function scoutBackToUS() {
+  document.getElementById('scout-wa').classList.add('hidden');
+  document.getElementById('scout-national').classList.remove('hidden');
+  var inp = document.getElementById('scout-input');
+  if (inp) inp.value = '';
+  var ac = document.getElementById('scout-ac-list');
+  if (ac) { ac.classList.remove('open'); ac.innerHTML = ''; }
+  var pw = document.getElementById('scout-parcel-wrap');
+  if (pw) pw.style.display = 'none';
+  if (_scoutParcelLayer) { _scoutParcelLayer.remove(); _scoutParcelLayer = null; }
+}
+
+function scoutAutoComplete(query) {
+  clearTimeout(_scoutACTimer);
+  var list = document.getElementById('scout-ac-list');
+  if (query.length < 3) { list.classList.remove('open'); return; }
+  _scoutACTimer = setTimeout(function() {
+    var bbox = '-124.9,45.4,-116.8,49.1';
+    var url  = 'https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=6'
+               + '&countrycodes=us&bounded=1&viewbox=' + bbox
+               + '&q=' + encodeURIComponent(query + ' Washington');
+    fetch(url, { headers: { 'Accept-Language': 'en' } })
+      .then(function(r) { return r.json(); })
+      .then(function(results) {
+        list.innerHTML = '';
+        if (!results.length) { list.classList.remove('open'); return; }
+        results.forEach(function(r) {
+          var li = document.createElement('li');
+          li.textContent = r.display_name;
+          li.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            document.getElementById('scout-input').value = r.display_name;
+            list.classList.remove('open');
+            scoutSelectPlace(parseFloat(r.lat), parseFloat(r.lon), r.display_name);
+          });
+          list.appendChild(li);
+        });
+        list.classList.add('open');
+      })
+      .catch(function() { list.classList.remove('open'); });
+  }, 320);
+}
+
+function scoutSelectPlace(lat, lon, displayName) {
+  /* WHY: zoom 18 shows lot-level detail (individual buildings visible, property centered) */
+  _scoutLeaflet.setView([lat, lon], 18);
+  if (_scoutMarker) _scoutMarker.remove();
+  _scoutMarker = L.marker([lat, lon]).addTo(_scoutLeaflet)
+    .bindPopup(displayName).openPopup();
+  scoutUpdateCards(displayName, lat, lon);
+  scoutFetchParcel(lat, lon);
+}
+
+function scoutUpdateCards(address, lat, lon) {
+  var short   = address.split(',').slice(0, 2).join(',').trim();
+  var encFull = encodeURIComponent(address);
+
+  document.getElementById('scout-addr-zillow').textContent  = short;
+  document.getElementById('scout-addr-redfin').textContent  = short;
+  document.getElementById('scout-addr-realtor').textContent = short;
+
+  /* Initial URL fallbacks (search pages) — backend will upgrade to direct links */
+  document.getElementById('scout-link-zillow').href  = 'https://www.zillow.com/homes/' + encodeURIComponent(short) + '_rb/';
+  document.getElementById('scout-link-redfin').href  = 'https://www.redfin.com/homes/' + encFull + '/';
+  document.getElementById('scout-link-realtor').href = 'https://www.realtor.com/realestateandhomes-search/' + encodeURIComponent(short);
+
+  /* ESRI World Imagery aerial thumbnail — free, no API key
+     WHY: 0.0013 lon / 0.0008 lat delta gives ~200m view, enough to see the lot */
+  if (lat && lon) {
+    var dLon = 0.0013, dLat = 0.0008;
+    var bbox = (lon - dLon).toFixed(6) + ',' + (lat - dLat).toFixed(6) + ','
+             + (lon + dLon).toFixed(6) + ',' + (lat + dLat).toFixed(6);
+    var aerialUrl = 'https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/export'
+                  + '?bbox=' + bbox + '&bboxSR=4326&imageSR=4326&size=320,200&format=jpg&f=image';
+    ['zillow', 'redfin', 'realtor'].forEach(function(site) {
+      var wrap = document.getElementById('scout-img-' + site + '-wrap');
+      var img  = document.getElementById('scout-img-' + site);
+      if (wrap) wrap.style.display = 'none';
+      if (img)  { img.src = aerialUrl; img.style.display = 'block'; }
+    });
+  }
+
+  /* Backend call for accurate direct-listing URLs */
+  fetch('/api/scout?address=' + encFull + (lat ? '&lat=' + lat + '&lon=' + lon : ''))
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.zillow && d.zillow.url)  document.getElementById('scout-link-zillow').href  = d.zillow.url;
+      if (d.redfin && d.redfin.url)  document.getElementById('scout-link-redfin').href  = d.redfin.url;
+      if (d.realtor && d.realtor.url) document.getElementById('scout-link-realtor').href = d.realtor.url;
+    })
+    .catch(function() {});  /* silently keep fallback URLs */
+}
+
+function scoutFetchParcel(lat, lon) {
+  var wrap    = document.getElementById('scout-parcel-wrap');
+  var loading = document.getElementById('scout-parcel-loading');
+  var body    = document.getElementById('scout-parcel-body');
+  var err     = document.getElementById('scout-parcel-error');
+  var grid    = document.getElementById('scout-parcel-grid');
+  var erpLink = document.getElementById('scout-erp-link');
+
+  wrap.style.display = '';
+  loading.style.display = '';
+  body.style.display = 'none';
+  err.style.display = 'none';
+  grid.innerHTML = '';
+  erpLink.style.display = 'none';
+  if (_scoutParcelLayer) { _scoutParcelLayer.remove(); _scoutParcelLayer = null; }
+
+  fetch('/api/parcel?lat=' + lat + '&lon=' + lon)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      loading.style.display = 'none';
+      if (!d.in_king_county) {
+        err.textContent = 'Parcel data is currently available for King County, WA only.';
+        err.style.display = '';
+        return;
+      }
+      var rows = [
+        ['Parcel Number (PIN)', d.pin || '-'],
+        ['Address',             d.address || '-'],
+        ['Jurisdiction',        d.jurisdiction || '-'],
+        ['Zoning',              d.zoning || '-'],
+        ['Lot Size',            d.lot_sqft    ? _fmtNum(d.lot_sqft)    + ' sq ft' : '-'],
+        ['Year Built',          d.year_built  || '-'],
+        ['Bedrooms',            d.bedrooms    || '-'],
+        ['Bathrooms',           d.bathrooms   || '-'],
+        ['Living Area',         d.living_sqft ? _fmtNum(d.living_sqft) + ' sq ft' : '-'],
+        ['Appraised Land',      d.appr_land         ? '$' + _fmtNum(d.appr_land)         : '-'],
+        ['Appraised Improvement', d.appr_improvement ? '$' + _fmtNum(d.appr_improvement) : '-'],
+        ['Appraised Total',     d.appr_total        ? '$' + _fmtNum(d.appr_total)        : '-'],
+      ];
+      rows.forEach(function(pair) {
+        var kEl = document.createElement('div'); kEl.className = 'pk'; kEl.textContent = pair[0];
+        var vEl = document.createElement('div'); vEl.className = 'pv'; vEl.textContent = pair[1];
+        grid.appendChild(kEl);
+        grid.appendChild(vEl);
+      });
+      body.style.display = '';
+      if (d.erp_url) { erpLink.href = d.erp_url; erpLink.style.display = ''; }
+      /* WHY: draw the lot boundary polygon on the Leaflet map for visual confirmation */
+      if (d.geometry && _scoutLeaflet) {
+        _scoutParcelLayer = L.geoJSON(d.geometry, {
+          style: { color: '#2563eb', weight: 2, fillColor: '#2563eb', fillOpacity: 0.15 }
+        }).addTo(_scoutLeaflet);
+      }
+    })
+    .catch(function() {
+      loading.style.display = 'none';
+      err.textContent = 'Failed to load parcel data.';
+      err.style.display = '';
+    });
+}
+
+function _fmtNum(v) {
+  return Number(v).toLocaleString('en-US', { maximumFractionDigits: 0 });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var inp = document.getElementById('scout-input');
+  if (!inp) return;
+  inp.addEventListener('input', function() { scoutAutoComplete(this.value.trim()); });
+  inp.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    var list = document.getElementById('scout-ac-list');
+    /* If autocomplete list is open, use the first suggestion */
+    var first = list && list.querySelector('li');
+    if (first) {
+      first.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+      return;
+    }
+    /* No autocomplete open — geocode whatever is typed */
+    var query = inp.value.trim();
+    if (query.length < 3) return;
+    var bbox = '-124.9,45.4,-116.8,49.1';
+    var url  = 'https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=1'
+               + '&countrycodes=us&bounded=1&viewbox=' + bbox
+               + '&q=' + encodeURIComponent(query + ' Washington');
+    fetch(url, { headers: { 'Accept-Language': 'en' } })
+      .then(function(r) { return r.json(); })
+      .then(function(results) {
+        if (!results.length) return;
+        var r = results[0];
+        inp.value = r.display_name;
+        scoutSelectPlace(parseFloat(r.lat), parseFloat(r.lon), r.display_name);
+      });
+  });
+  inp.addEventListener('blur', function() {
+    setTimeout(function() {
+      var ac = document.getElementById('scout-ac-list');
+      if (ac) ac.classList.remove('open');
+    }, 150);
+  });
+});
+</script>
 </body>
 </html>
