@@ -100,7 +100,7 @@ class TestParcelCacheHit:
         r = client.get("/api/parcel?lat=47.6248&lon=-122.2258")
         assert r.status_code == 200
         data = r.get_json()
-        assert data["pin"] == "2525069058"
+        assert data["pin"] == "7397300140"
         assert data["in_king_county"] is True
 
     def test_cache_key_uses_4_decimal_places(self, client, tmp_cache, monkeypatch):
@@ -111,15 +111,20 @@ class TestParcelCacheHit:
 
         r = client.get("/api/parcel?lat=47.62481&lon=-122.22584")
         assert r.status_code == 200
-        assert r.get_json()["pin"] == "2525069058"
+        assert r.get_json()["pin"] == "7397300140"
 
 
 # ---------------------------------------------------------------------------
 # /api/parcel — live ArcGIS mock (Medina, King County success path)
 # ---------------------------------------------------------------------------
 
-def _make_arcgis_response(pin, addr, juris, zoning, lot_sqft, appr_land, appr_impr, appr_total):
-    """Build a minimal ArcGIS query response for a single parcel feature."""
+def _make_arcgis_response(pin, addr, juris, zoning, lot_sqft):
+    """Build a minimal ArcGIS query response for a single parcel feature.
+
+    Assessed values (appr_land, appr_total, etc.) are NOT in the parcel
+    layer — they come from Socrata. Only fields that exist in
+    KingCo_Parcels/MapServer/0 are included here.
+    """
     return {
         "features": [
             {
@@ -129,9 +134,6 @@ def _make_arcgis_response(pin, addr, juris, zoning, lot_sqft, appr_land, appr_im
                     "JURIS": juris,
                     "CURRENT_ZONING": zoning,
                     "SQ_FT_LOT": lot_sqft,
-                    "APPR_LAND": appr_land,
-                    "APPR_IMPR": appr_impr,
-                    "APPR_TOTAL": appr_total,
                 },
                 "geometry": {
                     "rings": [
@@ -149,7 +151,8 @@ def _make_arcgis_response(pin, addr, juris, zoning, lot_sqft, appr_land, appr_im
     }
 
 
-def _make_socrata_response(yrbuilt, bedrooms, baths, sqft, stories):
+def _make_socrata_response(yrbuilt, bedrooms, baths, sqft, stories,
+                           appr_land="1800000", appr_impr="600000", appr_total="2400000"):
     return [
         {
             "yrbuilt": yrbuilt,
@@ -157,6 +160,9 @@ def _make_socrata_response(yrbuilt, bedrooms, baths, sqft, stories):
             "nbrbaths": baths,
             "sqfttotliving": sqft,
             "stories": stories,
+            "apprlndval": appr_land,
+            "apprimpval": appr_impr,
+            "apprtotval": appr_total,
         }
     ]
 
@@ -187,16 +193,13 @@ class TestParcelMedinaKingCounty:
         def fake_get(url, **kwargs):
             call_count["n"] += 1
             if "gismaps.kingcounty.gov" in url:
-                    return FakeResponse(
+                return FakeResponse(
                     _make_arcgis_response(
                         pin=arcgis_pin,
                         addr="3234 78TH PL NE",
                         juris="MEDINA",
                         zoning="R-16",
                         lot_sqft=17120,
-                        appr_land=1800000,
-                        appr_impr=600000,
-                        appr_total=2400000,
                     )
                 )
             if "data.kingcounty.gov" in url:
@@ -247,9 +250,9 @@ class TestParcelMedinaKingCounty:
         monkeypatch.setattr(req_mod, "get", fake_get)
 
         data = client.get("/api/parcel?lat=47.6248&lon=-122.2258").get_json()
-        assert data["lot_sqft"] == 16000
-        assert data["appr_total"] == 2000000
-        assert data["erp_url"].endswith("ParcelNbr=2525069058")
+        assert data["lot_sqft"] == 17120
+        assert data["appr_total"] == "2400000"
+        assert data["erp_url"].endswith("ParcelNbr=7397300140")
 
     def test_building_fields_from_socrata(self, client, tmp_cache, monkeypatch):
         fake_get, _ = self._mock_requests_get()
@@ -257,7 +260,7 @@ class TestParcelMedinaKingCounty:
         monkeypatch.setattr(req_mod, "get", fake_get)
 
         data = client.get("/api/parcel?lat=47.6248&lon=-122.2258").get_json()
-        assert data["year_built"] == "1965"
+        assert data["year_built"] == "1960"
         assert data["bedrooms"] == "4"
         assert data["living_sqft"] == "2800"
 
