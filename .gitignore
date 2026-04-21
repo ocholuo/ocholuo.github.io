@@ -24,7 +24,7 @@ package-lock.json
 
 # py
 */__pycache__
-
+*.pyc
 
 # iCloud conflict copies (e.g. "foo 2.png" duplicate of "foo.png")
 * 2.*
