@@ -83,7 +83,7 @@ def _load_parcel_cache() -> dict:
 
 def _save_parcel_cache(cache: dict) -> None:
     try:
-        os.makedirs(DATA_DIR, exist_ok=True)
+        os.makedirs(os.path.dirname(PARCEL_CACHE_PATH), exist_ok=True)
         with open(PARCEL_CACHE_PATH, "w") as f:
             json.dump(cache, f)
     except Exception as exc:
