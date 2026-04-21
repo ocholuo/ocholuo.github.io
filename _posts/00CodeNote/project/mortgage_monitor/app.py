@@ -795,10 +795,6 @@ def api_parcel():
         "inSR": "4326",
         "outSR": "4326",
         "f": "json",
-        # WHY: 15m buffer handles Nominatim points that land on street centerlines
-        # rather than inside the parcel polygon, which would otherwise return empty features.
-        "distance": "15",
-        "units": "esriSRUnit_Meter",
     }
     try:
         # WHY: bypass any inherited https_proxy env var (e.g. Claude Code sandbox proxy)
