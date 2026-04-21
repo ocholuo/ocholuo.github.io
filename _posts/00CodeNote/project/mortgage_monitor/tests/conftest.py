@@ -38,6 +38,15 @@ def rate_df():
 
 
 @pytest.fixture()
+def clear_cache():
+    """Clear the in-memory cache before and after each test."""
+    import app as _app
+    _app._cache.clear()
+    yield
+    _app._cache.clear()
+
+
+@pytest.fixture()
 def tmp_cache(tmp_path, monkeypatch):
     """Redirect parcel cache to a temp file and start each test with an empty cache."""
     cache_path = str(tmp_path / "parcel_cache.json")

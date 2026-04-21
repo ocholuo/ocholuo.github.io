@@ -11,6 +11,7 @@ import json
 import datetime
 import io
 import logging
+import threading
 from functools import wraps
 
 import requests
@@ -88,6 +89,27 @@ def _save_parcel_cache(cache: dict) -> None:
             json.dump(cache, f)
     except Exception as exc:
         log.warning("Could not save parcel cache: %s", exc)
+
+
+def _is_parcel_complete(entry: dict) -> bool:
+    """Return False if a King County entry is missing all enriched fields, triggering a re-fetch."""
+    if not entry.get("in_king_county"):
+        return True
+    return bool(
+        entry.get("address")
+        or entry.get("jurisdiction")
+        or entry.get("zoning")
+        or entry.get("year_built")
+    )
+
+
+def _pick(attrs: dict, *keys: str) -> object:
+    """Return the first non-empty value found among the candidate field names."""
+    for k in keys:
+        v = attrs.get(k)
+        if v is not None and str(v).strip() not in ("", "None"):
+            return v
+    return None
 
 
 _parcel_cache: dict = _load_parcel_cache()
@@ -705,7 +727,9 @@ def api_scout():
     city   = parts[1].strip() if len(parts) > 1 else ""
     state  = next((p.strip() for p in parts if p.strip() in _STATE_ABBR), "")
     state_abbr = _STATE_ABBR.get(state, "WA")
-    zipcode = next((p.strip() for p in parts if p.strip().isdigit() and len(p.strip()) == 5), "")
+    zipcode = next(
+        (w for p in parts for w in p.split() if w.isdigit() and len(w) == 5), ""
+    )
 
     street_slug = street.replace(" ", "-")
     city_slug   = city.replace(" ", "-")
@@ -776,10 +800,53 @@ def api_parcel():
 
     # WHY: PIN key is stable across re-geocodings; lat/lon key rounded to ~11 m.
     cache_key = pin_param if pin_param else f"{round(lat, 4)},{round(lon, 4)}"
-    if cache_key in _parcel_cache:
-        log.info("Parcel cache hit for %s", cache_key)
-        return jsonify(_parcel_cache[cache_key])
 
+    if cache_key in _parcel_cache:
+        cached = _parcel_cache[cache_key]
+        if _is_parcel_complete(cached):
+            log.info("Parcel cache hit for %s — revalidating in background", cache_key)
+            threading.Thread(
+                target=_revalidate_parcel,
+                args=(cache_key, cached, lat, lon, pin_param),
+                daemon=True,
+            ).start()
+            return jsonify(cached)
+        log.info("Parcel cache incomplete for %s, re-fetching now", cache_key)
+
+    result = _fetch_parcel_data(lat, lon, pin_param)
+    if result is None:
+        return jsonify({"error": "parcel lookup failed"}), 502
+
+    _parcel_cache[cache_key] = result
+    _save_parcel_cache(_parcel_cache)
+    log.info("Parcel cached for %s (PIN=%s)", cache_key, result.get("pin", "n/a"))
+    return jsonify(result)
+
+
+def _revalidate_parcel(
+    cache_key: str,
+    old: dict,
+    lat: float | None,
+    lon: float | None,
+    pin_param: str,
+) -> None:
+    """Fetch fresh parcel data in the background and update cache if it differs."""
+    try:
+        fresh = _fetch_parcel_data(lat, lon, pin_param)
+        if fresh and fresh != old:
+            _parcel_cache[cache_key] = fresh
+            _save_parcel_cache(_parcel_cache)
+            log.info("Parcel cache refreshed (background) for %s", cache_key)
+    except Exception as exc:
+        log.info("Background parcel revalidation failed for %s: %s", cache_key, exc)
+
+
+def _fetch_parcel_data(
+    lat: float | None,
+    lon: float | None,
+    pin_param: str,
+) -> dict | None:
+    """Query ArcGIS + Socrata for parcel data. Returns result dict or None on hard failure."""
     arcgis_url = (
         "https://gismaps.kingcounty.gov/arcgis/rest/services"
         "/Property/KingCo_Parcels/MapServer/0/query"
@@ -820,76 +887,259 @@ def api_parcel():
         resp.raise_for_status()
         data = resp.json()
     except Exception as exc:
-        log.warning("ArcGIS parcel query failed (key=%s): %s", cache_key, exc)
-        return jsonify({"error": "parcel lookup failed", "detail": str(exc)}), 502
+        log.warning("ArcGIS parcel query failed: %s", exc)
+        return None
 
     if data.get("error"):
-        log.warning("ArcGIS returned error (key=%s): %s", cache_key, data["error"])
-        return jsonify({"error": "ArcGIS error", "detail": str(data["error"])}), 502
+        log.warning("ArcGIS returned error: %s", data["error"])
+        return None
 
     features = data.get("features", [])
     if not features:
-        log.info("ArcGIS returned no features for key=%s (outside King County or invalid PIN)", cache_key)
-        not_found = {"in_king_county": False}
-        _parcel_cache[cache_key] = not_found
-        _save_parcel_cache(_parcel_cache)
-        return jsonify(not_found)
+        log.info("ArcGIS returned no features (outside King County or invalid PIN)")
+        return {"in_king_county": False}
 
     feat = features[0]
     attrs = feat.get("attributes", {})
     geo = feat.get("geometry", {})
-    pin = str(attrs.get("PIN", "") or "").strip()
     log.info("ArcGIS returned fields: %s", list(attrs.keys()))
+
+    pin = str(attrs.get("PIN", "") or "").strip()
 
     geojson_geom = None
     if geo and geo.get("rings"):
         geojson_geom = {"type": "Polygon", "coordinates": geo["rings"]}
 
-    result = {
+    erp_url = (
+        f"https://blue.kingcounty.com/Assessor/eRealProperty/Dashboard.aspx?ParcelNbr={pin}"
+        if pin else None
+    )
+
+    result: dict = {
         "in_king_county": True,
         "pin": pin,
-        "address": attrs.get("ADDR_FULL") or "",
-        "jurisdiction": attrs.get("JURIS") or "",
-        "zoning": attrs.get("CURRENT_ZONING") or "",
-        "lot_sqft": attrs.get("SQ_FT_LOT"),
-        "erp_url": (
-            f"https://blue.kingcounty.com/Assessor/eRealProperty/Dashboard.aspx?ParcelNbr={pin}"
-            if pin else None
-        ),
+        "erp_url": erp_url,
         "geometry": geojson_geom,
     }
 
-    # Socrata: building detail (yr built, beds/baths/sqft) + assessed values
-    if pin and len(pin) >= 6:
-        major = pin[:6]
-        minor = pin[6:].zfill(4) if len(pin) > 6 else "0000"
-        try:
-            sresp = requests.get(
-                "https://data.kingcounty.gov/resource/yr8g-yw5b.json",
-                params={"major": major, "minor": minor},
-                timeout=10,
-                headers=_SCOUT_HEADERS,
-                proxies={"http": None, "https": None},
-            )
-            if sresp.ok:
-                rows = sresp.json()
-                if rows:
-                    row = rows[0]
-                    result["year_built"]  = row.get("yrbuilt")
-                    result["bedrooms"]    = row.get("nbrbedrooms")
-                    result["bathrooms"]   = row.get("nbrbaths")
-                    result["living_sqft"] = row.get("sqfttotliving")
-                    result["stories"]     = row.get("stories")
-                    result["appr_land"]   = row.get("apprlndval")
-                    result["appr_improvement"] = row.get("apprimpval")
-                    result["appr_total"]  = row.get("apprtotval")
-        except Exception as exc:
-            log.info("Socrata building data failed: %s", exc)
+    # WHY: ArcGIS MapServer/0 only carries PIN + geometry; eRealProperty has all
+    # enriched attributes (address, zoning, building, assessed values).
+    if pin:
+        erp = _scrape_erp_details(pin)
+        result.update(erp)
 
-    _parcel_cache[cache_key] = result
-    _save_parcel_cache(_parcel_cache)
-    log.info("Parcel cached for %s (PIN=%s)", cache_key, result.get("pin", "n/a"))
-    return jsonify(result)
+    result.setdefault("address", "")
+    result.setdefault("jurisdiction", "")
+    result.setdefault("zoning", "")
+    result.setdefault("lot_sqft", None)
+
+    return result
+
+
+import re as _re
+from html.parser import HTMLParser as _HTMLParser
+
+
+class _TableParser(_HTMLParser):
+    """Extract label->value pairs from consecutive <td> cells in each <tr>."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._in_td = False
+        self._cell_buf: list[str] = []
+        self._row_cells: list[str] = []
+        self.pairs: dict[str, str] = {}
+        # WHY: assessment history rows have format Year|Land|Improvement|Total;
+        # captured separately because they have 3+ value cells, not a single label->value.
+        self.year_rows: dict[str, list[str]] = {}
+
+    def handle_starttag(self, tag: str, attrs: list) -> None:
+        if tag == "tr":
+            self._row_cells = []
+        elif tag == "td":
+            self._in_td = True
+            self._cell_buf = []
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "td":
+            self._in_td = False
+            self._row_cells.append(" ".join(self._cell_buf).strip())
+        elif tag == "tr":
+            cells = self._row_cells
+            if len(cells) >= 2:
+                label = cells[0].lower().rstrip(":").strip()
+                value = cells[1].strip()
+                if label and value:
+                    self.pairs[label] = value
+            if len(cells) >= 3 and _re.match(r"^\d{4}$", cells[0].strip()):
+                self.year_rows[cells[0].strip()] = [c.strip() for c in cells[1:]]
+
+    def handle_data(self, data: str) -> None:
+        if self._in_td:
+            stripped = data.strip()
+            if stripped:
+                self._cell_buf.append(stripped)
+
+
+def _fetch_erp_page(url: str, pin: str, label: str) -> _TableParser | None:
+    """Fetch one eRealProperty page and return a parsed _TableParser, or None on error."""
+    try:
+        resp = requests.get(url, timeout=20, headers=_SCOUT_HEADERS,
+                            proxies={"http": None, "https": None})
+        resp.raise_for_status()
+    except Exception as exc:
+        log.info("eRealProperty %s fetch failed for PIN=%s: %s", label, pin, exc)
+        return None
+    try:
+        p = _TableParser()
+        p.feed(resp.text)
+        log.info("eRealProperty %s labels for PIN=%s: %s", label, pin, list(p.pairs.keys()))
+        return p
+    except Exception as exc:
+        log.info("eRealProperty %s parse failed for PIN=%s: %s", label, pin, exc)
+        return None
+
+
+def _scrape_erp_details(pin: str) -> dict:
+    """Scrape King County eRealProperty Dashboard + Detail pages for parcel attributes."""
+    base = "https://blue.kingcounty.com/Assessor/eRealProperty"
+    dashboard = _fetch_erp_page(f"{base}/Dashboard.aspx?ParcelNbr={pin}", pin, "Dashboard")
+    detail    = _fetch_erp_page(f"{base}/Detail.aspx?ParcelNbr={pin}",    pin, "Detail")
+
+    if dashboard is None and detail is None:
+        return {}
+
+    # Merge pairs: Dashboard takes priority; Detail fills in what Dashboard lacks.
+    pairs: dict[str, str] = {}
+    if detail:
+        pairs.update(detail.pairs)
+    if dashboard:
+        pairs.update(dashboard.pairs)   # overwrites detail duplicates with dashboard values
+
+    # Merge year_rows from both pages.
+    year_rows: dict[str, list[str]] = {}
+    if detail:
+        year_rows.update(detail.year_rows)
+    if dashboard:
+        year_rows.update(dashboard.year_rows)
+
+    def get(*labels: str) -> str | None:
+        for lbl in labels:
+            v = pairs.get(lbl.lower())
+            if v and v not in ("-", "N/A", "n/a", ""):
+                return v
+        return None
+
+    def to_int(raw: str | None) -> int | None:
+        if raw is None:
+            return None
+        m = _re.search(r"[\d,]+", raw)
+        return int(m.group().replace(",", "")) if m else None
+
+    def strip_dollar(raw: str | None) -> str | None:
+        if raw is None:
+            return None
+        return raw.replace("$", "").replace(",", "").strip() or None
+
+    out: dict = {}
+    out["name"]             = get("name")
+    out["address"]          = get("site address", "property address", "address")
+    out["jurisdiction"]     = get("jurisdiction", "city", "municipality")
+    out["zoning"]           = get("zoning", "current zoning", "zone class", "zone")
+    out["lot_sqft"]         = to_int(get("lot size", "lot area", "lot sq ft", "lot sq. ft."))
+    out["year_built"]       = get("year built", "yr built")
+    out["bedrooms"]         = get("number of bedrooms", "bedrooms", "nbr bedrooms", "bedroom count")
+    out["bathrooms"]        = get("number of baths", "baths", "bathrooms", "nbr baths", "bath count")
+    out["living_sqft"]      = get("total square footage", "sq ft tot living", "total living sq ft",
+                                  "living space", "sq ft living", "square feet of living space")
+    out["grade"]            = get("grade")
+    out["condition"]        = get("condition")
+    out["views"]            = get("views")
+    out["appr_land"]        = strip_dollar(get("appraised land", "appraised land value", "land value"))
+    out["appr_improvement"] = strip_dollar(get("appraised improvement", "appraised improvements",
+                                               "improvement value"))
+    out["appr_total"]       = strip_dollar(get("appraised total", "total appraised value", "total value"))
+
+    # Detail-page fields.
+    out["stories"]          = get("stories", "number of stories", "nbr stories")
+    out["year_renovated"]   = get("year renovated", "yr renovated")
+    out["heat_source"]      = get("heat source", "heating source")
+    out["heat_system"]      = get("heat system", "heating system")
+    out["basement_sqft"]    = to_int(get("total basement", "finished basement",
+                                         "sq ft basement", "basement sqft"))
+    out["garage_sqft"]      = to_int(get("attached garage", "basement garage",
+                                         "garage sqft", "sq ft garage"))
+    out["deck_sqft"]        = to_int(get("deck area sqft", "deck sqft"))
+    out["present_use"]      = get("present use", "property type", "land type")
+    out["land_sqft"]        = to_int(get("land sqft", "land sq ft", "sq ft land"))
+    out["land_acres"]       = get("acres")
+    out["sewer"]            = get("sewer/septic", "sewer", "sewage disposal")
+    out["water"]            = get("water", "water source")
+
+    # WHY: King County labels each fireplace type separately; sum them for a total count.
+    fireplace_keys = [
+        "fireplace single story", "fireplace muilti story",
+        "fireplace free standing", "fireplace additional",
+    ]
+    fp_total = sum(
+        int(m.group()) if (v := pairs.get(k)) and (m := _re.search(r"\d+", v)) else 0
+        for k in fireplace_keys
+    )
+    if fp_total:
+        out["fireplaces"] = str(fp_total)
+
+    # WHY: assessment values live in multi-cell year rows, not label->value pairs.
+    if year_rows:
+        latest = max(year_rows.keys())
+        vals = year_rows[latest]
+        if len(vals) >= 1 and not out.get("appr_land"):
+            out["appr_land"] = strip_dollar(vals[0])
+        if len(vals) >= 2 and not out.get("appr_improvement"):
+            out["appr_improvement"] = strip_dollar(vals[1])
+        if len(vals) >= 3 and not out.get("appr_total"):
+            out["appr_total"] = strip_dollar(vals[2])
+
+    return {k: v for k, v in out.items() if v is not None}
+
+
+@app.route("/api/parcel/debug")
+def api_parcel_debug():
+    """Return raw ArcGIS attrs + eRealProperty scrape for a PIN — diagnostic only."""
+    pin = request.args.get("pin", "").strip()
+    if not pin:
+        return jsonify({"error": "pin required"}), 400
+
+    arcgis_url = (
+        "https://gismaps.kingcounty.gov/arcgis/rest/services"
+        "/Property/KingCo_Parcels/MapServer/0/query"
+    )
+    try:
+        ar = requests.get(arcgis_url,
+                          params={"where": f"PIN='{pin}'", "outFields": "*",
+                                  "returnGeometry": "false", "f": "json"},
+                          timeout=30, headers=_SCOUT_HEADERS,
+                          proxies={"http": None, "https": None})
+        ar.raise_for_status()
+        arcgis_raw = ar.json()
+    except Exception as exc:
+        arcgis_raw = {"error": str(exc)}
+
+    features = arcgis_raw.get("features", [])
+    attrs = features[0]["attributes"] if features else {}
+
+    base = "https://blue.kingcounty.com/Assessor/eRealProperty"
+    dashboard_parser = _fetch_erp_page(f"{base}/Dashboard.aspx?ParcelNbr={pin}", pin, "Dashboard")
+    detail_parser    = _fetch_erp_page(f"{base}/Detail.aspx?ParcelNbr={pin}",    pin, "Detail")
+
+    return jsonify({
+        "arcgis_fields": list(attrs.keys()),
+        "arcgis_attrs": attrs,
+        "dashboard_labels": list(dashboard_parser.pairs.keys()) if dashboard_parser else [],
+        "dashboard_pairs":  dashboard_parser.pairs if dashboard_parser else {},
+        "detail_labels":    list(detail_parser.pairs.keys()) if detail_parser else [],
+        "detail_pairs":     detail_parser.pairs if detail_parser else {},
+        "erp_scraped":      _scrape_erp_details(pin),
+    })
 
 
 def _seed_on_startup():
