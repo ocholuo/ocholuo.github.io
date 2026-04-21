@@ -26,6 +26,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 CSV_PATH = os.path.join(DATA_DIR, "rate_history.csv")
 TNX_CSV_PATH = os.path.join(DATA_DIR, "tnx_history.csv")  # separate: DGS10 is daily vs weekly mortgage
+PARCEL_CACHE_PATH = os.path.join(DATA_DIR, "parcel_cache.json")
 
 FRED_BASE = "https://fred.stlouisfed.org/graph/fredgraph.csv"
 FRED_SERIES = {
@@ -60,6 +61,36 @@ def cached(ttl=CACHE_TTL_SECONDS):
             return val
         return wrapper
     return decorator
+
+# ---------------------------------------------------------------------------
+# Parcel cache — file-backed, same pattern as rate_history.csv
+# WHY: ArcGIS + Socrata round-trip is slow (~1-2 s); parcel attributes
+# (PIN, zoning, assessed value) are reassessed annually at most, so a
+# persistent on-disk cache is safe and avoids redundant network calls.
+# Cache key: lat/lon rounded to 4 decimal places (~11 m precision).
+# ---------------------------------------------------------------------------
+
+def _load_parcel_cache() -> dict:
+    if not os.path.exists(PARCEL_CACHE_PATH):
+        return {}
+    try:
+        with open(PARCEL_CACHE_PATH) as f:
+            return json.load(f)
+    except Exception as exc:
+        log.warning("Could not read parcel cache: %s", exc)
+        return {}
+
+
+def _save_parcel_cache(cache: dict) -> None:
+    try:
+        os.makedirs(DATA_DIR, exist_ok=True)
+        with open(PARCEL_CACHE_PATH, "w") as f:
+            json.dump(cache, f)
+    except Exception as exc:
+        log.warning("Could not save parcel cache: %s", exc)
+
+
+_parcel_cache: dict = _load_parcel_cache()
 
 # ---------------------------------------------------------------------------
 # FRED data fetching helpers
@@ -741,6 +772,13 @@ def api_parcel():
     if lat is None or lon is None:
         return jsonify({"error": "lat and lon required"}), 400
 
+    # WHY: round to 4 decimal places (~11 m) so nearby repeated queries for
+    # the same property reuse the cached result without a second ArcGIS round-trip.
+    cache_key = f"{round(lat, 4)},{round(lon, 4)}"
+    if cache_key in _parcel_cache:
+        log.info("Parcel cache hit for %s", cache_key)
+        return jsonify(_parcel_cache[cache_key])
+
     arcgis_url = (
         "https://gismaps.kingcounty.gov/arcgis/rest/services"
         "/Property/KingCo_Parcels/MapServer/0/query"
@@ -774,7 +812,10 @@ def api_parcel():
     features = data.get("features", [])
     if not features:
         log.info("ArcGIS returned no features for lat=%s, lon=%s (likely outside King County)", lat, lon)
-        return jsonify({"in_king_county": False})
+        not_found = {"in_king_county": False}
+        _parcel_cache[cache_key] = not_found
+        _save_parcel_cache(_parcel_cache)
+        return jsonify(not_found)
 
     feat = features[0]
     attrs = feat.get("attributes", {})
@@ -825,6 +866,12 @@ def api_parcel():
                     result["stories"]     = row.get("stories")
         except Exception as exc:
             log.info(f"Socrata building data failed: {exc}")
+
+    # Persist to disk so repeat lookups for the same parcel skip ArcGIS entirely.
+    # Only cache non-error responses (errors may be transient network issues).
+    _parcel_cache[cache_key] = result
+    _save_parcel_cache(_parcel_cache)
+    log.info("Parcel cached for %s (PIN=%s)", cache_key, result.get("pin", "n/a"))
 
     return jsonify(result)
 
