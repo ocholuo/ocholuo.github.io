@@ -4435,10 +4435,15 @@ function scoutFetchParcel(lat, lon) {
   if (_scoutParcelLayer) { _scoutParcelLayer.remove(); _scoutParcelLayer = null; }
 
   fetch('/api/parcel?lat=' + lat + '&lon=' + lon)
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.json().then(function(d) { d._status = r.status; return d; }); })
     .then(function(d) {
       loading.style.display = 'none';
-      if (!d.in_king_county) {
+      if (d.error) {
+        err.textContent = 'Could not load parcel data. Check the Flask logs for details.';
+        err.style.display = '';
+        return;
+      }
+      if (d.in_king_county === false) {
         err.textContent = 'Parcel data is currently available for King County, WA only.';
         err.style.display = '';
         return;

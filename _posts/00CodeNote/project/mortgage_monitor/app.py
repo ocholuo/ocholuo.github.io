@@ -753,17 +753,27 @@ def api_parcel():
         "returnGeometry": "true",
         "outSR": "4326",
         "f": "json",
+        # WHY: 15m buffer handles Nominatim points that land on street centerlines
+        # rather than inside the parcel polygon, which would otherwise return empty features.
+        "distance": "15",
+        "units": "esriSRUnit_Meter",
     }
     try:
         resp = requests.get(arcgis_url, params=params, timeout=12, headers=_SCOUT_HEADERS)
         resp.raise_for_status()
         data = resp.json()
     except Exception as exc:
-        log.warning("ArcGIS parcel query failed: %s", exc)
-        return jsonify({"error": "parcel lookup failed"}), 502
+        log.warning("ArcGIS parcel query failed (lat=%s, lon=%s): %s", lat, lon, exc)
+        return jsonify({"error": "parcel lookup failed", "detail": str(exc)}), 502
+
+    # ArcGIS may return an error JSON instead of features
+    if data.get("error"):
+        log.warning("ArcGIS returned error (lat=%s, lon=%s): %s", lat, lon, data["error"])
+        return jsonify({"error": "ArcGIS error", "detail": str(data["error"])}), 502
 
     features = data.get("features", [])
     if not features:
+        log.info("ArcGIS returned no features for lat=%s, lon=%s (likely outside King County)", lat, lon)
         return jsonify({"in_king_county": False})
 
     feat = features[0]
