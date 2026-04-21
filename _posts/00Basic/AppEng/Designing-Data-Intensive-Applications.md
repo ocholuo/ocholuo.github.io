@@ -220,8 +220,6 @@ image:
     - [Doing the right thing](#doing-the-right-thing)
       - [Privacy and tracking](#privacy-and-tracking)
 
-
-
 ---
 
 # [Designing Data-Intensive Applications](https://www.goodreads.com/book/show/23463279-designing-data-intensive-applications)
@@ -243,24 +241,23 @@ image:
 
 ---
 
-
 ### Reliable, scalable, and maintainable applications
 
 A data-intensive application is typically built from standard building blocks. They usually need to:
-* Store data (_databases_)
-* Speed up reads (_caches_)
-* Search data (_search indexes_)
-* Send a message to another process asynchronously (_stream processing_)
-* Periodically crunch data (_batch processing_)
+- Store data (_databases_)
+- Speed up reads (_caches_)
+- Search data (_search indexes_)
+- Send a message to another process asynchronously (_stream processing_)
+- Periodically crunch data (_batch processing_)
 
 ---
 
 #### Thinking About Data Systems
 
 databases, queues, caches, etc. as being very different categories of tools.
+
 - Although a database and a message queue have some superficial similarity, both store data for some time
 - they have very different access patterns, which means different performance characteristics, and thus very different implementations.
-
 
 - Many new tools for data storage and processing have emerged in recent years.
   - They are optimized for a variety of different use cases, and they no longer neatly fit into traditional categories
@@ -268,7 +265,6 @@ databases, queues, caches, etc. as being very different categories of tools.
     - datastores that are also used as message queues (`Redis`),
     - and there are message queues with database-like durability guarantees (`Apache Kafka`).
   - The boundaries between the categories are becoming blurred.
-
 
 - Secondly, increasingly many applications now have such demanding or wide-ranging requirements
   - a single tool can no longer meet all of its data processing and storage needs.
@@ -284,7 +280,6 @@ databases, queues, caches, etc. as being very different categories of tools.
   - Your composite data system may provide certain guarantees:
     - e.g., that the cache will be correctly invalidated or updated on writes so that outside clients see consistent results.
 
-
 - You are now not only an application developer, but also a data system designer.
   - If you are designing a data system or service, a lot of tricky questions arise.
     - How do you ensure that the data remains correct and complete, even when things go wrong internally?
@@ -296,34 +291,34 @@ databases, queues, caches, etc. as being very different categories of tools.
     - your organization’s tolerance of different kinds of risk, regulatory constraints, etc.
   - Those factors depend very much on the situation.
 
-
-
 three concerns that are important in most software systems:
 
-* **Reliability**.
-  * To work _correctly_ (performing the correct function at the desired level of performance)
-  * even in the face of _adversity_ (hardware or software faults, and even human error).
-* **Scalability**.
-  * As the system grows (in data volume, traffic volume, or complexity),
-  * Reasonable ways of dealing with _growth_ .
-* **Maintainability**.
-  * Over time, many different people will work on the system (engineering and operations, both maintaining current behavior and adapting the system to new use cases),
-  * should be able to work on it _productively_.
+- **Reliability**.
+  - To work _correctly_ (performing the correct function at the desired level of performance)
+  - even in the face of _adversity_ (hardware or software faults, and even human error).
+- **Scalability**.
+  - As the system grows (in data volume, traffic volume, or complexity),
+  - Reasonable ways of dealing with _growth_ .
+- **Maintainability**.
+  - Over time, many different people will work on the system (engineering and operations, both maintaining current behavior and adapting the system to new use cases),
+  - should be able to work on it _productively_.
 
 ---
 
 #### Reliability
 
 Typical expectations:
-* Application **performs the function** the user expected
-* Tolerate the **user making mistakes**
-* Its **performance is good**
-* The **system prevents abuse**
+- Application **performs the function** the user expected
+- Tolerate the **user making mistakes**
+- Its **performance is good**
+- The **system prevents abuse**
 
 **reliability**:
+
 - “continuing to work correctly, even when things go wrong.”
 
 The things that can go wrong are called **faults**:
+
 - Systems that anticipate faults and can cope with them are called _fault-tolerant_ or _resilient_.
   - `fault-tolerant` is slightly misleading: it suggests tot make a system tolerant of every possible kind of fault, which in reality is not feasible.
 
@@ -332,8 +327,8 @@ The things that can go wrong are called **faults**:
 - It is impossible to reduce the probability of a fault to zero;
   - therefore it is usually best to design `fault-tolerance mechanisms` that **prevent faults from causing failures**.
 
-
 Counterintuitively 直觉相反, in such fault-tolerant systems, it can make sense to increase the rate of faults by triggering them deliberately
+
 - for example,
   - by randomly killing individual processes without warning.
   - Many critical bugs are actually due to `poor error handling`;
@@ -343,6 +338,7 @@ Counterintuitively 直觉相反, in such fault-tolerant systems, it can make sen
   - The Netflix Chaos Monkey is an example of this approach.
 
 generally **prefer tolerating faults over preventing faults**.
+
 - there are cases where prevention is better than cure
   - (e.g., because no cure exists).
   - This is the case with security matters,
@@ -352,51 +348,51 @@ generally **prefer tolerating faults over preventing faults**.
 
 ##### Hardware faults
 
-* **Hardware faults**.
-  * `Hard disks crash, RAM becomes faulty, the power grid has a blackout, someone unplugs the wrong network cable`.
-  * Hard disks are reported as having a `mean time to failure (MTTF) of about 10 to 50 years`.
-    * Thus, on a storage cluster with 10,000 disks, we should expect on average one disk to die per day.
-  * **Our first response** is usually to `add redundancy to the individual hardware components to reduce the failure rate of the system`.
-    * When one component dies, the redundant component can take its place while the broken component is replaced.
-    * cannot completely prevent hardware problems from causing failures, but can often keep a machine running uninterrupted for years.
-      * Disks may be set up in a RAID configuration,
-      * servers may have dual power supplies and hot-swappable CPUs,
-      * datacenters may have batteries and diesel generators for backup power.
-  * Until recently **redundancy of hardware components was sufficient for most applications**.
-    * it makes `total failure of a single machine` fairly rare. restore a backup onto a new machine fairly quickly, the downtime in case of failure is not catastrophic in most applications.
-    * Thus, **multi-machine redundancy** was only required by a small number of applications for which `high availability` was absolutely essential.
+- **Hardware faults**.
+  - `Hard disks crash, RAM becomes faulty, the power grid has a blackout, someone unplugs the wrong network cable`.
+  - Hard disks are reported as having a `mean time to failure (MTTF) of about 10 to 50 years`.
+    - Thus, on a storage cluster with 10,000 disks, we should expect on average one disk to die per day.
+  - **Our first response** is usually to `add redundancy to the individual hardware components to reduce the failure rate of the system`.
+    - When one component dies, the redundant component can take its place while the broken component is replaced.
+    - cannot completely prevent hardware problems from causing failures, but can often keep a machine running uninterrupted for years.
+      - Disks may be set up in a RAID configuration,
+      - servers may have dual power supplies and hot-swappable CPUs,
+      - datacenters may have batteries and diesel generators for backup power.
+  - Until recently **redundancy of hardware components was sufficient for most applications**.
+    - it makes `total failure of a single machine` fairly rare. restore a backup onto a new machine fairly quickly, the downtime in case of failure is not catastrophic in most applications.
+    - Thus, **multi-machine redundancy** was only required by a small number of applications for which `high availability` was absolutely essential.
 
-    * As data volumes increase, more applications use a larger number of machines, proportionally increasing the rate of hardware faults.
-      * Moreover, in some cloud platforms such as AWS it is fairly common for virtual machine instances to become unavailable without warning, as the platforms are designed to prioritize `flexibility and elasticity` over single-machine reliability.
+    - As data volumes increase, more applications use a larger number of machines, proportionally increasing the rate of hardware faults.
+      - Moreover, in some cloud platforms such as AWS it is fairly common for virtual machine instances to become unavailable without warning, as the platforms are designed to prioritize `flexibility and elasticity` over single-machine reliability.
 
-    * **There is a move towards systems that tolerate the loss of entire machines**.
-      * by using `software fault-tolerance techniques` in preference or in addition to hardware redundancy.
-      * Such systems also have operational advantages:
-        * a `single-server system` requires planned downtime to reboot the machine
-          * (to apply operating system security patches, for example),
-        * whereas a `system that can tolerate machine failure` can be patched one node at a time, without downtime of the entire system
-          * (_rolling upgrade_)
+    - **There is a move towards systems that tolerate the loss of entire machines**.
+      - by using `software fault-tolerance techniques` in preference or in addition to hardware redundancy.
+      - Such systems also have operational advantages:
+        - a `single-server system` requires planned downtime to reboot the machine
+          - (to apply operating system security patches, for example),
+        - whereas a `system that can tolerate machine failure` can be patched one node at a time, without downtime of the entire system
+          - (_rolling upgrade_)
 
 - We usually think of hardware faults as being random and independent from each other:
   - one machine’s disk failing does not imply that another machine’s disk is going to fail.
   - There may be weak correlations (for example due to a common cause, such as the temperature in the server rack),
   - but otherwise it is unlikely that a large number of hardware components will fail at the same time.
 
-
 ##### Software errors
 
-* **Software errors**.
-  * It is unlikely that a large number of hardware components will fail at the same time.
-  * a systematic error within the system,
-  * Such faults are harder to anticipate, and because they are correlated across nodes, they `tend to cause many more system failures` than uncorrelated hardware faults.
-    * A `software bug` that causes every instance of an application server to crash `when given a particular bad input`.
-      * For example, consider the leap second on June 30, 2012, that caused many applications to hang simultaneously due to a bug in the Linux kernel.
-    * A runaway process that `uses up some shared resource—CPU time, memory, disk space, or network bandwidth`.
-    * A service that the system depends on that `slows down, becomes unresponsive, or starts returning corrupted responses`.
-    * `Cascading 瀑布 failures`,
-      * where a small fault in one component triggers a fault in another component, which in turn triggers further faults.
+- **Software errors**.
+  - It is unlikely that a large number of hardware components will fail at the same time.
+  - a systematic error within the system,
+  - Such faults are harder to anticipate, and because they are correlated across nodes, they `tend to cause many more system failures` than uncorrelated hardware faults.
+    - A `software bug` that causes every instance of an application server to crash `when given a particular bad input`.
+      - For example, consider the leap second on June 30, 2012, that caused many applications to hang simultaneously due to a bug in the Linux kernel.
+    - A runaway process that `uses up some shared resource—CPU time, memory, disk space, or network bandwidth`.
+    - A service that the system depends on that `slows down, becomes unresponsive, or starts returning corrupted responses`.
+    - `Cascading 瀑布 failures`,
+      - where a small fault in one component triggers a fault in another component, which in turn triggers further faults.
 
 The bugs that cause these kinds of software faults often lie dormant 休眠潜伏 for a long time until they are triggered by an unusual set of circumstances.
+
 - In those circumstances, it is revealed 揭示 that the software is making some kind of assumption about its environment
   - while that assumption is usually true,
   - it eventually stops being true for some reason.
@@ -411,13 +407,12 @@ The bugs that cause these kinds of software faults often lie dormant 休眠潜�
     - (for example, in a message queue, that the number of incoming messages equals the number of outgoing messages),
     - it can constantly check itself while it is running and raise an alert if a discrepancy is found.
 
-
 ##### Human errors
 
-* **Human errors**.
-  * Humans are known to be unreliable.
-    * For example, configuration errors by operators were the leading cause of outages, whereas hardware faults (servers or network) played a role in only 10–25% of outages.
-  * Configuration errors by operators are a leading cause of outages. You can make systems more reliable:
+- **Human errors**.
+  - Humans are known to be unreliable.
+    - For example, configuration errors by operators were the leading cause of outages, whereas hardware faults (servers or network) played a role in only 10–25% of outages.
+  - Configuration errors by operators are a leading cause of outages. You can make systems more reliable:
     - **Minimising the opportunities for error, peg**
       - with admin interfaces that make easy to do the "right thing" and discourage the "wrong thing".
     - **Decouple the places has most mistakes from the places where they can cause failures**.
@@ -436,6 +431,7 @@ The bugs that cause these kinds of software faults often lie dormant 休眠潜�
     - Implement good management practices and training.
 
 There are situations in which we may choose to sacrifice reliability in order to:
+
 - reduce development cost (e.g., when developing a prototype product for an unproven market)
 - reduce operational cost (e.g., for a service with a very narrow profit margin)
 - but we should be very conscious of when we are cutting corners.
@@ -445,6 +441,7 @@ There are situations in which we may choose to sacrifice reliability in order to
 #### Scalability
 
 **Scalability**: describe a system’s ability to cope 应付 with increased load.
+
 - not a one-dimensional label: “X is scalable” or “Y doesn’t scale.”
 - scalability means considering questions like
   - If the system grows in a particular way, what are our options for coping with the growth?
@@ -464,16 +461,18 @@ There are situations in which we may choose to sacrifice reliability in order to
 ###### Twitter example
 
 Twitter main operations
+
 - **Post tweet**: a user can publish a new message to their followers (4.6k req/sec, over 12k req/sec peak)
 - **Home timeline**: a user can view tweets posted by the people they follow (300k req/sec)
 
 Simply handling 12,000 writes per second (the peak rate for posting tweets) would be fairly easy.
 
 However, Twitter’s scaling challenge is due to **fan-out**
+
 - each user follows many people, and each user is followed by many people.
 
-
 Two ways of implementing those operations:
+
 1. Posting a tweet simply inserts the new tweet into a global collection of tweets.
    1. When a user requests their home timeline, look up all the people they follow,
    2. find all the tweets for those users, and merge them (sorted by time).
@@ -486,13 +485,12 @@ JOIN follows ON follows.followee_id = users.id
 WHERE follows.follower_id = current_user
 ```
 
-2. Maintain a cache for each user's home timeline.
+1. Maintain a cache for each user's home timeline.
    1. When a user _posts a tweet_,
    2. look up all the people who follow that user,
    3. insert the new tweet into each of their home timeline caches.
 
 ![Screen Shot 2021-10-20 at 9.30.25 AM](https://i.imgur.com/AAWPjXh.png)
-
 
 The first version of Twitter used approach 1 then switched to approach 2.
 
@@ -505,28 +503,29 @@ The first version of Twitter used approach 1 then switched to approach 2.
   - Some users have over 30 million followers. A single tweet may result in over `30 million writes to home timelines`.
 
 Twitter moved to an hybrid of both approaches.
-- Tweets continue to be fanned out to home timelines but a small number of users with a very large number of followers are fetched separately and merged with that user's home timeline when it is read.
 
+- Tweets continue to be fanned out to home timelines but a small number of users with a very large number of followers are fetched separately and merged with that user's home timeline when it is read.
 
 ---
 
 ##### Describing performance
 
 What happens when the **load increases**:
-* When you increase a load parameter and `keep the system resources (CPU, mem‐ ory, network bandwidth, etc.) unchanged`, how is the performance of your system affected?
-* When you increase a load parameter, how much do you need to `increase the resources to keep performance unchanged`?
+- When you increase a load parameter and `keep the system resources (CPU, mem‐ ory, network bandwidth, etc.) unchanged`, how is the performance of your system affected?
+- When you increase a load parameter, how much do you need to `increase the resources to keep performance unchanged`?
 
 In a batch processing system such as Hadoop, we usually care about _throughput_
+
 - the number of records we can process per second.
 - or the total time it takes to run a job on a dataset of a certain size
 - In online systems, what’s usually more important is the service’s response time—that is, the time between a client sending a request and receiving a response.
-
 
 > Latency and response time
 > The `response time` is what the client sees.
 > `Latency` is the duration that a request is waiting to be handled.
 
 system handling a variety of requests, the response time can vary a lot.
+
 - response time not as a single number, but as a `distribution of values` that you can measure.
 
 ![Screen Shot 2021-10-20 at 9.52.59 AM](https://i.imgur.com/XX3IpVB.png)
@@ -545,32 +544,35 @@ system handling a variety of requests, the response time can vary a lot.
 - However, the mean is not very good metric to know your "typical" response time, it does not tell you how many users actually experienced that delay.
 
 - **Better to use percentiles.**
-  * _Median_
-  * _50th percentile_ or _p50_
-    * sort it from fastest to slowest, then the median is the halfway point
-    * a good metric to know how long users typically have to wait
-    * Half of user requests are served in less than the median response time, and the other half take longer than the median
-    * Note that `the median refers to a single request`;
-      * if the user makes several requests (over the course of a session, or because several resources are included in a single page)
-      * the probability that at least one of them is slower than the median is much greater than 50%.
+  - _Median_
+  - _50th percentile_ or _p50_
+    - sort it from fastest to slowest, then the median is the halfway point
+    - a good metric to know how long users typically have to wait
+    - Half of user requests are served in less than the median response time, and the other half take longer than the median
+    - Note that `the median refers to a single request`;
+      - if the user makes several requests (over the course of a session, or because several resources are included in a single page)
+      - the probability that at least one of them is slower than the median is much greater than 50%.
 
-  * _95th_, _99th_ Percentiles and _99.9th_
-    * (_p95_, _p99_ and _p999_) are good to figure out `how bad your outliners are.`
-    * They are the response time thresholds at which 95%, 99%, or 99.9% of requests are faster than that particular threshold.
-    * For example, if the 95th percentile response time is 1.5 seconds, that means 95 out of 100 requests take less than 1.5 seconds, and 5 out of 100 requests take 1.5 seconds or more.
+  - _95th_, _99th_ Percentiles and _99.9th_
+    - (_p95_, _p99_ and _p999_) are good to figure out `how bad your outliners are.`
+    - They are the response time thresholds at which 95%, 99%, or 99.9% of requests are faster than that particular threshold.
+    - For example, if the 95th percentile response time is 1.5 seconds, that means 95 out of 100 requests take less than 1.5 seconds, and 5 out of 100 requests take 1.5 seconds or more.
 
 **tail latencies**,
+
 - High percentiles of response times,
 - are important because they directly affect users’ experience of the service.
   - Amazon describes response time requirements for internal services in terms of the 99.9th percentile because the customers with the slowest requests are often those who have the most data. The most valuable customers.
 
 **optimising for the 99.99th percentile**
+
 - would be too expensive, and the benefits are diminishing 递减
   - _Service level objectives_ (SLOs) and _service level agreements_ (SLAs) are contracts that define the expected performance and availability of a service.
     - An SLA may state `the median response time to be less than 200ms and a 99th percentile under 1s, and the service may be required to be up at least 99.9% of the time`.
   - **These metrics set expectations for clients of the service and allow customers to demand a refund if the SLA is not met.**
 
 **Queueing delays**
+
 - often account for large part of the response times at high percentiles.
 - **It is important to measure times on the client side.**
 - **head-of-line blocking**
@@ -578,17 +580,15 @@ system handling a variety of requests, the response time can vary a lot.
   - Even if those subsequent requests are fast to process on the server, the client will see a slow overall response time due to the `time waiting for the prior request to complete`.
   - Due to this effect, it is important to measure response times on the client side.
 
-
 When **generating load artificially to test the scalability of a system**
+
 - the load-generating client needs to `keep sending requests independently of the response time`.
 - If the client waits for the previous request to complete before sending the next one, that behavior has the effect of artificially keeping the queues shorter in the test than they would be in reality, which skews the measurements
 
-
 ###### Percentiles in practice
+>
 > Calls in parallel, the end-user request still needs to wait for the slowest of the parallel calls to complete.
 > The chance of getting a slow call increases if an end-user request requires multiple backend calls.
-
-
 
 - High percentiles become especially important in **backend services that are called multiple times as part of serving a single end-user request**.
 - Even if you make the calls in parallel, the end-user request still needs to wait for the slowest of the parallel calls to complete.
@@ -607,8 +607,6 @@ When **generating load artificially to test the scalability of a system**
   - e.g., to reduce the time resolution or to combine data from several machines
   - the right way of aggregating response time data is to **add the histograms**.
 
-
-
 ##### Approaches for coping with load
 
 > with the parameters for describing `load` and metrics for measuring `performance`,
@@ -616,29 +614,30 @@ When **generating load artificially to test the scalability of a system**
 
 how do we **maintain good performance even when our load parameters increase** by some amount?
 
-* _Scaling up_ or _vertical scaling_:
-  * Moving to a more powerful machine
-* _Scaling out_ or _horizontal scaling_:
-  * Distributing the load across multiple smaller machines.
-  * Distributing load across multiple machines is also known as a `shared-nothing architecture`.
+- _Scaling up_ or _vertical scaling_:
+  - Moving to a more powerful machine
+- _Scaling out_ or _horizontal scaling_:
+  - Distributing the load across multiple smaller machines.
+  - Distributing load across multiple machines is also known as a `shared-nothing architecture`.
 
 A system that can run on a single machine is often simpler, but high-end machines can become very expensive, so very intensive workloads often can’t avoid scaling out.
+
 - In reality, good architectures usually involve a pragmatic mixture of approaches:
 - for example
 - several fairly powerful machines can be simpler and cheaper than a large number of small virtual machines.
 
-* _Elastic_ systems:
-  * **Automatically add computing resources when detected load increase**.
-  * Quite useful if load is unpredictable.
-  * systems are scaled manually (a human analyzes the capacity and decides to add more machines to the system).
-  * An elastic system can be useful if load is highly unpredictable, but manually scaled systems are simpler and may have fewer operational surprises
-
+- _Elastic_ systems:
+  - **Automatically add computing resources when detected load increase**.
+  - Quite useful if load is unpredictable.
+  - systems are scaled manually (a human analyzes the capacity and decides to add more machines to the system).
+  - An elastic system can be useful if load is highly unpredictable, but manually scaled systems are simpler and may have fewer operational surprises
 
 - `Distributing stateless services across multiple machines` is fairly straightforward.
 - `Taking stateful data systems from a single node to a distributed setup` can introduce a lot of complexity.
 - Until recently it was common wisdom to keep your database on a single node (scale up) until scaling cost or high-availability requirements forced you to make it distributed.
 
 The architecture of systems that operate at large scale is usually highly specific to the application
+
 - no such thing as a generic, one-size-fits-all scalable architecture (informally known as magic scaling sauce).
 - The problem may be
   - the volume of reads,
@@ -650,11 +649,10 @@ The architecture of systems that operate at large scale is usually highly specif
   - or (usually) some mixture of all of these plus many more issues.
 
 For example,
+
 - a system that is designed to handle 100,000 requests per second, each 1 kB in size,
 - a system that is designed for 3 requests per minute, each 2 GB in size
 - even though the two systems have the same data through‐put. big difference.
-
-
 
 ---
 
@@ -663,55 +661,53 @@ For example,
 > The majority of the cost of software is in its ongoing maintenance.
 
 **legacy systems**:
+
 - perhaps it involves fixing other people’s mistakes, or working with platforms that are now outdated, or systems that were forced to do things they were never intended for.
 - Every legacy system is unpleasant in its own way, and so it is difficult to give general recommendations for dealing with them.
 
-
 There are three **design principles for software systems**:
-* **Operability**.
-  * Make it easy for operation teams to keep the system running.
-* **Simplicity**.
-  * Easy for new engineers to understand the system by removing as much complexity as possible.
-* **Evolvability** 可进化性.
-  * Make it easy for engineers to make changes to the system in the future.
+- **Operability**.
+  - Make it easy for operation teams to keep the system running.
+- **Simplicity**.
+  - Easy for new engineers to understand the system by removing as much complexity as possible.
+- **Evolvability** 可进化性.
+  - Make it easy for engineers to make changes to the system in the future.
 
 ---
 
 ##### Operability: making life easy for operations
 
 A good operations team is responsible for
-* **Monitoring** and quickly **restoring** service if it goes into bad state
-* **Tracking** down the cause of problems
-* Keeping software and platforms **up to date**
-* Keeping tabs on **how different systems affect each other**
-* **Anticipating** future problems and solving them before they occur (e.g., capacity planning)
-* **Establishing good practices and tools** for deployment, configuration management, and more
-* Performing complex **maintenance** tasks, such as moving an application from one platform to another
-* Maintaining the **security** of the system as configuration changes are made
-* **Defining processes** that make operations predictable and help keep the production environment stable
-* **Preserving the organization’s knowledge** about the system, even as individual people come and go
+- **Monitoring** and quickly **restoring** service if it goes into bad state
+- **Tracking** down the cause of problems
+- Keeping software and platforms **up to date**
+- Keeping tabs on **how different systems affect each other**
+- **Anticipating** future problems and solving them before they occur (e.g., capacity planning)
+- **Establishing good practices and tools** for deployment, configuration management, and more
+- Performing complex **maintenance** tasks, such as moving an application from one platform to another
+- Maintaining the **security** of the system as configuration changes are made
+- **Defining processes** that make operations predictable and help keep the production environment stable
+- **Preserving the organization’s knowledge** about the system, even as individual people come and go
 
 **Good operability means making routine tasks easy.**
 
 Data systems can do various things to make routine tasks easy, including:
-* **Providing visibility** into the runtime behavior and internals of the system, with good monitoring
-* **Providing good support** for automation and integration with standard tools
-* **Avoiding dependency** on individual machines (allowing machines to be taken down for maintenance while the system as a whole continues running uninter‐ rupted)
-* **Providing good documentation** and an easy-to-understand operational model (“If I do X, Y will happen”)
-* **Providing good default behavior**, but also giving administrators the freedom to override defaults when needed
-* **Self-healing** where appropriate, but also giving administrators manual control over the system state when needed
-* **Exhibiting predictable behavior, minimizing surprises**
-
-
+- **Providing visibility** into the runtime behavior and internals of the system, with good monitoring
+- **Providing good support** for automation and integration with standard tools
+- **Avoiding dependency** on individual machines (allowing machines to be taken down for maintenance while the system as a whole continues running uninter‐ rupted)
+- **Providing good documentation** and an easy-to-understand operational model (“If I do X, Y will happen”)
+- **Providing good default behavior**, but also giving administrators the freedom to override defaults when needed
+- **Self-healing** where appropriate, but also giving administrators manual control over the system state when needed
+- **Exhibiting predictable behavior, minimizing surprises**
 
 ---
-
 
 ##### Simplicity: managing complexity
 
 A software project mired 陷入困境 in complexity is sometimes described as a `big ball of mud`
 
 There are various possible symptoms of complexity:
+
 - explosion of the state space,
 - tight coupling of modules,
 - tangled dependencies,
@@ -720,16 +716,18 @@ There are various possible symptoms of complexity:
 - special-casing to work around issues elsewhere, and many more.
 - Much has been said on this topic already.
 
-
 When `complexity makes maintenance hard`,
+
 - budget and schedules are often overrun.
 - There is a greater risk of introducing bugs when making a change:
 
 **removing accidental complexity**
+
 - Making a system simpler means removing _accidental_ complexity,
 - complexity: accidental if it is not inherent in the problem that the software solves (as seen by the users) but arises only from the implementation.
 
 One of the best tools we have for removing accidental complexity is _abstraction_
+
 - that hides the implementation details behind clean and simple to understand APIs and facades. 正面
 - A good abstraction can also be used for a wide range of different applications.
   - Not only is this reuse more efficient than reimplementing a similar thing multiple times,
@@ -737,37 +735,36 @@ One of the best tools we have for removing accidental complexity is _abstraction
   - as quality improvements in the abstracted component benefit all applications that use it.
 
 For example,
+
 - `high-level programming languages` are abstractions that hide machine code, CPU registers, and syscalls.
 - `SQL` is an abstraction that hides complex on-disk and in-memory data structures, concurrent requests from other clients, and inconsistencies after crashes.
 - Of course, when programming in a high-level language, we are still using machine code; we are just not using it directly, because the programming language abstraction saves us from having to think about it.
 
 However, finding good abstractions is very hard.
+
 - much less clear how we should be packaging them into abstractions that help us keep the complexity of the system at a manageable level.
 - look for good abstractions to extract parts of a large system into `well-defined, reusable components`.
-
 
 ---
 
 ##### Evolvability: making change easy
 
 **Agile working patterns**
+
 - _Agile_ working patterns provide a framework for adapting to change.
 - The Agile community has also developed technical tools and patterns that are helpful when developing software in a frequently changing environment, such as `test-driven development (TDD)` and `refactoring`.
-
 
 ---
 
 ### Summary
 
 **An application has to meet various requirements in order to be useful.**
-* _Functional requirements_:
-  * what the application should do
-* _Nonfunctional requirements_:
-  * general properties like security, reliability, compliance, scalability, compatibility and maintainability.
-
+- _Functional requirements_:
+  - what the application should do
+- _Nonfunctional requirements_:
+  - general properties like security, reliability, compliance, scalability, compatibility and maintainability.
 
 **Reliability** means making systems work correctly, even when faults occur. Faults can be in hardware (typically random and uncorrelated), software (bugs are typically sys‐ tematic and hard to deal with), and humans (who inevitably make mistakes from time to time). Fault-tolerance techniques can hide certain types of faults from the end user.
-
 
 **Scalability** means having strategies for keeping performance good, even when load increases. In order to discuss scalability, we first need ways of describing load and performance quantitatively. We briefly looked at Twitter’s home timelines as an example of describing load, and response time percentiles as a way of measuring performance. In a scalable system, you can add processing capacity in order to remain reliable under high load.
 
@@ -775,22 +772,19 @@ However, finding good abstractions is very hard.
 
 ---
 
-
-
-
-
 ## CHAPTER 2 Data models and query language
 
 Most applications are built by layering one data model on top of another.
+
 - **Each layer hides the complexity of the layers below** by `providing a clean data model`.
 - These abstractions allow different groups of people to work effectively.
 
 For example:
+
 1. As an application developer, you look at the real world (in which there are people, organizations, goods, actions, money flows, sensors, etc.) and `model it in terms of objects or data structures, and APIs that manipulate those data structures`. Those structures are often specific to your application.
 2. When you want to store those data structures, you `express them in terms of a general-purpose data model, such as JSON or XML documents, tables in a relational database, or a graph model`.
 3. The engineers who built your database software decided on a way of `representing that JSON/XML/relational/graph data in terms of bytes in memory, on disk, or on a network`. The representation may allow the data to be queried, searched, manipulated, and processed in various ways.
 4. On yet lower levels, hardware engineers have figured out how to represent bytes in terms of electrical currents, pulses of light, magnetic fields, and more.
-
 
 ---
 
@@ -800,7 +794,6 @@ The roots of relational databases lie in _business data processing_, _transactio
 
 In the 1970s and early 1980s, the `network model` and the `hierarchical model` were the main alternatives, but the `relational model` came to dominate them.
 
-
 The goal was to hide the implementation details behind a cleaner interface.
 
 ---
@@ -808,11 +801,11 @@ The goal was to hide the implementation details behind a cleaner interface.
 #### NoSQL
 
 _NoSQL_ has a few driving forces:
-* Greater scalability than relational databases can easily achieve,
-  * including very large datasets or very high write throughput
-* preference for free and open source software
-* Specialised query optimisations that are not well supported by the relational model
-* Frustration with the restrictiveness of relational schemas, and a desire for a more
+- Greater scalability than relational databases can easily achieve,
+  - including very large datasets or very high write throughput
+- preference for free and open source software
+- Specialised query optimisations that are not well supported by the relational model
+- Frustration with the restrictiveness of relational schemas, and a desire for a more
 dynamic and expressive data model
 
 ---
@@ -820,13 +813,14 @@ dynamic and expressive data model
 #### The Object-Relational Mismatch
 
 **With a SQL model, if data is stored in a relational tables, an awkward translation layer is translated, this is called _impedance mismatch_ 阻抗失配 .**
+
 - translation layer is required between the `objects in the application code` and the `database model of tables, rows, and columns`.
 - The disconnect between the models is sometimes called an **impedance mismatch**.
 
 **Object-relational mapping (ORM) frameworks**
+
 - Object-relational mapping (ORM) frameworks like ActiveRecord and Hibernate reduce the amount of boilerplate code required for this translation layer,
 - but they can’t completely hide the differences between the two models.
-
 
 ---
 
@@ -835,6 +829,7 @@ dynamic and expressive data model
 JSON model reduces the impedance mismatch and the lack of schema is often cited as an advantage.
 
 JSON representation has better _locality_ than the multi-table SQL schema.
+
 - **All the relevant information is in one place, and one query is sufficient.**
   - to fetch a profile in the relational, either perform multiple queries (query each table by user_id) or perform a messy multiway join between the users table and its subordinate tables.
   - In the JSON representation, all the relevant information is in one place, and one query is sufficient.
@@ -843,23 +838,22 @@ JSON representation has better _locality_ than the multi-table SQL schema.
 - In document databases, joins are not needed for one-to-many tree structures, and support for joins is often weak.
 - If the database itself does not support joins, you have to emulate a join in application code by making multiple queries.
 
-
-
 ---
 
 #### Many-to-One and Many-to-Many Relationships
 
 advantages to having standardized lists of data:
-* Consistent style and spelling across profiles
-* Avoiding ambiguity
-* Ease of updating
-  * the name is stored in only one place, so it is easy to update across the board if it ever needs to be changed (e.g., change of a city name due to political events)
-* Localization support
-  * when the site is translated into other languages, the standardized lists can be localized, so the region and industry can be displayed in the viewer’s language
-* Better search
-  * e.g., a search for philanthropists in the state of Washington can match this profile, because the list of regions can encode the fact that Seattle is in Washington (which is not apparent from the string "Greater Seattle Area")
+- Consistent style and spelling across profiles
+- Avoiding ambiguity
+- Ease of updating
+  - the name is stored in only one place, so it is easy to update across the board if it ever needs to be changed (e.g., change of a city name due to political events)
+- Localization support
+  - when the site is translated into other languages, the standardized lists can be localized, so the region and industry can be displayed in the viewer’s language
+- Better search
+  - e.g., a search for philanthropists in the state of Washington can match this profile, because the list of regions can encode the fact that Seattle is in Washington (which is not apparent from the string "Greater Seattle Area")
 
 The advantage of using an ID is that because it has no meaning to humans, it never needs to change:
+
 - the ID can remain the same, even if the information it identifies changes.
 - Anything that is meaningful to humans may need to change sometime in the future
 - and if that information is duplicated, all the redundant copies need to be updated.
@@ -871,18 +865,20 @@ The advantage of using an ID is that because it has no meaning to humans, it nev
 #### Are Document Databases Repeating History?
 
 The most popular database for business data processing in the 1970s was the IBM's _Information Management System_ (IMS).
+
 - IMS used a _hierarchical model_
 - and like document databases worked well for one-to-many relationships,
 - but it made many-to-any relationships difficult, and it didn't support joins.
 
 ---
 
-
 ##### hierarchical model
+
 - which has some remarkable similarities to the JSON model used by document databases.
 - It represented all data as a tree of records nested within records, much like the JSON structure of
 
 Various solutions were proposed to solve the limitations of the hierarchical model.
+
 - The two most prominent were the **relational model** (which became SQL, and took over the world)
 - and the **network model** (which initially had a large following but eventually faded into obscurity). The “great debate” between these two camps lasted for much of the 1970s
 
@@ -897,30 +893,34 @@ Various solutions were proposed to solve the limitations of the hierarchical mod
   - This allowed many-to-one and many-to-many relationships to be modeled.
 
 The links between records in the network model were not foreign keys, but like pointers in a programming language.
+
 - **The only way of accessing a record** was to `follow a path from a root record` (access path).
 
 A query in CODASYL was performed by moving a cursor 光标 through the database by iterating over a list of records.
+
 - If a record had multiple parents
   - (i.e., multiple incoming pointers from other records),
   - the application code had to keep track of all the various relationships.
   - like navigating around an n-dimensional data space
 
 Manual access path selection was able to make the most efficient use of the very limited hardware capabilities in the 1970s (such as tape drives, whose seeks are extremely slow),
+
 - **the problem**: the code for querying and updating the database is complicated and inflexible.
 - With both the hierarchical and the network model, if you didn’t have a path to the data you wanted, you were in a difficult situation.
   - You could change the access paths, but then you had to go through a lot of handwritten database query code and rewrite it to handle the new access paths. It was difficult to make changes to an application’s data model.
-
 
 ---
 
 ##### The relational model
 
 By contrast, the relational model was a way to lay out all the data in the open: a relation (table) is simply a collection of tuples (rows), and that's it.
+
 - You can rows in a table, selecting those that match an arbitrary condition.
 - You can read a particular row by designating some columns as a key and matching on those.
 - You can insert a new row into any table without worrying about foreign key relationships to and from other tables.
 
 **query optimiser**
+
 - The **query optimiser** automatically decides which parts of the query to execute in which order, and which indexes to use
 - Those choices are effectively the “access path,”
   - but the big difference is that they are made automatically by the query optimizer, not by the application developer, so we rarely need to think about them.
@@ -928,6 +928,7 @@ By contrast, the relational model was a way to lay out all the data in the open:
 - The relational model thus **made it much easier to add new features to applications**.
 
 Query optimizers for relational databases are complicated beasts, and they have consumed many years of research and development effort.
+
 - But a key insight of the relational model was this:
   - you only need to build a query optimizer once, and then all applications that use the database can benefit from it.
   - If you don’t have a query optimizer, it’s easier to handcode the access paths for a particular query than to write a general-purpose optimizer
@@ -935,14 +936,14 @@ Query optimizers for relational databases are complicated beasts, and they have 
 
 ---
 
-
 ##### document data model
 
 Document databases reverted back to the hierarchical model in one aspect:
+
 - storing nested records (one-to-many relationships) within their parent record rather than in a separate table.
 
-
 However, when it comes to representing **many-to-one** and **many-to-many** relationships, relational and document databases are not fundamentally different:
+
 - in both cases, the related item is referenced by a unique identifier,
   - foreign key in the relational model
   - docuaqsw  q meant reference in the document model
@@ -956,6 +957,7 @@ PRP4284412930
 ##### Relational Versus Document Databases Today
 
 There are many differences to consider when comparing relational databases to document databases,
+
 - including their fault-tolerance properties
 - and handling of concurrency
 - The main arguments in favour of the document data model are
@@ -965,6 +967,7 @@ There are many differences to consider when comparing relational databases to do
   - The relation model counters by providing better support for joins, and many-to-one and many-to-many relationships.
 
 Which data model leads to simpler application code?
+
 - If the data in your application has a **document-like structure** -> document model.
   - (i.e., a tree of one-to-many relationships, where typically the entire tree is loaded at once)
   - The relational technique of _shredding_ (splitting a document-like structure into multiple tables) can lead unnecessary complicated application code.
@@ -974,8 +977,8 @@ Which data model leads to simpler application code?
   - Joins can be emulated in application code by making multiple requests.
   - Using the document model can lead to significantly more complex application code and worse performance
 
-
 The document model has limitations:
+
 - **cannot refer directly to a nested item within a document**
   - instead you need to say something like “the second item in the list of positions for user 251” (much like an access path in the hierarchical model).
   - However, as long as documents are not too deeply nested, that is not usually a problem.
@@ -983,18 +986,17 @@ The document model has limitations:
   - may or may not be a problem depending on the application.
   - For example, many-to-many relationships may never be needed in an analytics application that uses a document database to record which events occurred at which time
 
-
 ---
 
 #### Schema 模式 flexibility
 
 **No schema**
+
 - No schema means that arbitrary keys and values can be added to a document
 - when reading, **clients have no guarantees as to what fields the documents may contain.**
 
-
-
 **Document databases**
+
 - Most document databases `do not enforce any schema` on the data in documents.
 - _schemaless_,
 - **schema-on-read**
@@ -1003,6 +1005,7 @@ The document model has limitations:
   - similar to dynamic (runtime) type checking,
 
 **XML support in relational databases**
+
 - XML support in relational databases usually comes with `optional schema validation`.
 - **schema-on-write**
   - the traditional approach of relational databases,
@@ -1010,9 +1013,9 @@ The document model has limitations:
   - the database ensures all written data conforms to it
   - similar to static (compile-time) type checking.
 
-
 **Schema changes**
 The difference between the approaches is particularly noticeable in situations where an application wants to change the format of its data.
+
 - For example
 - currently storing each user’s full name in one field, and to store the first name and last name separately:
 - In a document database:
@@ -1035,6 +1038,7 @@ UPDATE users SET first_name = substring_index(name, ' ', 1); -- MySQL
 ```
 
 **Schema changes** have a bad reputation of being slow and requiring downtime.
+
 - This reputation is not entirely deserved:
   - most relational database systems execute the `ALTER TABLE` statement in a few milliseconds.
     - MySQL is a notable exception—it copies the entire table on `ALTER TABLE`, which can mean minutes or even hours of downtime when altering a large table
@@ -1042,14 +1046,12 @@ UPDATE users SET first_name = substring_index(name, ' ', 1); -- MySQL
 
   - Running the `UPDATE` statement on a large table is likely to be slow on any database, since every row needs to be rewritten. If that is not acceptable, the application can leave first_name set to its default of NULL and fill it in at read time, like it would with a document database.
 
-
 The schema-on-read approach is advantageous if the items on the collection don't have all the same structure (heterogeneous 异质)
-* **Many different types of objects**, not practical to put each type of object in its own table.
-* **Data determined by external systems** which you have no control and which may change at any time.
-* In situations like these, a schema may hurt more than it helps, and schemaless documents can be a much more natural data model.
+- **Many different types of objects**, not practical to put each type of object in its own table.
+- **Data determined by external systems** which you have no control and which may change at any time.
+- In situations like these, a schema may hurt more than it helps, and schemaless documents can be a much more natural data model.
 
-
-* But in cases where all records are expected to have the same structure, schemas are a useful mechanism for documenting and enforcing that structure.
+- But in cases where all records are expected to have the same structure, schemas are a useful mechanism for documenting and enforcing that structure.
 
 ---
 
@@ -1060,6 +1062,7 @@ A document is usually stored as a single continuous string, encoded as JSON, XML
 The database typically needs to load the entire document, even if you access only a small portion of it, which can be wasteful on large documents.
 
 **storage locality**
+
 - If data is split across multiple tables
   - multiple index lookups are required to retrieve it all,
   - which may require more disk seeks and take more time.
@@ -1071,6 +1074,7 @@ The database typically needs to load the entire document, even if you access onl
 - These performance limitations significantly reduce the set of situations in which document databases are useful.
 
 grouping related data together for locality is not limited to the document model.
+
 - For example,
 - Google’s Spanner database offers the same **locality properties in a relational data model**, by allowing the schema to declare that a table’s rows should be interleaved (nested) within a parent table.
 - Oracle allows the same, using a feature called **multi-table index cluster tables**
@@ -1080,8 +1084,8 @@ grouping related data together for locality is not limited to the document model
 
 #### Convergence 敛 of document and relational databases
 
-
 **relational database systems**
+
 - Most relational database systems (other than MySQL) have supported `XML` since the mid-2000s.
 - This includes functions to make local modifications to XML documents
 - and the ability to index and query inside XML documents,
@@ -1090,18 +1094,17 @@ grouping related data together for locality is not limited to the document model
 - PostgreSQL since version 9.3, MySQL since version 5.7, and IBM DB2 since ver‐ sion 10.5 also have a similar level of support for JSON documents.
 
 **document database side**
+
 - RethinkDB supports relational-like joins in its query language,
 - and some MongoDB drivers automatically resolve database references (effectively performing a client-side join, although this is likely to be slower than a join performed in the database since it requires additional network round-trips and is less optimized).
 
 relational and document databases are becoming more similar over time
+
 - good thing: the data models complement each other.
 - If a database is able to handle document-like data and also perform relational queries on it, applications can use the combination of features that best fits their needs.
 - A hybrid of the relational and document models is a good route for databases to take in the future.
 
-
 ---
-
-
 
 ### Query languages for data
 
@@ -1122,11 +1125,12 @@ SELECT * FROM animals WHERE family = 'Sharks';
 ```
 
 **imperative language**
+
 - Many programming languages are imperative.
 - you tell the computer to perform certain operations in order.
 
-
 **declarative query language**
+
 - like SQL or relational algebra
 - you just specify **the pattern of the data you want**
   - what conditions the results must meet, and how the data to be transformed (e.g., sorted, grouped, and aggregated)
@@ -1148,14 +1152,13 @@ SELECT * FROM animals WHERE family = 'Sharks';
   - The fact that SQL is more limited in functionality gives the database much more room for automatic optimizations.
 
 **Parallel execution**
+
 - **Declarative languages** often lend themselves to `parallel execution`
   - Declarative languages have a better chance of getting faster in parallel execution
   - because they specify only the pattern of the results,
   - not the algorithm that is used to determine results.
   - The database is free to use a parallel implementation of the query language, if appropriate
 - **imperative code** is very hard to `parallelise across multiple cores` because it specifies instructions that must be performed in a particular order.
-
-
 
 ---
 
@@ -1164,12 +1167,12 @@ SELECT * FROM animals WHERE family = 'Sharks';
 compare declarative and imperative approaches in a completely different environment: a web browser.
 
 In a web browser,
+
 - using declarative CSS styling is much better than manipulating styles imperatively in JavaScript.
 - Declarative languages like SQL turned out to be much better than imperative query APIs.
 
 ```html
 <ul>
-
   <li class="selected">
     <p>Sharks</p>
     <ul>
@@ -1192,7 +1195,6 @@ In a web browser,
 
 ##### declarative languages
 
-
 ```css
 li.selected > p {
   background-color: blue;
@@ -1200,11 +1202,11 @@ li.selected > p {
 ```
 
 CSS selector
+
 - CSS selector `li.selected > p` declares the pattern of elements to which we want to apply the blue style:
   - all `<p>` elements whose direct parent is an `<li> element with a CSS class of selected`.
   - The element `<p>Sharks</p>` in the example matches this pattern,
   - but `<p>Whales</p>` does not match because its `<li> parent lacks class="selected"`.
-
 
 ```xsl
 <xsl:template match="li[@class='selected']/p">
@@ -1215,9 +1217,9 @@ CSS selector
 ```
 
 the XPath expression
+
 - the XPath expression `li[@class='selected']/p` is equivalent to the CSS selector `li.selected > p`
 - What CSS and XSL have in common is that they are both declarative languages for specifying the styling of a document.
-
 
 ##### imperative approach
 
@@ -1236,6 +1238,7 @@ for (var i = 0; i < liElements.length; i++) {
 ```
 
 In JavaScript
+
 - using the core `Document Object Model (DOM) API`, the result might look something like this:
 - much longer and harder to understand than the CSS and XSL equivalents,
 - but it also has some serious problems:
@@ -1254,23 +1257,20 @@ In JavaScript
 - In a web browser, using **declarative** `CSS styling` is much better than manipulating styles **imperatively** in `JavaScript`.
 - Similarly, in databases, **declarative query languages** like `SQL` turned out to be much better than **imperative query** `APIs`.
 
-
-
 ---
-
 
 #### MapReduce querying
 
 _MapReduce_ is a programming model for processing large amounts of data in bulk across many machines, popularised by Google.
+
 - MapReduce is neither a `declarative query language 声明式` nor a fully `imperative query API 完全命令式`, but somewhere in between:
 - the logic of the query is expressed with snippets of code, which are called repeatedly by the processing framework.
 - It is based on the `map` (collect) and `reduce` (fold or inject) functions that exist in many functional programming languages.
 
-
 For example:
+
 - add an observation record to database every time see animals in the ocean.
 - to generate a report saying how many sharks have sighted per month.
-
 
 1. In PostgreSQL
    1. The `date_trunc('month', timestamp)` function determines the calendar month containing timestamp, and returns another timestamp representing the beginning of that month. it rounds a timestamp down to the nearest month.
@@ -1282,8 +1282,7 @@ WHERE family = 'Sharks'
 GROUP BY observation_month;
 ```
 
-
-2. MongoDB's MapReduce solution.
+1. MongoDB's MapReduce solution.
 
 ```js
 db.observations.mapReduce(
@@ -1314,30 +1313,31 @@ db.observations.mapReduce(
 ```
 
 The `map` and `reduce` functions must be _pure_ functions,
+
 - they only use the data that is passed to them as input,
 - they **cannot perform additional database queries** and they must not have any side effects.
 - These restrictions allow the database to run the functions anywhere, in any order, and rerun them on failure.
 - However, they are nevertheless powerful: they can parse strings, call library functions, perform calculations, and more.
 
 MapReduce is a fairly `low-level programming model` for distributed execution on a cluster of machines.
+
 - `Higher-level query languages` like **SQL** can be implemented as a pipeline of MapReduce operations, but there are also many distributed implementations of SQL that don’t use MapReduce.
 - Note there is nothing in SQL that constrains it to running on a single machine,
 - and MapReduce doesn’t have a monopoly on `distributed query execution`.
 
 Being able to use JavaScript code in the middle of a query is a great feature for advanced queries, but it’s not limited to MapReduce
+
 - some SQL databases can be extended with JavaScript functions too
 
 A usability problem with MapReduce is that you have to write two carefully coordinated Java functions.
+
 - A declarative language offers more opportunities for a **query optimiser** to improve the performance of a query.
 - For there reasons, MongoDB 2.2 added support for a declarative query language called _aggregation pipeline_
-
-
 
 1. aggregation pipeline
    1. similar in expressiveness to a subset of SQL, but it uses a JSON-based syntax rather than SQL’s English-sentence-style syntax;
    2. the difference is perhaps a matter of taste.
    3. The moral of the story is that a NoSQL system may find itself accidentally reinventing SQL, albeit in disguise.
-
 
 ```js
 db.observations.aggregate([
@@ -1352,9 +1352,7 @@ db.observations.aggregate([
 ]);
 ```
 
-
 ---
-
 
 ### Graph-like data models
 
@@ -1362,46 +1360,49 @@ db.observations.aggregate([
 - If `many-to-many relationships` are very common in your application, it becomes more natural to start modelling your data as a **graph**.
 
 A graph consists of
+
 - _vertices_ (_nodes_ or _entities_)
 - and _edges_ (_relationships_ or _arcs_).
 
 Typical examples include:
+
 - Social graphs: Vertices are `people`, and edges indicate `which people know each other`.
 - The web graphs: Vertices are `web pages`, and edges indicate `HTML links to other pages`.
 - Road or rail networks: Vertices are `junctions`, and edges represent `the roads or railway lines between them`.
 
-
 Well-known algorithms can operate on these graphs, like the shortest path between two points, or popularity of a web page.
 
 graphs are not limited to such homogeneous data:
+
 - an equally powerful use of graphs is to provide a consistent way of storing completely different types of objects in a single datastore.
 
 There are several ways of structuring and querying the data.
+
 - The _property graph_ model (implemented by `Neo4j, Titan, and Infinite Graph`)
 - and the _triple-store_ model (implemented by `Datomic, AllegroGraph, and others`).
 - There are also three **declarative query languages** for graphs: `Cypher, SPARQL, and Datalog`.
 - there are also **imperative graph query languages** such as `Gremlin`
 - and **graph processing frameworks** like `Pregel`.
 
-
 ---
 
 #### Property graphs
 
 Each vertex consists of:
-* Unique identifier
-* Outgoing edges
-* Incoming edges
-* Collection of properties (key-value pairs)
+- Unique identifier
+- Outgoing edges
+- Incoming edges
+- Collection of properties (key-value pairs)
 
 Each edge consists of:
-* Unique identifier
-* Vertex at which the edge starts (_tail vertex_)
-* Vertex at which the edge ends (_head vertex_)
-* Label to describe the kind of relationship between the two vertices
-* A collection of properties (key-value pairs)
+- Unique identifier
+- Vertex at which the edge starts (_tail vertex_)
+- Vertex at which the edge ends (_head vertex_)
+- Label to describe the kind of relationship between the two vertices
+- A collection of properties (key-value pairs)
 
 think of a graph store as consisting of two relational tables,
+
 - one for vertices and one for edges,
 - this schema uses the PostgreSQL json datatype to store the properties of each vertex or edge
 - The head and tail vertex are stored for each edge;
@@ -1425,6 +1426,7 @@ CREATE INDEX edges_heads ON edges (head_vertex);
 ```
 
 Some important aspects of this model are:
+
 1. Any vertex can have an edge connecting it with any other vertex.
    1. There is no schema that restricts which kinds of things can or cannot be associated.
 2. Given any vertex,
@@ -1434,32 +1436,28 @@ Some important aspects of this model are:
    1. can store several different kinds of information in a single graph,
    2. while still maintaining a clean data model.
 
-
-
 Graphs provide a great deal of flexibility for data modelling. Graphs are good for evolvability.
-
-
 
 ---
 
 ##### The Cypher Query Language
 
 _Cypher_
-* a declarative language for property graphs created by `Neo4j`
-* Graph queries in SQL.
-* In a relational database, you usually know in advance which `joins` you need in your query.
-* In a graph query, the number `if joins` is not fixed in advance.
-* In Cypher `:WITHIN*0...` expresses "follow a `WITHIN` edge, zero or more times" (like the `*` operator in a regular expression).
-* This idea of variable-length traversal paths in a query can be expressed using something called _recursive common table expressions_ (the `WITH RECURSIVE` syntax).
+- a declarative language for property graphs created by `Neo4j`
+- Graph queries in SQL.
+- In a relational database, you usually know in advance which `joins` you need in your query.
+- In a graph query, the number `if joins` is not fixed in advance.
+- In Cypher `:WITHIN*0...` expresses "follow a `WITHIN` edge, zero or more times" (like the `*` operator in a regular expression).
+- This idea of variable-length traversal paths in a query can be expressed using something called _recursive common table expressions_ (the `WITH RECURSIVE` syntax).
 
 Example:
+
 - Each vertex is given a symbolic name like `USA` or `Idaho`,
 - and other parts of the query can use those names to create edges between the vertices,
 - using an arrow notation: `(Idaho) -[:WITHIN]-> (USA)`
   - creates an edge labeled `WITHIN`,
   - with `Idaho` as the tail node
   - and `USA` as the head node.
-
 
 ```sql
 CREATE
@@ -1481,6 +1479,7 @@ RETURN person.name
 ```
 
 The query can be read as follows:
+
 - Find any vertex (call it person) that meets both of the following conditions:
   1. person has an outgoing `BORN_IN` edge to some vertex. From that vertex, you can follow a chain of outgoing WITHIN edges until eventually you reach a vertex of type Location, whose name property is equal to "United States".
   2. That same person vertex also has an outgoing `LIVES_IN` edge. Following that edge, and then a chain of outgoing WITHIN edges, you eventually reach a vertex of type Location, whose name property is equal to "Europe".
@@ -1495,10 +1494,6 @@ The query can be read as follows:
 - In a `graph query`
   - need to traverse a variable number of edges before you find the vertex you’re looking for
   - the number of `joins` is not fixed in advance.
-
-
-
-
 
 ---
 
@@ -1549,35 +1544,36 @@ We can also merge several segments together at the sae time as performing the co
 Each segment now has its own in-memory hash table, mapping keys to file offsets. In order to find a value for a key, we first check the most recent segment hash map; if the key is not present we check the second-most recent segment and so on. The merging process keeps the number of segments small, so lookups don't need to check many hash maps.
 
 Some issues that are important in a real implementation:
-* File format. It is simpler to use binary format.
-* Deleting records. Append special deletion record to the data file (_tombstone_) that tells the merging process to discard previous values.
-* Crash recovery. If restarted, the in-memory hash maps are lost. You can recover from reading each segment but that would take long time. Bitcask speeds up recovery by storing a snapshot of each segment hash map on disk.
-* Partially written records. The database may crash at any time. Bitcask includes checksums allowing corrupted parts of the log to be detected and ignored.
-* Concurrency control. As writes are appended to the log in a strictly sequential order, a common implementation is to have a single writer thread. Segments are immutable, so they can be read concurrently by multiple threads.
+- File format. It is simpler to use binary format.
+- Deleting records. Append special deletion record to the data file (_tombstone_) that tells the merging process to discard previous values.
+- Crash recovery. If restarted, the in-memory hash maps are lost. You can recover from reading each segment but that would take long time. Bitcask speeds up recovery by storing a snapshot of each segment hash map on disk.
+- Partially written records. The database may crash at any time. Bitcask includes checksums allowing corrupted parts of the log to be detected and ignored.
+- Concurrency control. As writes are appended to the log in a strictly sequential order, a common implementation is to have a single writer thread. Segments are immutable, so they can be read concurrently by multiple threads.
 
 Append-only design turns out to be good for several reasons:
-* Appending and segment merging are sequential write operations, much faster than random writes, especially on magnetic spinning-disks.
-* Concurrency and crash recovery are much simpler.
-* Merging old segments avoids files getting fragmented over time.
+- Appending and segment merging are sequential write operations, much faster than random writes, especially on magnetic spinning-disks.
+- Concurrency and crash recovery are much simpler.
+- Merging old segments avoids files getting fragmented over time.
 
 Hash table has its limitations too:
-* The hash table must fit in memory. It is difficult to make an on-disk hash map perform well.
-* Range queries are not efficient.
+- The hash table must fit in memory. It is difficult to make an on-disk hash map perform well.
+- Range queries are not efficient.
 
 #### SSTables and LSM-Trees
 
 We introduce a new requirement to segment files: we require that the sequence of key-value pairs is _sorted by key_.
 
 We call this _Sorted String Table_, or _SSTable_. We require that each key only appears once within each merged segment file (compaction already ensures that). SSTables have few big advantages over log segments with hash indexes
+
 1. **Merging segments is simple and efficient** (we can use algorithms like _mergesort_). When multiple segments contain the same key, we can keep the value from the most recent segment and discard the values in older segments.
 2. **You no longer need to keep an index of all the keys in memory.** For a key like `handiwork`, when you know the offsets for the keys `handback` and `handsome`, you know `handiwork` must appear between those two. You can jump to the offset for `handback` and scan from there until you find `handiwork`, if not, the key is not present. You still need an in-memory index to tell you the offsets for some of the keys. One key for every few kilobytes of segment file is sufficient.
 3. Since read requests need to scan over several key-value pairs in the requested range anyway, **it is possible to group those records into a block and compress it** before writing it to disk.
 
 How do we get the data sorted in the first place? With red-black trees or AVL trees, you can insert keys in any order and read them back in sorted order.
-* When a write comes in, add it to an in-memory balanced tree structure (_memtable_).
-* When the memtable gets bigger than some threshold (megabytes), write it out to disk as an SSTable file. Writes can continue to a new memtable instance.
-* On a read request, try to find the key in the memtable, then in the most recent on-disk segment, then in the next-older segment, etc.
-* From time to time, run merging and compaction in the background to discard overwritten and deleted values.
+- When a write comes in, add it to an in-memory balanced tree structure (_memtable_).
+- When the memtable gets bigger than some threshold (megabytes), write it out to disk as an SSTable file. Writes can continue to a new memtable instance.
+- On a read request, try to find the key in the memtable, then in the most recent on-disk segment, then in the next-older segment, etc.
+- From time to time, run merging and compaction in the background to discard overwritten and deleted values.
 
 If the database crashes, the most recent writes are lost. We can keep a separate log on disk to which every write is immediately appended. That log is not in sorted order, but that doesn't matter, because its only purpose is to restore the memtable after crash. Every time the memtable is written out to an SSTable, the log can be discarded.
 
@@ -1614,12 +1610,12 @@ Careful concurrency control is required if multiple threads are going to access,
 LSM-trees are typically faster for writes, whereas B-trees are thought to be faster for reads. Reads are typically slower on LSM-tress as they have to check several different data structures and SSTables at different stages of compaction.
 
 Advantages of LSM-trees:
-* LSM-trees are typically able to sustain higher write throughput than B-trees, party because they sometimes have lower write amplification: a write to the database results in multiple writes to disk. The more a storage engine writes to disk, the fewer writes per second it can handle.
-* LSM-trees can be compressed better, and thus often produce smaller files on disk than B-trees. B-trees tend to leave disk space unused due to fragmentation.
+- LSM-trees are typically able to sustain higher write throughput than B-trees, party because they sometimes have lower write amplification: a write to the database results in multiple writes to disk. The more a storage engine writes to disk, the fewer writes per second it can handle.
+- LSM-trees can be compressed better, and thus often produce smaller files on disk than B-trees. B-trees tend to leave disk space unused due to fragmentation.
 
 Downsides of LSM-trees:
-* Compaction process can sometimes interfere with the performance of ongoing reads and writes. B-trees can be more predictable. The bigger the database, the the more disk bandwidth is required for compaction. Compaction cannot keep up with the rate of incoming writes, if not configured properly you can run out of disk space.
-* On B-trees, each key exists in exactly one place in the index. This offers strong transactional semantics. Transaction isolation is implemented using locks on ranges of keys, and in a B-tree index, those locks can be directly attached to the tree.
+- Compaction process can sometimes interfere with the performance of ongoing reads and writes. B-trees can be more predictable. The bigger the database, the the more disk bandwidth is required for compaction. Compaction cannot keep up with the rate of incoming writes, if not configured properly you can run out of disk space.
+- On B-trees, each key exists in exactly one place in the index. This offers strong transactional semantics. Transaction isolation is implemented using locks on ranges of keys, and in a B-tree index, those locks can be directly attached to the tree.
 
 #### Other indexing structures
 
@@ -1658,7 +1654,6 @@ A _transaction_ is a group of reads and writes that form a logical unit, this pa
 _Data analytics_ has very different access patterns. A query would need to scan over a huge number of records, only reading a few columns per record, and calculates aggregate statistics.
 
 These queries are often written by business analysts, and fed into reports. This pattern became known for _online analytics processing_ (OLAP).
-
 
 #### Data warehousing
 
@@ -1711,30 +1706,30 @@ Relational databases conforms to one schema although that schema can be changed,
 In large applications changes don't happen instantaneously. You want to perform a _rolling upgrade_ and deploy a new version to a few nodes at a time, gradually working your way through all the nodes without service downtime.
 
 Old and new versions of the code, and old and new data formats, may potentially all coexist. We need to maintain compatibility in both directions
-* Backward compatibility, newer code can read data that was written by older code.
-* Forward compatibility, older code can read data that was written by newer code.
+- Backward compatibility, newer code can read data that was written by older code.
+- Forward compatibility, older code can read data that was written by newer code.
 
 ### Formats for encoding data
 
 Two different representations:
-* In memory
-* When you want to write data to a file or send it over the network, you have to encode it
+- In memory
+- When you want to write data to a file or send it over the network, you have to encode it
 
 Thus, you need a translation between the two representations. In-memory representation to byte sequence is called _encoding_ (_serialisation_ or _marshalling_), and the reverse is called _decoding_ (_parsing_, _deserialisation_ or _unmarshalling_).
 
 Programming languages come with built-in support for encoding in-memory objects into byte sequences, but is usually a bad idea to use them. Precisely because of a few problems.
-* Often tied to a particular programming language.
-* The decoding process needs to be able to instantiate arbitrary classes and this is frequently a security hole.
-* Versioning
-* Efficiency
+- Often tied to a particular programming language.
+- The decoding process needs to be able to instantiate arbitrary classes and this is frequently a security hole.
+- Versioning
+- Efficiency
 
 Standardised encodings can be written and read by many programming languages.
 
 JSON, XML, and CSV are human-readable and popular specially as data interchange formats, but they have some subtle problems:
-* Ambiguity around the encoding of numbers and dealing with large numbers
-* Support of Unicode character strings, but no support for binary strings. People get around this by encoding binary data as Base64, which increases the data size by 33%.
-* There is optional schema support for both XML and JSON
-* CSV does not have any schema
+- Ambiguity around the encoding of numbers and dealing with large numbers
+- Support of Unicode character strings, but no support for binary strings. People get around this by encoding binary data as Base64, which increases the data size by 33%.
+- There is optional schema support for both XML and JSON
+- CSV does not have any schema
 
 #### Binary encoding
 
@@ -1743,15 +1738,15 @@ JSON is less verbose than XML, but both still use a lot of space compared to bin
 **Apache Thrift and Protocol Buffers (protobuf) are binary encoding libraries.**
 
 Thrift offers two different protocols:
-* **BinaryProtocol**, there are no field names like `userName`, `favouriteNumber`. Instead the data contains _field tags_, which are numbers (`1`, `2`)
-* **CompactProtocol**, which is equivalent to BinaryProtocol but it packs the same information in less space. It packs the field type and the tag number into the same byte.
+- **BinaryProtocol**, there are no field names like `userName`, `favouriteNumber`. Instead the data contains _field tags_, which are numbers (`1`, `2`)
+- **CompactProtocol**, which is equivalent to BinaryProtocol but it packs the same information in less space. It packs the field type and the tag number into the same byte.
 
 Protocol Buffers are very similar to Thrift's CompactProtocol, bit packing is a bit different and that might allow smaller compression.
 
 Schemas inevitable need to change over time (_schema evolution_), how do Thrift and Protocol Buffers handle schema changes while keeping backward and forward compatibility changes?
 
-* **Forward compatible support**. As with new fields you add new tag numbers, old code trying to read new code, it can simply ignore not recognised tags.
-* **Backwards compatible support**. As long as each field has a unique tag number, new code can always read old data. Every field you add after initial deployment of schema must be optional or have a default value.
+- **Forward compatible support**. As with new fields you add new tag numbers, old code trying to read new code, it can simply ignore not recognised tags.
+- **Backwards compatible support**. As long as each field has a unique tag number, new code can always read old data. Every field you add after initial deployment of schema must be optional or have a default value.
 
 Removing fields is just like adding a field with backward and forward concerns reversed. You can only remove a field that is optional, and you can never use the same tag again.
 
@@ -1788,10 +1783,10 @@ By contrast with Thrift and Protocol Buffers, every time the database schema cha
 ---
 
 Although textual formats such as JSON, XML and CSV are widespread, binary encodings based on schemas are also a viable option. As they have nice properties:
-* Can be much more compact, since they can omit field names from the encoded data.
-* Schema is a valuable form of documentation, required for decoding, you can be sure it is up to date.
-* Database of schemas allows you to check forward and backward compatibility changes.
-* Generate code from the schema is useful, since it enables type checking at compile time.
+- Can be much more compact, since they can omit field names from the encoded data.
+- Schema is a valuable form of documentation, required for decoding, you can be sure it is up to date.
+- Database of schemas allows you to check forward and backward compatibility changes.
+- Generate code from the schema is useful, since it enables type checking at compile time.
 
 ### Modes of dataflow
 
@@ -1814,12 +1809,12 @@ You have processes that need to communicate over a network of _clients_ and _ser
 Services are similar to databases, each service should be owned by one team. and that team should be able to release versions of the service frequently, without having to coordinate with other teams. We should expect old and new versions of servers and clients to be running at the same time.
 
 _Remote procedure calls_ (RPC) tries to make a request to a remote network service look the same as calling a function or method in your programming language, it seems convenient at first but the approach is flawed:
-* A network request is unpredictable
-* A network request it may return without a result, due a _timeout_
-* Retrying will cause the action to be performed multiple times, unless you build a mechanism for deduplication (_idempotence_).
-* A network request is much slower than a function call, and its latency is wildly variable.
-* Parameters need to be encoded into a sequence of bytes that can be sent over the network and becomes problematic with larger objects.
-* The RPC framework must translate datatypes from one language to another, not all languages have the same types.
+- A network request is unpredictable
+- A network request it may return without a result, due a _timeout_
+- Retrying will cause the action to be performed multiple times, unless you build a mechanism for deduplication (_idempotence_).
+- A network request is much slower than a function call, and its latency is wildly variable.
+- Parameters need to be encoded into a sequence of bytes that can be sent over the network and becomes problematic with larger objects.
+- The RPC framework must translate datatypes from one language to another, not all languages have the same types.
 
 **There is no point trying to make a remote service look too much like a local object in your programming language, because it's a fundamentally different thing.**
 
@@ -1832,11 +1827,11 @@ REST seems to be the predominant style for public APIs. The main focus of RPC fr
 #### Via asynchronous message passing
 
 In an _asynchronous message-passing_ systems, a client's request (usually called a _message_) is delivered to another process with low latency. The message goes via an intermediary called a _message broker_ (_message queue_ or _message-oriented middleware_) which stores the message temporarily. This has several advantages compared to direct RPC:
-* It can act as a buffer if the recipient is unavailable or overloaded
-* It can automatically redeliver messages to a process that has crashed and prevent messages from being lost
-* It avoids the sender needing to know the IP address and port number of the recipient (useful in a cloud environment)
-* It allows one message to be sent to several recipients
-* **Decouples the sender from the recipient**
+- It can act as a buffer if the recipient is unavailable or overloaded
+- It can automatically redeliver messages to a process that has crashed and prevent messages from being lost
+- It avoids the sender needing to know the IP address and port number of the recipient (useful in a cloud environment)
+- It allows one message to be sent to several recipients
+- **Decouples the sender from the recipient**
 
 The communication happens only in one direction. The sender doesn't wait for the message to be delivered, but simply sends it and then forgets about it (_asynchronous_).
 
@@ -1850,25 +1845,25 @@ An _actor model_ is a programming model for concurrency in a single process. Rat
 
 In _distributed actor frameworks_, this programming model is used to scale an application across multiple nodes. It basically integrates a message broker and the actor model into a single framework.
 
-* _Akka_ uses Java's built-in serialisation by default, which does not provide forward or backward compatibility. You can replace it with something like Protocol Buffers and the ability to do rolling upgrades.
-* _Orleans_ by default uses custom data encoding format that does not support rolling upgrade deployments.
-* In _Erlang OTP_ it is surprisingly hard to make changes to record schemas.
+- _Akka_ uses Java's built-in serialisation by default, which does not provide forward or backward compatibility. You can replace it with something like Protocol Buffers and the ability to do rolling upgrades.
+- _Orleans_ by default uses custom data encoding format that does not support rolling upgrade deployments.
+- In _Erlang OTP_ it is surprisingly hard to make changes to record schemas.
 
 ---
 
 What happens if multiple machines are involved in storage and retrieval of data?
 
 Reasons for distribute a database across multiple machines:
-* Scalability
-* Fault tolerance/high availability
-* Latency, having servers at various locations worldwide
+- Scalability
+- Fault tolerance/high availability
+- Latency, having servers at various locations worldwide
 
 ## Replication
 
 Reasons why you might want to replicate data:
-* To keep data geographically close to your users
-* Increase availability
-* Increase read throughput
+- To keep data geographically close to your users
+- Increase availability
+- Increase read throughput
 
 The difficulty in replication lies in handling _changes_ to replicated data. Popular algorithms for replicating changes between nodes: _single-leader_, _multi-leader_, and _leaderless_ replication.
 
@@ -1877,6 +1872,7 @@ The difficulty in replication lies in handling _changes_ to replicated data. Pop
 Each node that stores a copy of the database is called a _replica_.
 
 Every write to the database needs to be processed by every replica. The most common solution for this is called _leader-based replication_ (_active/passive_ or _master-slave replication_).
+
 1. One of the replicas is designated the _leader_ (_master_ or _primary_). Writes to the database must send requests to the leader.
 2. Other replicas are known as _followers_ (_read replicas_, _slaves_, _secondaries_ or _hot stanbys_). The leader sends the data change to all of its followers as part of a _replication log_ or _change stream_.
 3. Reads can be query the leader or any of the followers, while writes are only accepted on the leader.
@@ -1896,6 +1892,7 @@ Often, leader-based replication is asynchronous. Writes are not guaranteed to be
 Copying data files from one node to another is typically not sufficient.
 
 Setting up a follower can usually be done without downtime. The process looks like:
+
 1. Take a snapshot of the leader's database
 2. Copy the snapshot to the follower node
 3. Follower requests data changes that have happened since the snapshot was taken
@@ -1914,15 +1911,16 @@ Follower can connect to the leader and request all the data changes that occurre
 One of the followers needs to be promoted to be the new leader, clients need to be reconfigured to send their writes to the new leader and followers need to start consuming data changes from the new leader.
 
 Automatic failover consists:
+
 1. Determining that the leader has failed. If a node does not respond in a period of time it's considered dead.
 2. Choosing a new leader. The best candidate for leadership is usually the replica with the most up-to-date changes from the old leader.
 3. Reconfiguring the system to use the new leader. The system needs to ensure that the old leader becomes a follower and recognises the new leader.
 
 Things that could go wrong:
-* If asynchronous replication is used, the new leader may have received conflicting writes in the meantime.
-* Discarding writes is especially dangerous if other storage systems outside of the database need to be coordinated with the database contents.
-* It could happen that two nodes both believe that they are the leader (_split brain_). Data is likely to be lost or corrupted.
-* What is the right time before the leader is declared dead?
+- If asynchronous replication is used, the new leader may have received conflicting writes in the meantime.
+- Discarding writes is especially dangerous if other storage systems outside of the database need to be coordinated with the database contents.
+- It could happen that two nodes both believe that they are the leader (_split brain_). Data is likely to be lost or corrupted.
+- What is the right time before the leader is declared dead?
 
 For these reasons, some operation teams prefer to perform failovers manually, even if the software supports automatic failover.
 
@@ -1933,9 +1931,9 @@ For these reasons, some operation teams prefer to perform failovers manually, ev
 The leader logs every _statement_ and sends it to its followers (every `INSERT`, `UPDATE` or `DELETE`).
 
 This type of replication has some problems:
-* Non-deterministic functions such as `NOW()` or `RAND()` will generate different values on replicas.
-* Statements that depend on existing data, like auto-increments, must be executed in the same order in each replica.
-* Statements with side effects may result on different results on each replica.
+- Non-deterministic functions such as `NOW()` or `RAND()` will generate different values on replicas.
+- Statements that depend on existing data, like auto-increments, must be executed in the same order in each replica.
+- Statements with side effects may result on different results on each replica.
 
 A solution to this is to replace any nondeterministic function with a fixed return value in the leader.
 
@@ -1950,9 +1948,9 @@ Usually is not possible to run different versions of the database in leaders and
 ##### Logical (row-based) log replication
 
 Basically a sequence of records describing writes to database tables at the granularity of a row:
-* For an inserted row, the new values of all columns.
-* For a deleted row, the information that uniquely identifies that column.
-* For an updated row, the information to uniquely identify that row and all the new values of the columns.
+- For an inserted row, the new values of all columns.
+- For a deleted row, the information that uniquely identifies that column.
+- For an updated row, the information to uniquely identify that row and all the new values of the columns.
 
 A transaction that modifies several rows, generates several of such logs, followed by a record indicating that the transaction was committed. MySQL binlog uses this approach.
 
@@ -1985,17 +1983,16 @@ The problems that may arise and how to solve them.
 _Read-after-write consistency_, also known as _read-your-writes consistency_ is a guarantee that if the user reloads the page, they will always see any updates they submitted themselves.
 
 How to implement it:
-* **When reading something that the user may have modified, read it from the leader.** For example, user profile information on a social network is normally only editable by the owner. A simple rule is always read the user's own profile from the leader.
-* You could track the time of the latest update and, for one minute after the last update, make all reads from the leader.
-* The client can remember the timestamp of the most recent write, then the system can ensure that the replica serving any reads for that user reflects updates at least until that timestamp.
-* If your replicas are distributed across multiple datacenters, then any request needs to be routed to the datacenter that contains the leader.
-
+- **When reading something that the user may have modified, read it from the leader.** For example, user profile information on a social network is normally only editable by the owner. A simple rule is always read the user's own profile from the leader.
+- You could track the time of the latest update and, for one minute after the last update, make all reads from the leader.
+- The client can remember the timestamp of the most recent write, then the system can ensure that the replica serving any reads for that user reflects updates at least until that timestamp.
+- If your replicas are distributed across multiple datacenters, then any request needs to be routed to the datacenter that contains the leader.
 
 Another complication is that the same user is accessing your service from multiple devices, you may want to provide _cross-device_ read-after-write consistency.
 
 Some additional issues to consider:
-* Remembering the timestamp of the user's last update becomes more difficult. The metadata will need to be centralised.
-* If replicas are distributed across datacenters, there is no guarantee that connections from different devices will be routed to the same datacenter. You may need to route requests from all of a user's devices to the same datacenter.
+- Remembering the timestamp of the user's last update becomes more difficult. The metadata will need to be centralised.
+- If replicas are distributed across datacenters, there is no guarantee that connections from different devices will be routed to the same datacenter. You may need to route requests from all of a user's devices to the same datacenter.
 
 #### Monotonic reads
 
@@ -2032,9 +2029,9 @@ It rarely makes sense to use multi-leader setup within a single datacenter.
 You can have a leader in _each_ datacenter. Within each datacenter, regular leader-follower replication is used. Between datacenters, each datacenter leader replicates its changes to the leaders in other datacenters.
 
 Compared to a single-leader replication model deployed in multi-datacenters
-* **Performance.** With single-leader, every write must go across the internet to wherever the leader is, adding significant latency. In multi-leader every write is processed in the local datacenter and replicated asynchronously to other datacenters. The network delay is hidden from users and perceived performance may be better.
-* **Tolerance of datacenter outages.** In single-leader if the datacenter with the leader fails, failover can promote a follower in another datacenter. In multi-leader, each datacenter can continue operating independently from others.
-* **Tolerance of network problems.** Single-leader is very sensitive to problems in this inter-datacenter link as writes are made synchronously over this link. Multi-leader with asynchronous replication can tolerate network problems better.
+- **Performance.** With single-leader, every write must go across the internet to wherever the leader is, adding significant latency. In multi-leader every write is processed in the local datacenter and replicated asynchronously to other datacenters. The network delay is hidden from users and perceived performance may be better.
+- **Tolerance of datacenter outages.** In single-leader if the datacenter with the leader fails, failover can promote a follower in another datacenter. In multi-leader, each datacenter can continue operating independently from others.
+- **Tolerance of network problems.** Single-leader is very sensitive to problems in this inter-datacenter link as writes are made synchronously over this link. Multi-leader with asynchronous replication can tolerate network problems better.
 
 Multi-leader replication is implemented with Tungsten Replicator for MySQL, BDR for PostgreSQL or GoldenGate for Oracle.
 
@@ -2081,17 +2078,17 @@ In multi-leader, it's not clear what the final value should be.
 The database must resolve the conflict in a _convergent_ way, all replicas must arrive a the same final value when all changes have been replicated.
 
 Different ways of achieving convergent conflict resolution.
-* Five each write a unique ID (timestamp, long random number, UUID, or a has of the key and value), pick the write with the highest ID as the _winner_ and throw away the other writes. This is known as _last write wins_ (LWW) and it is dangerously prone to data loss.
-* Give each replica a unique ID, writes that originated at a higher-numbered replica always take precedence. This approach also implies data loss.
-* Somehow merge the values together.
-* Record the conflict and write application code that resolves it a to some later time (perhaps prompting the user).
+- Five each write a unique ID (timestamp, long random number, UUID, or a has of the key and value), pick the write with the highest ID as the _winner_ and throw away the other writes. This is known as _last write wins_ (LWW) and it is dangerously prone to data loss.
+- Give each replica a unique ID, writes that originated at a higher-numbered replica always take precedence. This approach also implies data loss.
+- Somehow merge the values together.
+- Record the conflict and write application code that resolves it a to some later time (perhaps prompting the user).
 
 ##### Custom conflict resolution
 
 Multi-leader replication tools let you write conflict resolution logic using application code.
 
-* **On write.** As soon as the database system detects a conflict in the log of replicated changes, it calls the conflict handler.
-* **On read.** All the conflicting writes are stored. On read, multiple versions of the data are returned to the application. The application may prompt the user or automatically resolve the conflict. CouchDB works this way.
+- **On write.** As soon as the database system detects a conflict in the log of replicated changes, it calls the conflict handler.
+- **On read.** All the conflicting writes are stored. On read, multiple versions of the data are returned to the application. The application may prompt the user or automatically resolve the conflict. CouchDB works this way.
 
 #### Multi-leader replication topologies
 
@@ -2112,8 +2109,8 @@ In a leaderless configuration, failover does not exist. Clients send the write t
 _Read requests are also sent to several nodes in parallel_. The client may get different responses. Version numbers are used to determine which value is newer.
 
 Eventually, all the data is copied to every replica. After a unavailable node come back online, it has two different mechanisms to catch up:
-* **Read repair.** When a client detect any stale responses, write the newer value back to that replica.
-* **Anti-entropy process.** There is a background process that constantly looks for differences in data between replicas and copies any missing data from one replica to he other. It does not copy writes in any particular order.
+- **Read repair.** When a client detect any stale responses, write the newer value back to that replica.
+- **Anti-entropy process.** There is a background process that constantly looks for differences in data between replicas and copies any missing data from one replica to he other. It does not copy writes in any particular order.
 
 #### Quorums for reading and writing
 
@@ -2122,11 +2119,11 @@ If there are _n_ replicas, every write must be confirmed by _w_ nodes to be cons
 A common choice is to make _n_ and odd number (typically 3 or 5) and to set _w_ = _r_ = (_n_ + 1)/2 (rounded up).
 
 Limitations:
-* Sloppy quorum, the _w_ writes may end up on different nodes than the _r_ reads, so there is no longer a guaranteed overlap.
-* If two writes occur concurrently, and is not clear which one happened first, the only safe solution is to merge them. Writes can be lost due to clock skew.
-* If a write happens concurrently with a read, the write may be reflected on only some of the replicas.
-* If a write succeeded on some replicas but failed on others, it is not rolled back on the replicas where it succeeded. Reads may or may not return the value from that write.
-* If a node carrying a new value fails, and its data is restored from a replica carrying an old value, the number of replicas storing the new value may break the quorum condition.
+- Sloppy quorum, the _w_ writes may end up on different nodes than the _r_ reads, so there is no longer a guaranteed overlap.
+- If two writes occur concurrently, and is not clear which one happened first, the only safe solution is to merge them. Writes can be lost due to clock skew.
+- If a write happens concurrently with a read, the write may be reflected on only some of the replicas.
+- If a write succeeded on some replicas but failed on others, it is not rolled back on the replicas where it succeeded. Reads may or may not return the value from that write.
+- If a node carrying a new value fails, and its data is restored from a replica carrying an old value, the number of replicas storing the new value may break the quorum condition.
 
 **Dynamo-style databases are generally optimised for use cases that can tolerate eventual consistency.**
 
@@ -2135,8 +2132,8 @@ Limitations:
 Leaderless replication may be appealing for use cases that require high availability and low latency, and that can tolerate occasional stale reads.
 
 It's likely that the client won't be able to connect to _some_ database nodes during a network interruption.
-* Is it better to return errors to all requests for which we cannot reach quorum of _w_ or _r_ nodes?
-* Or should we accept writes anyway, and write them to some nodes that are reachable but aren't among the _n_ nodes on which the value usually lives?
+- Is it better to return errors to all requests for which we cannot reach quorum of _w_ or _r_ nodes?
+- Or should we accept writes anyway, and write them to some nodes that are reachable but aren't among the _n_ nodes on which the value usually lives?
 
 The latter is known as _sloppy quorum_: writes and reads still require _w_ and _r_ successful responses, but those may include nodes that are not among the designated _n_ "home" nodes for a value.
 
@@ -2152,16 +2149,16 @@ Each write from a client is sent to all replicas, regardless of datacenter, but 
 
 In order to become eventually consistent, the replicas should converge toward the same value. to avoid losing data, you application developer, need to know a lot about the internals of your database's conflict handling.
 
-* **Last write wins (discarding concurrent writes).** Even though the writes don' have a natural ordering, we can force an arbitrary order on them. We can attach a timestamp to each write and pick the most recent. There are some situations such caching on which lost writes are acceptable. If losing data is not acceptable, LWW is a poor choice for conflict resolution.
-* **The "happens-before" relationship and concurrency.** Whether one operation happens before another operation is the key to defining what concurrency means. **We can simply say that to operations are _concurrent_ if neither happens before the other.** Either A happened before B, or B happened before A, or A and B are concurrent.
+- **Last write wins (discarding concurrent writes).** Even though the writes don' have a natural ordering, we can force an arbitrary order on them. We can attach a timestamp to each write and pick the most recent. There are some situations such caching on which lost writes are acceptable. If losing data is not acceptable, LWW is a poor choice for conflict resolution.
+- **The "happens-before" relationship and concurrency.** Whether one operation happens before another operation is the key to defining what concurrency means. **We can simply say that to operations are _concurrent_ if neither happens before the other.** Either A happened before B, or B happened before A, or A and B are concurrent.
 
 ##### Capturing the happens-before relationship
 
 The server can determine whether two operations are concurrent by looking at the version numbers.
-* The server maintains a version number for every key, increments the version number every time that key is written, and stores the new version number along the value written.
-* Client reads a key, the server returns all values that have not been overwrite, as well as the latest version number. A client must read a key before writing.
-* Client writes a key, it must include the version number from the prior read, and it must merge together all values that it received in the prior read.
-* Server receives a write with a particular version number, it can overwrite all values with that version number or below, but it must keep all values with a higher version number.
+- The server maintains a version number for every key, increments the version number every time that key is written, and stores the new version number along the value written.
+- Client reads a key, the server returns all values that have not been overwrite, as well as the latest version number. A client must read a key before writing.
+- Client writes a key, it must include the version number from the prior read, and it must merge together all values that it received in the prior read.
+- Server receives a write with a particular version number, it can overwrite all values with that version number or below, but it must keep all values with a higher version number.
 
 ##### Merging concurrently written values
 
@@ -2188,7 +2185,6 @@ Replication, for very large datasets or very high query throughput is not suffic
 Basically, each partition is a small database of its own.
 
 The main reason for wanting to partition data is _scalability_, query load can be load cabe distributed across many processors. Throughput can be scaled by adding more nodes.
-
 
 ### Partitioning and replication
 
@@ -2249,10 +2245,10 @@ The advantage is that it can make reads more efficient: rather than doing scatte
 The process of moving load from one node in the cluster to another.
 
 Strategies for rebalancing:
-* **How not to do it: Hash mod n.** The problem with _mod N_ is that if the number of nodes _N_ changes, most of the keys will need to be moved from one node to another.
-* **Fixed number of partitions.** Create many more partitions than there are nodes and assign several partitions to each node. If a node is added to the cluster, we can _steal_ a few partitions from every existing node until partitions are fairly distributed once again. The number of partitions does not change, nor does the assignment of keys to partitions. The only thing that change is the assignment of partitions to nodes. This is used in Riak, Elasticsearch, Couchbase, and Voldemport. **You need to choose a high enough number of partitions to accommodate future growth.** Neither too big or too small.
-* **Dynamic partitioning.** The number of partitions adapts to the total data volume. An empty database starts with an empty partition. While the dataset is small, all writes have to processed by a single node while the others nodes sit idle. HBase and MongoDB allow an initial set of partitions to be configured (_pre-splitting_).
-* **Partitioning proportionally to nodes.** Cassandra and Ketama make the number of partitions proportional to the number of nodes. Have a fixed number of partitions _per node_. This approach also keeps the size of each partition fairly stable.
+- **How not to do it: Hash mod n.** The problem with _mod N_ is that if the number of nodes _N_ changes, most of the keys will need to be moved from one node to another.
+- **Fixed number of partitions.** Create many more partitions than there are nodes and assign several partitions to each node. If a node is added to the cluster, we can _steal_ a few partitions from every existing node until partitions are fairly distributed once again. The number of partitions does not change, nor does the assignment of keys to partitions. The only thing that change is the assignment of partitions to nodes. This is used in Riak, Elasticsearch, Couchbase, and Voldemport. **You need to choose a high enough number of partitions to accommodate future growth.** Neither too big or too small.
+- **Dynamic partitioning.** The number of partitions adapts to the total data volume. An empty database starts with an empty partition. While the dataset is small, all writes have to processed by a single node while the others nodes sit idle. HBase and MongoDB allow an initial set of partitions to be configured (_pre-splitting_).
+- **Partitioning proportionally to nodes.** Cassandra and Ketama make the number of partitions proportional to the number of nodes. Have a fixed number of partitions _per node_. This approach also keeps the size of each partition fairly stable.
 
 #### Automatic versus manual rebalancing
 
@@ -2263,6 +2259,7 @@ It can be good to have a human in the loop for rebalancing. You may avoid operat
 ### Request routing
 
 This problem is also called _service discovery_. There are different approaches:
+
 1. Allow clients to contact any node and make them handle the request directly, or forward the request to the appropriate node.
 2. Send all requests from clients to a routing tier first that acts as a partition-aware load balancer.
 3. Make clients aware of the partitioning and the assignment of partitions to nodes.
@@ -2287,10 +2284,10 @@ The application is free to ignore certain potential error scenarios and concurre
 
 #### ACID
 
-* **Atomicity.** Is _not_ about concurrency. It is what happens if a client wants to make several writes, but a fault occurs after some of the writes have been processed. _Abortability_ would have been a better term than _atomicity_.
-* **Consistency.** _Invariants_ on your data must always be true. The idea of consistency depends on the application's notion of invariants. Atomicity, isolation, and durability are properties of the database, whereas consistency (in an ACID sense) is a property of the application.
-* **Isolation.** Concurrently executing transactions are isolated from each other. It's also called _serializability_, each transaction can pretend that it is the only transaction running on the entire database, and the result is the same as if they had run _serially_ (one after the other).
-* **Durability.** Once a transaction has committed successfully, any data it has written will not be forgotten, even if there is a hardware fault or the database crashes. In a single-node database this means the data has been written to nonvolatile storage. In a replicated database it means the data has been successfully copied to some number of nodes.
+- **Atomicity.** Is _not_ about concurrency. It is what happens if a client wants to make several writes, but a fault occurs after some of the writes have been processed. _Abortability_ would have been a better term than _atomicity_.
+- **Consistency.** _Invariants_ on your data must always be true. The idea of consistency depends on the application's notion of invariants. Atomicity, isolation, and durability are properties of the database, whereas consistency (in an ACID sense) is a property of the application.
+- **Isolation.** Concurrently executing transactions are isolated from each other. It's also called _serializability_, each transaction can pretend that it is the only transaction running on the entire database, and the result is the same as if they had run _serially_ (one after the other).
+- **Durability.** Once a transaction has committed successfully, any data it has written will not be forgotten, even if there is a hardware fault or the database crashes. In a single-node database this means the data has been written to nonvolatile storage. In a replicated database it means the data has been successfully copied to some number of nodes.
 
 Atomicity can be implemented using a log for crash recovery, and isolation can be implemented using a lock on each object, allowing only one thread to access an object at any one time.
 
@@ -2317,6 +2314,7 @@ Weak isolation levels used in practice:
 #### Read committed
 
 It makes two guarantees:
+
 1. When reading from the database, you will only see data that has been committed (no _dirty reads_). Writes by a transaction only become visible to others when that transaction commits.
 2. When writing to the database, you will only overwrite data that has been committed (no _dirty writes_). Dirty writes are prevented usually by delaying the second write until the first write's transaction has committed or aborted.
 
@@ -2331,8 +2329,8 @@ There are still plenty of ways in which you can have concurrency bugs when using
 _Nonrepeatable read_ or _read skew_, when you read at the same time you committed a change you may see temporal and inconsistent results.
 
 There are some situations that cannot tolerate such temporal inconsistencies:
-* **Backups.** During the time that the backup process is running, writes will continue to be made to the database. If you need to restore from such a backup, inconsistencies can become permanent.
-* **Analytic queries and integrity checks.** You may get nonsensical results if they observe parts of the database at different points in time.
+- **Backups.** During the time that the backup process is running, writes will continue to be made to the database. If you need to restore from such a backup, inconsistencies can become permanent.
+- **Analytic queries and integrity checks.** You may get nonsensical results if they observe parts of the database at different points in time.
 
 _Snapshot isolation_ is the most common solution. Each transaction reads from a _consistent snapshot_ of the database.
 
@@ -2418,9 +2416,9 @@ Since database is using snapshot isolation, both checks return 2. Both transacti
 Write skew can occur if two transactions read the same objects, and then update some of those objects. You get a dirty write or lost update anomaly.
 
 Ways to prevent write skew are a bit more restricted:
-* Atomic operations don't help as things involve more objects.
-* Automatically prevent write skew requires true serializable isolation.
-* The second-best option in this case is probably to explicitly lock the rows that the transaction depends on.
+- Atomic operations don't help as things involve more objects.
+- Automatically prevent write skew requires true serializable isolation.
+- The second-best option in this case is probably to explicitly lock the rows that the transaction depends on.
   ```sql
   BEGIN TRANSACTION;
 
@@ -2441,9 +2439,9 @@ Ways to prevent write skew are a bit more restricted:
 This is the strongest isolation level. It guarantees that even though transactions may execute in parallel, the end result is the same as if they had executed one at a time, _serially_, without concurrency. Basically, the database prevents _all_ possible race conditions.
 
 There are three techniques for achieving this:
-* Executing transactions in serial order
-* Two-phase locking
-* Serializable snapshot isolation.
+- Executing transactions in serial order
+- Two-phase locking
+- Serializable snapshot isolation.
 
 #### Actual serial execution
 
@@ -2456,8 +2454,8 @@ With interactive style of transaction, a lot of time is spent in network communi
 For this reason, systems with single-threaded serial transaction processing don't allow interactive multi-statement transactions. The application must submit the entire transaction code to the database ahead of time, as a _stored procedure_, so all the data required by the transaction is in memory and the procedure can execute very fast.
 
 There are a few pros and cons for stored procedures:
-* Each database vendor has its own language for stored procedures. They usually look quite ugly and archaic from today's point of view, and they lack the ecosystem of libraries.
-* It's harder to debug, more awkward to keep in version control and deploy, trickier to test, and difficult to integrate with monitoring.
+- Each database vendor has its own language for stored procedures. They usually look quite ugly and archaic from today's point of view, and they lack the ecosystem of libraries.
+- It's harder to debug, more awkward to keep in version control and deploy, trickier to test, and difficult to integrate with monitoring.
 
 Modern implementations of stored procedures include general-purpose programming languages instead: VoltDB uses Java or Groovy, Datomic uses Java or Clojure, and Redis uses Lua.
 
@@ -2478,10 +2476,10 @@ Several transactions are allowed to concurrently read the same object as long as
 Writers don't just block other writers; they also block readers and vice versa. It protects against all the race conditions discussed earlier.
 
 Blocking readers and writers is implemented by a having lock on each object in the database. The lock is used as follows:
-* if a transaction want sot read an object, it must first acquire a lock in shared mode.
-* If a transaction wants to write to an object, it must first acquire the lock in exclusive mode.
-* If a transaction first reads and then writes an object, it may upgrade its shared lock to an exclusive lock.
-* After a transaction has acquired the lock, it must continue to hold the lock until the end of the transaction (commit or abort). **First phase is when the locks are acquired, second phase is when all the locks are released.**
+- if a transaction want sot read an object, it must first acquire a lock in shared mode.
+- If a transaction wants to write to an object, it must first acquire the lock in exclusive mode.
+- If a transaction first reads and then writes an object, it may upgrade its shared lock to an exclusive lock.
+- After a transaction has acquired the lock, it must continue to hold the lock until the end of the transaction (commit or abort). **First phase is when the locks are acquired, second phase is when all the locks are released.**
 
 It can happen that transaction A is stuck waiting for transaction B to release its lock, and vice versa (_deadlock_).
 
@@ -2524,8 +2522,8 @@ If there is enough spare capacity, and if contention between transactions is not
 SSI is based on snapshot isolation, reads within a transaction are made from a consistent snapshot of the database. On top of snapshot isolation, SSI adds an algorithm for detecting serialization conflicts among writes and determining which transactions to abort.
 
 The database knows which transactions may have acted on an outdated premise and need to be aborted by:
-* **Detecting reads of a stale MVCC object version.** The database needs to track when a transaction ignores another transaction's writes due to MVCC visibility rules. When a transaction wants to commit, the database checks whether any of the ignored writes have now been committed. If so, the transaction must be aborted.
-* **Detecting writes that affect prior reads.** As with two-phase locking, SSI uses index-range locks except that it does not block other transactions. When a transaction writes to the database, it must look in the indexes for any other transactions that have recently read the affected data. It simply notifies the transactions that the data they read may no longer be up to date.
+- **Detecting reads of a stale MVCC object version.** The database needs to track when a transaction ignores another transaction's writes due to MVCC visibility rules. When a transaction wants to commit, the database checks whether any of the ignored writes have now been committed. If so, the transaction must be aborted.
+- **Detecting writes that affect prior reads.** As with two-phase locking, SSI uses index-range locks except that it does not block other transactions. When a transaction writes to the database, it must look in the indexes for any other transactions that have recently read the affected data. It simply notifies the transactions that the data they read may no longer be up to date.
 
 ##### Performance of serializable snapshot isolation
 
@@ -2550,6 +2548,7 @@ We need to accept the possibility of partial failure and build fault-tolerant me
 Focusing on _shared-nothing systems_ the network is the only way machines communicate.
 
 The internet and most internal networks are _asynchronous packet networks_. A message is sent and the network gives no guarantees as to when it will arrive, or whether it will arrive at all. Things that could go wrong:
+
 1. Request lost
 2. Request waiting in a queue to be delivered later
 3. Remote node may have failed
@@ -2602,8 +2601,8 @@ The time when a message is received is always later than the time when it is sen
 
 Each machine on the network has its own clock, slightly faster or slower than the other machines. It is possible to synchronise clocks with Network Time Protocol (NTP).
 
-* **Time-of-day clocks**. Return the current date and time according to some calendar (_wall-clock time_). If the local clock is toof ar ahead of the NTP server, it may be forcibly reset and appear to jump back to a previous point in time. **This makes it is unsuitable for measuring elapsed time.**
-* **Monotonic clocks**. Peg: `System.nanoTime()`. They are guaranteed to always move forward. The difference between clock reads can tell you how much time elapsed between two checks. **The _absolute_ value of the clock is meaningless.** NTP allows the clock rate to be speeded up or slowed down by up to 0.05%, but **NTP cannot cause the monotonic clock to jump forward or backward**. **In a distributed system, using a monotonic clock for measuring elapsed time (peg: timeouts), is usually fine**.
+- **Time-of-day clocks**. Return the current date and time according to some calendar (_wall-clock time_). If the local clock is toof ar ahead of the NTP server, it may be forcibly reset and appear to jump back to a previous point in time. **This makes it is unsuitable for measuring elapsed time.**
+- **Monotonic clocks**. Peg: `System.nanoTime()`. They are guaranteed to always move forward. The difference between clock reads can tell you how much time elapsed between two checks. **The _absolute_ value of the clock is meaningless.** NTP allows the clock rate to be speeded up or slowed down by up to 0.05%, but **NTP cannot cause the monotonic clock to jump forward or backward**. **In a distributed system, using a monotonic clock for measuring elapsed time (peg: timeouts), is usually fine**.
 
 If some piece of software is relying on an accurately synchronised clock, the result is more likely to be silent and subtle data loss than a dramatic crash.
 
@@ -2643,13 +2642,13 @@ How does a node know that it is still leader?
 One option is for the leader to obtain a _lease_ from other nodes (similar ot a lock with a timeout). It will be the leader until the lease expires; to remain leader, the node must periodically renew the lease. If the node fails, another node can takeover when it expires.
 
 We have to be very careful making assumptions about the time that has passed for processing requests (and holding the lease), as there are many reasons a process would be paused:
-* Garbage collector (stop the world)
-* Virtual machine can be suspended
-* In laptops execution may be suspended
-* Operating system context-switches
-* Synchronous disk access
-* Swapping to disk (paging)
-* Unix process can be stopped (`SIGSTOP`)
+- Garbage collector (stop the world)
+- Virtual machine can be suspended
+- In laptops execution may be suspended
+- Operating system context-switches
+- Synchronous disk access
+- Swapping to disk (paging)
+- Unix process can be stopped (`SIGSTOP`)
 
 **You cannot assume anything about timing**
 
@@ -2684,8 +2683,8 @@ Fencing tokens can detect and block a node that is _inadvertently_ acting in err
 Distributed systems become much harder if there is a risk that nodes may "lie" (_byzantine fault_).
 
 A system is _Byzantine fault-tolerant_ if it continues to operate correctly even if some of the nodes are malfunctioning.
-* Aerospace environments
-* Multiple participating organisations, some participants may attempt ot cheat or defraud others
+- Aerospace environments
+- Multiple participating organisations, some participants may attempt ot cheat or defraud others
 
 ## Consistency and consensus
 
@@ -2703,12 +2702,12 @@ With weak guarantees, you need to be constantly aware of its limitations. System
 
 Make a system appear as if there were only one copy of the data, and all operaitons on it are atomic.
 
-* `read(x) => v` Read from register _x_, database returns value _v_.
-* `write(x,v) => r` _r_ could be _ok_ or _error_.
+- `read(x) => v` Read from register _x_, database returns value _v_.
+- `write(x,v) => r` _r_ could be _ok_ or _error_.
 
 If one client read returns the new value, all subsequent reads must also return the new value.
 
-* `cas(x_old, v_old, v_new) => r` an atomic _compare-and-set_ operation. If the value of the register _x_ equals _v_old_, it is atomically set to _v_new_. If `x != v_old` the registers is unchanged and it returns an error.
+- `cas(x_old, v_old, v_new) => r` an atomic _compare-and-set_ operation. If the value of the register _x_ equals _v_old_, it is atomically set to _v_new_. If `x != v_old` the registers is unchanged and it returns an error.
 
 **Serializability**: Transactions behave the same as if they had executed _some_ serial order.
 
@@ -2730,10 +2729,10 @@ A hard uniqueness constraint in relational databases requires linearizability.
 
 The simplest approach would be to have a single copy of the data, but this would not be able to tolerate faults.
 
-* Single-leader repolication is potentially linearizable.
-* Consensus algorithms is linearizable.
-* Multi-leader replication is not linearizable.
-* Leaderless replication is probably not linearizable.
+- Single-leader repolication is potentially linearizable.
+- Consensus algorithms is linearizable.
+- Multi-leader replication is not linearizable.
+- Leaderless replication is probably not linearizable.
 
 Multi-leader replication is often a good choice for multi-datacenter replication. On a network interruption between data-centers will force a choice between linearizability and availability.
 
@@ -2741,9 +2740,9 @@ With multi-leader configuration, each data center can operate normally with inte
 
 With single-leader replication, the leader must be in one of the datacenters. If the application requires linearizable reads and writes, the network interruption causes the application to become unavailable.
 
-* If your application_requires_ linearizability, and some replicas are disconnected from the other replicas due to a network problem, the some replicas cannot process request while they are disconnected (unavailable).
+- If your application_requires_ linearizability, and some replicas are disconnected from the other replicas due to a network problem, the some replicas cannot process request while they are disconnected (unavailable).
 
-* If your application _does not require_, then it can be written in a way that each replica can process requests independently, even if it is disconnected from other replicas (peg: multi-leader), becoming _available_.
+- If your application _does not require_, then it can be written in a way that each replica can process requests independently, even if it is disconnected from other replicas (peg: multi-leader), becoming _available_.
 
 **If an application does not require linearizability it can be more tolerant of network problems.**
 
@@ -2767,8 +2766,8 @@ Some cases one set is greater than another one.
 
 Different consistency models:
 
-* Linearizablity. _total order_ of operations: if the system behaves as if there is only a single copy of the data.
-* Causality. Two events are ordered if they are causally related. Causality defines _a partial order_, not a total one (incomparable if they are concurrent).
+- Linearizablity. _total order_ of operations: if the system behaves as if there is only a single copy of the data.
+- Causality. Two events are ordered if they are causally related. Causality defines _a partial order_, not a total one (incomparable if they are concurrent).
 
 Linearizability is not the only way of preserving causality. **Causal consistency is the strongest possible consistency model that does not slow down due to network delays, and remains available in the face of network failures.**
 
@@ -2781,9 +2780,9 @@ We can create sequence numbers in a total order that is _consistent with causali
 With a single-leader replication, the leader can simply increment a counter for each operation, and thus assign a monotonically increasing sequence number to each operation in the replication log.
 
 If there is not a single leader (multi-leader or leaderless database):
-* Each node can generate its own independent set of sequence numbers. One node can generate only odd numbers and the other only even numbers.
-* Attach a timestamp from a time-of-day clock.
-* Preallocate blocks of sequence numbers.
+- Each node can generate its own independent set of sequence numbers. One node can generate only odd numbers and the other only even numbers.
+- Attach a timestamp from a time-of-day clock.
+- Preallocate blocks of sequence numbers.
 
 The only problem is that the sequence numbers they generate are _not consistent with causality_. They do not correctly capture ordering of operations across different nodes.
 
@@ -2798,8 +2797,8 @@ As long as the maximum counter value is carried along with every operation, this
 Total order of oepration only emerges after you have collected all of the operations.
 
 Total order broadcast:
-* Reliable delivery: If a message is delivered to one node, it is delivered to all nodes.
-* Totally ordered delivery: messages are delivered to every node in the same order.
+- Reliable delivery: If a message is delivered to one node, it is delivered to all nodes.
+- Totally ordered delivery: messages are delivered to every node in the same order.
 
 ZooKeeper and etcd implement total order broadcast.
 
@@ -2816,9 +2815,9 @@ Because log entries are delivered to all nodes in the same order, if therer are 
 This procedure ensures linearizable writes, it doesn't guarantee linearizable reads.
 
 To make reads linearizable:
-* You can sequence reads through the log by appending a message, reading the log, and performing the actual read when the message is delivered back to you (etcd works something like this).
-* Fetch the position of the latest log message in a linearizable way, you can query that position to be delivered to you, and then perform the read (idea behind ZooKeeper's `sync()`).
-* You can make your read from a replica that is synchronously updated on writes.
+- You can sequence reads through the log by appending a message, reading the log, and performing the actual read when the message is delivered back to you (etcd works something like this).
+- Fetch the position of the latest log message in a linearizable way, you can query that position to be delivered to you, and then perform the read (idea behind ZooKeeper's `sync()`).
+- You can make your read from a replica that is synchronously updated on writes.
 
 For every message you want to send through total order broadcast, you increment-and-get the linearizable integer and then attach the value you got from the register as a sequence number to the message. YOu can send the message to all nodes, and the recipients will deliver the message consecutively by sequence number.
 
@@ -2827,8 +2826,8 @@ For every message you want to send through total order broadcast, you increment-
 Basically _getting several nodes to agree on something_.
 
 There are situations in which it is important for nodes to agree:
-* Leader election: All nodes need to agree on which node is the leader.
-* Atomic commit: Get all nodes to agree on the outcome of the transacction, either they all abort or roll back.
+- Leader election: All nodes need to agree on which node is the leader.
+- Atomic commit: Get all nodes to agree on the outcome of the transacction, either they all abort or roll back.
 
 #### Atomic commit and two-phase commit (2PC)
 
@@ -2838,8 +2837,8 @@ On a single node, transaction commitment depends on the _order_ in which data is
 
 2PC uses a coordinartor (_transaction manager_). When the application is ready to commit, the coordinator begins phase 1: it sends a _prepare_ request to each of the nodes, asking them whether are able to commit.
 
-* If all participants reply "yes", the coordinator sends out a _commit_ request in phase 2, and the commit takes place.
-* If any of the participants replies "no", the coordinator sends an _abort_ request to all nodes in phase 2.
+- If all participants reply "yes", the coordinator sends out a _commit_ request in phase 2, and the commit takes place.
+- If any of the participants replies "no", the coordinator sends an _abort_ request to all nodes in phase 2.
 
 When a participant votes "yes", it promises that it will definitely be able to commit later; and once the coordiantor decides, that decision is irrevocable. Those promises ensure the atomicity of 2PC.
 
@@ -2872,10 +2871,10 @@ When a coordinator fails, _orphaned_ in-doubt transactions do occur, and the onl
 One or more nodes may _propose_ values, and the consensus algorithm _decides_ on those values.
 
 Consensus algorithm must satisfy the following properties:
-* Uniform agreement: No two nodes decide differently.
-* Integrity: No node decides twice.
-* Validity: If a node decides the value _v_, then _v_ was proposed by some node.
-* Termination: Every node that does not crash eventually decides some value.
+- Uniform agreement: No two nodes decide differently.
+- Integrity: No node decides twice.
+- Validity: If a node decides the value _v_, then _v_ was proposed by some node.
+- Termination: Every node that does not crash eventually decides some value.
 
 If you don't care about fault tolerance, then satisfying the first three properties is easy: you can just hardcode one node to be the "dictator" and let that node make all of the decisions.
 
@@ -2886,10 +2885,10 @@ The termination property formalises the idea of fault tolerance. Even if some no
 Total order broadcast requires messages to be delivered exactly once, in the same order, to all nodes.
 
 So total order broadcast is equivalent to repeated rounds of consensus:
-* Due to agreement property, all nodes decide to deliver the same messages in the same order.
-* Due to integrity, messages are not duplicated.
-* Due to validity, messages are not corrupted.
-* Due to termination, messages are not lost.
+- Due to agreement property, all nodes decide to deliver the same messages in the same order.
+- Due to integrity, messages are not duplicated.
+- Due to validity, messages are not corrupted.
+- Due to termination, messages are not lost.
 
 ##### Single-leader replication and consensus
 
@@ -2918,10 +2917,10 @@ ZooKeeper or etcd are often described as "distributed key-value stores" or "coor
 They are designed to hold small amounts of data that can fit entirely in memory, you wouldn't want to store all of your application's data here. Data is replicated across all the nodes using a fault-tolerant total order broadcast algorithm.
 
 ZooKeeper is modeled after Google's Chubby lock service and it provides some useful features:
-* Linearizable atomic operations: Using an atomic compare-and-set operation, you can implement a lock.
-* Total ordering of operations: When some resource is protected by a lock or lease, you need a _fencing token_ to prevent clients from conflicting with each other in the case of a process pause. The fencing token is some number that monotonically increases every time the lock is acquired.
-* Failure detection: Clients maintain a long-lived session on ZooKeeper servers. When a ZooKeeper node fails, the session remains active. When ZooKeeper declares the session to be dead all locks held are automatically released.
-* Change notifications: Not only can one client read locks and values, it can also watch them for changes.
+- Linearizable atomic operations: Using an atomic compare-and-set operation, you can implement a lock.
+- Total ordering of operations: When some resource is protected by a lock or lease, you need a _fencing token_ to prevent clients from conflicting with each other in the case of a process pause. The fencing token is some number that monotonically increases every time the lock is acquired.
+- Failure detection: Clients maintain a long-lived session on ZooKeeper servers. When a ZooKeeper node fails, the session remains active. When ZooKeeper declares the session to be dead all locks held are automatically released.
+- Change notifications: Not only can one client read locks and values, it can also watch them for changes.
 
 ZooKeeper is super useful for distributed coordination.
 
@@ -2937,9 +2936,9 @@ ZooKeeper and friends can be seen as part of a long history of research into _me
 
 ## Batch processing
 
-* Service (online): waits for a request, sends a response back
-* Batch processing system (offline): takes a large amount of input data, runs a _job_ to process it, and produces some output.
-* Stream processing systems (near-real-time): a stream processor consumes input and produces outputs. A stream job operates on events shortly after they happen.
+- Service (online): waits for a request, sends a response back
+- Batch processing system (offline): takes a large amount of input data, runs a _job_ to process it, and produces some output.
+- Stream processing systems (near-real-time): a stream processor consumes input and produces outputs. A stream job operates on events shortly after they happen.
 
 ### Batch processing with Unix tools
 
@@ -2981,13 +2980,14 @@ HDFS consists of a daemon process running on each machine, exposing a network se
 File blocks are replciated on multiple machines. Reaplication may mean simply several copies of the same data on multiple machines, or an _erasure coding_ scheme such as Reed-Solomon codes, which allow lost data to be recovered.
 
 MapReduce is a programming framework with which you can write code to process large datasets in a distributed filesystem like HDFS.
+
 1. Read a set of input files, and break it up into _records_.
 2. Call the mapper function to extract a key and value from each input record.
 3. Sort all of the key-value pairs by key.
 4. Call the reducer function to iterate over the sorted key-value pairs.
 
-* Mapper: Called once for every input record, and its job is to extract the key and value from the input record.
-* Reducer: Takes the key-value pairs produced by the mappers, collects all the values belonging to the same key, and calls the reducer with an iterator over that collection of vaues.
+- Mapper: Called once for every input record, and its job is to extract the key and value from the input record.
+- Reducer: Takes the key-value pairs produced by the mappers, collects all the values belonging to the same key, and calls the reducer with an iterator over that collection of vaues.
 
 MapReduce can parallelise a computation across many machines, without you having ot write code to explicitly handle the parallelism. THe mapper and reducer only operate on one record at a time; they don't need to know where their input is coming from or their output is going to.
 
@@ -3046,9 +3046,9 @@ The output of those batch jobs is often some kind of database.
 So, how does the output from the batch process get back into a database?
 
 Writing from the batch job directly to the database server is a bad idea:
-* Making a network request for every single record is magnitude slower than the normal throughput of a batch task.
-* Mappers or reducers concurrently write to the same output database an it can be easily overwhelmed.
-* You have to worry about the results from partially completed jobs being visible to other systems.
+- Making a network request for every single record is magnitude slower than the normal throughput of a batch task.
+- Mappers or reducers concurrently write to the same output database an it can be easily overwhelmed.
+- You have to worry about the results from partially completed jobs being visible to other systems.
 
 A much better solution is to build a brand-new database _inside_ the batch job an write it as files to the job's output directory, so it can be loaded in bulk into servers that handle read-only queries. Various key-value stores support building database files in MapReduce including Voldemort, Terrapin, ElephanDB and HBase bulk loading.
 
@@ -3090,9 +3090,9 @@ The process of writing out the intermediate state to files is called _materialis
 
 MapReduce's approach of fully materialising state has some downsides compared to Unix pipes:
 
-* A MapReduce job can only start when all tasks in the preceding jobs have completed, whereas rocesses connected by a Unix pipe are started at the same time.
-* Mappers are often redundant: they just read back the same file that was just written by a reducer.
-* Files are replicated across several nodes, which is often overkill for such temporary data.
+- A MapReduce job can only start when all tasks in the preceding jobs have completed, whereas rocesses connected by a Unix pipe are started at the same time.
+- Mappers are often redundant: they just read back the same file that was just written by a reducer.
+- Files are replicated across several nodes, which is often overkill for such temporary data.
 
 To fix these problems with MapReduce, new execution engines for distributed batch computations were developed, Spark, Tez and Flink. These new ones can handle an entire workflow as one job, rather than breaking it up into independent subjobs (_dataflow engines_).
 
@@ -3145,14 +3145,15 @@ Databases offer _triggers_ but they are limited, so specialised tools have been 
 ##### Direct messaging from producers to consumers
 
 Within the _publish_/_subscribe_ model, we can differentiate the systems by asking two questions:
+
 1. _What happens if the producers send messages faster than the consumers can process them?_ The system can drop messages, buffer the messages in a queue, or apply _backpressure_ (_flow control_, blocking the producer from sending more messages).
 2. _What happens if nodes crash or temporarily go offline, are any messages lost?_ Durability may require some combination of writing to disk and/or replication.
 
 A number of messaging systems use direct communication between producers and consumers without intermediary nodes:
-* UDP multicast, where low latency is important, application-level protocols can recover lost packets.
-* Brokerless messaging libraries such as ZeroMQ
-* StatsD and Brubeck use unreliable UDP messaging for collecting metrics
-* If the consumer expose a service on the network, producers can make a direct HTTP or RPC request to push messages to the consumer. This is the idea behind webhooks, a callback URL of one service is registered with another service, and makes a request to that URL whenever an event occurs
+- UDP multicast, where low latency is important, application-level protocols can recover lost packets.
+- Brokerless messaging libraries such as ZeroMQ
+- StatsD and Brubeck use unreliable UDP messaging for collecting metrics
+- If the consumer expose a service on the network, producers can make a direct HTTP or RPC request to push messages to the consumer. This is the idea behind webhooks, a callback URL of one service is registered with another service, and makes a request to that URL whenever an event occurs
 
 These direct messaging systems require the application code to be aware of the possibility of message loss. The faults they can tolerate are quite limited as they assume that producers and consumers are constantly online.
 
@@ -3167,16 +3168,16 @@ By centralising the data, these systems can easily tolerate clients that come an
 A consequence of queueing is that consuemrs are generally _asynchronous_: the producer only waits for the broker to confirm that it has buffered the message and does not wait for the message to be processed by consumers.
 
 Some brokers can even participate in two-phase commit protocols using XA and JTA. This makes them similar to databases, aside some practical differences:
-* Most message brokers automatically delete a message when it has been successfully delivered to its consumers. This makes them not suitable for long-term storage.
-* Most message brokers assume that their working set is fairly small. If the broker needs to buffer a lot of messages, each individual message takes longer to process, and the overall throughput may degrade.
-* Message brokers often support some way of subscribing to a subset of topics matching some pattern.
-* Message brokers do not support arbitrary queries, but they do notify clients when data changes.
+- Most message brokers automatically delete a message when it has been successfully delivered to its consumers. This makes them not suitable for long-term storage.
+- Most message brokers assume that their working set is fairly small. If the broker needs to buffer a lot of messages, each individual message takes longer to process, and the overall throughput may degrade.
+- Message brokers often support some way of subscribing to a subset of topics matching some pattern.
+- Message brokers do not support arbitrary queries, but they do notify clients when data changes.
 
 This is the traditional view of message brokers, encapsulated in standards like JMS and AMQP, and implemented in RabbitMQ, ActiveMQ, HornetQ, Qpid, TIBCO Enterprise Message Service, IBM MQ, Azure Service Bus, and Google Cloud Pub/Sub.
 
 When multiple consumers read messages in the same topic, to main patterns are used:
-* Load balancing: Each message is delivered to _one_ of the consumers. The broker may assign messages to consumers arbitrarily.
-* Fan-out: Each message is delivered to _all_ of the consumers.
+- Load balancing: Each message is delivered to _one_ of the consumers. The broker may assign messages to consumers arbitrarily.
+- Fan-out: Each message is delivered to _all_ of the consumers.
 
 In order to ensure that the message is not lost, message brokers use _acknowledgements_: a client must explicitly tell the broker when it has finished processing a message so that the broker can remove it from the queue.
 
@@ -3199,8 +3200,8 @@ Within each partition, the broker assigns monotonically increasing sequence numb
 Apache Kafka, Amazon Kinesis Streams, and Twitter's DistributedLog, are log-based message brokers that work like this.
 
 The log-based approach trivially supports fan-out messaging, as several consumers can independently read the log reading without affecint each other. Reading a message does not delete it from the log. To eachieve load balancing the broker can assign entire partitions to nodes in the consumer group. Each client then consumes _all_ the messages in the partition it has been assigned. This approach has some downsides.
-* The number of nodes sharing the work of consuming a topic can be at most the number of log partitions in that topic.
-* If a single message is slow to process, it holds up the processing of subsequent messages in that partition.
+- The number of nodes sharing the work of consuming a topic can be at most the number of log partitions in that topic.
+- If a single message is slow to process, it holds up the processing of subsequent messages in that partition.
 
 In situations where messages may be expensive to process and you want to pararellise processing on a message-by-message basis, and where message ordering is not so important, the JMS/AMQP style of message broker is preferable. In situations with high message throughput, where each message is fast to process and where message ordering is important, the log-based approach works very well.
 
@@ -3315,6 +3316,7 @@ Sometimes you may want to rewrite history, Datomic calls this feature _excision_
 ### Processing Streams
 
 What you can do with the stream once you have it:
+
 1. You can take the data in the events and write it to the database, cache, search index, or similar storage system, from where it can thenbe queried by other clients.
 2. You can push the events to users in some way, for example by sending email alerts or push notifications, or to a real-time dashboard.
 3. You can process one or more input streams to produce one or more output streams.
@@ -3353,17 +3355,17 @@ You can time out and declare a window ready after you have not seen any new even
 2. Publish a _correction_, an updated value for the window with stranglers included. You may also need to retrat the previous output.
 
 To adjust for incofrrect device clocks, one approach is to log three timestamps:
-* The time at which the event occurred, according to the device clock
-* The time at which the event was sent to the server, according to the device clock
-* The time at which the event was received by the server, according to the server clock.
+- The time at which the event occurred, according to the device clock
+- The time at which the event was sent to the server, according to the device clock
+- The time at which the event was received by the server, according to the server clock.
 
 You can estimate the offset between the device clock and the server clock, then apply that offset to the event timestamp, and thus estimate the true time at which the event actually occurred.
 
 Several types of windows are in common use:
-* Tumbling window: Fixed length. If you have a 1-minute tumbling window, all events between 10:03:00 and 10:03:59 will be grouped in one window, next window would be 10:04:00-10:04:59
-* Hopping window: Fixed length, but allows windows to overlap in order to provide some smoothing. If you have a 5-minute window with a hop size of 1 minute, it would contain the events between 10:03:00 and 10:07:59, next window would cover 10:04:00-10:08:59
-* Sliding window: Events that occur within some interval of each other. For example, a 5-minute sliding window would cover 10:03:39 and 10:08:12 because they are less than 4 minutes apart.
-* Session window: No fixed duration. All events for the same user, the window ends when the user has been inactive for some time (30 minutes). Common in website analytics
+- Tumbling window: Fixed length. If you have a 1-minute tumbling window, all events between 10:03:00 and 10:03:59 will be grouped in one window, next window would be 10:04:00-10:04:59
+- Hopping window: Fixed length, but allows windows to overlap in order to provide some smoothing. If you have a 5-minute window with a hop size of 1 minute, it would contain the events between 10:03:00 and 10:07:59, next window would cover 10:04:00-10:08:59
+- Sliding window: Events that occur within some interval of each other. For example, a 5-minute sliding window would cover 10:03:39 and 10:08:12 because they are less than 4 minutes apart.
+- Session window: No fixed duration. All events for the same user, the window ends when the user has been inactive for some time (30 minutes). Common in website analytics
 
 The fact that new events can appear anytime on a stream makes joins on stream challenging.
 
@@ -3444,10 +3446,10 @@ Transaction systems provide linearizability, useful guarantees as reading your o
 In the absence of widespread support for a good distributed transaction protocol, log-based derived data is the most promising approach for integrating different data systems.
 
 However, as systems are scaled towards bigger and more coplex workloads, limitations emerge:
-* Constructing a totally ordered log requires all events to pass through a _single leader node_ that decides on the ordering.
-* An undefined ordering of events that originate on multiple datacenters.
-* When two events originate in different services, there is no defined order for those events.
-* Some applications maintain client-side state. Clients and servers are very likely to see events in different orders.
+- Constructing a totally ordered log requires all events to pass through a _single leader node_ that decides on the ordering.
+- An undefined ordering of events that originate on multiple datacenters.
+- When two events originate in different services, there is no defined order for those events.
+- Some applications maintain client-side state. Clients and servers are very likely to see events in different orders.
 
 Deciding on a total order of events is known as _total order broadcast_, which is equivalent to consensus. It is still an open research problem to design consensus algorithms that can scale beyond the throughput of a single node.
 
@@ -3480,14 +3482,15 @@ The stream process can use fast approximation algorithms while the batch process
 Batch and stream processors are like elaborate implementations of triggers, stored procedures, and materialised view maintenance routines. The derived data systems they maintain are like different index types.
 
 There are two avenues by which different storate and processing tools can nevertheless be composed into a cohesive system:
-* Federated databases: unifying reads. It is possible to provide a unified query interface to a wide variety of underlying storate engines and processing methods, this is known as _federated database_ or _polystore_. An example is PostgreSQL's _foreign data wrapper_.
-* Unbundled databases: unifying writes. When we compose several storage systems, we need to ensure that all data changes end up in all the right places, even in the face of faults, it is like _unbundling_ a database's index-maintenance features in a way that can synchronise writes across disparate technologies.
+- Federated databases: unifying reads. It is possible to provide a unified query interface to a wide variety of underlying storate engines and processing methods, this is known as _federated database_ or _polystore_. An example is PostgreSQL's _foreign data wrapper_.
+- Unbundled databases: unifying writes. When we compose several storage systems, we need to ensure that all data changes end up in all the right places, even in the face of faults, it is like _unbundling_ a database's index-maintenance features in a way that can synchronise writes across disparate technologies.
 
 Keeping the writes to several storage systems in sync is the harder engineering problem.
 
 Synchronising writes requires distributed transactions across heterogeneous storage systems which may be the wrong solution. An asynchronous event log with idempotent writes is a much more robust and practical approach.
 
 The big advantage is _loose coupling_ between various components:
+
 1. Asynchronous event streams make the system as a whole more robust to outages or performance degradation of individual components.
 2. Unbundling data systems allows different software components and services to be developed, improved and maintained independently from each other by different teams.
 
@@ -3508,8 +3511,8 @@ Instead of treating the database as a passive variable that is manipulated by th
 A customer is purchasing an item that is priced in one currency but paid in another currency. In order to perform the currency conversion, you need to know the current exchange rate.
 
 This could be implemented in two ways:
-* Microservices approach, the code that processes the purchase would probably wuery an exchange-rate service or a database in order to obtain the current rate for a particular currency.
-* Dataflow approach, the code that processes purchases would subscribe to a stream of exchange rate updates ahead of time, and record the current rate in a local database whenever it changes. When it comes to processing the purchase, it only needs to query the local database.
+- Microservices approach, the code that processes the purchase would probably wuery an exchange-rate service or a database in order to obtain the current rate for a particular currency.
+- Dataflow approach, the code that processes purchases would subscribe to a stream of exchange rate updates ahead of time, and record the current rate in a local database whenever it changes. When it comes to processing the purchase, it only needs to query the local database.
 
 The dataflow is not only faster, but it is also more robust to the failure of another service.
 
@@ -3574,6 +3577,7 @@ Asynchronous multi-master replication is ruled out as different masters concurre
 ##### Uniqueness in log-based messaging
 
 A stream processor consumes all the messages in a log partition sequentially on a single thread. A stream processor can unambiguously and deterministically decide which one of several conflicting operations came first.
+
 1. Every request for a username is encoded as a message.
 2. A stream processor sequentially reads the requests in the log. For every request for a username that is available, it records the name as taken and emits a success message to an output stream. For every request for a username that is already taken, it emits a rejection message to an output stream.
 3. The client waits for a success or rejection message corresponding to its request.
@@ -3597,8 +3601,8 @@ Equivalent correctness can be achieved with partitioned logs, and without an ato
 Consumers of a log are asynchronous by design, so a sender does not wait until its message has been processed by consumers. However, it is possible for a client to wait for a message to appear on an output stream.
 
 _Consistency_ conflates two different requirements:
-* Timeliness: users observe the system in an up-to-date state.
-* Integrity: Means absence of corruption. No data loss, no contradictory or false data. The derivation must be correct.
+- Timeliness: users observe the system in an up-to-date state.
+- Integrity: Means absence of corruption. No data loss, no contradictory or false data. The derivation must be correct.
 
 Violations of timeless are "eventual consistency" whereas violations of integrity are "perpetual inconsistency".
 
@@ -3609,10 +3613,10 @@ When processing event streams asynchronously, there is no guarantee of timelines
 _Exactly-once_ or _effectively-once_ semantics is a mechanism for preserving integrity. Fault-tolerant message delivery and duplicate suppression are important for maintaining the integrity of a data system in the face of faults.
 
 Stream processing systems can preserve integrity without requiring distributed transactions and an atomic commit protocol, which means they can potentially achieve comparable correctness with much better performance and operational robustness. Integrity can be achieved through a combination of mechanisms:
-* Representing the content of the write operation as a single message, this fits well with event-sourcing
-* Deriving all other state updates from that single message using deterministic derivation functions
-* Passing a client-generated request ID, enabling end-to-end duplicate suppression and idempotence
-* Making messages immutable and allowing derived data to be reprocessed from time to time
+- Representing the content of the write operation as a single message, this fits well with event-sourcing
+- Deriving all other state updates from that single message using deterministic derivation functions
+- Passing a client-generated request ID, enabling end-to-end duplicate suppression and idempotence
+- Making messages immutable and allowing derived data to be reprocessed from time to time
 
 In many businesses contexts, it is actually acceptable to temporarily violate a constraint and fix it up later apologising. The cost of the apology (money or reputation), it is often quite low.
 
