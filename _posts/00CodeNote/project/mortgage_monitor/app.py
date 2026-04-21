@@ -705,7 +705,9 @@ def api_scout():
     city   = parts[1].strip() if len(parts) > 1 else ""
     state  = next((p.strip() for p in parts if p.strip() in _STATE_ABBR), "")
     state_abbr = _STATE_ABBR.get(state, "WA")
-    zipcode = next((p.strip() for p in parts if p.strip().isdigit() and len(p.strip()) == 5), "")
+    zipcode = next(
+        (w for p in parts for w in p.split() if w.isdigit() and len(w) == 5), ""
+    )
 
     street_slug = street.replace(" ", "-")
     city_slug   = city.replace(" ", "-")
