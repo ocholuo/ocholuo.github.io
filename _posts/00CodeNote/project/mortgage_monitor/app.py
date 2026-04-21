@@ -789,6 +789,10 @@ def api_parcel():
         "spatialRel": "esriSpatialRelIntersects",
         "outFields": "PIN,ADDR_FULL,JURIS,CURRENT_ZONING,SQ_FT_LOT,APPR_LAND,APPR_IMPR,APPR_TOTAL",
         "returnGeometry": "true",
+        # WHY: inSR=4326 tells ArcGIS the input geometry is WGS84 lat/lon degrees.
+        # Without this, King County's server interprets coordinates in its native
+        # spatial reference (WA State Plane, meters) → wrong location → 0 features.
+        "inSR": "4326",
         "outSR": "4326",
         "f": "json",
         # WHY: 15m buffer handles Nominatim points that land on street centerlines
