@@ -4,7 +4,8 @@ Tests for /api/parcel endpoint and parcel cache helpers.
 Integration address used throughout:
   3234 78th Pl NE, Medina, WA 98039
   Coordinates: lat=47.6248, lon=-122.2258  (King County)
-  Expected PIN: 2525069058 (from King County Parcel Viewer)
+  Parcel PIN:  7397300140  (King County Parcel Viewer)
+  eRealProperty: https://blue.kingcounty.com/Assessor/eRealProperty/Dashboard.aspx?ParcelNbr=7397300140
 """
 
 import json
@@ -70,20 +71,20 @@ class TestParcelInputValidation:
 
 MEDINA_CACHED = {
     "in_king_county": True,
-    "pin": "2525069058",
+    "pin": "7397300140",
     "address": "3234 78TH PL NE",
     "jurisdiction": "MEDINA",
     "zoning": "R-16",
-    "lot_sqft": 16000,
-    "appr_land": 1200000,
-    "appr_improvement": 800000,
-    "appr_total": 2000000,
-    "erp_url": "https://blue.kingcounty.com/Assessor/eRealProperty/Dashboard.aspx?ParcelNbr=2525069058",
+    "lot_sqft": 17120,
+    "appr_land": "1800000",
+    "appr_improvement": "600000",
+    "appr_total": "2400000",
+    "erp_url": "https://blue.kingcounty.com/Assessor/eRealProperty/Dashboard.aspx?ParcelNbr=7397300140",
     "geometry": None,
-    "year_built": "1965",
+    "year_built": "1960",
     "bedrooms": "4",
     "bathrooms": "3",
-    "living_sqft": "2800",
+    "living_sqft": "3200",
     "stories": "2",
 }
 
@@ -180,22 +181,22 @@ class TestParcelMedinaKingCounty:
     ArcGIS and Socrata responses are mocked — no real network calls.
     """
 
-    def _mock_requests_get(self, arcgis_pin="2525069058", socrata_yrbuilt="1965"):
+    def _mock_requests_get(self, arcgis_pin="7397300140", socrata_yrbuilt="1960"):
         call_count = {"n": 0}
 
         def fake_get(url, **kwargs):
             call_count["n"] += 1
             if "gismaps.kingcounty.gov" in url:
-                return FakeResponse(
+                    return FakeResponse(
                     _make_arcgis_response(
                         pin=arcgis_pin,
                         addr="3234 78TH PL NE",
                         juris="MEDINA",
                         zoning="R-16",
-                        lot_sqft=16000,
-                        appr_land=1200000,
-                        appr_impr=800000,
-                        appr_total=2000000,
+                        lot_sqft=17120,
+                        appr_land=1800000,
+                        appr_impr=600000,
+                        appr_total=2400000,
                     )
                 )
             if "data.kingcounty.gov" in url:
@@ -228,7 +229,7 @@ class TestParcelMedinaKingCounty:
         monkeypatch.setattr(req_mod, "get", fake_get)
 
         data = client.get("/api/parcel?lat=47.6248&lon=-122.2258").get_json()
-        assert data["pin"] == "2525069058"
+        assert data["pin"] == "7397300140"
 
     def test_address_fields_present(self, client, tmp_cache, monkeypatch):
         fake_get, _ = self._mock_requests_get()
@@ -344,3 +345,179 @@ class TestParcelArcGISErrors:
 
         client.get("/api/parcel?lat=47.6248&lon=-122.2258")
         assert "47.6248,-122.2258" not in app_module._parcel_cache
+
+
+# ---------------------------------------------------------------------------
+# /api/parcel — PIN-based lookup
+#
+# Address: 3234 78th Pl NE, Medina, WA 98039
+# Parcel:  7397300140  (King County Parcel Viewer)
+# eRealProperty URL:
+#   https://blue.kingcounty.com/Assessor/eRealProperty/Dashboard.aspx?ParcelNbr=7397300140
+# ---------------------------------------------------------------------------
+
+MEDINA_PIN = "7397300140"
+MEDINA_ERP_URL = (
+    "https://blue.kingcounty.com/Assessor/eRealProperty/Dashboard.aspx"
+    "?ParcelNbr=7397300140"
+)
+
+
+def _medina_arcgis_by_pin():
+    """ArcGIS WHERE-clause response for PIN=7397300140."""
+    return {
+        "features": [
+            {
+                "attributes": {
+                    "PIN": MEDINA_PIN,
+                    "ADDR_FULL": "3234 78TH PL NE",
+                    "JURIS": "MEDINA",
+                    "CURRENT_ZONING": "R-16",
+                    "SQ_FT_LOT": 17120,
+                },
+                "geometry": {
+                    "rings": [
+                        [
+                            [-122.2262, 47.6245],
+                            [-122.2255, 47.6245],
+                            [-122.2255, 47.6252],
+                            [-122.2262, 47.6252],
+                            [-122.2262, 47.6245],
+                        ]
+                    ]
+                },
+            }
+        ]
+    }
+
+
+def _medina_socrata_by_pin():
+    """Socrata yr8g-yw5b response for PIN 7397300140 (major=739730, minor=0140)."""
+    return [
+        {
+            "yrbuilt": "1960",
+            "nbrbedrooms": "4",
+            "nbrbaths": "3",
+            "sqfttotliving": "3200",
+            "stories": "2",
+            "apprlndval": "1800000",
+            "apprimpval": "600000",
+            "apprtotval": "2400000",
+        }
+    ]
+
+
+class TestParcelPinLookup:
+    """
+    Tests for ?pin= query param — WHERE-clause ArcGIS lookup for
+    3234 78th Pl NE, Medina, WA 98039 (PIN 7397300140).
+    """
+
+    def _fake_get(self, *a, **kw):
+        url = a[0] if a else kw.get("url", "")
+        if "gismaps.kingcounty.gov" in url:
+            return FakeResponse(_medina_arcgis_by_pin())
+        if "data.kingcounty.gov" in url:
+            return FakeResponse(_medina_socrata_by_pin())
+        raise AssertionError(f"Unexpected URL: {url}")
+
+    def test_pin_lookup_returns_200(self, client, tmp_cache, monkeypatch):
+        import requests as req_mod
+        monkeypatch.setattr(req_mod, "get", self._fake_get)
+
+        r = client.get(f"/api/parcel?pin={MEDINA_PIN}")
+        assert r.status_code == 200
+
+    def test_pin_lookup_in_king_county_true(self, client, tmp_cache, monkeypatch):
+        import requests as req_mod
+        monkeypatch.setattr(req_mod, "get", self._fake_get)
+
+        data = client.get(f"/api/parcel?pin={MEDINA_PIN}").get_json()
+        assert data["in_king_county"] is True
+
+    def test_pin_lookup_pin_field_matches(self, client, tmp_cache, monkeypatch):
+        import requests as req_mod
+        monkeypatch.setattr(req_mod, "get", self._fake_get)
+
+        data = client.get(f"/api/parcel?pin={MEDINA_PIN}").get_json()
+        assert data["pin"] == MEDINA_PIN
+
+    def test_pin_lookup_erp_url_correct(self, client, tmp_cache, monkeypatch):
+        import requests as req_mod
+        monkeypatch.setattr(req_mod, "get", self._fake_get)
+
+        data = client.get(f"/api/parcel?pin={MEDINA_PIN}").get_json()
+        assert data["erp_url"] == MEDINA_ERP_URL
+
+    def test_pin_lookup_address_and_zoning(self, client, tmp_cache, monkeypatch):
+        import requests as req_mod
+        monkeypatch.setattr(req_mod, "get", self._fake_get)
+
+        data = client.get(f"/api/parcel?pin={MEDINA_PIN}").get_json()
+        assert data["address"] == "3234 78TH PL NE"
+        assert data["jurisdiction"] == "MEDINA"
+        assert data["zoning"] == "R-16"
+        assert data["lot_sqft"] == 17120
+
+    def test_pin_lookup_building_fields_from_socrata(self, client, tmp_cache, monkeypatch):
+        import requests as req_mod
+        monkeypatch.setattr(req_mod, "get", self._fake_get)
+
+        data = client.get(f"/api/parcel?pin={MEDINA_PIN}").get_json()
+        assert data["year_built"] == "1960"
+        assert data["bedrooms"] == "4"
+        assert data["living_sqft"] == "3200"
+
+    def test_pin_lookup_assessed_values_from_socrata(self, client, tmp_cache, monkeypatch):
+        import requests as req_mod
+        monkeypatch.setattr(req_mod, "get", self._fake_get)
+
+        data = client.get(f"/api/parcel?pin={MEDINA_PIN}").get_json()
+        assert data["appr_land"] == "1800000"
+        assert data["appr_total"] == "2400000"
+
+    def test_pin_lookup_geojson_geometry(self, client, tmp_cache, monkeypatch):
+        import requests as req_mod
+        monkeypatch.setattr(req_mod, "get", self._fake_get)
+
+        data = client.get(f"/api/parcel?pin={MEDINA_PIN}").get_json()
+        assert data["geometry"]["type"] == "Polygon"
+
+    def test_pin_lookup_cached_under_pin_key(self, client, tmp_cache, monkeypatch):
+        import requests as req_mod
+        monkeypatch.setattr(req_mod, "get", self._fake_get)
+
+        client.get(f"/api/parcel?pin={MEDINA_PIN}")
+        assert MEDINA_PIN in app_module._parcel_cache
+
+    def test_missing_both_lat_lon_and_pin_returns_400(self, client, tmp_cache):
+        r = client.get("/api/parcel")
+        assert r.status_code == 400
+
+
+# ---------------------------------------------------------------------------
+# eRealProperty URL format check (no network — just verifies URL construction)
+# ---------------------------------------------------------------------------
+
+class TestErpUrl:
+    def test_erp_url_format_for_known_pin(self, client, tmp_cache, monkeypatch):
+        """Verify the eRealProperty dashboard URL is constructed correctly."""
+        import requests as req_mod
+
+        def fake_get(*a, **kw):
+            if "gismaps" in a[0]:
+                return FakeResponse({
+                    "features": [{"attributes": {"PIN": "5255400140", "ADDR_FULL": "20027 102ND CT NE",
+                                                  "JURIS": "BOTHELL", "CURRENT_ZONING": "R-5", "SQ_FT_LOT": 9500},
+                                   "geometry": {}}]
+                })
+            return FakeResponse([])
+
+        monkeypatch.setattr(req_mod, "get", fake_get)
+
+        data = client.get("/api/parcel?lat=47.7769&lon=-122.2069").get_json()
+        expected = (
+            "https://blue.kingcounty.com/Assessor/eRealProperty/Dashboard.aspx"
+            "?ParcelNbr=5255400140"
+        )
+        assert data["erp_url"] == expected
