@@ -801,7 +801,12 @@ def api_parcel():
         "units": "esriSRUnit_Meter",
     }
     try:
-        resp = requests.get(arcgis_url, params=params, timeout=12, headers=_SCOUT_HEADERS)
+        # WHY: bypass any inherited https_proxy env var (e.g. Claude Code sandbox proxy)
+        # that would intercept and drop the connection to gismaps.kingcounty.gov.
+        resp = requests.get(
+            arcgis_url, params=params, timeout=30, headers=_SCOUT_HEADERS,
+            proxies={"http": None, "https": None},
+        )
         resp.raise_for_status()
         data = resp.json()
     except Exception as exc:
@@ -858,6 +863,7 @@ def api_parcel():
                 params={"major": major, "minor": minor},
                 timeout=10,
                 headers=_SCOUT_HEADERS,
+                proxies={"http": None, "https": None},
             )
             if sresp.ok:
                 rows = sresp.json()
