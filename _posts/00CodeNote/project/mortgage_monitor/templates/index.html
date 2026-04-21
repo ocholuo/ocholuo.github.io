@@ -3304,7 +3304,6 @@ function addRsimSegment() {
   h +=         "<div class=\"rsim-savings-badge\" id=\"rsim-s"+idx+"-save-badge\">IF YOU REFINANCE TODAY</div>";
   h +=         "<div class=\"rsim-savings-hero-row\">";
   h +=           "<span class=\"rsim-savings-hero\" id=\"rsim-s"+idx+"-save-hero\">&mdash;</span>";
-  h +=           "<span class=\"rsim-savings-sub\" id=\"rsim-s"+idx+"-save-sub\"></span>";
   h +=         "</div>";
   h +=         "<div class=\"rsim-savings-rows\">";
   h +=           "<div class=\"rsim-savings-row\">";
@@ -3481,7 +3480,6 @@ function refiSimUpdate() {
       var banner   = document.getElementById("rsim-s"+seg.idx+"-savings");
       var saveHero  = document.getElementById("rsim-s"+seg.idx+"-save-hero");
       var saveBadge = document.getElementById("rsim-s"+seg.idx+"-save-badge");
-      var saveSub   = document.getElementById("rsim-s"+seg.idx+"-save-sub");
       var saveMo    = document.getElementById("rsim-s"+seg.idx+"-save-mo");
       var saveYr    = document.getElementById("rsim-s"+seg.idx+"-save-yr");
       var saveMoLbl = document.getElementById("rsim-s"+seg.idx+"-save-mo-lbl");
@@ -3500,7 +3498,6 @@ function refiSimUpdate() {
         var isIntSaved = intDiff > 0;
         var absInt     = Math.abs(intDiff);
         var intColor   = isIntSaved ? "#16a34a" : "var(--red)";
-        if (saveSub) { saveSub.textContent = t(isSaving ? "rsim.save.sub.save" : "rsim.save.sub.cost"); saveSub.style.color = isSaving ? "#16a34a" : "var(--red)"; }
         if (saveMoLbl) saveMoLbl.textContent = t(isIntSaved ? "rsim.save.int.saved.mo" : "rsim.save.int.cost.mo");
         if (saveYrLbl) saveYrLbl.textContent = t(isIntSaved ? "rsim.save.int.saved.yr" : "rsim.save.int.cost.yr");
         if (saveMo) { saveMo.textContent = "+" + fmtDollar(Math.round(absInt)) + "/mo"; saveMo.style.color = intColor; }
