@@ -1180,8 +1180,9 @@
 <!-- ── Sidebar Navigation (desktop only; hidden on mobile) ── -->
 <nav class="sidebar" id="sidebar">
   <div class="sidebar-logo">
-    <div class="brand-mark">MM</div>
-    <div class="sidebar-logo-title">Mortgage Monitor</div>
+    <div class="brand-mark">OMH</div>
+    <div class="sidebar-logo-title">Oh My House</div>
+    <div class="sidebar-logo-sub">Mortgage Monitor</div>
     <div class="sidebar-logo-sub">Daily Rate Tracker</div>
   </div>
   <ul class="sidebar-nav">
@@ -1726,7 +1727,7 @@
         <strong class="rsim-pmt-val" id="rsim-s0-pmt">&mdash;</strong>
         <div class="rsim-stats-grid">
           <div class="rsim-stat-item">
-            <div class="rsim-stat-label" data-i18n="rsim.stat.monthly">月供</div>
+            <div class="rsim-stat-label" data-i18n="rsim.stat.monthly">Monthly Payment</div>
             <div class="rsim-stat-value" id="rsim-s0-stat-pmt">&mdash;</div>
             <div class="rsim-stat-sub" id="rsim-s0-stat-pmt-prin"></div>
             <div class="rsim-stat-sub" id="rsim-s0-stat-pmt-int"></div>
@@ -1969,13 +1970,13 @@ let _currentRange = "3M";
 // ── i18n ─────────────────────────────────────────────────────────
 const T = {
   en: {
-    'app.title':'Daily Mortgage Rate Tracker','app.sub':'Daily rates · Mortgage News Daily + Bankrate · ',
+    'app.title':'Oh My House','app.sub':'Daily rates · Mortgage News Daily + Bankrate · ',
     'badge.updated':'Updated','badge.daily':'Updated Daily · Weekdays','badge.mnd':'MND Rate Index',
     'rate.30yr':'30-YR FIXED','rate.15yr':'15-YR FIXED','rate.tnx':'10-YR TREASURY',
     'rate.1wk':'1-Wk Change','rate.1yr':'1-Yr Change','rate.mavg':'Monthly Avg','rate.52avg':'52-Wk Avg','rate.range':'52-Week Range','rate.spread':'Spread to 30yr',
     'chart.title':'Daily Rate Chart','legend.30':'30yr Fixed','legend.15':'15yr Fixed','legend.tnx':'10yr Treasury',
     'forecast.title':'Rate Forecast And Analysis','proj.30d':'30-Day Projection','proj.60d':'60-Day Projection',
-    'nav.home':'Mortgage Monitor','nav.calc':'Payment Calculator','nav.refi':'Refi Savings','nav.history':'Rate History',
+    'nav.home':'Oh My House','nav.calc':'Payment Calculator','nav.refi':'Refi Savings','nav.history':'Rate History',
     'nav.history.desc':'Last 20 trading days','nav.alert':'Rate Alert','nav.alert.desc':'Get notified when rates drop',
     'nav.news':'Market News','nav.news.desc':'Mortgage · Fed · Economy','nav.share':'Share Rate Card','nav.share.desc':'Print or save current view',
     'footer.title':'Data Sources',
@@ -2015,14 +2016,14 @@ const T = {
     'rsim.seg.refi.year':'Refi at Month','rsim.seg.refi.hint':'Payment period (month) to refinance',
     'rsim.seg.term':'New Term','rsim.seg.closing.lbl':'Closing Costs',
     'rsim.seg.rate.new':'New Rate','rsim.seg.rate.lbl':'Rate:','rsim.seg.closing':'closing',
-    'rsim.stat.monthly':'Monthly Pmt','rsim.stat.tot.int':'Total Interest','rsim.stat.tot.cost':'Total Cost',
+    'rsim.stat.monthly':'Monthly Payment','rsim.stat.tot.int':'Total Interest','rsim.stat.tot.cost':'Total Cost',
     'rsim.stat.prin.lbl':'Principal:','rsim.stat.int.lbl':'Interest:',
-    'rsim.savings.badge.save':'IF YOU REFINANCE TODAY','rsim.savings.badge.cost':'REFINANCING WILL INCREASE COST',
+    'rsim.savings.badge.save':'Estimated Savings','rsim.savings.badge.cost':'Projected Cost Increase',
     'rsim.save.sub.save':'saved/mo','rsim.save.sub.cost':'more/mo',
-    'rsim.save.int.saved.mo':'Monthly interest saved','rsim.save.int.cost.mo':'Monthly interest added',
-    'rsim.save.int.saved.yr':'Annual interest saved', 'rsim.save.int.cost.yr':'Annual interest added',
-    'rsim.int.cmp.save':'full-term interest saved','rsim.int.cmp.cost':'full-term interest added',
-    'rsim.cost.cmp.save':'full-term cost saved','rsim.cost.cmp.cost':'full-term cost added',
+    'rsim.save.int.saved.mo':'Monthly Interest Savings','rsim.save.int.cost.mo':'Monthly Interest Increase',
+    'rsim.save.int.saved.yr':'Annual Interest Savings', 'rsim.save.int.cost.yr':'Annual Interest Increase',
+    'rsim.int.cmp.save':'Lifetime Interest Savings','rsim.int.cmp.cost':'Lifetime Interest Increase',
+    'rsim.cost.cmp.save':'Lifetime Cost Savings','rsim.cost.cmp.cost':'Lifetime Cost Increase',
     'calc.ccl.nox.prin':'Principal (no extra)','calc.ccl.nox.int':'Interest (no extra)',
     'calc.stat.basecross':'Base Crossover:',
     'chart.yr':'Yr',
@@ -2034,13 +2035,13 @@ const T = {
     'scout.parcel.erp':'Full Detail on King County eRealProperty \u2192',
   },
   zh: {
-    'app.title':'每日房贷利率追踪','app.sub':'每日利率 · MND + Bankrate · ',
+    'app.title':'我的房子','app.sub':'每日利率 · MND + Bankrate · ',
     'badge.updated':'更新于','badge.daily':'每日更新 · 工作日','badge.mnd':'MND 利率指数',
     'rate.30yr':'30年固定利率','rate.15yr':'15年固定利率','rate.tnx':'10年期国债',
     'rate.1wk':'周变动','rate.1yr':'年变动','rate.mavg':'月均值','rate.52avg':'52周均值','rate.range':'52周区间','rate.spread':'相对30年息差',
     'chart.title':'每日利率走势','legend.30':'30年固定','legend.15':'15年固定','legend.tnx':'10年期国债',
     'forecast.title':'利率预测与分析','proj.30d':'30日预测','proj.60d':'60日预测',
-    'nav.home':'每日房贷利率追踪','nav.calc':'月供计算器','nav.refi':'再融资节省','nav.history':'利率历史',
+    'nav.home':'我的房子','nav.calc':'月供计算器','nav.refi':'再融资节省','nav.history':'利率历史',
     'nav.history.desc':'近20个交易日','nav.alert':'利率提醒','nav.alert.desc':'利率下降时通知我',
     'nav.news':'市场新闻','nav.news.desc':'房贷 · 美联储 · 经济','nav.share':'分享当前界面','nav.share.desc':'打印或保存当前视图',
     'footer.title':'数据来源',
@@ -2080,14 +2081,14 @@ const T = {
     'rsim.seg.refi.year':'还款月份','rsim.seg.refi.hint':'还款的第几个月份（期数）',
     'rsim.seg.term':'新年限','rsim.seg.closing.lbl':'结算费用',
     'rsim.seg.rate.new':'新利率','rsim.seg.rate.lbl':'利率:','rsim.seg.closing':'结算费用',
-    'rsim.stat.monthly':'月供','rsim.stat.tot.int':'总利息','rsim.stat.tot.cost':'总费用',
+    'rsim.stat.monthly':'月还款额','rsim.stat.tot.int':'总利息','rsim.stat.tot.cost':'总费用',
     'rsim.stat.prin.lbl':'本金:','rsim.stat.int.lbl':'利息:',
-    'rsim.savings.badge.save':'立即再融资可节省','rsim.savings.badge.cost':'立即再融资会增加',
+    'rsim.savings.badge.save':'预计节省额','rsim.savings.badge.cost':'预计费用增加',
     'rsim.save.sub.save':'每月节省','rsim.save.sub.cost':'每月多交',
-    'rsim.save.int.saved.mo':'每月节省利息','rsim.save.int.cost.mo':'每月增加利息',
-    'rsim.save.int.saved.yr':'每年节省利息', 'rsim.save.int.cost.yr':'每年增加利息',
-    'rsim.int.cmp.save':'全程节省利息','rsim.int.cmp.cost':'全程增加利息',
-    'rsim.cost.cmp.save':'全程节省费用','rsim.cost.cmp.cost':'全程增加费用',
+    'rsim.save.int.saved.mo':'月度利息节省','rsim.save.int.cost.mo':'月度利息增加',
+    'rsim.save.int.saved.yr':'年度利息节省', 'rsim.save.int.cost.yr':'年度利息增加',
+    'rsim.int.cmp.save':'全期利息节省','rsim.int.cmp.cost':'全期利息增加',
+    'rsim.cost.cmp.save':'全期费用节省','rsim.cost.cmp.cost':'全期费用增加',
     'calc.ccl.nox.prin':'本金（无额外）','calc.ccl.nox.int':'利息（无额外）',
     'calc.stat.basecross':'基准交叉:',
     'chart.yr':'年',
@@ -2099,13 +2100,13 @@ const T = {
     'scout.parcel.erp':'在金县官网查看完整详情 \u2192',
   },
   es: {
-    'app.title':'Rastreador Diario de Hipotecas','app.sub':'Tasas diarias · MND + Bankrate · ',
+    'app.title':'Oh, Mi Casa','app.sub':'Tasas diarias · MND + Bankrate · ',
     'badge.updated':'Actualizado','badge.daily':'Actualización diaria · Días hábiles','badge.mnd':'Índice MND',
     'rate.30yr':'FIJO 30 AÑOS','rate.15yr':'FIJO 15 AÑOS','rate.tnx':'BONO 10 AÑOS',
     'rate.1wk':'Cambio semanal','rate.1yr':'Cambio anual','rate.mavg':'Prom. mensual','rate.52avg':'Prom. 52 sem.','rate.range':'Rango 52 semanas','rate.spread':'Diferencial vs 30yr',
     'chart.title':'Gráfico Diario de Tasas','legend.30':'Fijo 30 años','legend.15':'Fijo 15 años',
     'forecast.title':'Pronóstico de Tasas','proj.30d':'Proyección 30 días','proj.60d':'Proyección 60 días',
-    'nav.home':'Monitor Hipotecario','nav.calc':'Calculadora de pago','nav.refi':'Ahorro en Refi','nav.history':'Historial de tasas',
+    'nav.home':'Oh, Mi Casa','nav.calc':'Calculadora de pago','nav.refi':'Ahorro en Refi','nav.history':'Historial de tasas',
     'nav.history.desc':'Últimos 20 días hábiles','nav.alert':'Alerta de tasa','nav.alert.desc':'Notifícame cuando bajen',
     'nav.news':'Noticias del mercado','nav.news.desc':'Hipoteca · Fed · Economía','nav.share':'Compartir Vista','nav.share.desc':'Imprimir o guardar vista actual',
     'footer.title':'Fuentes de datos',
@@ -2147,12 +2148,12 @@ const T = {
     'rsim.seg.rate.new':'Nueva tasa','rsim.seg.rate.lbl':'Tasa:','rsim.seg.closing':'cierre',
     'rsim.stat.monthly':'Pago mensual','rsim.stat.tot.int':'Interés total','rsim.stat.tot.cost':'Costo total',
     'rsim.stat.prin.lbl':'Capital:','rsim.stat.int.lbl':'Interés:',
-    'rsim.savings.badge.save':'SI REFINANCIA HOY','rsim.savings.badge.cost':'REFINANCIAR AUMENTARÁ EL COSTO',
+    'rsim.savings.badge.save':'Ahorro Estimado','rsim.savings.badge.cost':'Aumento de Costo Proyectado',
     'rsim.save.sub.save':'ahorrado/mes','rsim.save.sub.cost':'más/mes',
-    'rsim.save.int.saved.mo':'Interés mensual ahorrado','rsim.save.int.cost.mo':'Interés mensual adicional',
-    'rsim.save.int.saved.yr':'Interés anual ahorrado',  'rsim.save.int.cost.yr':'Interés anual adicional',
-    'rsim.int.cmp.save':'interés total ahorrado','rsim.int.cmp.cost':'interés total adicional',
-    'rsim.cost.cmp.save':'costo total ahorrado','rsim.cost.cmp.cost':'costo total adicional',
+    'rsim.save.int.saved.mo':'Ahorro de Interés Mensual','rsim.save.int.cost.mo':'Aumento de Interés Mensual',
+    'rsim.save.int.saved.yr':'Ahorro de Interés Anual',  'rsim.save.int.cost.yr':'Aumento de Interés Anual',
+    'rsim.int.cmp.save':'Ahorro de Interés Total','rsim.int.cmp.cost':'Aumento de Interés Total',
+    'rsim.cost.cmp.save':'Ahorro de Costo Total','rsim.cost.cmp.cost':'Aumento de Costo Total',
     'calc.ccl.nox.prin':'Capital (sin extra)','calc.ccl.nox.int':'Interés (sin extra)',
     'calc.stat.basecross':'Cruce base:',
     'chart.yr':'Año',
@@ -3294,7 +3295,7 @@ function addRsimSegment() {
   h +=   "<div class=\"rsim-stats-grid\">";
   h +=     "<div class=\"rsim-stat-col\">";
   h +=       "<div class=\"rsim-stat-item\">";
-  h +=         "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.monthly\">Monthly Pmt</div>";
+  h +=         "<div class=\"rsim-stat-label\" data-i18n=\"rsim.stat.monthly\">Monthly Payment</div>";
   h +=         "<div class=\"rsim-stat-value\" id=\"rsim-s"+idx+"-stat-pmt\">&mdash;</div>";
   h +=         "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-pmt-prin\"></div>";
   h +=         "<div class=\"rsim-stat-sub\" id=\"rsim-s"+idx+"-stat-pmt-int\"></div>";
@@ -3303,7 +3304,6 @@ function addRsimSegment() {
   h +=         "<div class=\"rsim-savings-badge\" id=\"rsim-s"+idx+"-save-badge\">IF YOU REFINANCE TODAY</div>";
   h +=         "<div class=\"rsim-savings-hero-row\">";
   h +=           "<span class=\"rsim-savings-hero\" id=\"rsim-s"+idx+"-save-hero\">&mdash;</span>";
-  h +=           "<span class=\"rsim-savings-sub\" id=\"rsim-s"+idx+"-save-sub\"></span>";
   h +=         "</div>";
   h +=         "<div class=\"rsim-savings-rows\">";
   h +=           "<div class=\"rsim-savings-row\">";
@@ -3480,7 +3480,6 @@ function refiSimUpdate() {
       var banner   = document.getElementById("rsim-s"+seg.idx+"-savings");
       var saveHero  = document.getElementById("rsim-s"+seg.idx+"-save-hero");
       var saveBadge = document.getElementById("rsim-s"+seg.idx+"-save-badge");
-      var saveSub   = document.getElementById("rsim-s"+seg.idx+"-save-sub");
       var saveMo    = document.getElementById("rsim-s"+seg.idx+"-save-mo");
       var saveYr    = document.getElementById("rsim-s"+seg.idx+"-save-yr");
       var saveMoLbl = document.getElementById("rsim-s"+seg.idx+"-save-mo-lbl");
@@ -3499,7 +3498,6 @@ function refiSimUpdate() {
         var isIntSaved = intDiff > 0;
         var absInt     = Math.abs(intDiff);
         var intColor   = isIntSaved ? "#16a34a" : "var(--red)";
-        if (saveSub) { saveSub.textContent = t(isSaving ? "rsim.save.sub.save" : "rsim.save.sub.cost"); saveSub.style.color = isSaving ? "#16a34a" : "var(--red)"; }
         if (saveMoLbl) saveMoLbl.textContent = t(isIntSaved ? "rsim.save.int.saved.mo" : "rsim.save.int.cost.mo");
         if (saveYrLbl) saveYrLbl.textContent = t(isIntSaved ? "rsim.save.int.saved.yr" : "rsim.save.int.cost.yr");
         if (saveMo) { saveMo.textContent = "+" + fmtDollar(Math.round(absInt)) + "/mo"; saveMo.style.color = intColor; }
@@ -3770,7 +3768,7 @@ function rsimLoadDefaultExample() {
     { amount: 20000, startMonth: 16, freq: "once" }
   ] });
   // WHY: Segment 3 refi at yr 3 (24 months after seg-1 refi); balance ~$667K
-  addRsimSegmentFromData({ refiYear: 3, term: 15, rate: 5.30, closing: 0, extras: [
+  addRsimSegmentFromData({ refiYear: 3, term: 15, rate: 5.25, closing: 0, extras: [
     { amount: 30000, startMonth: 1, freq: "annually" }
   ] });
 }
@@ -4435,10 +4433,15 @@ function scoutFetchParcel(lat, lon) {
   if (_scoutParcelLayer) { _scoutParcelLayer.remove(); _scoutParcelLayer = null; }
 
   fetch('/api/parcel?lat=' + lat + '&lon=' + lon)
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.json().then(function(d) { d._status = r.status; return d; }); })
     .then(function(d) {
       loading.style.display = 'none';
-      if (!d.in_king_county) {
+      if (d.error) {
+        err.textContent = 'Parcel lookup failed: ' + (d.detail || d.error);
+        err.style.display = '';
+        return;
+      }
+      if (d.in_king_county === false) {
         err.textContent = 'Parcel data is currently available for King County, WA only.';
         err.style.display = '';
         return;
