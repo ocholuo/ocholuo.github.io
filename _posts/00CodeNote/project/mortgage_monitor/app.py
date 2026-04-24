@@ -26,6 +26,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 CSV_PATH = os.path.join(DATA_DIR, "rate_history.csv")
 TNX_CSV_PATH = os.path.join(DATA_DIR, "tnx_history.csv")  # separate: DGS10 is daily vs weekly mortgage
+PARCEL_CACHE_PATH = os.path.join(DATA_DIR, "parcel_cache.json")
 
 FRED_BASE = "https://fred.stlouisfed.org/graph/fredgraph.csv"
 FRED_SERIES = {
@@ -60,6 +61,36 @@ def cached(ttl=CACHE_TTL_SECONDS):
             return val
         return wrapper
     return decorator
+
+# ---------------------------------------------------------------------------
+# Parcel cache — file-backed, same pattern as rate_history.csv
+# WHY: ArcGIS + Socrata round-trip is slow (~1-2 s); parcel attributes
+# (PIN, zoning, assessed value) are reassessed annually at most, so a
+# persistent on-disk cache is safe and avoids redundant network calls.
+# Cache key: lat/lon rounded to 4 decimal places (~11 m precision).
+# ---------------------------------------------------------------------------
+
+def _load_parcel_cache() -> dict:
+    if not os.path.exists(PARCEL_CACHE_PATH):
+        return {}
+    try:
+        with open(PARCEL_CACHE_PATH) as f:
+            return json.load(f)
+    except Exception as exc:
+        log.warning("Could not read parcel cache: %s", exc)
+        return {}
+
+
+def _save_parcel_cache(cache: dict) -> None:
+    try:
+        os.makedirs(os.path.dirname(PARCEL_CACHE_PATH), exist_ok=True)
+        with open(PARCEL_CACHE_PATH, "w") as f:
+            json.dump(cache, f)
+    except Exception as exc:
+        log.warning("Could not save parcel cache: %s", exc)
+
+
+_parcel_cache: dict = _load_parcel_cache()
 
 # ---------------------------------------------------------------------------
 # FRED data fetching helpers
@@ -674,7 +705,9 @@ def api_scout():
     city   = parts[1].strip() if len(parts) > 1 else ""
     state  = next((p.strip() for p in parts if p.strip() in _STATE_ABBR), "")
     state_abbr = _STATE_ABBR.get(state, "WA")
-    zipcode = next((p.strip() for p in parts if p.strip().isdigit() and len(p.strip()) == 5), "")
+    zipcode = next(
+        (w for p in parts for w in p.split() if w.isdigit() and len(w) == 5), ""
+    )
 
     street_slug = street.replace(" ", "-")
     city_slug   = city.replace(" ", "-")
@@ -738,40 +771,78 @@ def api_scout():
 def api_parcel():
     lat = request.args.get("lat", type=float)
     lon = request.args.get("lon", type=float)
-    if lat is None or lon is None:
-        return jsonify({"error": "lat and lon required"}), 400
+    pin_param = request.args.get("pin", "").strip()
+
+    if not pin_param and (lat is None or lon is None):
+        return jsonify({"error": "lat/lon or pin required"}), 400
+
+    # WHY: PIN key is stable across re-geocodings; lat/lon key rounded to ~11 m.
+    cache_key = pin_param if pin_param else f"{round(lat, 4)},{round(lon, 4)}"
+    if cache_key in _parcel_cache:
+        log.info("Parcel cache hit for %s", cache_key)
+        return jsonify(_parcel_cache[cache_key])
 
     arcgis_url = (
         "https://gismaps.kingcounty.gov/arcgis/rest/services"
         "/Property/KingCo_Parcels/MapServer/0/query"
     )
-    params = {
-        "geometry": f"{lon},{lat}",
-        "geometryType": "esriGeometryPoint",
-        "spatialRel": "esriSpatialRelIntersects",
-        "outFields": "PIN,ADDR_FULL,JURIS,CURRENT_ZONING,SQ_FT_LOT,APPR_LAND,APPR_IMPR,APPR_TOTAL",
-        "returnGeometry": "true",
-        "outSR": "4326",
-        "f": "json",
-    }
+
+    if pin_param:
+        # WHY: WHERE-clause query by PIN avoids spatial query entirely — more
+        # reliable and faster. PIN format: 10 digits, no spaces.
+        params = {
+            "where": f"PIN='{pin_param}'",
+            "outFields": "*",
+            "returnGeometry": "true",
+            "outSR": "4326",
+            "f": "json",
+        }
+    else:
+        # WHY: outFields=* avoids 400 errors from requesting field names that
+        # don't exist in the parcel layer (e.g. APPR_LAND is in Socrata, not here).
+        # inSR=4326 tells ArcGIS our geometry is WGS84 lat/lon, not State Plane.
+        params = {
+            "geometry": f"{lon},{lat}",
+            "geometryType": "esriGeometryPoint",
+            "spatialRel": "esriSpatialRelIntersects",
+            "outFields": "*",
+            "returnGeometry": "true",
+            "inSR": "4326",
+            "outSR": "4326",
+            "f": "json",
+        }
+
     try:
-        resp = requests.get(arcgis_url, params=params, timeout=12, headers=_SCOUT_HEADERS)
+        # WHY: bypass any inherited https_proxy env var (e.g. Claude Code sandbox proxy)
+        # that would intercept and drop the connection to gismaps.kingcounty.gov.
+        resp = requests.get(
+            arcgis_url, params=params, timeout=30, headers=_SCOUT_HEADERS,
+            proxies={"http": None, "https": None},
+        )
         resp.raise_for_status()
         data = resp.json()
     except Exception as exc:
-        log.warning("ArcGIS parcel query failed: %s", exc)
-        return jsonify({"error": "parcel lookup failed"}), 502
+        log.warning("ArcGIS parcel query failed (key=%s): %s", cache_key, exc)
+        return jsonify({"error": "parcel lookup failed", "detail": str(exc)}), 502
+
+    if data.get("error"):
+        log.warning("ArcGIS returned error (key=%s): %s", cache_key, data["error"])
+        return jsonify({"error": "ArcGIS error", "detail": str(data["error"])}), 502
 
     features = data.get("features", [])
     if not features:
-        return jsonify({"in_king_county": False})
+        log.info("ArcGIS returned no features for key=%s (outside King County or invalid PIN)", cache_key)
+        not_found = {"in_king_county": False}
+        _parcel_cache[cache_key] = not_found
+        _save_parcel_cache(_parcel_cache)
+        return jsonify(not_found)
 
     feat = features[0]
     attrs = feat.get("attributes", {})
     geo = feat.get("geometry", {})
     pin = str(attrs.get("PIN", "") or "").strip()
+    log.info("ArcGIS returned fields: %s", list(attrs.keys()))
 
-    # Convert ArcGIS rings to GeoJSON Polygon geometry
     geojson_geom = None
     if geo and geo.get("rings"):
         geojson_geom = {"type": "Polygon", "coordinates": geo["rings"]}
@@ -783,9 +854,6 @@ def api_parcel():
         "jurisdiction": attrs.get("JURIS") or "",
         "zoning": attrs.get("CURRENT_ZONING") or "",
         "lot_sqft": attrs.get("SQ_FT_LOT"),
-        "appr_land": attrs.get("APPR_LAND"),
-        "appr_improvement": attrs.get("APPR_IMPR"),
-        "appr_total": attrs.get("APPR_TOTAL"),
         "erp_url": (
             f"https://blue.kingcounty.com/Assessor/eRealProperty/Dashboard.aspx?ParcelNbr={pin}"
             if pin else None
@@ -793,7 +861,7 @@ def api_parcel():
         "geometry": geojson_geom,
     }
 
-    # Socrata building/residential detail — major = first 6 digits of PIN, minor = last 4
+    # Socrata: building detail (yr built, beds/baths/sqft) + assessed values
     if pin and len(pin) >= 6:
         major = pin[:6]
         minor = pin[6:].zfill(4) if len(pin) > 6 else "0000"
@@ -803,6 +871,7 @@ def api_parcel():
                 params={"major": major, "minor": minor},
                 timeout=10,
                 headers=_SCOUT_HEADERS,
+                proxies={"http": None, "https": None},
             )
             if sresp.ok:
                 rows = sresp.json()
@@ -813,9 +882,15 @@ def api_parcel():
                     result["bathrooms"]   = row.get("nbrbaths")
                     result["living_sqft"] = row.get("sqfttotliving")
                     result["stories"]     = row.get("stories")
+                    result["appr_land"]   = row.get("apprlndval")
+                    result["appr_improvement"] = row.get("apprimpval")
+                    result["appr_total"]  = row.get("apprtotval")
         except Exception as exc:
-            log.info(f"Socrata building data failed: {exc}")
+            log.info("Socrata building data failed: %s", exc)
 
+    _parcel_cache[cache_key] = result
+    _save_parcel_cache(_parcel_cache)
+    log.info("Parcel cached for %s (PIN=%s)", cache_key, result.get("pin", "n/a"))
     return jsonify(result)
 
 
