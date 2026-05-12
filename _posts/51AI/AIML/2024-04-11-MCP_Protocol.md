@@ -28,6 +28,7 @@ toc: true
     - [Real-world Use Cases 实际应用场景](#real-world-use-cases-实际应用场景)
   - [How MCP Works 工作流程](#how-mcp-works-工作流程)
   - [MCP vs RAG 对比](#mcp-vs-rag-对比)
+  - [Claude Skill vs MCP Server 对比](#claude-skill-vs-mcp-server-对比)
   - [Benefits](#benefits)
     - [Reduced Hallucinations](#reduced-hallucinations)
     - [Increased Automation 提升自动化能力](#increased-automation-提升自动化能力)
@@ -465,6 +466,114 @@ MCP 和 RAG 都能用外部信息增强 LLM，但目的根本不同：<font colo
 | **Use cases / 典型场景** | Booking flights, updating CRM, running code, real-time data / 订机票、更新CRM、运行代码、实时数据 | Q&A, document summarization, reducing hallucinations / 问答、文档摘要、减少幻觉 |
 
 > **Mental model / 心智模型**: RAG = LLM with a library card. MCP = LLM with hands that can reach out and do things. / RAG = 带借书证的 LLM；MCP = 长了手、能主动做事的 LLM。
+
+---
+
+## Claude Skill vs MCP Server 对比
+
+The core distinction is <font color=OrangeRed>Access vs. Knowledge</font>: an MCP Server provides physical access to external tools and data, while a Claude Skill teaches Claude the best way to perform a specific workflow.
+
+核心区别在于<font color=OrangeRed>访问权限 vs 知识</font>：MCP Server 提供对外部工具和数据的物理访问，而 Claude Skill 教会 Claude 如何以最佳方式执行特定工作流。
+
+> Think of it this way: a **Claude Skill** is the instruction manual (teaching Claude *how* to perform a workflow), while an **MCP Server** is the toolbox (giving Claude physical *access* to external tools and data).
+>
+> 类比：**Claude Skill** 是操作手册（教 Claude *怎么做*某件事），**MCP Server** 是工具箱（给 Claude 提供访问外部工具和数据的物理通道）。
+
+![Claude Skill vs MCP Server: Skill box (knowledge & recipes) on the left, MCP box (action & access) on the right — Claude Skill says "I learned the recipe!", MCP Server says "I have the actual connection!" and "I have the tools and access!"](./assets/img/post/mcp-skill-vs-mcp-illustration.jpg)
+
+### Key Differences 核心差异
+
+| Feature | Claude Skill | MCP Server |
+|---|---|---|
+| **Primary Goal** | Standardize behavior: teaches Claude a specific "how-to" for a workflow | Provide access: connects Claude to external software (Slack, GitHub, local files) |
+| **Activation** | Loads dynamically based on user intent in the prompt | Always available as a live connection once the server is running |
+| **Hosting** | Lives as a folder with instructions/scripts inside Claude's environment | Requires a separate server process (local or remote) to be running |
+| **Complexity** | Easy to build with Markdown and simple scripts | Higher technical barrier; requires setting up a server and protocol |
+| **Analogy** | A Runbook: "Here is how we format our team's reports" | A Port: "Here is the plug to connect to the company database" |
+
+### Claude Skill: The Instructional Layer 知识/指令层
+
+A Skill is a packaged set of instructions (usually a `SKILL.md` file) and helper scripts that tell Claude *how* to handle a repeatable task.
+
+Skill 是一套打包的指令（通常是 `SKILL.md` 文件）和辅助脚本，告诉 Claude *如何*处理可重复的任务。
+
+- **How it works**: When you ask Claude to do something, it scans available skills; if one matches, it loads that skill into context and follows it.
+- **Best for**: Ensuring consistency — e.g., every finance report uses a specific color scheme and formula structure.
+- **Characteristic**: Skills are <font color=OrangeRed>static knowledge</font>. They live inside Claude's "brain" and define a thinking pattern for a well-defined job.
+
+---
+
+- **工作原理**：向 Claude 发出请求时，它会扫描可用的 Skill；若匹配，则加载到上下文并执行。
+- **适合场景**：保证一致性。例如，让 Claude 生成的每份财务报告都使用特定颜色方案和公式结构。
+- **特点**：Skill 是<font color=OrangeRed>静态知识</font>，存储在 Claude 的"大脑"中，为特定任务提供思维定势。
+
+### MCP Server: The Integration Layer 集成/访问层
+
+MCP is an open standard that lets Claude communicate with anything that has an API. It acts as a bridge between the AI and your actual applications.
+
+MCP 是一个开放标准，让 Claude 与任何有 API 的工具通信，充当 AI 与实际应用之间的桥梁。
+
+- **How it works**: You run an MCP server (e.g., for Google Drive or your terminal). Claude uses the protocol to call functions on that server — reading a file, sending a message, querying a database.
+- **Best for**: Real-time data and external actions — checking actual Jira tickets, querying a live database, sending a Slack message.
+- **Characteristic**: MCP is <font color=OrangeRed>dynamic and real-time</font> — a physical entity running outside Claude that gives it the ability to act in the world.
+
+---
+
+- **工作原理**：启动一个 MCP Server（如 Google Drive 或本地终端的 MCP）。Claude 通过协议调用服务器上的函数——读取文件、发送消息、查询数据库。
+- **适合场景**：实时数据和外部操作。查看实际的 Jira 单子、实时数据库或发送 Slack 消息，必须使用 MCP Server。
+- **特点**：MCP 是<font color=OrangeRed>动态且实时的</font>——一个运行在 Claude 之外的物理实体，赋予 Claude 在真实世界中行动的能力。
+
+### Why Not Just Hardcode Tokens in a Skill? 为什么不直接把 Token 写进 Skill？
+
+Hardcoding credentials inside a Skill looks like a shortcut but creates three fundamental problems:
+
+在 Skill 里直接写入凭证看似捷径，但存在三个根本问题：
+
+#### Security 安全性
+
+Skill files are readable text. A hardcoded token is plaintext in your config. If you share the Skill with a colleague, they gain your identity. MCP Server keeps credentials entirely outside Claude's reach — authentication is handled internally and Claude only sees a function interface.
+
+Skill 文件是可读文本，Token 以明文存储。分享 Skill 给同事意味着分享你的身份凭证。MCP Server 让凭证完全不暴露给 Claude——认证在服务端内部处理，Claude 只能调用功能接口。
+
+#### Capabilities 执行能力
+
+Claude's runtime is a sandboxed cloud process. It cannot directly reach your local filesystem, access internal corporate APIs behind a firewall, or maintain persistent background processes. An MCP server runs as a native process on your machine with full local permissions — it is Claude's mechanical arm into the physical world.
+
+Claude 的运行时是受限的云端沙盒，无法直接访问本地文件系统、内网 API 或维持持久化后台进程。MCP Server 作为本机进程运行，拥有完整的本地权限——它是 Claude 伸向物理世界的机械臂。
+
+#### Standardization 标准化
+
+A Skill that calls Slack works only for that Skill. A Slack MCP Server works for any MCP-compatible AI client — Claude, future models, or any tool that supports the standard. <font color=OrangeRed>MCP is the USB-C of AI integrations.</font>
+
+为 Slack 写的 Skill 只服务于该 Skill；而 Slack 的 MCP Server 可供所有支持 MCP 协议的 AI 客户端使用——Claude、未来的模型或任何兼容工具。<font color=OrangeRed>MCP 是 AI 集成领域的 USB-C 接口。</font>
+
+### Choosing the Right Tool 如何选择
+
+![When to use Skill vs MCP Server: scenario decision table in Chinese — local data access, workflow definition, real-time info, style control, and operating external apps](./assets/img/post/mcp-skill-vs-mcp-scenario-table-zh.png)
+
+| Scenario / 场景 | Use Skill / 用 Skill | Use MCP Server / 用 MCP |
+|---|---|---|
+| Processing local data / 处理本地数据 | No — cannot access your disk | Yes — reads local files, databases, scripts |
+| Defining a workflow / 定义工作流程 | Yes — defines "step 1, then step 2" logic | No — only executes individual actions |
+| Real-time information / 实时信息获取 | No — knowledge is from training data | Yes — fetch live weather, GitHub commits, Slack messages |
+| Style & format control / 风格与格式控制 | Yes — defines tone, code style, document templates | No — only moves data, doesn't shape it |
+| Operating external apps / 操作外部应用 | No — hard to break out of security sandbox | Yes — "plugin" to send email, update Jira, post to Slack |
+
+### Using Both Together 组合使用
+
+The most powerful setups combine both: the MCP Server gives Claude the **hands** to reach into external systems, while the Claude Skill gives Claude the **wisdom** to know exactly what to do with what it finds.
+
+最强大的配置是两者结合：MCP Server 给 Claude 提供"手"伸入外部系统，Claude Skill 给 Claude 提供"智慧"知道该如何处理找到的内容。
+
+**Example: monitor a local contracts folder and Slack legal when overdue / 示例：监控本地合同文件夹，逾期时通过 Slack 通知法务**
+
+| Role / 角色 | Concept / 概念 | Task / 职责 |
+|---|---|---|
+| Instruction manual / 命令手册 | Skill | Defines: "Contract is overdue if date > today; use formal tone" / 定义逾期规则与通知语气 |
+| Local archivist / 本地档案员 | Filesystem MCP | Walks to disk and reads contract files to Claude / 实际访问硬盘，逐行将合同内容读给 Claude |
+| Company courier / 邮差 | Slack MCP | Takes Claude's drafted message and delivers via Slack API / 拿着 Claude 草拟的消息，通过 Slack API 实际发送 |
+
+> **Brain vs. Limbs / 大脑 vs 四肢**: Skill = the recipe (知识/菜谱). MCP = the hands and ingredients (手和食材). Even with a perfect recipe, you cannot cook without hands to hold the pan and a refrigerator door (MCP) to get the ingredients.
 
 ---
 
