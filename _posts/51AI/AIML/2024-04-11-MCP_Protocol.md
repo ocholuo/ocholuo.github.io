@@ -436,6 +436,8 @@ Acore distinction: <font color=OrangeRed>Access vs. Knowledge</font>
 
 ![Claude Skill vs MCP Server: Skill box (knowledge & recipes) on the left, MCP box (action & access) on the right — Claude Skill says "I learned the recipe!", MCP Server says "I have the actual connection!" and "I have the tools and access!"](./assets/img/post/mcp-skill-vs-mcp-illustration.jpg)
 
+![The barrier between Cloud-Isolated Skills and MCP: on the left, Claude is trapped in a Cloud Sandbox Bubble holding a skill handbook but cannot access the local D: drive; on the right, Claude connects via MCP Protocol through a pipe to an MCP Server that opens the local Contracts Folder and bridges to the Slack Interface](./assets/img/post/mcp-skill-vs-mcp-barrier-bridge.jpg)
+
 ### Key Differences 核心差异
 
 | Feature | Claude Skill | MCP Server |
