@@ -10,50 +10,6 @@ toc: true
 
 # MCP Protocol Overview / MCP 协议概述
 
-- [MCP Protocol Overview / MCP 协议概述](#mcp-protocol-overview--mcp-协议概述)
-  - [Overview 概述](#overview-概述)
-    - [What is MCP 什么是 MCP](#what-is-mcp-什么是-mcp)
-      - [Pre-MCP Integration Landscape / 出现之前：集成方式一览](#pre-mcp-integration-landscape--出现之前集成方式一览)
-    - [Architecture \& Components 架构与组件](#architecture--components-架构与组件)
-      - [MCP Host 宿主](#mcp-host-宿主)
-      - [MCP Client 客户端](#mcp-client-客户端)
-      - [MCP Server 服务器](#mcp-server-服务器)
-    - [MCP Primitives 原语](#mcp-primitives-原语)
-      - [Server Primitives: Resources 服务器原语：资源](#server-primitives-resources-服务器原语资源)
-      - [Server Primitives: Prompts 服务器原语：提示词](#server-primitives-prompts-服务器原语提示词)
-      - [Client Primitives: Sampling, Elicitation, Roots 客户端原语](#client-primitives-sampling-elicitation-roots-客户端原语)
-    - [Protocol Lifecycle 协议生命周期](#protocol-lifecycle-协议生命周期)
-    - [Protocol Versions 协议版本](#protocol-versions-协议版本)
-    - [Transport Layer 传输层](#transport-layer-传输层)
-    - [Real-world Use Cases 实际应用场景](#real-world-use-cases-实际应用场景)
-  - [How MCP Works 工作流程](#how-mcp-works-工作流程)
-  - [MCP vs RAG 对比](#mcp-vs-rag-对比)
-  - [Claude Skill vs MCP Server 对比](#claude-skill-vs-mcp-server-对比)
-  - [Benefits](#benefits)
-    - [Reduced Hallucinations](#reduced-hallucinations)
-    - [Increased Automation 提升自动化能力](#increased-automation-提升自动化能力)
-    - [Easier Integrations — Solving the N×M Problem 更简单的集成，解决 N×M 问题](#easier-integrations--solving-the-nm-problem-更简单的集成解决-nm-问题)
-  - [Security Principles 安全原则](#security-principles-安全原则)
-    - [Authentication Challenge: Personal Access Tokens 认证挑战：个人访问令牌](#authentication-challenge-personal-access-tokens-认证挑战个人访问令牌)
-  - [Deployment Options 部署选择](#deployment-options-部署选择)
-    - [Local vs Remote Servers 本地 vs 远程服务器](#local-vs-remote-servers-本地-vs-远程服务器)
-    - [Managed vs Self-hosted 托管 vs 自托管](#managed-vs-self-hosted-托管-vs-自托管)
-      - [Amazon Bedrock AgentCore Suite / Amazon Bedrock AgentCore 套件](#amazon-bedrock-agentcore-suite--amazon-bedrock-agentcore-套件)
-      - [mcp-proxy: Migrating stdio Servers to the Cloud / mcp-proxy：将 stdio 服务器迁移至云端](#mcp-proxy-migrating-stdio-servers-to-the-cloud--mcp-proxy将-stdio-服务器迁移至云端)
-  - [Open Source Role 开源生态](#open-source-role-开源生态)
-    - [MCP Ecosystem Roles / MCP 生态体系角色](#mcp-ecosystem-roles--mcp-生态体系角色)
-  - [Current State \& Limitations 现状与不足](#current-state--limitations-现状与不足)
-    - [Ecosystem 生态现状](#ecosystem-生态现状)
-    - [Security vs Usability Tension 安全性与易用性的张力](#security-vs-usability-tension-安全性与易用性的张力)
-    - [Open Standard vs AI Competition 开放标准 vs AI 竞争](#open-standard-vs-ai-competition-开放标准-vs-ai-竞争)
-  - [Future Vision](#future-vision)
-    - [From Structured APIs to AI-Friendly Layers 从结构化 API 到 AI 友好层](#from-structured-apis-to-ai-friendly-layers-从结构化-api-到-ai-友好层)
-    - [AI Native API Vision AI 原生 API 愿景](#ai-native-api-vision-ai-原生-api-愿景)
-    - [AI Native API vs MoE AI 原生 API 与 MoE 的区别](#ai-native-api-vs-moe-ai-原生-api-与-moe-的区别)
-    - [Where MCP Fits MCP 的定位](#where-mcp-fits-mcp-的定位)
-  - [Building MCP Servers 构建 MCP 服务器](#building-mcp-servers-构建-mcp-服务器)
-  - [Key Takeaways 要点总结](#key-takeaways-要点总结)
-
 ref:
 
 - <https://cloud.google.com/discover/what-is-model-context-protocol?hl=en>
@@ -598,6 +554,28 @@ Before MCP, connecting LLMs to external systems required custom code per model p
 在 MCP 出现之前，将 LLM 连接到外部系统需要为每个模型、每个工具编写定制代码——即 <font color=OrangeRed>N×M 问题</font>：N 个模型 × M 个工具 = N×M 套定制集成。MCP 就像 <font color=OrangeRed>USB-C 接口</font>——一种标准，适配所有设备。开发者无需重写集成代码即可切换 LLM 提供商或添加新工具。
 
 ![N×M standardization: AI Agent uses a single MCP protocol to connect to servers that wrap SQL, GraphQL, REST, SOAP, and gRPC backends — AI vendors support one protocol, tool vendors implement their own MCP servers independently](./assets/img/post/mcp-nmx-standardization.jpg)
+
+### Standardization & Universality 标准化与通用性
+
+MCP 是一种<font color=OrangeRed>开放标准</font>，提供了统一的协议规范，如同 AI 应用程序的 "USB-C 接口"——使 AI 模型连接不同数据源和工具时遵循相同标准，而无需为每种数据源和模型单独处理。
+
+- **统一规范 / Unified standard**: Any LLM connects to any tool via the same protocol. Alternative approaches (custom code, plugin systems, API adapters) each require separate implementations per data source and model pair. / 任何 LLM 通过同一协议连接任何工具；其他方式（定制代码、插件系统、API 接口）通常需针对每个数据源和模型组合单独处理。
+- **跨系统兼容 / Cross-system compatibility**: Seamlessly connects local resources (databases, files) and remote APIs (Slack, GitHub) through the same unified protocol layer. / 无论本地资源（数据库、文件）还是远程 API（Slack、GitHub），均通过同一协议层无缝接入。
+
+### Development Efficiency 开发效率与便捷性
+
+- **简化开发流程 / Streamlined development**: Developers no longer write bespoke interface code for each data type or service. MCP's SDK enables rapid integration — e.g., a smart-home system can manage all device data through a single MCP server instead of N separate adapters. / 开发者无需为每种数据类型或服务编写专门接口代码。利用 MCP SDK 可快速实现连接——例如智能家居系统可通过单一 MCP 服务器统一管理所有设备数据。
+- **预构建服务器 / Pre-built servers**: Anthropic ships official MCP servers for popular platforms — Google Drive, Slack, GitHub, Postgres — ready to use without building from scratch. / Anthropic 为 Google Drive、Slack、GitHub、Postgres 等主流系统提供官方预构建 MCP 服务器，开箱即用。
+
+### Context Management & Interaction 上下文管理与交互能力
+
+- **分布式上下文管理 / Distributed context**: MCP abstracts "context state" so it can be passed via the protocol rather than packed into the prompt itself — context is no longer limited to what fits in the prompt window, making interactions more lightweight. / MCP 对"上下文状态"进行抽象化处理，使其可通过协议标准化传递，不再局限于 prompt 本身，使交互更轻量化。
+- **双向通信 / Bidirectional communication**: Data flows both ways — data sources push information to the LLM, and the LLM can write output back to the data source, forming an efficient interaction loop. / 数据双向流动——数据源向 AI 模型传输信息，AI 模型也能将输出反馈给数据源，形成高效的交互闭环。
+
+### Security & Scalability 安全性与可扩展性
+
+- **安全机制完善 / Built-in security controls**: MCP provides strong access control, fine-grained permissions, audit trails, and built-in monitoring tools that reduce data breach risk and protect sensitive data. / MCP 提供强访问控制、细粒度权限设置、审计跟踪和内置安全监测工具，降低数据泄露风险，保障敏感数据安全。
+- **灵活扩展 / Flexible extensibility**: Developers can add new plugins or modules at any time, easily incorporate new data sources or capabilities, and rapidly adapt to changing business requirements. / 开发者可随时为应用构建新的插件或模块，方便添加新数据源或功能，快速适应不同业务需求。
 
 ---
 
