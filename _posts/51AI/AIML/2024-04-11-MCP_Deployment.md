@@ -10,43 +10,8 @@ toc: true
 
 # MCP Deployment
 
-- [MCP Deployment](#mcp-deployment)
-  - [Overview 概述](#overview-概述)
-  - [Prerequisites 准备工作](#prerequisites-准备工作)
-  - [Core Concepts 核心概念](#core-concepts-核心概念)
-  - [Project Setup 项目搭建](#project-setup-项目搭建)
-  - [FastMCP Quick Start 快速开始](#fastmcp-quick-start-快速开始)
-    - [Define a Tool — @mcp.tool()](#define-a-tool--mcptool)
-    - [Define a Resource — @mcp.resource()](#define-a-resource--mcpresource)
-    - [Define a Prompt — @mcp.prompt()](#define-a-prompt--mcpprompt)
-    - [Run the Server](#run-the-server)
-  - [Traditional SDK: Resources and Tools](#traditional-sdk-resources-and-tools)
-    - [Defining Resources](#defining-resources)
-    - [Defining Tools](#defining-tools)
-    - [Error Handling and Validation](#error-handling-and-validation)
-  - [Debugging with MCP Inspector 调试工具](#debugging-with-mcp-inspector-调试工具)
-  - [Client Development 客户端开发](#client-development-客户端开发)
-    - [stdio Client](#stdio-client)
-    - [SSE Client](#sse-client)
-    - [Client with DeepSeek LLM](#client-with-deepseek-llm)
-  - [Claude Desktop Configuration](#claude-desktop-configuration)
-  - [Cline and Cursor Configuration](#cline-and-cursor-configuration)
-  - [Sampling Callback 采样回调](#sampling-callback-采样回调)
-  - [Advanced Features 高级特性](#advanced-features-高级特性)
-    - [Lifecycle Management 生命周期管理](#lifecycle-management-生命周期管理)
-    - [Prompt Primitives](#prompt-primitives)
-    - [Resource Primitives](#resource-primitives)
-  - [LangChain Integration LangChain 集成](#langchain-integration-langchain-集成)
-  - [Remote Deployment 远程部署](#remote-deployment-远程部署)
-    - [SSE Transport SSE 传输模式](#sse-transport-sse-传输模式)
-    - [Docker Deployment](#docker-deployment)
-    - [AWS Deployment (Lambda + ECS)](#aws-deployment-lambda--ecs)
-    - [Aliyun Serverless 阿里云函数计算部署](#aliyun-serverless-阿里云函数计算部署)
-  - [Security Best Practices 安全最佳实践](#security-best-practices-安全最佳实践)
-  - [Key Takeaways](#key-takeaways)
-  - [References](#references)
-
 ref:
+
 - [How to Build an MCP Server: A Step-by-Step Guide with Code Examples](https://blog.openreplay.com/how-to-build-an-mcp-server/)
 - [5分钟上手MCP](https://mp.weixin.qq.com/s/ZFZ-MCP-tutorial)
 - [MCP 编程极速上手](https://mp.weixin.qq.com/s/MCP-quick-start)
@@ -626,6 +591,7 @@ asyncio.run(main())
 ```
 
 The `sampling_callback` is invoked whenever the server calls `create_message`. Use it to:
+
 - Log every LLM interaction for auditing
 - Route to different models per request
 - Add safety filters before responses reach the server
@@ -806,6 +772,7 @@ if __name__ == "__main__":
 ```
 
 The server exposes two endpoints:
+
 - `GET /sse` — SSE stream for server-to-client events
 - `POST /messages` — client-to-server messages
 
