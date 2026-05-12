@@ -828,6 +828,8 @@ The MCP server is the most critical component in the MCP system — it defines w
 
 MCP 服务器是 MCP 系统中最关键的环节——它定义 LLM 可以使用哪些工具、访问哪些数据。工具通过 `server.tool()` 定义并在服务器启动时注册，LLM 在运行时根据工具描述和用户查询来选择调用哪个工具。
 
+![FastMCP Wrapper architecture: three-layer SDK over the official MCP SDK — top layer is @mcp.prompt() for context construction and AI guidance, middle layer is @mcp.resource() serving read-only knowledge sources (API docs, database dumps, local files), bottom layer is @mcp.tool() executing actions and interacting with external systems via API integrations, database queries, and file operations — all connected to an LLM on the right](./assets/img/post/mcp-fastmcp-wrapper-three-layers.jpg)
+
 ```javascript
 // Node.js example: define a tool that queries a knowledge base
 server.tool(
