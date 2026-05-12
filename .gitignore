@@ -26,8 +26,10 @@ package-lock.json
 */__pycache__
 *.pyc
 
-# iCloud conflict copies (e.g. "foo 2.png" duplicate of "foo.png")
+# conflict copies (e.g. "foo 2.png" duplicate of "foo.png")
 * 2.*
+/.claude
+
 
 # Misc
 _posts/00Abook/Data Structures and Algorithms in Java, 6th Edition.pdf
@@ -63,4 +65,3 @@ _posts/00AIssueBook/Application/SU/SketchUp-ah
 _posts/00AIssueBook/Application/SU/SketchUp-ai
 _posts/00AIssueBook/Application/SU/SketchUp-aj
 _posts/00AIssueBook/M1.md
-/.claude
