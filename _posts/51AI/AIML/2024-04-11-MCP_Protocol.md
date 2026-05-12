@@ -588,7 +588,7 @@ MCP 是一种<font color=OrangeRed>开放标准</font>，提供了统一的协�
 
 ## Security Principles 安全原则
 
-> Full attack taxonomy → see [`AIAttack/2021-08-11-MCPSecurity.md`](../AIAttack/2021-08-11-MCPSecurity.md). This section covers defensive principles only. / 完整攻击分类见安全分析笔记，本节仅覆盖防御原则。
+> Full attack taxonomy → see [MCPSecurity](/posts/MCPSecurity/). This section covers defensive principles only. / 完整攻击分类见安全分析笔记，本节仅覆盖防御原则。
 
 Because MCP can access any data and potentially execute code through connected tools, security cannot be an afterthought.
 
@@ -885,7 +885,7 @@ For tools that produce machine-readable structured output, declare an `outputSch
 - Current limitation: local-only servers can still access filesystem unsandboxed; auth/access control immature / 当前限制：本地服务器可无沙盒访问文件系统，认证与访问控制尚不成熟
 - Ecosystem risk: Anthropic as both protocol owner and model vendor creates governance tension / 生态风险：Anthropic 同时担任协议定义者和模型厂商，存在治理张力
 - Future direction: <font color=OrangeRed>AI Native API</font> — models talking to models directly, no structured API calls required / 未来方向：AI 原生 API——模型间直接对话，无需结构化 API 调用
-- Security implications are significant → see [`AIAttack/2021-08-11-MCPSecurity.md`](../AIAttack/2021-08-11-MCPSecurity.md) / 安全影响不容忽视 → 参见安全分析笔记
+- Security implications are significant → see [MCPSecurity](/posts/MCPSecurity/) / 安全影响不容忽视 → 参见安全分析笔记
 - <font color=OrangeRed>Authentication in MCP</font>: PAT + RBAC pattern lets existing backend services keep their auth unchanged while MCP servers act securely on behalf of users / 认证：PAT + RBAC 方案让现有后端服务无需改动，MCP 服务器安全地代表用户行事
 - Remote server design: **stateless** servers (Lambda + API Gateway) for short request-response; **stateful** servers (ECS Fargate + ALB Sticky Sessions) for multi-turn session workflows / 远程服务器设计：无状态服务器用于短请求-响应，有状态服务器用于多轮会话工作流
 - Building MCP servers: tool descriptions are the LLM's selection signal — clear, accurate descriptions are the highest-leverage investment in a reliable MCP server / 构建 MCP 服务器：工具描述是 LLM 的选择信号，清晰准确的描述是构建可靠 MCP 服务器的最高杠杆投入

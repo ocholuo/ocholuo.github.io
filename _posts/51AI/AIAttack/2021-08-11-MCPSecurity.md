@@ -335,7 +335,7 @@ Injection attacks, whether through prompt injection, malicious metadata, or cont
 
 ---
 
-### Session Hijacking 会话劫持
+### Session Hijacking
 
 MCP's stateful session model (introduced with Streamable HTTP) creates two hijacking variants specific to the protocol:
 
@@ -411,7 +411,7 @@ If `Mcp-Session-Id` values are predictable or validated only for existence (not 
 
 ---
 
-### Token Passthrough Anti-pattern 令牌透传反模式
+### Token Passthrough Anti-pattern
 
 The MCP specification explicitly **prohibits** token passthrough: an MCP server accepting and forwarding tokens that were not issued specifically for that server as their intended audience.
 
@@ -528,7 +528,7 @@ build MCP components on pipelines that implement security best practices like St
 
 ---
 
-#### SSRF via OAuth Metadata Discovery OAuth 元数据发现中的 SSRF
+#### SSRF via OAuth Metadata Discovery
 
 When an MCP client performs OAuth 2.0 Server Metadata Discovery (RFC 8414), it fetches a JSON document from the server's `/.well-known/` endpoint. A malicious MCP server can set its `resource_metadata` URL to point to an internal address — e.g., `169.254.169.254` (AWS/GCP instance metadata), `10.x.x.x`, or `192.168.x.x` — causing the MCP client to issue a credentialed HTTP request to that internal host.
 
@@ -550,7 +550,7 @@ When an MCP client performs OAuth 2.0 Server Metadata Discovery (RFC 8414), it f
 
 ---
 
-#### Local MCP Server Compromise 本地 MCP 服务器入侵
+#### Local MCP Server Compromise
 
 Local MCP servers start from configuration files (e.g., `claude_desktop_config.json`, `.cursor/mcp.json`). An attacker who can write to these config files can specify an arbitrary startup command that executes with the same OS permissions as the current user.
 
