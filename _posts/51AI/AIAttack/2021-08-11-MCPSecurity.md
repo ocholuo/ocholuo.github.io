@@ -23,13 +23,17 @@ tags: [AI, LLM, AIAttack]
     - [Advanced Schema / Configuration Poisoning](#advanced-schema--configuration-poisoning)
     - [Resource and Data Poisoning](#resource-and-data-poisoning)
   - [Confused Deputy (OAuth / Authorization Proxy)](#confused-deputy-oauth--authorization-proxy)
+  - [Session Hijacking](#session-hijacking)
   - [Excessive Permissions / Privilege Abuse](#excessive-permissions--privilege-abuse)
   - [Credential Credential \& Token Exposure](#credential-credential--token-exposure)
+  - [Token Passthrough Anti-pattern](#token-passthrough-anti-pattern)
   - [File Exposure and Context Leakage](#file-exposure-and-context-leakage)
   - [Tool Shadowing \& Typosquatting](#tool-shadowing--typosquatting)
   - [Supply Chain Attacks](#supply-chain-attacks)
     - [Supply Chain Attacks \& Rug Pulls](#supply-chain-attacks--rug-pulls)
     - [AppSec Risks \& Code level vulnerabilities](#appsec-risks--code-level-vulnerabilities)
+    - [SSRF via OAuth Metadata Discovery](#ssrf-via-oauth-metadata-discovery)
+    - [Local MCP Server Compromise](#local-mcp-server-compromise)
   - [MCP-Specific Risks for Agentic AI](#mcp-specific-risks-for-agentic-ai)
 - [MCP Security Breaches Impacts](#mcp-security-breaches-impacts)
 - [MCP Security Fundamentals](#mcp-security-fundamentals)
@@ -322,6 +326,35 @@ Injection attacks, whether through prompt injection, malicious metadata, or cont
 
 - Ensure that every action is tied to explicit user context and validated permissions, and confirm that tokens or delegated scopes correspond to the correct requestor to prevent cross-user or cross-scope operations.
 
+**Spec-level mitigations / 协议规范要求的缓解措施 (OAuth 2.1 + MCP)**:
+
+- **Consent before redirect / 重定向前获得同意**: The MCP server MUST display a per-client consent prompt to the user BEFORE initiating any third-party OAuth authorization redirect. Never start the OAuth flow speculatively and ask for consent afterward.
+- **State parameter timing / state 参数时序**: The OAuth `state` parameter must be generated and stored ONLY AFTER the user has explicitly granted consent. Storing state before consent enables a CSRF window where an attacker can inject a forged callback before the user completes the flow.
+- **`__Host-` cookie prefix / Cookie 前缀**: Use the `__Host-` prefix for any session cookies tied to the OAuth callback (e.g., `__Host-mcp-state`). This ensures the cookie is only sent to the exact host that set it, prevents subdomain hijacking, and requires the `Secure` attribute — blocking HTTP delivery.
+- **PKCE required**: Always use PKCE (Proof Key for Code Exchange) in the OAuth flow; authorization code interception attacks are otherwise trivial in local and browser-based clients.
+
+---
+
+### Session Hijacking
+
+MCP's stateful session model (introduced with Streamable HTTP) creates two hijacking variants specific to the protocol:
+
+**Variant A — Shared Queue Injection 共享队列注入**
+
+In multi-server environments where a shared message queue or context store routes messages among multiple MCP servers, an attacker-controlled server registered in the same host can read messages intended for other servers if routing keys are not properly scoped.
+
+- **Root cause**: Session keys scoped to only `<session_id>` rather than `<user_id>:<session_id>`, allowing cross-user or cross-server message leakage in shared infrastructure.
+- **Impact**: Tool call interception, context exfiltration, injection of forged responses into another session's message stream.
+- **Mitigation**: Always key session stores as `<user_id>:<session_id>`. Dispatch messages only to the server registered under that exact scoped key.
+
+**Variant B — Session Impersonation 会话冒充**
+
+If `Mcp-Session-Id` values are predictable or validated only for existence (not ownership), an attacker holding a valid session ID can impersonate another user's session.
+
+- **Root cause**: Session IDs not cryptographically bound to the authenticated user identity at creation time.
+- **Impact**: Horizontal privilege escalation — attacker accesses another user's tools, context, and data without their credentials.
+- **Mitigation**: Bind each `Mcp-Session-Id` to the authenticated user's identity at session creation. On every subsequent request, validate both that the ID exists AND that it belongs to the currently authenticated user.
+
 ---
 
 ### Excessive Permissions / Privilege Abuse
@@ -375,6 +408,29 @@ Injection attacks, whether through prompt injection, malicious metadata, or cont
 **Mitigation**:
 
 - Treat all secrets as sensitive assets, store them in dedicated vaults, prevent them from being loaded into model context, and ensure that logs and tool outputs do not contain credential data.
+
+---
+
+### Token Passthrough Anti-pattern
+
+The MCP specification explicitly **prohibits** token passthrough: an MCP server accepting and forwarding tokens that were not issued specifically for that server as their intended audience.
+
+**Why it is dangerous**: If a user has a token for Service A, and MCP Server B accepts and reuses that token to call Service A on the user's behalf, Service A cannot distinguish between a legitimate direct call and a proxied call via Server B. An attacker who compromises MCP Server B can capture and replay those tokens against Service A indefinitely — without any credential of their own.
+
+**Spec rule**: MCP servers MUST NOT accept tokens whose `aud` (audience) claim does not match the server's own registered identifier. Every MCP server must have its own distinct OAuth client registration and receive tokens issued specifically to it.
+
+**Attack scenario**:
+
+1. User authenticates to Service A and receives `token_A` (aud = `service-a`).
+2. Attacker-controlled MCP Server B requests the user to pass `token_A` to it.
+3. Server B forwards `token_A` to Service A, impersonating the user.
+4. Service A accepts the call because the token signature is valid — it has no way to know it was intended for direct use only.
+
+**Mitigation**:
+
+- Each MCP server registers independently with every upstream OAuth authorization server.
+- Validate the `aud` claim of every incoming token and reject any token not explicitly issued for this server.
+- Never forward a received token to another service — always exchange it for a new token scoped to the downstream service via a proper token exchange flow (RFC 8693).
 
 ---
 
@@ -469,6 +525,45 @@ build MCP components on pipelines that implement security best practices like St
 - Apply secure coding practices across all MCP servers and tools,
 - validate and sanitize all inputs, and ensure that backend logic cannot be influenced by untrusted data sources.
 - This includes robust input validation, strong authentication, rate limiting, secure configuration, and the application of least-privilege design across all interfaces.
+
+---
+
+#### SSRF via OAuth Metadata Discovery
+
+When an MCP client performs OAuth 2.0 Server Metadata Discovery (RFC 8414), it fetches a JSON document from the server's `/.well-known/` endpoint. A malicious MCP server can set its `resource_metadata` URL to point to an internal address — e.g., `169.254.169.254` (AWS/GCP instance metadata), `10.x.x.x`, or `192.168.x.x` — causing the MCP client to issue a credentialed HTTP request to that internal host.
+
+**Attack flow**:
+
+1. Attacker deploys a malicious MCP server.
+2. The server's OAuth metadata response includes `"resource_metadata": "http://169.254.169.254/latest/meta-data/"`.
+3. MCP client faithfully fetches that URL during OAuth discovery.
+4. Cloud instance metadata (containing IAM credentials) is returned to the attacker.
+
+**Impact**: Cloud credential theft, internal service enumeration, lateral movement from the MCP client's network position.
+
+**Mitigation**:
+
+- Block all HTTP requests during OAuth metadata discovery to RFC 1918 private ranges (`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`), loopback (`127.0.0.0/8`), and link-local (`169.254.0.0/16`).
+- Enforce HTTPS for all metadata discovery URLs — reject HTTP.
+- Require that discovery URLs share the same registered domain as the MCP server's own origin.
+- Route all outbound discovery requests through an egress proxy (e.g., Stripe's Smokescreen) that enforces an allowlist of permitted external destinations.
+
+---
+
+#### Local MCP Server Compromise
+
+Local MCP servers start from configuration files (e.g., `claude_desktop_config.json`, `.cursor/mcp.json`). An attacker who can write to these config files can specify an arbitrary startup command that executes with the same OS permissions as the current user.
+
+**Attack scenario**: A repository, npm package, or social-engineering lure modifies the user's MCP config to replace a legitimate startup command with a malicious one. On the next MCP client launch, the attacker's command runs automatically — before the user has any opportunity to inspect it.
+
+**Spec-level requirements for MCP client implementations**:
+
+| Requirement / 要求 | Detail / 说明 |
+|---|---|
+| **Pre-configuration consent UI** | Before executing any new or modified server startup command, the client MUST display the full command string to the user and require explicit approval. Silent auto-start of new or changed commands is not permitted. |
+| **Sandbox startup processes** | MCP client implementations should run local server processes in a sandbox: limited filesystem access, no unrestricted network egress, resource caps to prevent abuse. |
+| **Startup command allowlist** | Maintain an allowlist of permitted executables. Reject startup commands that invoke shell interpreters directly (`sh -c`, `bash -c`, `cmd /c`, `powershell -Command`) — these bypass all other controls. |
+| **Config file integrity** | Use file-system permissions, cryptographic hashes, or signed configuration to detect unauthorized modifications before executing startup commands. |
 
 ---
 
@@ -571,6 +666,15 @@ This requires `attribute-based access control` where decisions factor in multipl
 - Does the requested tool handle sensitive data?
 - What other tools has this agent accessed in this session?
 - Traditional role-based access control can’t answer questions.
+
+**Scope Minimization / 权限范围最小化**:
+
+The MCP OAuth specification defines specific patterns for managing scope creep — a major risk when agents accumulate permissions across sessions:
+
+- Request only the minimum OAuth scopes needed at initialization — never request broad scopes preemptively "just in case".
+- For operations requiring elevated permissions, use **incremental authorization**: the server responds with `WWW-Authenticate: Bearer scope="required-scope"`, and the client initiates a new authorization request for only that specific scope — not a broad re-authorization.
+- <font color=OrangeRed>Wildcard scopes</font> (e.g., `*`, `all`, `admin`) are an anti-pattern in MCP — they grant indiscriminate access, cannot be audited at the operation level, and make it impossible to enforce least privilege or scope-targeted revocation.
+- Scope grants should be revocable per-scope without invalidating the entire session.
 
 #### Auditability
 
