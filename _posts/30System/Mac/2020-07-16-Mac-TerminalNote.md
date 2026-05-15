@@ -101,7 +101,7 @@ J:win0.0 my_path$ ls
 Logs   win0.0.vbox-prev
 share   win0.0.vdi
 win0.0.vbox
-J:win0.0 luo$ VBoxManage clonehd win0.0.vdi win0.vdi
+J:win0.0 cuihua$ VBoxManage clonehd win0.0.vdi win0.vdi
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Clone medium created in format 'VDI'. UUID: 984e9128-1326-40d6-a192-c65e674f7da8
 ```
