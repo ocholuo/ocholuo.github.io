@@ -5,7 +5,6 @@ categories: [00Basic, 50BigData]
 tags: [mongodb, x509, authentication, tls, certificates, nosql, security]
 math: false
 toc: true
-image: ""
 ---
 
 # MongoDB X.509 Authentication

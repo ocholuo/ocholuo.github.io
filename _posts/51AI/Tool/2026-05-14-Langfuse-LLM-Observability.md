@@ -5,7 +5,6 @@ categories: [51AI, Tool]
 tags: [langfuse, llm, observability, tracing, mlops, open-source, prompt-management, evaluation]
 math: false
 toc: true
-image: ""
 ---
 
 # Langfuse — LLM Observability Platform
