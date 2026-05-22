@@ -65,11 +65,104 @@ With skills:
 - Best practices embedded in every interaction
 - Lower learning curve for your integration
 
-技能与 MCP 的关系
+技能与 MCP 的关系 — Skills vs MCP
 
-- 如果你已经有了 MCP (Model Context Protocol) 服务器，技能就是它的“大脑”。
-- MCP (连接性)： 提供了厨房和工具（如连接 Notion, GitHub 的能力）。
-- 技能 (知识)： 提供了菜谱（教 Claude 如何高效、规范地使用这些工具）。
+### 一句话定义 One-line Definition
+
+- **MCP（连接性）**：一个开放协议，让 Claude 连接外部系统，获得新的能力（工具、数据、资源）。
+- **技能（知识）**：一套 Markdown 指令，告诉 Claude 如何高效、规范地使用这些能力完成特定工作流。
+
+- **MCP (connectivity)**: an open protocol that connects Claude to external systems, giving it new capabilities (tools, data, resources).
+- **Skill (knowledge)**: a set of Markdown instructions that tell Claude how to use those capabilities efficiently and consistently within a specific workflow.
+
+如果 MCP 给了 Claude 一双手，技能就是告诉它如何用手做事的操作手册。
+
+If MCP gives Claude hands, a skill is the operating manual that tells it what to do with them.
+
+---
+
+### 技术层对比 Layer Comparison
+
+| 维度 Dimension | MCP | Skill 技能 |
+|---|---|---|
+| 所处层级 Layer | 基础设施 / 连接层 Infrastructure / connectivity | 提示 / 指令层 Prompt / instruction |
+| 提供什么 Provides | 新能力：工具调用、数据源、资源 New capabilities: tool calls, data sources, resources | 工作流知识：如何使用现有能力 Workflow knowledge: how to use existing capabilities |
+| 编写语言 Authored in | Python、Node.js、Go 等编程语言 Programming languages | Markdown (SKILL.md) — 无需编程 no coding required |
+| 部署方式 Deployment | 运行中的服务进程，Claude 通过协议连接 Running server process Claude connects to via protocol | `.claude/skills/` 目录下的文件 Files in `.claude/skills/` directory |
+| 触发机制 Triggering | Claude 的工具调用机制（Tool use） Claude's tool-use mechanism | `description` 字段与用户请求匹配 `description` field matched against user request |
+| 需要编程 Requires coding | 是 Yes | 否 No |
+| 能独立工作 Works alone | 是（Claude 可以直接调用工具）Yes (Claude makes raw tool calls) | 是（使用 Claude 内置工具）Yes (using Claude's built-in tools) |
+
+---
+
+### MCP 技术细节 MCP Technical Internals
+
+MCP 基于 <font color=OrangeRed>JSON-RPC 2.0</font>，支持三种传输方式：stdio（本地进程）、SSE（HTTP 流式）、Streamable HTTP。
+
+MCP is built on <font color=OrangeRed>JSON-RPC 2.0</font> with three transport options: stdio (local process), SSE (HTTP streaming), Streamable HTTP.
+
+MCP 服务器暴露三种原语：
+
+An MCP server exposes three primitives:
+
+- **Tools（工具）**：Claude 可以调用的函数，如 `create_pr`、`query_database`、`send_email`。副作用明显，需要 Claude 决策是否调用。
+  Functions Claude can call — e.g. `create_pr`, `query_database`, `send_email`. Have side effects; Claude decides when to invoke.
+
+- **Resources（资源）**：只读数据源，如文件内容、数据库记录、API 响应。Claude 按需读取。
+  Read-only data sources — file contents, DB records, API responses. Claude reads on demand.
+
+- **Prompts（提示模板）**：服务器预定义的提示，用户可从下拉菜单选择触发。
+  Server-defined prompt templates users can select from a menu to trigger.
+
+---
+
+### Skill 技术细节 Skill Technical Internals
+
+技能采用三层渐进式加载，最小化 Token 消耗：
+
+Skills use three-level progressive loading to minimize token consumption:
+
+```
+第一层 Level 1: YAML frontmatter (name + description)
+  → 始终在系统提示中 Always in system prompt (~100 words)
+  → 让 Claude 知道何时触发 Lets Claude know when to trigger
+
+第二层 Level 2: SKILL.md body
+  → 任务相关时加载 Loaded when task is relevant
+  → 包含完整工作流指令 Contains full workflow instructions
+
+第三层 Level 3: Bundled resources (scripts/, references/, assets/)
+  → 按需读取或执行 Read or executed on demand
+  → 无大小限制 No size limit
+```
+
+---
+
+### 何时用哪个 When to Use Which
+
+| 场景 Scenario | 用 MCP | 用 Skill | 两者结合 Both |
+|---|---|---|---|
+| 连接 Claude 到新外部系统 Connect Claude to a new external system | ✓ | | |
+| 让 Claude 查询数据库 / 调用 API Give Claude database / API access | ✓ | | |
+| 统一某个工作流的执行方式 Standardize how a workflow executes | | ✓ | |
+| 嵌入领域专业知识 Embed domain expertise | | ✓ | |
+| 有 MCP 服务器，但 Claude 用得乱 Have MCP but Claude uses it inconsistently | | | ✓ |
+| 端到端自动化（连接 + 规范）Full automation: connect + standardize | | | ✓ |
+
+**最佳组合模式 Best combined pattern：**
+
+```
+MCP Server           Skill
+(GitHub MCP)    +    (PR review workflow)
+    ↓                     ↓
+给 Claude 工具:         告诉 Claude 如何用这些工具:
+- create_pr             1. 读取 diff
+- list_files            2. 按安全清单审查
+- add_comment           3. 分类问题严重程度
+                        4. 用 add_comment 写结构化评论
+```
+
+MCP provides the tools; the skill provides the judgment and sequence for using them.
 
 ## 技术要求与规范
 

@@ -9,11 +9,7 @@ image:
 
 - [`git add`](#git-add)
 - [`git commit`](#git-commit)
-- [`git show` 显示各种类型的对象。](#git-show-显示各种类型的对象)
-
----
-
-
+- [`git show` 显示各种类型的对象](#git-show-显示各种类型的对象)
 
 ---
 
@@ -25,6 +21,7 @@ git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [-
       [--chmod=(+|-)x] [--] [<pathspec>…​]
 
 将文件内容添加到索引(将修改添加到暂存区)。将要提交的文件的信息添加到索引库中。
+
 - 将要提交的文件的信息添加到索引库中(将修改添加到暂存区)，以准备为下一次提交分段的内容。
 - 它通常将现有路径的当前内容作为一个整体添加，但是通过一些选项，它也可以用于添加内容，只对所应用的工作树文件进行一些更改，或删除工作树中不存在的路径了。
 - “索引”保存工作树内容的快照，并且将该快照作为下一个提交的内容。 因此，在任何更改之后，并且在运行`git commit`命令之前，必须使用`git add`命令将任何新的或修改的文件添加到索引。
@@ -38,9 +35,10 @@ git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [-
     Your branch is up-to-date with 'origin/master'.
     Changes to be committed:
       (use "git reset HEAD <file>..." to unstage)
-    	new file:   key.txt
+     new file:   key.txt
 
 默认情况下，`git add`命令不会添加忽略的文件。
+
 - 如果在命令行上显式指定了任何忽略的文件，git add命令都将失败，并显示一个忽略的文件列表。
 - 由Git执行的目录递归或文件名遍历所导致的忽略文件将被默认忽略。
 - `git add-f(force)`选项添加被忽略的文件。
@@ -59,6 +57,7 @@ $ git add git-*.sh
 ```
 
 基本用法 `git add <path>`
+
 - 把<path>添加到索引库中，<path>可以是文件也可以是目录。
 - git不仅能判断出<path>中，修改(不包括已删除)的文件，还能判断出新添的文件，并把它们的信息添加到索引库中。
 
@@ -96,7 +95,6 @@ $ git add Hello?        # 将以Hello开头后面只有一位的文件的修改�
         这里的t.txt和t2.txt表示已经被执行了git add，待提交。即已经添加到索引库中。
         readme.txt表示已经处于tracked下，它被修改了，但是还没有执行git add。即还没添加到索引库中。
 
-
 git rm 文件名(包括路径) 从git中删除指定文件
 
 git clone git://github.com/schacon/grit.git 从服务器上将代码给拉下来
@@ -106,7 +104,6 @@ git config --list 看所有用户
 git ls-files 看已经被提交的
 
 git rm [file name] 删除一个文件
-
 
 ### `git commit`
 
@@ -120,9 +117,11 @@ git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
        [-i | -o] [-S[<keyid>]] [--] [<file>…​]
 
 用于将更改记录(提交)到存储库。
+
 - 将索引的当前内容与描述更改的用户和日志消息一起存储在新的提交中。
 
 要添加的内容可以通过以下几种方式指定：
+
 - 用`git commit`之前，用`git add`对索引进行递增的“添加”更改(注意：修改后的文件的状态必须为“added”);
 - 用`git rm`从工作树和索引中删除文件，再次用`git commit`命令;
 - 通过将文件作为参数列出到`git commit`命令(不使用--interactive或--patch选项)，在这种情况下，提交将忽略索引中分段的更改，而是记录列出的文件的当前内容(必须已知到Git的内容) ;
@@ -152,7 +151,6 @@ $ git rm goodbye.c
 $ git add hello.c
 $ git commit
 
-
 可以在每次更改后暂存文件，而不是在git commit中关注工作树中跟踪内容的文件的更改，可使用相应的git add和git rm。 也就是说，如果工作树中没有其他更改(hello.c文件内容不变)，则该示例与前面的示例相同：
 $ vi hello.c
 $ rm goodbye.c
@@ -160,10 +158,8 @@ $ git commit -a
 
 `git commit -a`首先查看您的工作树，注意您已修改hello.c并删除了goodbye.c，并执行必要的`git add`和`git rm`
 
-
 在更改许多文件之后，可以通过给出`git commit`的路径名来更改记录更改的顺序。
 当给定路径名时，该命令提交只记录对命名路径所做的更改：
-
 
 $ edit hello.c hello.h # 修改了这两个文件的内容
 $ git add hello.c hello.h
@@ -183,7 +179,6 @@ $ edit hello.c
 $ git add hello.c
 解决冲突和暂存结果后，git ls-files -u将停止提及冲突的路径。完成后，运行git commit最后记录合并：
 $ git commit
-
 
 ---
 
@@ -217,7 +212,7 @@ git stash pop 将文件从临时空间pop下来
 
 －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
 
-git remote add origin git@github.com:username/Hello-World.git
+git remote add origin <git@github.com>:username/Hello-World.git
 
 git push origin master 将本地项目给提交到服务器中
 
@@ -267,12 +262,12 @@ git add README添加文件
 
 git commit -m 'first commit'
 
-git remote add origin git@github.com:daixu/WebApp.git增加一个远程服务器端
+git remote add origin <git@github.com>:daixu/WebApp.git增加一个远程服务器端
 
-上面的命令会增加URL地址为'git@github.com:daixu/WebApp.git'，名称为origin的远程服务器库，以后提交代码的时候只需要使用 origin别名即可
+上面的命令会增加URL地址为'<git@github.com>:daixu/WebApp.git'，名称为origin的远程服务器库，以后提交代码的时候只需要使用 origin别名即可
 
+### `git show` 显示各种类型的对象
 
-### `git show` 显示各种类型的对象。
 `git show [options] <object>…​`
 
 - 描述显示一个或多个对象(blobs，树，标签和提交)。
@@ -300,6 +295,7 @@ $ git show master:Makefile master:t/Makefile
 ```
 
 git show-ref
+
 - 可以现实本地存储库的所有可用的引用以及关联的提交ID
 
       $ git show-ref
@@ -308,20 +304,20 @@ git show-ref
       3aa4c239f729b07deb99a52f125893e162daac9e refs/remotes/origin/master
       f17132340e8ee6c159e0a4a6bc6f80e1da3b1aea refs/tags/secret
 
-
-
 查看文本内容（blob对象)
+
 - 知道一个文本对象的sha-1值，那么查看方式如下：
 $ git show 215ded5
 蚂蚁部落
 
 查看tree对象：
+
 - 显示当前tree对象的目录结构，代码如下：
 $ git show fac4ee5^{tree}
 ![015709g5zlfblo4r5ukug4](https://i.imgur.com/FhXEdD9.jpg)
 
-
 查看tag标签：
+
 - 看一下当前项目的提交历史，
 $ git log --oneline
 ![015752py6e09yp66j5f9lp](https://i.imgur.com/DfZqlnr.jpg)
@@ -336,27 +332,10 @@ $ git show annotatedTag
 除了显示轻量级标签相同的信息外，还显示有附注标签对象的一些信息，打标签这，打标签的时间等。
 ![015921x31au3liia0iz636](https://i.imgur.com/FfjSJc2.jpg)
 
-
 查看commit对象：
+
 - 显示commit对象的相关信息（提交者，提交时间和commit对象sha-1值等）和上一个提交对象的差异。
 $ git show 5a97a20
 ![020011v16jwnbtbrpjvwwp](https://i.imgur.com/x0y5bwJ.jpg)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .
