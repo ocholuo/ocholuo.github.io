@@ -118,6 +118,8 @@ sleepy....
 
 ### AWS
 
+![AWS Architect Learning Path — progression from Technical Essentials through SAA Associate to SAP Professional certifications](./assets/img/post/aws-architect-learning-path.png)
+
 | **AWS Certificate**                                                                                                                                                                                        | Mark    |
 | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ |
 | Certification: `AWS Cloud Practitioner (CLF-C01)`                                                                                                                                                          | 🐰      |
