@@ -5,7 +5,7 @@ categories: [00LearningPath, courses]
 tags: [OS, mass-storage, HDD, NVM, SSD, RAID, disk-scheduling, FCFS, SSTF, SCAN, C-SCAN, C-LOOK, NAS, SAN, swap-space, ECC, 536OS]
 math: true
 toc: true
-image: ""
+image:
 ---
 
 # Mass-Storage Systems

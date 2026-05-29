@@ -5,7 +5,7 @@ categories: [00LearningPath, 536OS]
 tags: [536OS, operating-systems, computer-architecture, interrupts, storage-hierarchy, multiprocessor, NUMA, virtualization, multiprogramming, DMA, bootstrap]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # 1. Introduction to Operating Systems

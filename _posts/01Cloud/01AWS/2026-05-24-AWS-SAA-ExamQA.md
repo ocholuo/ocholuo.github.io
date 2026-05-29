@@ -5,7 +5,7 @@ categories: [01Cloud, 01AWS]
 tags: [AWS, SAA, exam, practice]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # AWS Solutions Architect Associate — Exam Practice Q&A

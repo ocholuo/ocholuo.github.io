@@ -5,7 +5,7 @@ categories: [18DefendSec, Hardening]
 tags: [Hardening, OS, NetworkSec, Database, EnterpriseSecuirty, RBAC, RADIUS, Kerberos, TACACS, SQLInjection, PatchManagement]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # Security Hardening: OS, Network, Database & Enterprise

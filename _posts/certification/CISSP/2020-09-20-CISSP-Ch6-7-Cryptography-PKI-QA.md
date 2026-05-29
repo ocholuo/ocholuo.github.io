@@ -5,7 +5,7 @@ categories: [Certification, CISSP]
 tags: [Certification, CISSP, Cryptography, PKI, DES, AES, RSA, ECC, SHA, IPsec, DigitalSignatures, TLS]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # CISSP Ch6–7: Cryptography, PKI & Applications Q&A

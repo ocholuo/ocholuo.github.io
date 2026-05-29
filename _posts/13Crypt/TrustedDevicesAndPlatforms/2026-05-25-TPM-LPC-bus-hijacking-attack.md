@@ -5,7 +5,7 @@ categories: [13Cryptography, TPM]
 tags: [TPM, LPC-bus, hardware-attack, trusted-computing, chain-of-trust, physical-attack, D-RTM, PCR, I2C, attestation]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # TPM LPC Bus Hijacking and Physical Interface Attacks

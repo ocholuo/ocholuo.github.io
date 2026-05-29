@@ -5,7 +5,7 @@ categories: [01Cloud, 01AWS]
 tags: [AWS, Developer, exam, STS, IAM, CodeCommit, CloudFormation, ElasticBeanstalk]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # AWS Developer Exam — Flash Cards

@@ -5,7 +5,7 @@ categories: [15NetworkSec, NetworkBasic]
 tags: [NetworkSec, VLAN, Ethernet, CSMA-CD, switching, network-simulation, LAN, Riverbed]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # Ethernet CSMA/CD & VLAN Performance Lab

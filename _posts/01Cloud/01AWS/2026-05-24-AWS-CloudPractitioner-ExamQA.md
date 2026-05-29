@@ -5,7 +5,7 @@ categories: [01Cloud, 01AWS]
 tags: [AWS, CloudPractitioner, exam, practice]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # AWS Cloud Practitioner - Exam Practice Q&A

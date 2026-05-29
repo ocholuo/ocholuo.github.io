@@ -5,7 +5,7 @@ categories: [00LearningPath, 528CN]
 tags: [528CN, computer-networks, bandwidth, latency, throughput, delay-bandwidth-product, high-speed-networks, jitter, bottleneck, RTT]
 math: true
 toc: true
-image: ""
+image:
 ---
 
 # 1.5 Network Performance: Bandwidth, Latency & Delay×Bandwidth

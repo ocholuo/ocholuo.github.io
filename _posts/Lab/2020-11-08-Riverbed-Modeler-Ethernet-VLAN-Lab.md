@@ -5,7 +5,7 @@ categories: [Lab, Riverbed]
 tags: [Lab, Riverbed, Ethernet, CSMA-CD, VLAN, switching, network-simulation, LAN]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # Riverbed Modeler: Ethernet CSMA/CD & VLAN Lab

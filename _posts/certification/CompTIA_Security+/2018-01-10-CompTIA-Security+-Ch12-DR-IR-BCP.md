@@ -5,7 +5,7 @@ categories: [certification, CompTIA_Security+]
 tags: [Security+, disaster-recovery, incident-response, business-continuity, BCP, backup, recovery-sites, vulnerability-scanning, CSIRT]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # Ch12: Disaster Recovery, Incident Response & Business Continuity

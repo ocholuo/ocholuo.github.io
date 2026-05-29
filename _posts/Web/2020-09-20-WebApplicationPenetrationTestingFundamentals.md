@@ -5,7 +5,7 @@ categories: [Web, PenetrationTesting]
 tags: [web-security, penetration-testing, OWASP, burp-suite, ZAP, XSS, SQL-injection, CSRF, session-management, authentication]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # Web Application Penetration Testing Fundamentals Web 应用渗透测试基础

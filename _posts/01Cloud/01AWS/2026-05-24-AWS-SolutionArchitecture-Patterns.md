@@ -5,7 +5,7 @@ categories: [01Cloud, 01AWS]
 tags: [aws, solution-architecture, high-availability, elasticity, design-patterns, vpc, iam, cloudfront, auto-scaling]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # AWS Solution Architecture Design Patterns

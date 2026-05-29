@@ -5,7 +5,7 @@ categories: [Web, WebSecurity]
 tags: [web-security, phishing, URL-obfuscation, mobile-code, cookies, SQL-injection, click-jacking, XSS, browser-attacks]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # Web Security Fundamentals: Browser Attacks 浏览器攻击基础

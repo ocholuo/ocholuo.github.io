@@ -5,7 +5,7 @@ categories: [00LearningPath, 536OS]
 tags: [536OS, operating-systems, system-calls, OS-structure, user-interface, shell, microkernel, monolithic, GRUB, boot-process, linker-loader, BCC, eBPF]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # 2. Operating System Services, Interfaces, and Structure

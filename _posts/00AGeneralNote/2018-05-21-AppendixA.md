@@ -5,7 +5,7 @@ categories: [00AGeneralNote, Security+]
 tags: [glossary, security+, terminology, cryptography, network-security, certification]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # CyberSec Appendix A
