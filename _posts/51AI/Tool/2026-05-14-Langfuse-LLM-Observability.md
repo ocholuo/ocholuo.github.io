@@ -150,6 +150,7 @@ langfuse.score(
 Langfuse maintains a model cost table (price per 1k input/output tokens) for hundreds of models from OpenAI, Anthropic, Google, Mistral, etc. When a Generation is logged with `model` and `usage`, cost is auto-calculated in USD.
 
 Cost surfaces at:
+
 - Per-generation (raw cost)
 - Per-trace rollup (sum of all generations)
 - Dashboard: daily/weekly cost charts, cost by model, cost by user, cost by feature
@@ -170,7 +171,7 @@ for item in dataset.items:
     item.score(name="exact_match", value=1 if output == item.expected_output else 0)
 ```
 
-4. Compare experiment runs in the UI (score distributions, latency, cost per run)
+1. Compare experiment runs in the UI (score distributions, latency, cost per run)
 
 ### User and Session Tracking
 
@@ -321,6 +322,7 @@ Intercepts LangChain's `on_llm_start`, `on_llm_end`, `on_chain_start`, etc. and 
 Langfuse uses an **async background queue** to batch and send events. This avoids adding latency to LLM calls. The consequence: if the process exits before the queue drains, **events are silently lost**.
 
 Rules:
+
 - Always call `langfuse.flush()` before process exit
 - Use a `try/finally` block when instrumenting handlers
 - In serverless (AWS Lambda, Cloud Functions): call flush at the end of every handler invocation
@@ -392,6 +394,7 @@ Langfuse does not detect injection itself — it provides the infrastructure to 
 ### Cost Runaway Prevention
 
 Uncontrolled LLM API spend is an operational risk. Langfuse provides:
+
 - Real-time cost per trace (visible immediately in the UI)
 - Daily/weekly cost charts on the dashboard
 - Per-user cost breakdown (identify which users or features drive spend)
