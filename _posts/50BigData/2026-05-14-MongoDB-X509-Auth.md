@@ -76,7 +76,7 @@ Example output:
 **Field-by-field breakdown / 字段说明:**
 
 | Field | Meaning |
-|---|---|
+| --- | --- |
 | `_id` | MongoDB's internal document ID — always `$external.<subject-string>` for X.509 users. Auto-constructed, never set manually. |
 | `userId` | System-generated UUID for audit logs and change tracking. Appears in `mongod` logs when this user authenticates. |
 | `user` | The actual MongoDB username — the full certificate subject string, exactly as produced by `openssl x509 -subject -nameopt RFC2253`. This is what MongoDB compares against the connecting client's cert. |
@@ -135,10 +135,10 @@ openssl req -new -newkey rsa:2048 -sha256 \
 ```
 
 This produces two files:
+
 - `.key.pem` — your private key (keep this secret, never commit to git)
 - `.csr` — the certificate signing request (safe to share)
-
-**File naming rule:** both files must share the same prefix and differ only by extension.
+- **File naming rule:** both files must share the same prefix and differ only by extension.
 
 ### Step 2 — Request Certificate from Internal CA
 
@@ -169,12 +169,8 @@ cat issuer.pem >> CA.pem
 ### Step 5 — Extract Subject String
 
 ```bash
-openssl x509 -in svc-myapp.pem -inform PEM -subject -nameopt RFC2253
-```
-
-Output example:
-
-```
+openssl x509 -in svc-myapp.pem -inform PEM -subject -nameopt RFC2253 
+# Output example: 
 subject= C=US,ST=YourState,O=Your Org,OU=management:group.12345,CN=svc-myapp-replicaset-mydb.corp.example.com
 ```
 
@@ -184,7 +180,7 @@ This exact string (starting from `C=US,...`) is what you send to the DBA team.
 
 Share with the DBA team:
 
-```
+```bash
 Replica set / cluster: <host1:port1,host2:port2,...>
 Database: <dbname>
 Requested role: <readWrite / owner / read-only>
@@ -229,6 +225,7 @@ db = client["mydb"]
 ```
 
 **Notes on the path arguments:**
+
 - `tlsCertificateKeyFile` — the merged file from Step 3 (private key + certificate in one PEM)
 - `tlsCAFile` — the CA chain from Step 4; tells PyMongo which CA to trust for the server cert
 - `tlsCertificateKeyFilePassword` — only needed if the key was generated with a passphrase
@@ -240,7 +237,7 @@ db = client["mydb"]
 When the certificate expires, repeat the CSR → cert manager → merge → verify steps. Two constraints that **must not change**:
 
 | Item | Why it must stay the same |
-|---|---|
+| --- | --- |
 | CN in the new CSR | MongoDB user lookup is a string match on the subject. A different CN = different subject = authentication fails |
 | Management group / OU | The OU (e.g., `management:group.12345`) is part of the subject string. Different group = different subject = auth fails |
 

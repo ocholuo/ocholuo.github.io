@@ -5,7 +5,7 @@ categories: [30System, Docker]
 tags: [Docker, Dockerfile, build-cache, uv, buildx, python, incremental-build]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # Docker Layer Caching and Incremental Builds

@@ -5,7 +5,7 @@ categories: [00CodeNote, JS]
 tags: [npm, nodejs, package.json, package-lock, yarn, pnpm, dependencies, javascript]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # npm Package Files: package.json, package-lock.json and the Ecosystem

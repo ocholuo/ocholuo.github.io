@@ -5,7 +5,7 @@ categories: [00CodeNote, SQL]
 tags: [SQLite, concurrency, locking, SQLITE_BUSY, WAL, database, Python]
 math: false
 toc: true
-image: ""
+image:
 ---
 
 # SQLite Locking and SQLITE_BUSY / SQLite 锁机制与 SQLITE_BUSY 详解
