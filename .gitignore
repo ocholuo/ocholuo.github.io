@@ -19,12 +19,12 @@ package-lock.json
 
 .clj-kondo/
 .lsp/
-.vscode/
-.DS_Store
+.vscode/ 
 
 # py
 */__pycache__
 *.pyc
+**/.DS_Store
 
 # conflict copies (e.g. "foo 2.png" duplicate of "foo.png")
 * 2.*
