@@ -611,12 +611,18 @@ MCP introduces a unique authentication problem: users cannot go through a tradit
 
 MCP 带来了一个独特的认证问题：用户通过 AI 工具访问外部系统时，无法走传统登录流程（用户名/密码、邮箱/验证码）。MCP 服务器充当**用户的代表**——需要在没有交互式会话的情况下代表用户完成认证。同时，底层服务的访问控制规则必须依然生效：通过 AI 工具访问 CRM 的用户，应该看到与直接登录完全相同的数据。
 
+This breaks down into <font color=OrangeRed>two distinct challenges</font>: (1) authentication — how does the user prove identity without an interactive login flow; and (2) authorization for MCP server requests — the user accessing the system through an AI tool is the *same* user who would log in directly, so redesigning the entire access-control model just to accommodate the MCP server would be costly and unnecessary. / 这拆分为<font color=OrangeRed>两个独立挑战</font>：（1）认证——用户如何在没有交互式登录流程的情况下证明身份；（2）MCP 服务器请求的授权——通过 AI 工具访问系统的用户与直接登录的用户是**同一人**，为了迁就 MCP 服务器而重新设计整个访问控制机制成本高昂且没有必要。
+
 The recommended pattern / 推荐方案：
 
 - **Personal Access Tokens (PATs) / 个人访问令牌**: Users generate a PAT from the service they want to connect, then provide it to the MCP server configuration. The PAT carries the user's identity and permissions without requiring an interactive session. Existing backend services keep their auth mechanism unchanged. / 用户从目标服务生成 PAT，再提供给 MCP 服务器配置。PAT 携带用户身份和权限，无需交互式会话。现有后端服务无需改动认证机制。
 - **RBAC integration / RBAC 集成**: Combine PATs with Role-Based Access Control so the MCP server can only access resources the user is authorized for — not everything the server process can reach. / PAT 结合基于角色的访问控制，确保 MCP 服务器只能访问用户有权限的资源，而非服务器进程可以触达的全部内容。
 
 ![PAT authentication sequence: user creates PAT → configures in AI tool → sends request → AI tool invokes MCP server → MCP server calls service API with PAT → service validates PAT and checks permissions → returns data based on user's authorized scope](./assets/img/post/mcp-security-pat-flow.png)
+
+**PAT flow in detail / PAT 流程细节**: (1) user generates a PAT from the target service and configures it in the MCP server; (2) the AI tool sends a request that triggers the MCP server; (3) the MCP server calls the service's API, attaching the PAT; (4) the service validates the PAT and checks the associated permissions; (5) the service returns only the data within the user's authorized scope. This keeps the backend service's existing auth mechanism untouched while letting it securely serve an AI-tool-driven request. / PAT 流程细节：（1）用户从目标服务生成 PAT 并配置到 MCP 服务器；（2）AI 工具发出请求触发 MCP 服务器；（3）MCP 服务器携带 PAT 调用服务 API；（4）服务验证 PAT 并检查关联权限；（5）服务仅返回用户授权范围内的数据。该方案让后端服务的现有认证机制保持不变，同时安全地响应由 AI 工具发起的请求。
+
+**Off-the-shelf auth for MCP servers / MCP 服务器的现成认证方案**: Building PAT issuance, validation, and RBAC enforcement from scratch is nontrivial. Identity providers are starting to ship plug-and-play auth specifically for MCP servers — e.g. Logto's **MCP Auth** — so a server can add production-ready authentication without reading the full authorization spec or wiring up token issuance manually. / 从零构建 PAT 签发、校验和 RBAC 强制执行并不简单。身份提供商已开始为 MCP 服务器提供开箱即用的认证方案——例如 Logto 的 **MCP Auth**——使服务器无需通读完整授权规范或手动搭建令牌签发流程即可获得生产级认证能力。
 
 ---
 
