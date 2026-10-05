@@ -6,7 +6,7 @@ tags: [git, github, pull-request, rebase, squash-merge]
 math: false
 toc: true
 mermaid: true
-image: ""
+image:
 ---
 
 # GitHub Stacked PRs + Squash Merge 链式 PR 与压缩合并
