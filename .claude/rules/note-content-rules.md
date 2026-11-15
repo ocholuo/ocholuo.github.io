@@ -38,3 +38,11 @@ Decision: three layers together (tags, section labels, generated review index).
 - When the same content appears more than once, or overlaps an existing note, do not delete or merge it silently.
 - Produce a list of the duplicate candidates with their locations and wait for the user to decide what to delete.
 - Until the user decides, keep both copies.
+
+## Glossary and appendix notes
+
+- Group entries by the first letter of the term, `Number` first, then A to Z. Merge every alphabetical run in the PDF into one list. Ignore the PDF's own letter headings, because they are unreliable.
+- Add no source line under a letter or a word, and add no own-words summary. This overrides the source-flag and summary rules above for glossary notes.
+- Copy the PDF text color as `<font color="#rrggbb">` and the background fill as `<span style="background-color:#rrggbb">`, using the exact hex values from the PDF. Treat near-black text as plain.
+- Keep duplicate terms. After sorting, each pair sits side by side. Give the user the duplicate list and let the user choose what to delete.
+- Parse by geometry: a bullet glyph belongs to the text line at the same height. Many entries have no bullet and start with `term—`. Verify the result by comparing letter and digit counts with the PDF text.
