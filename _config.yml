@@ -74,16 +74,17 @@ pageviews:
 
 # Prefer color scheme setting.
 #
-# Note: Keep empty will follow the system prefer color by default,
-# and there will be a toggle to switch the theme between dark and light
-# on the bottom left of the sidebar.
+# Left unset on purpose: setting it forces one mode and hides the toggle.
+# With it unset, a toggle button sits at the bottom left of the sidebar, and
+# readers can switch between dark and light. The default mode for readers who
+# have not chosen yet (dark) is set in `_includes/mode-toggle.html`.
 #
 # Available options:
 #
-#     light  - Use the light color scheme
-#     dark   - Use the dark color scheme
+#     light  - Force the light color scheme, no toggle
+#     dark   - Force the dark color scheme, no toggle
 #
-theme_mode: dark # [light|dark]
+# theme_mode: dark # [light|dark]
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
