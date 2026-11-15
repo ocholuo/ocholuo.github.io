@@ -41,7 +41,8 @@ npm run fixlint      # auto-fix stylelint issues
 ### Content Structure
 
 - `_posts/` — all blog posts, organized into topic subdirectories (e.g. `02Security/`, `01Cloud/`, `30System/`). Posts that don't have a date in their filename won't be published.
-- `_tabs/` — top-level navigation pages (`about.md`, `archives.md`, `categories.md`, `tags.md`).
+- **Before placing or creating any note, read `_tabs/contents.md`** (the folder map: every top-level and second-level folder with its scope) **and `.claude/rules/note-placement.md`** (where a new note goes, naming rules, and keeping the map current).
+- `_tabs/` — top-level navigation pages (`about.md`, `archives.md`, `categories.md`, `tags.md`, `contents.md`).
 - `_data/` — site data files: `authors.yml`, `contact.yml`, `share.yml`, and `locales/` for i18n.
 
 ### Post Front Matter
