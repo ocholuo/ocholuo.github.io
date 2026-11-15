@@ -12,10 +12,10 @@ Applies whenever a note under `_posts/` is written or converted from a source do
 
 Decision: three layers together (tags, section labels, generated review index).
 
-- Content on the same subject from different sources (for example Security+ textbook and CISSP notes) is gathered into one topic note, with one section per source.
+- Put content on the same subject from different sources (for example Security+ textbook and CISSP notes) in one topic note. Use one section per source.
 - **A. Tags.** Front matter `tags` carry one `src-<slug>` tag per source in the note, for example `src-security-plus`, `src-cissp`. The slug is lowercase, hyphenated, without `+` (so the tag URL stays valid). The Tags page then lists every note from a source.
 - **B. Section label.** Each source section starts with a heading of the form `### [<Source>] <chapter or section>, p<pdf-page> - Original text`, for example `### [Security+] Ch10, p412 - Original text`. The page is the PDF page number, so it can be traced back. The own-words block follows as `**Summary:**`.
-- **C. Review index.** One generated page per source in `certification/`, listing every note and section from that source in source order, so one book can be reviewed front to back. It is produced by a script and regenerated after notes change, never edited by hand.
+- **C. Review index.** One generated page per source in `certification/`. It lists every note and section from that source in source order, so one book can be reviewed front to back. A script produces it and regenerates it after notes change. Never edit it by hand.
 - A new source gets a slug and a label name added to this list: `security-plus` / `[Security+]`, `cissp` / `[CISSP]`. Confirm any new source name with the user first.
 
 ## Images
@@ -30,7 +30,7 @@ Decision: three layers together (tags, section labels, generated review index).
 
 ## Privacy: alert before every push
 
-- Before any push that adds converted content, scan the text and look at the images for personal information (names, emails, phone numbers, IDs, account names, screenshots of private data).
+- Before any push that adds converted content, scan the text for personal information. Look at the images too. Examples: names, emails, phone numbers, IDs, account names, screenshots of private data.
 - If anything is found, or anything is uncertain, stop and tell the user before pushing. Third-party contact details (for example an author email in a source) count as a finding.
 
 ## Duplicates: report, never delete
