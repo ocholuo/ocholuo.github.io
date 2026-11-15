@@ -16,3 +16,7 @@ These rules apply to every PR in `ocholuo.github.io`. They override the general 
 - Keep a PR as a draft until CI is green on the head commit, then mark it ready.
 - Add no `Co-Authored-By` trailer and no AI or agent attribution to commits or to the PR body.
 - Alert the user before any push that adds converted PDF content and may hold personal information (see `note-content-rules.md`).
+
+## Tooling note
+
+- `gh` on this machine may be logged in as an account with read-only access to this repo, so `gh pr create` can fail with "must be a collaborator". `git push` uses a separate credential and still works. Do not switch the user's GitHub accounts. Save the PR body to a file and ask the user to create the PR on github.com or to switch the `gh` account.
