@@ -28,7 +28,10 @@ package-lock.json
 
 # conflict copies (e.g. "foo 2.png" duplicate of "foo.png")
 * 2.*
+# Claude Code config is kept outside this repository and linked in locally.
 /.claude
+/CLAUDE.md
+/CLAUDE.local.md
 
 
 # Misc
