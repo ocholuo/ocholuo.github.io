@@ -1,4 +1,10 @@
 <!-- Switch the mode between dark and light. -->
+<!--
+  Site default is dark. A reader can switch with the sidebar button, and the choice is remembered
+  in localStorage. Until a reader chooses, the site stays dark, whatever the system prefers.
+  The class keeps the public names that other includes rely on: ModeToggle.ID, ModeToggle.DARK_MODE,
+  the `data-mode` attribute on <html>, the posted theme-change message, and flipMode().
+-->
 
 <script type="text/javascript">
   class ModeToggle {
@@ -14,51 +20,25 @@
     static get LIGHT_MODE() {
       return 'light';
     }
+    static get DEFAULT_MODE() {
+      return 'dark';
+    }
     static get ID() {
       return 'mode-toggle';
     }
 
     constructor() {
-      if (this.hasMode) {
-        if (this.isDarkMode) {
-          if (!this.isSysDarkPrefer) {
-            this.setDark();
-          }
-        } else {
-          if (this.isSysDarkPrefer) {
-            this.setLight();
-          }
-        }
-      }
-
-      let self = this;
-
-      /* always follow the system prefers */
-      this.sysDarkPrefers.addEventListener('change', () => {
-        if (self.hasMode) {
-          if (self.isDarkMode) {
-            if (!self.isSysDarkPrefer) {
-              self.setDark();
-            }
-          } else {
-            if (self.isSysDarkPrefer) {
-              self.setLight();
-            }
-          }
-
-          self.clearMode();
-        }
-
-        self.notify();
-      });
+      this.memoryMode = null;
+      document.documentElement.setAttribute(ModeToggle.MODE_ATTR, this.modeStatus);
     } /* constructor() */
 
-    get sysDarkPrefers() {
-      return window.matchMedia('(prefers-color-scheme: dark)');
-    }
-
-    get isSysDarkPrefer() {
-      return this.sysDarkPrefers.matches;
+    /* the reader's saved choice: 'dark', 'light', or null when never chosen */
+    get mode() {
+      try {
+        return localStorage.getItem(ModeToggle.MODE_KEY);
+      } catch (e) {
+        return this.memoryMode;
+      }
     }
 
     get isDarkMode() {
@@ -73,32 +53,44 @@
       return this.mode != null;
     }
 
-    get mode() {
-      return sessionStorage.getItem(ModeToggle.MODE_KEY);
-    }
-
     /* get the current mode on screen */
     get modeStatus() {
-      if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) {
-        return ModeToggle.DARK_MODE;
-      } else {
+      if (this.isLightMode) {
         return ModeToggle.LIGHT_MODE;
+      }
+      if (this.isDarkMode) {
+        return ModeToggle.DARK_MODE;
+      }
+      return ModeToggle.DEFAULT_MODE;
+    }
+
+    saveMode(value) {
+      document.documentElement.setAttribute(ModeToggle.MODE_ATTR, value);
+      this.memoryMode = value;
+      try {
+        localStorage.setItem(ModeToggle.MODE_KEY, value);
+      } catch (e) {
+        /* storage is blocked (private mode): the choice applies to this page only */
       }
     }
 
     setDark() {
-      document.documentElement.setAttribute(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE);
-      sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE);
+      this.saveMode(ModeToggle.DARK_MODE);
     }
 
     setLight() {
-      document.documentElement.setAttribute(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE);
-      sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE);
+      this.saveMode(ModeToggle.LIGHT_MODE);
     }
 
+    /* forget the saved choice and return to the site default */
     clearMode() {
-      document.documentElement.removeAttribute(ModeToggle.MODE_ATTR);
-      sessionStorage.removeItem(ModeToggle.MODE_KEY);
+      this.memoryMode = null;
+      document.documentElement.setAttribute(ModeToggle.MODE_ATTR, ModeToggle.DEFAULT_MODE);
+      try {
+        localStorage.removeItem(ModeToggle.MODE_KEY);
+      } catch (e) {
+        /* nothing to clear */
+      }
     }
 
     /* Notify another plugins that the theme mode has changed */
@@ -113,26 +105,10 @@
     }
 
     flipMode() {
-      if (this.hasMode) {
-        if (this.isSysDarkPrefer) {
-          if (this.isLightMode) {
-            this.clearMode();
-          } else {
-            this.setLight();
-          }
-        } else {
-          if (this.isDarkMode) {
-            this.clearMode();
-          } else {
-            this.setDark();
-          }
-        }
+      if (this.modeStatus === ModeToggle.DARK_MODE) {
+        this.setLight();
       } else {
-        if (this.isSysDarkPrefer) {
-          this.setLight();
-        } else {
-          this.setDark();
-        }
+        this.setDark();
       }
 
       this.notify();
