@@ -101,8 +101,8 @@ Color key: <font color=MediumSeaGreen>**group**</font>, <font color=OrangeRed>**
     - <font color=DodgerBlue>**cipher-code**</font>: Ciphers and codes.
     - <font color=DodgerBlue>**PKI**</font>: Digital signatures and PKI.
     - <font color=DodgerBlue>**TrustedDevicesAndPlatforms**</font>: TPM and hardware trust.
-  - <font color=OrangeRed>**15NetworkSec**</font> — Network fundamentals (about 13)
-    - <font color=DodgerBlue>**NetworkBasic**</font>: VLAN, Ethernet and basic labs.
+  - <font color=OrangeRed>**15NetworkSec**</font> — Network fundamentals (about 14)
+    - <font color=DodgerBlue>**NetworkBasic**</font>: VLAN, Ethernet, basic labs, network device evolution and an SDN introduction.
     - <font color=DodgerBlue>**NetworkProtocol**</font>: Protocols: TLS handshake, HTTP status codes.
     - <font color=DodgerBlue>**OSIModel**</font>: OSI layers, IP, routing, autonomous systems.
   - <font color=OrangeRed>**16NetworkSecII**</font> — Network security (about 11)
